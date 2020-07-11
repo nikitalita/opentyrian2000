@@ -1627,8 +1627,8 @@ void draw_ship_illustration( void )
 		                      ? ships[player[0].items.ship].bigshipgraphic - 1
 		                      : 31;
 
-		const int ship_x[6] = { 31, 0, 0, 0, 35, 31 },
-		          ship_y[6] = { 36, 0, 0, 0, 33, 35 };
+		const int ship_x[] = { 31, 0, 0, 0, 35, 31, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 35, 31 },
+		          ship_y[] = { 36, 0, 0, 0, 33, 35, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 35, 35 };
 
 		const int x = ship_x[sprite_id - 27],
 		          y = ship_y[sprite_id - 27];
@@ -1652,7 +1652,7 @@ void draw_ship_illustration( void )
 		blit_sprite(VGAScreenSeg, x, y, WEAPON_SHAPES, sprite_id);
 	}
 
-	const int weapon_sprites[43] =
+	const int weapon_sprites[60] =
 	{
 		-1,  0,  1,  2,  3,  4,  5,  6,  7,  8,
 		 9, 10, 11, 21,  5, 13, -1, 14, 15,  0,
@@ -1664,7 +1664,7 @@ void draw_ship_illustration( void )
 	// front weapon
 	if (player[0].items.weapon[FRONT_WEAPON].id > 0)
 	{
-		const int front_weapon_xy_list[43] =
+		const int front_weapon_xy_list[60] =
 		{
 			 -1,  4,  9,  3,  8,  2,  5, 10,  1, -1,
 			 -1, -1, -1,  7,  8, -1, -1,  0, -1,  4,
@@ -1684,7 +1684,7 @@ void draw_ship_illustration( void )
 	// rear weapon
 	if (player[0].items.weapon[REAR_WEAPON].id > 0)
 	{
-		const int rear_weapon_xy_list[43] =
+		const int rear_weapon_xy_list[60] =
 		{
 			-1, -1, -1, -1, -1, -1, -1, -1, -1,  0,
 			 1,  2,  3, -1,  4,  5, -1, -1,  6, -1,
@@ -1859,6 +1859,10 @@ void JE_drawItem( JE_byte itemType, JE_word itemNum, JE_word x, JE_word y )
 				shipGrPtr = &shapes9;
 				shipGr = JE_SGr(itemNum - 90, &shipGrPtr);
 				blit_sprite2x2(VGAScreen, x, y, *shipGrPtr, shipGr);
+			}
+			else if (ships[itemNum].shipgraphic > 500)
+			{
+				blit_sprite2x2(VGAScreen, x, y, shapesT2k, ships[itemNum].shipgraphic - 500);
 			}
 			else
 			{

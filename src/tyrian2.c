@@ -671,6 +671,7 @@ start_level:
 
 		if (play_demo)
 		{
+			moveTyrianLogoUp = true;
 			stop_song();
 			fade_black(10);
 
@@ -2701,7 +2702,7 @@ new_game:
 									sprintf(buffer, "%s %s", miscTextB[4], pName[0]);
 									JE_dString(VGAScreen, JE_fontCenter(buffer, FONT_SHAPES), 100, buffer, FONT_SHAPES);
 
-									sprintf(buffer, "Or play... %s", specialName[7]);
+									sprintf(buffer, "Or play... %s", specialName[SA_DESTRUCT - 1]);
 									JE_dString(VGAScreen, 80, 180, buffer, SMALL_FONT_SHAPES);
 								}
 								else
@@ -3288,6 +3289,8 @@ bool JE_titleScreen( JE_boolean animate )
 	else
 #endif
 	{
+		JE_word tyrY, t2kY;
+
 		do
 		{
 			/* Animate instead of quickly fading in */
@@ -3311,9 +3314,11 @@ bool JE_titleScreen( JE_boolean animate )
 
 					memcpy(VGAScreen2->pixels, VGAScreen->pixels, VGAScreen2->pitch * VGAScreen2->h);
 
-					temp = moveTyrianLogoUp ? 62 : 4;
+					tyrY = moveTyrianLogoUp ? 62 : 4;
+					t2kY = moveTyrianLogoUp ? 41 : 73;
 
-					blit_sprite(VGAScreenSeg, 11, temp, PLANET_SHAPES, 146); // tyrian logo
+					blit_sprite(VGAScreenSeg, 11, tyrY, PLANET_SHAPES, 146); // tyrian logo
+					blit_sprite(VGAScreenSeg, 155, t2kY, PLANET_SHAPES, 151); // 2000(tm)
 
 					JE_showVGA();
 
@@ -3321,13 +3326,14 @@ bool JE_titleScreen( JE_boolean animate )
 
 					if (moveTyrianLogoUp)
 					{
-						for (temp = 61; temp >= 4; temp -= 2)
+						for (t2kY = 44, tyrY = 61; tyrY >= 4; tyrY -= 2)
 						{
 							setjasondelay(2);
 
 							memcpy(VGAScreen->pixels, VGAScreen2->pixels, VGAScreen->pitch * VGAScreen->h);
 
-							blit_sprite(VGAScreenSeg, 11, temp, PLANET_SHAPES, 146); // tyrian logo
+							blit_sprite(VGAScreenSeg, 11, tyrY, PLANET_SHAPES, 146); // tyrian logo
+							blit_sprite(VGAScreenSeg, 155, t2kY++, PLANET_SHAPES, 151); // 2000(tm)
 
 							JE_showVGA();
 
@@ -3335,8 +3341,6 @@ bool JE_titleScreen( JE_boolean animate )
 						}
 						moveTyrianLogoUp = false;
 					}
-
-					strcpy(menuText[4], opentyrian_str);  // OpenTyrian override
 
 					/* Draw Menu Text on Screen */
 					for (int i = 0; i < menunum; ++i)
@@ -3421,7 +3425,7 @@ bool JE_titleScreen( JE_boolean animate )
 							{
 								/* SuperTyrian */
 
-								JE_playSampleNum(V_DATA_CUBE);
+								JE_playSampleNum(V_DANGER);
 								JE_whoa();
 
 								initialDifficulty = keysactive[SDL_SCANCODE_SCROLLLOCK] ? 6 : 8;
@@ -3442,23 +3446,32 @@ bool JE_titleScreen( JE_boolean animate )
 								JE_dString(VGAScreen, JE_fontCenter(buf, FONT_SHAPES), 110, buf, FONT_SHAPES);
 
 								play_song(16);
-								JE_playSampleNum(V_DANGER);
+								JE_playSampleNum(V_GOOD_LUCK);
 								JE_showVGA();
 
 								wait_noinput(true, true, true);
 								wait_input(true, true, true);
 
-								JE_initEpisode(1);
-								constantDie = false;
-								superTyrian = true;
-								onePlayerAction = true;
-								gameLoaded = true;
-								difficultyLevel = initialDifficulty;
+								fade_black(1);
+								if (select_episode()) // T2000 let you choose the starting episode
+								{
+									constantDie = false;
+									superTyrian = true;
+									onePlayerAction = true;
+									gameLoaded = true;
+									difficultyLevel = initialDifficulty;
 
-								player[0].cash = 0;
+									player[0].cash = 0;
 
-								player[0].items.ship = 13;                     // The Stalker 21.126
-								player[0].items.weapon[FRONT_WEAPON].id = 39;  // Atomic RailGun
+									player[0].items.ship = 13;                     // The Stalker 21.126
+									player[0].items.weapon[FRONT_WEAPON].id = 39;  // Atomic RailGun
+								}
+								else
+								{
+									redraw = true;
+									fadeIn = true;
+									play_song(SONG_TITLE);
+								}
 							}
 							else
 							{
@@ -3474,7 +3487,9 @@ bool JE_titleScreen( JE_boolean animate )
 									JE_dString(VGAScreen, JE_fontCenter(superShips[0], FONT_SHAPES), 30, superShips[0], FONT_SHAPES);
 									JE_dString(VGAScreen, JE_fontCenter(superShips[i+1], SMALL_FONT_SHAPES), 100, superShips[i+1], SMALL_FONT_SHAPES);
 									tempW = ships[player[0].items.ship].shipgraphic;
-									if (tempW != 1)
+									if (tempW > 500)
+										blit_sprite2x2(VGAScreen, 148, 70, shapesT2k, tempW - 500);
+									else if (tempW != 1)
 										blit_sprite2x2(VGAScreen, 148, 70, shapes9, tempW);
 
 									JE_showVGA();
@@ -3526,7 +3541,13 @@ bool JE_titleScreen( JE_boolean animate )
 						
 						if (select_gameplay())
 						{
-							if (select_episode() && select_difficulty())
+							if (timedBattleMode)
+							{
+								onePlayerAction = true;
+								if (select_timed_battle() && select_difficulty())
+									gameLoaded = false; // TODO
+							}
+							else if (select_episode() && select_difficulty())
 								gameLoaded = true;
 
 							initialDifficulty = difficultyLevel;
@@ -3557,7 +3578,7 @@ bool JE_titleScreen( JE_boolean animate )
 							{
 								// allows player to smuggle arcade/super-arcade ships into full game
 								
-								ulong initial_cash[] = { 10000, 15000, 20000, 30000 };
+								ulong initial_cash[] = { 10000, 15000, 20000, 30000, 35000 };
 
 								assert(episodeNum >= 1 && episodeNum <= EPISODE_AVAILABLE);
 								player[0].cash = initial_cash[episodeNum-1];
@@ -3577,7 +3598,7 @@ bool JE_titleScreen( JE_boolean animate )
 						JE_helpSystem(1);
 						fadeIn = true;
 						break;
-					case 4: /* Ordering info, now OpenTyrian menu */
+					case 4: /* Ordering info (doesn't exist in T2000), now OpenTyrian menu */
 						opentyrian_menu();
 						fadeIn = true;
 						break;
@@ -3606,6 +3627,8 @@ trentWinsGame:
 
 void intro_logos( void )
 {
+	moveTyrianLogoUp = true;
+
 	SDL_FillRect(VGAScreen, NULL, 0);
 
 	fade_white(50);
@@ -4024,6 +4047,13 @@ void JE_createNewEventEnemy( JE_byte enemyTypeOfs, JE_word enemyOffset, Sint16 u
 	tempW = eventRec[eventLoc-1].eventdat + enemyTypeOfs;
 
 	enemyAvail[b-1] = JE_makeEnemy(&enemy[b-1], tempW, uniqueShapeTableI);
+
+	// When T2000 gives an X position of -200, what it actually wants is a random X position...
+	if (eventRec[eventLoc-1].eventdat2 == -200)
+	{
+		// Ranged 24 - 231
+		eventRec[eventLoc-1].eventdat2 = (mt_rand() % 208) + 24;
+	}
 
 	if (eventRec[eventLoc-1].eventdat2 != -99)
 	{

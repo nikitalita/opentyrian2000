@@ -26,7 +26,7 @@
 
 #include <stdbool.h>
 
-#define SA 7
+#define SA 9
 
 enum
 {
@@ -34,8 +34,8 @@ enum
 	SA_NORTSHIPZ = 7,
 	
 	// only used for code entry
-	SA_DESTRUCT = 8,
-	SA_ENGAGE = 9,
+	SA_DESTRUCT = 10,
+	SA_ENGAGE = 11,
 	
 	// only used in pItems[P_SUPERARCADE]
 	SA_SUPERTYRIAN = 254,

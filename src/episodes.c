@@ -72,29 +72,33 @@ void JE_loadItemDat( void )
 	JE_word itemNum[7]; /* [1..7] */
 	efread(&itemNum, sizeof(JE_word), 7, f);
 
-	for (int i = 0; i < WEAP_NUM + 1; ++i)
+	const int weapons_bounds[2][2] = {{0, WEAP_END1}, {WEAP_START2, WEAP_NUM}};
+	for (int bank = 0; bank < 2; ++bank)
 	{
-		efread(&weapons[i].drain,           sizeof(JE_word), 1, f);
-		efread(&weapons[i].shotrepeat,      sizeof(JE_byte), 1, f);
-		efread(&weapons[i].multi,           sizeof(JE_byte), 1, f);
-		efread(&weapons[i].weapani,         sizeof(JE_word), 1, f);
-		efread(&weapons[i].max,             sizeof(JE_byte), 1, f);
-		efread(&weapons[i].tx,              sizeof(JE_byte), 1, f);
-		efread(&weapons[i].ty,              sizeof(JE_byte), 1, f);
-		efread(&weapons[i].aim,             sizeof(JE_byte), 1, f);
-		efread(&weapons[i].attack,          sizeof(JE_byte), 8, f);
-		efread(&weapons[i].del,             sizeof(JE_byte), 8, f);
-		efread(&weapons[i].sx,              sizeof(JE_shortint), 8, f);
-		efread(&weapons[i].sy,              sizeof(JE_shortint), 8, f);
-		efread(&weapons[i].bx,              sizeof(JE_shortint), 8, f);
-		efread(&weapons[i].by,              sizeof(JE_shortint), 8, f);
-		efread(&weapons[i].sg,              sizeof(JE_word), 8, f);
-		efread(&weapons[i].acceleration,    sizeof(JE_shortint), 1, f);
-		efread(&weapons[i].accelerationx,   sizeof(JE_shortint), 1, f);
-		efread(&weapons[i].circlesize,      sizeof(JE_byte), 1, f);
-		efread(&weapons[i].sound,           sizeof(JE_byte), 1, f);
-		efread(&weapons[i].trail,           sizeof(JE_byte), 1, f);
-		efread(&weapons[i].shipblastfilter, sizeof(JE_byte), 1, f);
+		for (int i = weapons_bounds[bank][0]; i < weapons_bounds[bank][1] + 1; ++i)
+		{
+			efread(&weapons[i].drain,           sizeof(JE_word), 1, f);
+			efread(&weapons[i].shotrepeat,      sizeof(JE_byte), 1, f);
+			efread(&weapons[i].multi,           sizeof(JE_byte), 1, f);
+			efread(&weapons[i].weapani,         sizeof(JE_word), 1, f);
+			efread(&weapons[i].max,             sizeof(JE_byte), 1, f);
+			efread(&weapons[i].tx,              sizeof(JE_byte), 1, f);
+			efread(&weapons[i].ty,              sizeof(JE_byte), 1, f);
+			efread(&weapons[i].aim,             sizeof(JE_byte), 1, f);
+			efread(&weapons[i].attack,          sizeof(JE_byte), 8, f);
+			efread(&weapons[i].del,             sizeof(JE_byte), 8, f);
+			efread(&weapons[i].sx,              sizeof(JE_shortint), 8, f);
+			efread(&weapons[i].sy,              sizeof(JE_shortint), 8, f);
+			efread(&weapons[i].bx,              sizeof(JE_shortint), 8, f);
+			efread(&weapons[i].by,              sizeof(JE_shortint), 8, f);
+			efread(&weapons[i].sg,              sizeof(JE_word), 8, f);
+			efread(&weapons[i].acceleration,    sizeof(JE_shortint), 1, f);
+			efread(&weapons[i].accelerationx,   sizeof(JE_shortint), 1, f);
+			efread(&weapons[i].circlesize,      sizeof(JE_byte), 1, f);
+			efread(&weapons[i].sound,           sizeof(JE_byte), 1, f);
+			efread(&weapons[i].trail,           sizeof(JE_byte), 1, f);
+			efread(&weapons[i].shipblastfilter, sizeof(JE_byte), 1, f);
+		}
 	}
 	
 	for (int i = 0; i < PORT_NUM + 1; ++i)
@@ -179,36 +183,40 @@ void JE_loadItemDat( void )
 		efread(&shields[i].cost,        sizeof(JE_word), 1, f);
 	}
 	
-	for (int i = 0; i < ENEMY_NUM + 1; ++i)
+	const int enemies_bounds[2][2] = {{0, ENEMY_END1}, {ENEMY_START2, ENEMY_NUM}};
+	for (int bank = 0; bank < 2; ++bank)
 	{
-		efread(&enemyDat[i].ani,           sizeof(JE_byte), 1, f);
-		efread(&enemyDat[i].tur,           sizeof(JE_byte), 3, f);
-		efread(&enemyDat[i].freq,          sizeof(JE_byte), 3, f);
-		efread(&enemyDat[i].xmove,         sizeof(JE_shortint), 1, f);
-		efread(&enemyDat[i].ymove,         sizeof(JE_shortint), 1, f);
-		efread(&enemyDat[i].xaccel,        sizeof(JE_shortint), 1, f);
-		efread(&enemyDat[i].yaccel,        sizeof(JE_shortint), 1, f);
-		efread(&enemyDat[i].xcaccel,       sizeof(JE_shortint), 1, f);
-		efread(&enemyDat[i].ycaccel,       sizeof(JE_shortint), 1, f);
-		efread(&enemyDat[i].startx,        sizeof(JE_integer), 1, f);
-		efread(&enemyDat[i].starty,        sizeof(JE_integer), 1, f);
-		efread(&enemyDat[i].startxc,       sizeof(JE_shortint), 1, f);
-		efread(&enemyDat[i].startyc,       sizeof(JE_shortint), 1, f);
-		efread(&enemyDat[i].armor,         sizeof(JE_byte), 1, f);
-		efread(&enemyDat[i].esize,         sizeof(JE_byte), 1, f);
-		efread(&enemyDat[i].egraphic,      sizeof(JE_word), 20, f);
-		efread(&enemyDat[i].explosiontype, sizeof(JE_byte), 1, f);
-		efread(&enemyDat[i].animate,       sizeof(JE_byte), 1, f);
-		efread(&enemyDat[i].shapebank,     sizeof(JE_byte), 1, f);
-		efread(&enemyDat[i].xrev,          sizeof(JE_shortint), 1, f);
-		efread(&enemyDat[i].yrev,          sizeof(JE_shortint), 1, f);
-		efread(&enemyDat[i].dgr,           sizeof(JE_word), 1, f);
-		efread(&enemyDat[i].dlevel,        sizeof(JE_shortint), 1, f);
-		efread(&enemyDat[i].dani,          sizeof(JE_shortint), 1, f);
-		efread(&enemyDat[i].elaunchfreq,   sizeof(JE_byte), 1, f);
-		efread(&enemyDat[i].elaunchtype,   sizeof(JE_word), 1, f);
-		efread(&enemyDat[i].value,         sizeof(JE_integer), 1, f);
-		efread(&enemyDat[i].eenemydie,     sizeof(JE_word), 1, f);
+		for (int i = enemies_bounds[bank][0]; i < enemies_bounds[bank][1] + 1; ++i)
+		{
+			efread(&enemyDat[i].ani,           sizeof(JE_byte), 1, f);
+			efread(&enemyDat[i].tur,           sizeof(JE_byte), 3, f);
+			efread(&enemyDat[i].freq,          sizeof(JE_byte), 3, f);
+			efread(&enemyDat[i].xmove,         sizeof(JE_shortint), 1, f);
+			efread(&enemyDat[i].ymove,         sizeof(JE_shortint), 1, f);
+			efread(&enemyDat[i].xaccel,        sizeof(JE_shortint), 1, f);
+			efread(&enemyDat[i].yaccel,        sizeof(JE_shortint), 1, f);
+			efread(&enemyDat[i].xcaccel,       sizeof(JE_shortint), 1, f);
+			efread(&enemyDat[i].ycaccel,       sizeof(JE_shortint), 1, f);
+			efread(&enemyDat[i].startx,        sizeof(JE_integer), 1, f);
+			efread(&enemyDat[i].starty,        sizeof(JE_integer), 1, f);
+			efread(&enemyDat[i].startxc,       sizeof(JE_shortint), 1, f);
+			efread(&enemyDat[i].startyc,       sizeof(JE_shortint), 1, f);
+			efread(&enemyDat[i].armor,         sizeof(JE_byte), 1, f);
+			efread(&enemyDat[i].esize,         sizeof(JE_byte), 1, f);
+			efread(&enemyDat[i].egraphic,      sizeof(JE_word), 20, f);
+			efread(&enemyDat[i].explosiontype, sizeof(JE_byte), 1, f);
+			efread(&enemyDat[i].animate,       sizeof(JE_byte), 1, f);
+			efread(&enemyDat[i].shapebank,     sizeof(JE_byte), 1, f);
+			efread(&enemyDat[i].xrev,          sizeof(JE_shortint), 1, f);
+			efread(&enemyDat[i].yrev,          sizeof(JE_shortint), 1, f);
+			efread(&enemyDat[i].dgr,           sizeof(JE_word), 1, f);
+			efread(&enemyDat[i].dlevel,        sizeof(JE_shortint), 1, f);
+			efread(&enemyDat[i].dani,          sizeof(JE_shortint), 1, f);
+			efread(&enemyDat[i].elaunchfreq,   sizeof(JE_byte), 1, f);
+			efread(&enemyDat[i].elaunchtype,   sizeof(JE_word), 1, f);
+			efread(&enemyDat[i].value,         sizeof(JE_integer), 1, f);
+			efread(&enemyDat[i].eenemydie,     sizeof(JE_word), 1, f);
+		}
 	}
 	
 	fclose(f);

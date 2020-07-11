@@ -77,7 +77,6 @@ char destructModeName[DESTRUCT_MODES][13];                               /* [1..
 char shipInfo[HELPTEXT_SHIPINFO_COUNT][2][256];                          /* [1..13, 1..2] of string */
 char menuInt[MENU_MAX+1][11][18];                                        /* [0..14, 1..11] of string [17] */
 
-
 void decrypt_pascal_string( char *s, int len )
 {
 	static const unsigned char crypt_key[] = { 204, 129, 63, 255, 71, 19, 25, 62, 1, 99 };
@@ -176,7 +175,7 @@ void JE_HBox( SDL_Surface *screen, int x, int y, unsigned int  messagenum, unsig
 
 void JE_loadHelpText( void )
 {
-	const unsigned int menuInt_entries[MENU_MAX + 1] = { -1, 7, 9, 8, -1, -1, 11, -1, -1, -1, 6, 4, 6, 7, 5 };
+	const unsigned int menuInt_entries[MENU_MAX + 1] = { -1, 7, 9, 9, -1, -1, 11, -1, -1, -1, 6, 4, 7, 7, 5 };
 	
 	FILE *f = dir_fopen_die(data_dir(), "tyrian.hdt", "rb");
 	efread(&episode1DataLoc, sizeof(JE_longint), 1, f);
@@ -216,6 +215,11 @@ void JE_loadHelpText( void )
 	for (unsigned int i = 0; i < COUNTOF(menuText); ++i)
 		read_encrypted_pascal_string(menuText[i], sizeof(menuText[i]), f);
 	skip_pascal_string(f);
+
+	// OpenTyrian2000 Override
+	strcpy(menuText[6], menuText[5]);
+	strcpy(menuText[5], menuText[4]);
+	strcpy(menuText[4], opentyrian_str);
 
 	/*Event text*/
 	skip_pascal_string(f);
@@ -375,7 +379,19 @@ void JE_loadHelpText( void )
 		read_encrypted_pascal_string(shipInfo[i][1], sizeof(shipInfo[i][1]), f);
 	}
 	skip_pascal_string(f);
-	
+
+	/*Menu 14 - Super Tyrian*/
+	skip_pascal_string(f);
+	for (unsigned int i = 0; i < menuInt_entries[14]; ++i)
+		read_encrypted_pascal_string(menuInt[14][i], sizeof(menuInt[14][i]), f);
+	skip_pascal_string(f);
+
+	/*Timed Battle Planets*/
+	skip_pascal_string(f);
+	for (unsigned int i = 0; i < COUNTOF(timed_battle_name); ++i)
+		read_encrypted_pascal_string(timed_battle_name[i], sizeof(timed_battle_name[i]), f);
+	skip_pascal_string(f);
+
 	fclose(f);
 }
 

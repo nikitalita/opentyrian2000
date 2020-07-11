@@ -111,7 +111,7 @@ extern JE_boolean filtrationAvail, filterActive, filterFade, filterFadeStart;
 extern JE_boolean gameJustLoaded;
 extern JE_boolean galagaMode;
 extern JE_boolean extraGame;
-extern JE_boolean twoPlayerMode, twoPlayerLinked, onePlayerAction, superTyrian, trentWin;
+extern JE_boolean twoPlayerMode, twoPlayerLinked, onePlayerAction, timedBattleMode, superTyrian, trentWin;
 extern JE_byte superArcadeMode;
 extern JE_byte superArcadePowerUp;
 extern JE_real linkGunDirec;

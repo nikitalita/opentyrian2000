@@ -55,7 +55,7 @@
 #include <string.h>
 #include <time.h>
 
-const char *opentyrian_str = "OpenTyrian";
+const char *opentyrian_str = "OpenTyrian2000";
 const char *opentyrian_version = OPENTYRIAN_VERSION;
 
 void opentyrian_menu( void )
@@ -99,7 +99,8 @@ void opentyrian_menu( void )
 	fade_black(10);
 	JE_loadPic(VGAScreen, 13, false);
 
-	draw_font_hv(VGAScreen, VGAScreen->w / 2, 5, opentyrian_str, large_font, centered, 15, -3);
+	draw_font_hv(VGAScreen, (VGAScreen->w / 2) - 18, 5, "OpenTyrian", large_font, centered, 15, -3);
+	draw_font_hv(VGAScreen, (VGAScreen->w / 2) + 42, 12, "2000", normal_font, left_aligned, 15, -3);
 
 	memcpy(VGAScreen2->pixels, VGAScreen->pixels, VGAScreen2->pitch * VGAScreen2->h);
 

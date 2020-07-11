@@ -38,7 +38,7 @@ const char *pcxfile[PCX_NUM] = /* [1..PCXnum] */
 };
 
 const JE_byte pcxpal[PCX_NUM] = /* [1..PCXnum] */
-{ 0, 7, 5, 8, 10, 5, 18, 19, 19, 20, 21, 22, 5};
+{ 0, 7, 5, 8, 10, 5, 18, 19, 19, 20, 21, 22, 5, 23};
 
 /*FACEMAX*/
 const JE_byte facepal[12] = /* [1..12] */

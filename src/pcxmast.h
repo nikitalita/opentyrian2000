@@ -22,7 +22,7 @@
 #include "opentyr.h"
 
 
-#define PCX_NUM 13
+#define PCX_NUM 14
 
 typedef JE_longint JE_pcxpostype[PCX_NUM + 1]; /* [1..PCXnum + 1] */
 

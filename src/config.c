@@ -182,7 +182,7 @@ JE_boolean galagaMode;
 
 JE_boolean extraGame;
 
-JE_boolean twoPlayerMode, twoPlayerLinked, onePlayerAction, superTyrian;
+JE_boolean twoPlayerMode, twoPlayerLinked, onePlayerAction, timedBattleMode, superTyrian;
 JE_boolean trentWin = false;
 JE_byte    superArcadeMode;
 

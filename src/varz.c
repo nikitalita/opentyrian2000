@@ -38,10 +38,11 @@
 
 JE_integer tempDat, tempDat2, tempDat3;
 
+// TODO I have no clue what the SA ship progression is in T2K
 const JE_byte SANextShip[SA + 2] /* [0..SA + 1] */ = { 3, 9, 6, 2, 5, 1, 4, 3, 7 }; // 0 -> 3 -> 2 -> 6 -> 4 -> 5 -> 1 -> 9 -> 7
-const JE_word SASpecialWeapon[SA] /* [1..SA] */  = { 7, 8, 9, 10, 11, 12, 13 };
-const JE_word SASpecialWeaponB[SA] /* [1..SA] */ = {37, 6, 15, 40, 16, 14, 41 };
-const JE_byte SAShip[SA] /* [1..SA] */ = { 3, 1, 5, 10, 2, 11, 12 };
+const JE_word SASpecialWeapon[SA] /* [1..SA] */  = { 7, 8, 9, 10, 11, 12, 13, 48, 47 };
+const JE_word SASpecialWeaponB[SA] /* [1..SA] */ = {37, 6, 15, 40, 16, 14, 41, 48, 47 };
+const JE_byte SAShip[SA] /* [1..SA] */ = { 3, 1, 5, 10, 2, 11, 12, 15, 17 };
 const JE_word SAWeapon[SA][5] /* [1..SA, 1..5] */ =
 {  /*  R  Bl  Bk  G   P */
 	{  9, 31, 32, 33, 34 },  /* Stealth Ship */
@@ -50,7 +51,9 @@ const JE_word SAWeapon[SA][5] /* [1..SA, 1..5] */ =
 	{ 15,  3, 28, 22, 12 },  /* Enemy        */
 	{ 23, 35, 25, 14,  6 },  /* Weird        */
 	{  2,  5, 21,  4,  7 },  /* Unknown      */
-	{ 40, 38, 37, 41, 36 }   /* NortShip Z   */
+	{ 40, 38, 37, 41, 36 },  /* NortShip Z   */
+	{ 47, 45, 19, 33, 19 },  /* Dragon       */
+	{ 44, 26, 46, 26,  1 }   /* Pretzel Pete */
 };
 
 const JE_byte specialArcadeWeapon[PORT_NUM] /* [1..Portnum] */ =
@@ -329,7 +332,7 @@ void JE_getShipInfo( void )
 {
 	JE_boolean extraShip, extraShip2;
 
-	shipGrPtr = &shapes9;
+	shipGrPtr = (ships[player[0].items.ship].shipgraphic > 500) ? &shapesT2k : &shapes9;
 	shipGr2ptr = &shapes9;
 
 	powerAdd  = powerSys[player[0].items.generator].power;
@@ -343,7 +346,7 @@ void JE_getShipInfo( void )
 	}
 	else
 	{
-		shipGr = ships[player[0].items.ship].shipgraphic;
+		shipGr = ships[player[0].items.ship].shipgraphic - (shipGrPtr == &shapesT2k ? 500 : 0);
 		player[0].armor = ships[player[0].items.ship].dmg;
 	}
 
