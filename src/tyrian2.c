@@ -2142,7 +2142,8 @@ draw_player_shot_loop_end:
 
 		// Timed Battle mode plays no sounds
 		JE_textShade (VGAScreen, 140, 6, miscText[66], 7, (levelTimerCountdown % 20) / 3, FULL_SHADE);
-		sprintf(buffer, "%.1f", levelTimerCountdown / 100.0f);
+		// Don't use floats due to rounding.
+		sprintf(buffer, "%d.%d", levelTimerCountdown / 100, (levelTimerCountdown / 10) % 10);
 		JE_dString (VGAScreen, 100, 2, buffer, SMALL_FONT_SHAPES);
 	}
 	else if (levelTimer && levelTimerCountdown > 0)
@@ -2165,7 +2166,8 @@ draw_player_shot_loop_end:
 		}
 
 		JE_textShade (VGAScreen, 140, 6, miscText[66], 7, (levelTimerCountdown % 20) / 3, FULL_SHADE);
-		sprintf(buffer, "%.1f", levelTimerCountdown / 100.0f);
+		// Don't use floats due to rounding.
+		sprintf(buffer, "%d.%d", levelTimerCountdown / 100, (levelTimerCountdown / 10) % 10);
 		JE_dString (VGAScreen, 100, 2, buffer, SMALL_FONT_SHAPES);
 	}
 
