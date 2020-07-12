@@ -2344,6 +2344,112 @@ void JE_drawMainMenuHelpText( void )
 	JE_textShade(VGAScreen, 10, 187, tempStr, 14, 1, DARKEN);
 }
 
+JE_boolean JE_saveRequest( JE_byte slot, const char *savename )
+{
+	bool save_selected = true, done = false;
+
+	JE_clearKeyboard();
+	JE_wipeKey();
+	wait_noinput(true, true, true);
+
+	JE_barShade(VGAScreen, 65, 55, 255, 155);
+
+	while (!done)
+	{
+		Uint8 col = 8;
+		int colC = 1;
+
+		do
+		{
+			service_SDL_events(true);
+			setjasondelay(4);
+
+			blit_sprite(VGAScreen, 50, 50, OPTION_SHAPES, 35);  // message box
+			JE_textShade(VGAScreen, 70, 66, miscText[68], 0, 5, FULL_SHADE); // Are you sure you want to save?
+			JE_textShade(VGAScreen, 74, 90, miscText[1], 12, 1, FULL_SHADE); // Save name:
+			JE_textShade(VGAScreen, 135, 90, savename, 12, 1, FULL_SHADE);
+			JE_textShade(VGAScreen, 74, 100, miscText[69], 12, 1, FULL_SHADE); // Original save:
+			JE_textShade(VGAScreen, 140, 100, saveFiles[slot-1].name, 12, 1, FULL_SHADE);
+
+			col += colC;
+			if (col > 8 || col < 2)
+				colC = -colC;
+
+			int temp_x, temp_c;
+
+			temp_x = 54 + 45 - (JE_textWidth(miscText[9], FONT_SHAPES) / 2);
+			temp_c = save_selected ? col - 12 : -5;
+
+			JE_outTextAdjust(VGAScreen, temp_x, 128, miscText[9], 15, temp_c, FONT_SHAPES, true);
+
+			temp_x = 149 + 45 - (JE_textWidth(miscText[10], FONT_SHAPES) / 2);
+			temp_c = !save_selected ? col - 12 : -5;
+
+			JE_outTextAdjust(VGAScreen, temp_x, 128, miscText[10], 15, temp_c, FONT_SHAPES, true);
+
+			if (has_mouse)
+			{
+				JE_mouseStart();
+				JE_showVGA();
+				JE_mouseReplace();
+			}
+			else
+			{
+				JE_showVGA();
+			}
+
+			wait_delay();
+
+			push_joysticks_as_keyboard();
+			service_SDL_events(false);
+
+		} while (!newkey && !mousedown);
+
+		if (mousedown)
+		{
+			if (lastmouse_y > 123 && lastmouse_y < 149)
+			{
+				if (lastmouse_x > 56 && lastmouse_x < 142)
+				{
+					save_selected = true;
+					done = true;
+				}
+				else if (lastmouse_x > 151 && lastmouse_x < 237)
+				{
+					save_selected = false;
+					done = true;
+				}
+			}
+			mousedown = false;
+		}
+		else if (newkey)
+		{
+			switch (lastkey_scan)
+			{
+				case SDL_SCANCODE_LEFT:
+				case SDL_SCANCODE_RIGHT:
+				case SDL_SCANCODE_TAB:
+					save_selected = !save_selected;
+					JE_playSampleNum(S_CURSOR);
+					break;
+				case SDL_SCANCODE_RETURN:
+				case SDL_SCANCODE_SPACE:
+					done = true;
+					break;
+				case SDL_SCANCODE_ESCAPE:
+					save_selected = false;
+					done = true;
+					break;
+				default:
+					break;
+			}
+		}
+	}
+
+	JE_playSampleNum(save_selected ? S_SELECT : S_CLICK);
+	return save_selected;
+}
+
 JE_boolean JE_quitRequest( void )
 {
 	bool quit_selected = true, done = false;

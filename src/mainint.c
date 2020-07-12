@@ -24,6 +24,7 @@
 #include "episodes.h"
 #include "file.h"
 #include "fonthand.h"
+#include "game_menu.h"
 #include "helptext.h"
 #include "helptext.h"
 #include "joystick.h"
@@ -2445,8 +2446,8 @@ void JE_operation( JE_byte slot )
 				if (lastMouseX > 56 && lastMouseX < 142 && lastMouseY > 123 && lastMouseY < 149)
 				{
 					quit = true;
-					JE_saveGame(slot, stemp);
-					JE_playSampleNum(S_SELECT);
+					if (JE_saveRequest(slot, stemp))
+						JE_saveGame(slot, stemp);
 				}
 				else if (lastMouseX > 151 && lastMouseX < 237 && lastMouseY > 123 && lastMouseY < 149)
 				{
@@ -2487,8 +2488,8 @@ void JE_operation( JE_byte slot )
 						break;
 					case SDL_SCANCODE_RETURN:
 						quit = true;
-						JE_saveGame(slot, stemp);
-						JE_playSampleNum(S_SELECT);
+						if (JE_saveRequest(slot, stemp))
+							JE_saveGame(slot, stemp);
 						break;
 					default:
 						break;
