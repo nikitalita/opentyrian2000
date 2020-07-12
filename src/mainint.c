@@ -2195,7 +2195,7 @@ void JE_endLevelAni( void )
 
 	if (timedBattleMode)
 	{
-		x = (levelTimerCountdown / 100) * 100;
+		x = (levelTimerCountdown / 10) * 100;
 		sprintf(tempStr, "%s %d", miscTextB[6], x);
 		JE_outTextGlow(VGAScreenSeg, 40, 75, tempStr);
 		player[0].cash += x;
