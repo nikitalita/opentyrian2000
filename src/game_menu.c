@@ -74,6 +74,7 @@ static JE_byte curItemType, curItem, cursor;
 static JE_boolean leftPower, rightPower, rightPowerAfford;
 static JE_byte currentCube;
 static JE_boolean keyboardUsed;
+static JE_byte weaponSimTime;
 
 static JE_byte planetAni, planetAniWait;
 static JE_byte currentDotNum, currentDotWait;
@@ -1627,8 +1628,8 @@ void draw_ship_illustration( void )
 		                      ? ships[player[0].items.ship].bigshipgraphic - 1
 		                      : 31;
 
-		const int ship_x[] = { 31, 0, 0, 0, 35, 31, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 35, 31 },
-		          ship_y[] = { 36, 0, 0, 0, 33, 35, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 35, 35 };
+		const int ship_x[] = { 31, 0, 0, 0, 35, 31, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 36, 30 },
+		          ship_y[] = { 36, 0, 0, 0, 33, 35, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 33, 30 };
 
 		const int x = ship_x[sprite_id - 27],
 		          y = ship_y[sprite_id - 27];
@@ -1658,7 +1659,7 @@ void draw_ship_illustration( void )
 		 9, 10, 11, 21,  5, 13, -1, 14, 15,  0,
 		14,  9,  8,  2, 15,  0, 13,  0,  8,  8,
 		11,  1,  0,  0,  0,  0,  0,  0,  0,  0,
-		 0,  2,  1
+		 0,  2,  1,  0,  0,  1,  0,  0
 	};
 
 	// front weapon
@@ -1670,7 +1671,7 @@ void draw_ship_illustration( void )
 			 -1, -1, -1,  7,  8, -1, -1,  0, -1,  4,
 			  0, -1, -1,  3, -1,  4, -1,  4, -1, -1,
 			 -1,  9,  0,  0,  0,  0,  0,  0,  0,  0,
-			  0,  3,  9
+			  0,  3,  9,  4,  0,  9,  0,  0
 		};
 
 		const int front_weapon_x[12] = { 59, 66, 66, 54, 61, 51, 58, 51, 61, 52, 53, 58 };
@@ -1690,7 +1691,7 @@ void draw_ship_illustration( void )
 			 1,  2,  3, -1,  4,  5, -1, -1,  6, -1,
 			-1,  1,  0, -1,  6, -1,  5, -1,  0,  0,
 			 3,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-			 0, -1, -1
+			 0, -1, -1, -1, -1, -1, -1, -1
 		};
 
 		const int rear_weapon_x[7] = { 41, 27,  49,  43, 51, 39, 41 };
@@ -2698,6 +2699,7 @@ void JE_menuFunction( JE_byte select )
 		{
 			old_items[0] = player[0].items;
 
+			weaponSimTime = 0;
 			lastDirection = 1;
 			JE_genItemMenu(select);
 			JE_initWeaponView();
@@ -3124,6 +3126,14 @@ void JE_drawShipSpecs( SDL_Surface * screen, SDL_Surface * temp_screen  )
 			temp_x = 31;
 			temp_y = 35;
 			break;
+		case 45:
+			temp_x = 36;
+			temp_y = 33;
+			break;
+		case 46:
+			temp_x = 30;
+			temp_y = 30;
+			break;
 		default:
 			assert(0);
 	}
@@ -3178,7 +3188,40 @@ void JE_weaponSimUpdate( void )
 
 	JE_weaponViewFrame();
 
-	if ( (curSel[1] == 3 && curSel[4] < menuChoices[4]) || (curSel[1] == 4 && curSel[4] < menuChoices[4] - 1) )
+	++weaponSimTime;
+	weaponSimTime %= 150;
+
+	if ((curMenu == 4) && (curSel[1] == 4) && weaponPort[player[0].items.weapon[REAR_WEAPON].id].opnum == 2
+		&& (weaponSimTime >= 75))
+	{
+		// [/] Rear Weapon Mode
+		JE_outText(VGAScreen, 28, 137, miscText[70], 1, 4);
+
+		if (curSel[4] < menuChoices[4] - 1)
+		{
+			if (!leftPower)
+				blit_sprite(VGAScreenSeg, 24, 149, OPTION_SHAPES, 13);  // downgrade disabled
+			if (!rightPower || !rightPowerAfford)
+				blit_sprite(VGAScreenSeg, 119, 149, OPTION_SHAPES, 14);  // upgrade disabled
+
+			temp = player[0].items.weapon[curSel[1]-3].power;
+
+			for (int x = 1; x <= temp; x++)
+			{
+				fill_rectangle_xy(VGAScreen, 39 + x * 6, 151, 39 + x * 6 + 4, 151, 251);
+				JE_pix(VGAScreen, 39 + x * 6, 151, 252);
+				fill_rectangle_xy(VGAScreen, 39 + x * 6, 152, 39 + x * 6 + 4, 164, 250);
+				fill_rectangle_xy(VGAScreen, 39 + x * 6, 165, 39 + x * 6 + 4, 165, 249);
+			}
+		}
+		else
+		{
+			leftPower = false;
+			rightPower = false;
+			blit_sprite(VGAScreenSeg, 20, 146, OPTION_SHAPES, 17);  // hide power level interface
+		}
+	}
+	else if ( (curSel[1] == 3 && curSel[4] < menuChoices[4]) || (curSel[1] == 4 && curSel[4] < menuChoices[4] - 1) )
 	{
 		if (leftPower)
 		{
@@ -3219,7 +3262,7 @@ void JE_weaponSimUpdate( void )
 			fill_rectangle_xy(VGAScreen, 39 + x * 6, 165, 39 + x * 6 + 4, 165, 249);
 		}
 
-		sprintf(buf, "POWER: %d", temp);
+		sprintf(buf, "%s %d", miscTextB[5], temp);
 		JE_outText(VGAScreen, 58, 137, buf, 15, 4);
 	}
 	else
@@ -3308,6 +3351,17 @@ void JE_weaponViewFrame( void )
 
 	blit_sprite(VGAScreenSeg, 0, 0, OPTION_SHAPES, 12); // upgrade interface
 
+	// weapon mode indicator
+	if (player[0].weapon_mode == 1)
+	{
+		blit_sprite(VGAScreenSeg, 3, 56, OPTION_SHAPES, 18);  // lit
+		blit_sprite(VGAScreenSeg, 3, 64, OPTION_SHAPES, 19);  // unlit
+	}
+	else // == 2
+	{
+		blit_sprite(VGAScreenSeg, 3, 56, OPTION_SHAPES, 19);  // unlit
+		blit_sprite(VGAScreenSeg, 3, 64, OPTION_SHAPES, 18);  // lit
+	}
 
 	/*========================Power Bar=========================*/
 
