@@ -695,6 +695,12 @@ start_level:
 			fade_song();
 			fade_black(10);
 
+			if (timedBattleMode)
+			{
+				mainLevel = 0;
+				return;
+			}
+
 			JE_loadGame(twoPlayerMode ? 22 : 11);
 			if (doNotSaveBackup)
 			{
@@ -2126,7 +2132,20 @@ draw_player_shot_loop_end:
 	}
 
 	/*--------  Level Timer    ---------*/
-	if (levelTimer && levelTimerCountdown > 0)
+	if (timedBattleMode && levelTimer && levelTimerCountdown > 0)
+	{
+		if (--levelTimerCountdown == 0)
+		{
+			levelTimer = false;
+			readyToEndLevel = endLevel = true;
+		}
+
+		// Timed Battle mode plays no sounds
+		JE_textShade (VGAScreen, 140, 6, miscText[66], 7, (levelTimerCountdown % 20) / 3, FULL_SHADE);
+		sprintf(buffer, "%.1f", levelTimerCountdown / 100.0f);
+		JE_dString (VGAScreen, 100, 2, buffer, SMALL_FONT_SHAPES);
+	}
+	else if (levelTimer && levelTimerCountdown > 0)
 	{
 		levelTimerCountdown--;
 		if (levelTimerCountdown == 0)
@@ -3006,6 +3025,25 @@ new_game:
 						temp = atoi(s + 3);
 						play_song(temp - 1);
 						break;
+
+					case 'T':
+						if (timedBattleMode)
+						{
+							// ]T[ 43 44 45 46 47 -- Episode 1
+							// ]T[ 03 03 04 05 06 -- Episode 5
+							mainLevel = atoi(s + (battle_select * 3));
+							jumpSection = true;
+						}
+						break;
+
+					case 'q':
+						if (timedBattleMode)
+						{
+							JE_highScoreCheck();
+							mainLevel = 0;
+							return;
+						}
+						break;
 					}
 				}
 
@@ -3196,8 +3234,6 @@ bool JE_titleScreen( JE_boolean animate )
 	JE_byte menu = 0;
 	JE_boolean redraw = true,
 	           fadeIn = false;
-
-	JE_word temp; /* JE_byte temp; from varz.h will overflow in for loop */
 
 	play_demo = false;
 	stopped_demo = false;
@@ -3545,7 +3581,7 @@ bool JE_titleScreen( JE_boolean animate )
 							{
 								onePlayerAction = true;
 								if (select_timed_battle() && select_difficulty())
-									gameLoaded = false; // TODO
+									gameLoaded = true;
 							}
 							else if (select_episode() && select_difficulty())
 								gameLoaded = true;
@@ -4805,6 +4841,15 @@ void JE_eventSystem( void )
 		superEnemy254Jump = eventRec[eventLoc-1].eventdat;
 		break;
 
+	case 58: // Set enemy launch
+		// This implementation comes from ArcTyr, and may not be 100% accurate to Tyrian 2000
+		for (temp = 0; temp < 100; temp++)
+		{
+			if (eventRec[eventLoc-1].eventdat4 == 99 || enemy[temp].linknum == eventRec[eventLoc-1].eventdat4)
+				enemy[temp].launchtype = eventRec[eventLoc-1].eventdat;
+		}
+		break;
+
 	case 60: /*Assign Special Enemy*/
 		for (temp = 0; temp < 100; temp++)
 		{
@@ -5006,6 +5051,16 @@ void JE_eventSystem( void )
 		shotRepeat[SHOT_SPECIAL2] = 0;
 		break;
 
+	case 84: // timed battle parameters
+		// TODO: eventdat is 1 and eventdat2 is 10000 for every level that has this event
+		//       does it mean anything?
+		if (timedBattleMode)
+		{
+			levelTimer = true;
+			levelTimerCountdown = eventRec[eventLoc-1].eventdat3 * 100;
+		}
+		break;
+
 	default:
 		fprintf(stderr, "warning: ignoring unknown event %d\n", eventRec[eventLoc-1].eventtype);
 		break;
@@ -5136,9 +5191,10 @@ void draw_boss_bar( void )
 		unsigned int x = (bars == 2)
 		               ? ((b == 0) ? 125 : 185)
 		               : ((levelTimer) ? 250 : 155);  // level timer and boss bar would overlap
+		unsigned int y = (levelTimer) ? 15 : 7;
 
-		JE_barX(x - 25, 7, x + 25, 12, 115);
-		JE_barX(x - (boss_bar[b].armor / 10), 7, x + (boss_bar[b].armor + 5) / 10, 12, 118 + boss_bar[b].color);
+		JE_barX(x - 25, y, x + 25, y + 5, 115);
+		JE_barX(x - (boss_bar[b].armor / 10), y, x + (boss_bar[b].armor + 5) / 10, y + 5, 118 + boss_bar[b].color);
 
 		if (boss_bar[b].color > 0)
 			boss_bar[b].color--;

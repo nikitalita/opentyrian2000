@@ -72,6 +72,17 @@ typedef struct
 typedef JE_SaveFileType JE_SaveFilesType[SAVE_FILES_NUM]; /* [1..savefilesnum] */
 typedef JE_byte JE_SaveGameTemp[SAVE_FILES_SIZE + 4 + 100]; /* [1..sizeof(savefilestype) + 4 + 100] */
 
+typedef struct
+{
+	// Tyrian 2000 uses a different high scores struct and appends it to TYRIAN.SAV
+	JE_longint    score;
+	char          playerName[30];
+	JE_byte       difficulty;
+} T2KHighScoreType;
+
+// First 10 are timed battle, next 10 are episodes
+extern T2KHighScoreType t2kHighScores[20][3];
+
 extern const JE_byte cryptKey[10];
 extern const JE_KeySettingType defaultKeySettings;
 extern const char defaultHighScoreNames[34][23];
@@ -83,6 +94,7 @@ extern JE_word lastCubeMax, cubeMax;
 extern JE_word cubeList[4];
 extern JE_boolean gameHasRepeated;
 extern JE_shortint difficultyLevel, oldDifficultyLevel, initialDifficulty;
+extern JE_byte battle_select;
 extern uint power, lastPower, powerAdd;
 extern JE_byte shieldWait, shieldT;
 

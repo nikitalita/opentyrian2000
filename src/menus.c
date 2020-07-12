@@ -267,7 +267,7 @@ bool select_timed_battle( void )
 	JE_loadPic(VGAScreen, 2, false);
 	JE_dString(VGAScreen, JE_fontCenter(timed_battle_name[0], FONT_SHAPES), 20, timed_battle_name[0], FONT_SHAPES);
 
-	int battle_select = 1;
+	battle_select = 1;
 	int battle_max = COUNTOF(timed_battle_name) - 1;
 
 	bool fade_in = true;
@@ -311,6 +311,11 @@ bool select_timed_battle( void )
 
 			case SDL_SCANCODE_RETURN:
 				JE_playSampleNum(S_SELECT);
+
+				// I don't know how T2K determines episode from this,
+				// I'm assuming it's hardcoded
+				JE_initEpisode(battle_select == 1 ? 1 : 5);
+				initial_episode_num = battle_select + 5;
 				fade_black(10);
 				return true;
 

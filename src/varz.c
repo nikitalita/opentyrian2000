@@ -1054,7 +1054,8 @@ JE_byte JE_playerDamage( JE_byte temp,
 
 				if (this_player->is_alive && !youAreCheating)
 				{
-					levelTimer = false;
+					if (!timedBattleMode)
+						levelTimer = false;
 					this_player->is_alive = false;
 					this_player->exploding_ticks = 60;
 					levelEnd = 40;

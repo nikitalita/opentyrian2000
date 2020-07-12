@@ -158,6 +158,9 @@ JE_boolean gameHasRepeated;  // can only get highscore on first play-through
 JE_shortint difficultyLevel, oldDifficultyLevel,
             initialDifficulty;  // can only get highscore on initial episode
 
+/* Timed Battle */
+JE_byte battle_select;
+
 /* Player Stuff */
 uint    power, lastPower, powerAdd;
 JE_byte shieldWait, shieldT;
@@ -217,6 +220,8 @@ JE_byte    processorType;  /* 1=386 2=486 3=Pentium Hyper */
 
 JE_SaveFilesType saveFiles; /*array[1..saveLevelnum] of savefiletype;*/
 JE_SaveGameTemp saveTemp;
+
+T2KHighScoreType t2kHighScores[20][3];
 
 JE_word editorLevel;   /*Initial value 800*/
 
@@ -702,14 +707,14 @@ const char *get_user_directory( void )
 		char *xdg_config_home = getenv("XDG_CONFIG_HOME");
 		if (xdg_config_home != NULL)
 		{
-			snprintf(user_dir, sizeof(user_dir), "%s/opentyrian", xdg_config_home);
+			snprintf(user_dir, sizeof(user_dir), "%s/opentyrian2000", xdg_config_home);
 		}
 		else
 		{
 			char *home = getenv("HOME");
 			if (home != NULL)
 			{
-				snprintf(user_dir, sizeof(user_dir), "%s/.config/opentyrian", home);
+				snprintf(user_dir, sizeof(user_dir), "%s/.config/opentyrian2000", home);
 			}
 			else
 			{
@@ -861,6 +866,37 @@ void JE_loadConfiguration( void )
 		/* TODO: Figure out what this is about and make sure it isn't broked. */
 		editorLevel = (saveTemp[SIZEOF_SAVEGAMETEMP - 5] << 8) | saveTemp[SIZEOF_SAVEGAMETEMP - 6];
 
+		// T2K High Scores are unencrypted after saveTemp
+		for (z = 0; z < 10; ++z)
+		{
+			JE_byte len;
+
+			for (y = 0; y < 3; ++y)
+			{
+				efread(&t2kHighScores[z][y].score, 1, sizeof(JE_longint), fi);
+				t2kHighScores[z][y].score = SDL_SwapLE32(t2kHighScores[z][y].score);
+				efread(&len, 1, sizeof(JE_byte), fi);
+				efread(&t2kHighScores[z][y].playerName, 1, 29, fi);
+				t2kHighScores[z][y].playerName[len] = 0;
+				efread(&t2kHighScores[z][y].difficulty, 1, sizeof(JE_byte), fi);
+			}
+		}
+		for (z = 10; z < 20; ++z)
+		{
+			JE_byte len;
+
+			for (y = 0; y < 3; ++y)
+			{
+				efread(&t2kHighScores[z][y].score, 1, sizeof(JE_longint), fi);
+				t2kHighScores[z][y].score = SDL_SwapLE32(t2kHighScores[z][y].score);
+				fseek(fi, 4, SEEK_CUR); // Unknown long int that seems to have no effect
+				efread(&len, 1, sizeof(JE_byte), fi);
+				efread(&t2kHighScores[z][y].playerName, 1, 29, fi);
+				t2kHighScores[z][y].playerName[len] = 0;
+				efread(&t2kHighScores[z][y].difficulty, 1, sizeof(JE_byte), fi);
+			}
+		}
+
 		fclose(fi);
 	} else {
 		/* We didn't have a save file! Let's make up random stuff! */
@@ -889,6 +925,28 @@ void JE_loadConfiguration( void )
 				strcpy(saveFiles[z].highScoreName, defaultTeamNames[mt_rand() % 22]);
 			} else {
 				strcpy(saveFiles[z].highScoreName, defaultHighScoreNames[mt_rand() % 34]);
+			}
+		}
+
+		for (z = 0; z < 10; ++z)
+		{
+			for (y = 0; y < 3; ++y)
+			{
+				// Timed Battle scores
+				t2kHighScores[z][y].score = ((mt_rand() % 50) + 1) * 100;
+				strcpy(t2kHighScores[z][y].playerName, defaultHighScoreNames[mt_rand() % 34]);
+			}
+		}
+		for (z = 10; z < 20; ++z)
+		{
+			for (y = 0; y < 3; ++y)
+			{
+				// Main Game scores
+				t2kHighScores[z][y].score = ((mt_rand() % 20) + 1) * 1000;
+				if (z & 1)
+					strcpy(t2kHighScores[z][y].playerName, defaultTeamNames[mt_rand() % 22]);
+				else
+					strcpy(t2kHighScores[z][y].playerName, defaultHighScoreNames[mt_rand() % 34]);
 			}
 		}
 	}
@@ -976,6 +1034,40 @@ void JE_saveConfiguration( void )
 	if (f != NULL)
 	{
 		efwrite(saveTemp, 1, sizeof(saveTemp), f);
+
+		// T2K High Scores are unencrypted after saveTemp
+		for (z = 0; z < 10; ++z)
+		{
+			JE_longint templi;
+			JE_byte len;
+
+			for (y = 0; y < 3; ++y)
+			{
+				templi = SDL_SwapLE32(t2kHighScores[z][y].score);
+				len = strlen(t2kHighScores[z][y].playerName);
+				efwrite(&templi, 1, sizeof(JE_longint), f);
+				efwrite(&len, 1, sizeof(JE_byte), f);
+				efwrite(&t2kHighScores[z][y].playerName, 1, 29, f);
+				efwrite(&t2kHighScores[z][y].difficulty, 1, sizeof(JE_byte), f);
+			}
+		}
+		for (z = 10; z < 20; ++z)
+		{
+			JE_longint templi;
+			JE_byte len;
+
+			for (y = 0; y < 3; ++y)
+			{
+				templi = SDL_SwapLE32(t2kHighScores[z][y].score);
+				len = strlen(t2kHighScores[z][y].playerName);
+				efwrite(&templi, 1, sizeof(JE_longint), f);
+				templi = 0xF00FD33D;
+				efwrite(&templi, 1, sizeof(JE_longint), f); // Unknown long int that seems to have no effect
+				efwrite(&len, 1, sizeof(JE_byte), f);
+				efwrite(&t2kHighScores[z][y].playerName, 1, 29, f);
+				efwrite(&t2kHighScores[z][y].difficulty, 1, sizeof(JE_byte), f);
+			}
+		}
 
 #if _POSIX_C_SOURCE >= 1 || _XOPEN_SOURCE || _POSIX_SOURCE
 		fsync(fileno(f));
