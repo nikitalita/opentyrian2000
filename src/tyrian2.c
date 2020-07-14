@@ -929,7 +929,7 @@ start_level_first:
 	/* JE_setVol(tyrMusicVolume, fxPlayVol >> 2); NOTE: MXD killed this because it was broken */
 
 	/*Save backup game*/
-	if (!play_demo && !doNotSaveBackup)
+	if (!play_demo && !doNotSaveBackup && !timedBattleMode)
 	{
 		temp = twoPlayerMode ? 22 : 11;
 		JE_saveGame(temp, "LAST LEVEL    ");
