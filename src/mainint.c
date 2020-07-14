@@ -836,6 +836,7 @@ void JE_initPlayerData( void )
 	superArcadeMode = SA_NONE;
 	superTyrian = false;
 	twoPlayerMode = false;
+	timedBattleMode = false;
 
 	secretHint = (mt_rand() % 3) + 1;
 
@@ -1528,8 +1529,10 @@ void JE_highScoreCheck( void )
 			JE_showVGA();
 			memcpy(colors, palettes[0], sizeof(colors));
 
-			play_song(33);
+			if (!timedBattleMode) // Doesn't play this music
+				play_song(33);
 
+			// Not part of the above condition
 			{
 				/* Enter Thy name */
 
@@ -1541,6 +1544,10 @@ void JE_highScoreCheck( void )
 
 				strcpy(stemp, "                             ");
 				temp = 0;
+
+				// As astoundingly ugly as this makes the shade below look, this is in fact what Tyrian 2000 does.
+				if (timedBattleMode)
+					JE_loadPic(VGAScreen, 13, false);
 
 				JE_barShade(VGAScreen, 65, 55, 255, 155);
 
@@ -1657,7 +1664,8 @@ void JE_highScoreCheck( void )
 				}
 				while (!quit);
 
-				if (!cancel)
+				// Timed Battle mode doesn't allow cancelling, so we ignore it
+				if (!cancel || timedBattleMode)
 				{
 					t2kHighScores[table][slot].score = temp_score;
 					strcpy(t2kHighScores[table][slot].playerName, stemp);
@@ -1668,7 +1676,11 @@ void JE_highScoreCheck( void )
 				JE_loadPic(VGAScreen, 2, false);
 
 				JE_dString(VGAScreen, JE_fontCenter(miscText[50], FONT_SHAPES), 10, miscText[50], FONT_SHAPES);
-				JE_dString(VGAScreen, JE_fontCenter(episode_name[episodeNum], SMALL_FONT_SHAPES), 35, episode_name[episodeNum], SMALL_FONT_SHAPES);
+
+				if (timedBattleMode)
+					JE_dString(VGAScreen, JE_fontCenter(timed_battle_name[battle_select], SMALL_FONT_SHAPES), 35, timed_battle_name[battle_select], SMALL_FONT_SHAPES);
+				else
+					JE_dString(VGAScreen, JE_fontCenter(episode_name[episodeNum], SMALL_FONT_SHAPES), 35, episode_name[episodeNum], SMALL_FONT_SHAPES);
 
 				for (int i = 0; i < 3; ++i)
 				{

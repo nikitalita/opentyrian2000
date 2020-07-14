@@ -399,6 +399,7 @@ void JE_loadGame( JE_byte slot )
 	twoPlayerMode = false;
 	extraGame = false;
 	galagaMode = false;
+	timedBattleMode = false;
 
 	initialDifficulty = saveFiles[slot-1].initialDifficulty;
 	gameHasRepeated   = saveFiles[slot-1].gameHasRepeated;

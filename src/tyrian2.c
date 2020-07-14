@@ -3496,6 +3496,7 @@ bool JE_titleScreen( JE_boolean animate )
 									constantDie = false;
 									superTyrian = true;
 									onePlayerAction = true;
+									timedBattleMode = false;
 									gameLoaded = true;
 									difficultyLevel = initialDifficulty;
 
@@ -3538,6 +3539,7 @@ bool JE_titleScreen( JE_boolean animate )
 									twoPlayerMode = false;
 									onePlayerAction = true;
 									superArcadeMode = i+1;
+									timedBattleMode = false;
 									gameLoaded = true;
 									initialDifficulty = ++difficultyLevel;
 
@@ -3616,7 +3618,7 @@ bool JE_titleScreen( JE_boolean animate )
 							{
 								// allows player to smuggle arcade/super-arcade ships into full game
 								
-								ulong initial_cash[] = { 10000, 15000, 20000, 30000, 35000 };
+								ulong initial_cash[] = { 10000, 15000, 20000, 30000, 20000 };
 
 								assert(episodeNum >= 1 && episodeNum <= EPISODE_AVAILABLE);
 								player[0].cash = initial_cash[episodeNum-1];
