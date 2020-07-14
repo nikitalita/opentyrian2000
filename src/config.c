@@ -413,7 +413,7 @@ void JE_loadGame( JE_byte slot )
 		superTyrian = true;
 	if (superArcadeMode != SA_NONE)
 		onePlayerAction = true;
-	if (superArcadeMode > SA_NORTSHIPZ)
+	if (superArcadeMode > SA_LASTSHIP)
 		superArcadeMode = SA_NONE;
 	
 	if (twoPlayerMode)

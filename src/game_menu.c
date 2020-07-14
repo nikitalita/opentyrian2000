@@ -86,7 +86,7 @@ static PlayerItems old_items[2];  // TODO: should not be global if possible
 
 static struct cube_struct cube[4];
 
-static const JE_MenuChoiceType menuChoicesDefault = { 7, 9, 8, 0, 0, 11, (SAVE_FILES_NUM / 2) + 2, 0, 0, 6, 4, 6, 7, 5 };
+static const JE_MenuChoiceType menuChoicesDefault = { 7, 9, 9, 0, 0, 11, (SAVE_FILES_NUM / 2) + 2, 0, 0, 6, 4, 6, 7, 5 };
 static const JE_byte menuEsc[MENU_MAX] = { 0, 1, 1, 1, 2, 3, 3, 1, 8, 0, 0, 11, 3, 0 };
 static const JE_byte itemAvailMap[7] = { 1, 2, 3, 9, 4, 6, 7 };
 static const JE_word planetX[21] = { 200, 150, 240, 300, 270, 280, 320, 260, 220, 150, 160, 210, 80, 240, 220, 180, 310, 330, 150, 240, 200 };
@@ -1659,7 +1659,7 @@ void draw_ship_illustration( void )
 		 9, 10, 11, 21,  5, 13, -1, 14, 15,  0,
 		14,  9,  8,  2, 15,  0, 13,  0,  8,  8,
 		11,  1,  0,  0,  0,  0,  0,  0,  0,  0,
-		 0,  2,  1,  0,  0,  1,  0,  0
+		 0,  2,  1,  0,  0,  1,  1,  1
 	};
 
 	// front weapon
@@ -1671,7 +1671,7 @@ void draw_ship_illustration( void )
 			 -1, -1, -1,  7,  8, -1, -1,  0, -1,  4,
 			  0, -1, -1,  3, -1,  4, -1,  4, -1, -1,
 			 -1,  9,  0,  0,  0,  0,  0,  0,  0,  0,
-			  0,  3,  9,  4,  0,  9,  0,  0
+			  0,  3,  9,  4,  4,  9,  9,  9
 		};
 
 		const int front_weapon_x[12] = { 59, 66, 66, 54, 61, 51, 58, 51, 61, 52, 53, 58 };
@@ -2321,7 +2321,7 @@ void JE_drawMainMenuHelpText( void )
 		int help[16] = { 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 24, 11 };
 		memcpy(tempStr, mainMenuHelp[help[curSel[curMenu] - 2]], sizeof(tempStr));
 	}
-	else if (curMenu < 3 || curMenu == 9 || curMenu > 10)
+	else if (curMenu < 3 || curMenu >= 9)
 	{
 		memcpy(tempStr, mainMenuHelp[(menuHelp[curMenu][temp])-1], sizeof(tempStr));
 	}
@@ -2729,6 +2729,10 @@ void JE_menuFunction( JE_byte select )
 			curMenu = 5;
 			break;
 		case 8:
+			// TODO Mouse settings menu
+			JE_playSampleNum(S_SPRING);
+			break;
+		case 9:
 			curMenu = 0;
 			break;
 		}

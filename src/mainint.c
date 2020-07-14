@@ -3139,9 +3139,10 @@ redo:
 				/* mouse input */
 				if ((inputDevice == 0 || inputDevice == 2) && has_mouse)
 				{
+					// TODO Tyrian 2000 remap mouse
 					button[0] |= mouse_pressed[0];
 					button[1] |= mouse_pressed[1];
-					button[2] |= mouse_has_three_buttons ? mouse_pressed[2] : mouse_pressed[1];
+					button[2] |= mouse_pressed[2];
 
 					if (input_grab_enabled)
 					{
@@ -3723,7 +3724,7 @@ redo:
 					{
 						shotMultiPos[SHOT_REAR] = 0;
 
-						if (superArcadeMode != SA_NONE && superArcadeMode <= SA_NORTSHIPZ)
+						if (superArcadeMode != SA_NONE && superArcadeMode <= SA_LASTSHIP)
 						{
 							shotMultiPos[SHOT_SPECIAL] = 0;
 							shotMultiPos[SHOT_SPECIAL2] = 0;

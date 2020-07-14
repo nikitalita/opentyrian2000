@@ -32,6 +32,7 @@ enum
 {
 	SA_NONE = 0,
 	SA_NORTSHIPZ = 7,
+	SA_LASTSHIP = 9,
 	
 	// only used for code entry
 	SA_DESTRUCT = 10,
