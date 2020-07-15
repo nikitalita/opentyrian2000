@@ -74,7 +74,7 @@ void opentyrian_menu( void )
 
 	static const char *menu_items[] =
 	{
-		"About OpenTyrian",
+		"About OpenTyrian2000",
 		NULL,  // "Windowed" or "Fullscreen: Display %d"
 		NULL,  // "Scaler: %s"
 		NULL,  // "Scaling Mode: %s"

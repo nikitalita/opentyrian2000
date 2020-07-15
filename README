@@ -20,7 +20,7 @@ as freeware:
 
 == Keyboard Controls ===========================================================
 
-ctrl-backspace -- kill OpenTyrian
+ctrl-backspace -- kill OpenTyrian2000
 alt-enter      -- fullscreen
 ctrl-f10       -- ungrab mouse
 
@@ -43,8 +43,14 @@ depending on which ship you intend to pilot, and NAME is your alias
 OpenTyrian uses UDP port 1333 for multiplayer, but in most cases players will
 not need to open any ports because OpenTyrian makes use of UDP hole punching.
 
+Note that Network play has not been tested for OpenTyrian2000.
+
 == Links =======================================================================
 
+* For OpenTyrian2000
+project: https://github.com/KScl/opentyrian2000
+
+* For OpenTyrian
 project: https://github.com/opentyrian/opentyrian
 irc:     irc://irc.freenode.net/#tyrian
 forums:  http://tyrian2k.proboards.com/index.cgi?board=opentyriangeneral
