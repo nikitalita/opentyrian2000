@@ -2132,27 +2132,17 @@ draw_player_shot_loop_end:
 	}
 
 	/*--------  Level Timer    ---------*/
-	if (timedBattleMode && levelTimer && levelTimerCountdown > 0)
-	{
-		if (--levelTimerCountdown == 0)
-		{
-			levelTimer = false;
-			readyToEndLevel = endLevel = true;
-		}
-
-		// Timed Battle mode plays no sounds
-		JE_textShade (VGAScreen, 140, 6, miscText[66], 7, (levelTimerCountdown % 20) / 3, FULL_SHADE);
-		// Don't use floats due to rounding.
-		sprintf(buffer, "%d.%d", levelTimerCountdown / 100, (levelTimerCountdown / 10) % 10);
-		JE_dString (VGAScreen, 100, 2, buffer, SMALL_FONT_SHAPES);
-	}
-	else if (levelTimer && levelTimerCountdown > 0)
+	if (levelTimer && levelTimerCountdown > 0)
 	{
 		levelTimerCountdown--;
 		if (levelTimerCountdown == 0)
 			JE_eventJump(levelTimerJumpTo);
 
-		if (levelTimerCountdown > 200)
+		if (timedBattleMode)
+		{
+			// No-op; play no sound effects
+		}
+		else if (levelTimerCountdown > 200)
 		{
 			if (levelTimerCountdown % 100 == 0)
 				soundQueue[7] = S_WARNING;
@@ -5055,14 +5045,14 @@ void JE_eventSystem( void )
 		shotRepeat[SHOT_SPECIAL2] = 0;
 		break;
 
-	case 84: // timed battle parameters
-		// TODO: eventdat is 1 and eventdat2 is 10000 for every level that has this event
-		//       does it mean anything?
-		if (timedBattleMode)
-		{
-			levelTimer = true;
-			levelTimerCountdown = eventRec[eventLoc-1].eventdat3 * 100;
-		}
+	case 84: // timed battle level timer
+		if (!timedBattleMode)
+			break;
+
+		// note: a copy of event 67
+		levelTimer = (eventRec[eventLoc-1].eventdat == 1);
+		levelTimerCountdown = eventRec[eventLoc-1].eventdat3 * 100;
+		levelTimerJumpTo   = eventRec[eventLoc-1].eventdat2;
 		break;
 
 	default:
