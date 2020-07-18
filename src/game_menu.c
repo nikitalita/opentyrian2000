@@ -1324,7 +1324,7 @@ void JE_itemScreen( void )
 				if (curMenu == 4 && (curSel[1] == 3 || curSel[1] == 4))
 				{
 					player[0].items.weapon[curSel[1]-3].power = temp_weapon_power[curSel[4]-2];
-					if (curSel[curMenu] == 4)
+					if (curSel[1] == 4)
 						player[0].weapon_mode = 1;
 				}
 
@@ -1349,7 +1349,7 @@ void JE_itemScreen( void )
 				if (curMenu == 4 && (curSel[1] == 3 || curSel[1] == 4))
 				{
 					player[0].items.weapon[curSel[1]-3].power = temp_weapon_power[curSel[4]-2];
-					if (curSel[curMenu] == 4)
+					if (curSel[1] == 4)
 						player[0].weapon_mode = 1;
 				}
 
