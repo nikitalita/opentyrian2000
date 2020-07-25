@@ -48,10 +48,33 @@ const JE_byte cryptKey[10] = /* [1..10] */
 	15, 50, 89, 240, 147, 34, 86, 9, 32, 208
 };
 
-const JE_KeySettingType defaultKeySettings =
+const DosKeySettings defaultDosKeySettings =
 {
-	SDL_SCANCODE_UP, SDL_SCANCODE_DOWN, SDL_SCANCODE_LEFT, SDL_SCANCODE_RIGHT, SDL_SCANCODE_SPACE, SDL_SCANCODE_RETURN, SDL_SCANCODE_LCTRL, SDL_SCANCODE_LALT
-/*	72, 80, 75, 77, 57, 28, 29, 56*/
+	72, 80, 75, 77, 57, 28, 29, 56
+};
+
+const KeySettings defaultKeySettings =
+{
+	SDL_SCANCODE_UP,
+	SDL_SCANCODE_DOWN,
+	SDL_SCANCODE_LEFT,
+	SDL_SCANCODE_RIGHT,
+	SDL_SCANCODE_SPACE,
+	SDL_SCANCODE_RETURN,
+	SDL_SCANCODE_LCTRL,
+	SDL_SCANCODE_LALT,
+};
+
+static const char *const keySettingNames[] =
+{
+	"up",
+	"down",
+	"left",
+	"right",
+	"fire",
+	"change fire",
+	"left sidekick",
+	"right sidekick",
 };
 
 const char defaultHighScoreNames[34][23] = /* [1..34] of string [22] */
@@ -173,7 +196,8 @@ char    lastLevelName[11], levelName[11]; /* string [10] */
 JE_byte mainLevel, nextLevel, saveLevel;   /*Current Level #*/
 
 /* Keyboard Junk */
-JE_KeySettingType keySettings;
+DosKeySettings dosKeySettings;
+KeySettings keySettings;
 
 /* Configuration */
 JE_shortint levelFilter, levelFilterNew, levelBrightness, levelBrightnessChg;
@@ -261,7 +285,24 @@ bool load_opentyrian_config( void )
 		if (config_get_string_option(section, "scaling_mode", &scaling_mode))
 			set_scaling_mode_by_name(scaling_mode);
 	}
-	
+
+	memcpy(keySettings, defaultKeySettings, sizeof(keySettings));
+
+	section = config_find_section(config, "keyboard", NULL);
+	if (section != NULL)
+	{
+		for (size_t i = 0; i < COUNTOF(keySettings); ++i)
+		{
+			const char *keyName;
+			if (config_get_string_option(section, keySettingNames[i], &keyName))
+			{
+				SDL_Scancode scancode = SDL_GetScancodeFromName(keyName);
+				if (scancode != SDL_SCANCODE_UNKNOWN)
+					keySettings[i] = scancode;
+			}
+		}
+	}
+
 	fclose(file);
 	
 	return true;
@@ -282,7 +323,19 @@ bool save_opentyrian_config( void )
 	config_set_string_option(section, "scaler", scalers[scaler].name);
 	
 	config_set_string_option(section, "scaling_mode", scaling_mode_names[scaling_mode]);
-	
+
+	section = config_find_or_add_section(config, "keyboard", NULL);
+	if (section == NULL)
+		exit(EXIT_FAILURE);  // out of memory
+
+	for (size_t i = 0; i < COUNTOF(keySettings); ++i)
+	{
+		const char *keyName = SDL_GetScancodeName(keySettings[i]);
+		if (keyName[0] == '\0')
+			keyName = NULL;
+		config_set_string_option(section, keySettingNames[i], keyName);
+	}
+
 #ifndef TARGET_WIN32
 	mkdir(get_user_directory(), 0700);
 #else
@@ -742,33 +795,31 @@ void JE_loadConfiguration( void )
 	int y;
 	
 	fi = dir_fopen_warn(get_user_directory(), "tyrian.cfg", "rb");
-	if (fi && ftell_eof(fi) == 20 + sizeof(keySettings))
+	if (fi && ftell_eof(fi) == 28)
 	{
-		/* SYN: I've hardcoded the sizes here because the .CFG file format is fixed
-		   anyways, so it's not like they'll change. */
 		background2 = 0;
-		efread(&background2, 1, 1, fi);
-		efread(&gameSpeed, 1, 1, fi);
+		fread_bool_die(&background2, fi);
+		fread_u8_die(&gameSpeed, 1, fi);
 		
-		efread(&inputDevice_, 1, 1, fi);
-		efread(&jConfigure, 1, 1, fi);
+		fread_u8_die(&inputDevice_, 1, fi);
+		fread_u8_die(&jConfigure, 1, fi);
 		
-		efread(&versionNum, 1, 1, fi);
+		fread_u8_die(&versionNum, 1, fi);
 		
-		efread(&processorType, 1, 1, fi);
-		efread(&midiPort, 1, 1, fi);
-		efread(&soundEffects, 1, 1, fi);
-		efread(&gammaCorrection, 1, 1, fi);
-		efread(&difficultyLevel, 1, 1, fi);
+		fread_u8_die(&processorType, 1, fi);
+		fread_u8_die(&midiPort, 1, fi);
+		fread_u8_die(&soundEffects, 1, fi);
+		fread_u8_die(&gammaCorrection, 1, fi);
+		fread_s8_die(&difficultyLevel, 1, fi);
 		
-		efread(joyButtonAssign, 1, 4, fi);
+		fread_u8_die(joyButtonAssign, 4, fi);
 		
-		efread(&tyrMusicVolume, 2, 1, fi);
-		efread(&fxVolume, 2, 1, fi);
+		fread_u16_die(&tyrMusicVolume, 1, fi);
+		fread_u16_die(&fxVolume, 1, fi);
 		
-		efread(inputDevice, 1, 2, fi);
-		
-		efread(keySettings, sizeof(*keySettings), COUNTOF(keySettings), fi);
+		fread_u8_die(inputDevice, 2, fi);
+
+		fread_u8_die(dosKeySettings, 8, fi);
 		
 		fclose(fi);
 	}
@@ -777,7 +828,7 @@ void JE_loadConfiguration( void )
 		printf("\nInvalid or missing TYRIAN.CFG! Continuing using defaults.\n\n");
 		
 		soundEffects = 1;
-		memcpy(&keySettings, &defaultKeySettings, sizeof(keySettings));
+		memcpy(&dosKeySettings, &defaultDosKeySettings, sizeof(dosKeySettings));
 		background2 = true;
 		tyrMusicVolume = fxVolume = 128;
 		gammaCorrection = 0;
@@ -801,7 +852,7 @@ void JE_loadConfiguration( void )
 	{
 
 		fseek(fi, 0, SEEK_SET);
-		efread(saveTemp, 1, sizeof(saveTemp), fi);
+		fread_die(saveTemp, 1, sizeof(saveTemp), fi);
 		JE_decryptSaveTemp();
 
 		/* SYN: The original mostly blasted the save file into raw memory. However, our lives are not so
@@ -874,12 +925,14 @@ void JE_loadConfiguration( void )
 
 			for (y = 0; y < 3; ++y)
 			{
-				efread(&t2kHighScores[z][y].score, 1, sizeof(JE_longint), fi);
+				fread_s32_die(&t2kHighScores[z][y].score, 1, fi);
 				t2kHighScores[z][y].score = SDL_SwapLE32(t2kHighScores[z][y].score);
-				efread(&len, 1, sizeof(JE_byte), fi);
-				efread(&t2kHighScores[z][y].playerName, 1, 29, fi);
-				t2kHighScores[z][y].playerName[len] = 0;
-				efread(&t2kHighScores[z][y].difficulty, 1, sizeof(JE_byte), fi);
+
+				fread_u8_die(&len, 1, fi);
+				fread_die(t2kHighScores[z][y].playerName, 1, 29, fi);
+
+				t2kHighScores[z][y].playerName[len] = '\0';
+				fread_u8_die(&t2kHighScores[z][y].difficulty, 1, fi);
 			}
 		}
 		for (z = 10; z < 20; ++z)
@@ -888,13 +941,15 @@ void JE_loadConfiguration( void )
 
 			for (y = 0; y < 3; ++y)
 			{
-				efread(&t2kHighScores[z][y].score, 1, sizeof(JE_longint), fi);
+				fread_s32_die(&t2kHighScores[z][y].score, 1, fi);
 				t2kHighScores[z][y].score = SDL_SwapLE32(t2kHighScores[z][y].score);
+
 				fseek(fi, 4, SEEK_CUR); // Unknown long int that seems to have no effect
-				efread(&len, 1, sizeof(JE_byte), fi);
-				efread(&t2kHighScores[z][y].playerName, 1, 29, fi);
-				t2kHighScores[z][y].playerName[len] = 0;
-				efread(&t2kHighScores[z][y].difficulty, 1, sizeof(JE_byte), fi);
+				fread_u8_die(&len, 1, fi);
+
+				fread_die(t2kHighScores[z][y].playerName, 1, 29, fi);
+				t2kHighScores[z][y].playerName[len] = '\0';
+				fread_u8_die(&t2kHighScores[z][y].difficulty, 1, fi);
 			}
 		}
 
@@ -1034,7 +1089,7 @@ void JE_saveConfiguration( void )
 	f = dir_fopen_warn(get_user_directory(), "tyrian.sav", "wb");
 	if (f != NULL)
 	{
-		efwrite(saveTemp, 1, sizeof(saveTemp), f);
+		fwrite_die(saveTemp, 1, sizeof(saveTemp), f);
 
 		// T2K High Scores are unencrypted after saveTemp
 		for (z = 0; z < 10; ++z)
@@ -1046,10 +1101,11 @@ void JE_saveConfiguration( void )
 			{
 				templi = SDL_SwapLE32(t2kHighScores[z][y].score);
 				len = strlen(t2kHighScores[z][y].playerName);
-				efwrite(&templi, 1, sizeof(JE_longint), f);
-				efwrite(&len, 1, sizeof(JE_byte), f);
-				efwrite(&t2kHighScores[z][y].playerName, 1, 29, f);
-				efwrite(&t2kHighScores[z][y].difficulty, 1, sizeof(JE_byte), f);
+				fwrite_s32_die(&templi, f);
+
+				fwrite_u8_die(&len, 1, f);
+				fwrite_die(t2kHighScores[z][y].playerName, 1, 29, f);
+				fwrite_u8_die(&t2kHighScores[z][y].difficulty, 1, f);
 			}
 		}
 		for (z = 10; z < 20; ++z)
@@ -1061,12 +1117,14 @@ void JE_saveConfiguration( void )
 			{
 				templi = SDL_SwapLE32(t2kHighScores[z][y].score);
 				len = strlen(t2kHighScores[z][y].playerName);
-				efwrite(&templi, 1, sizeof(JE_longint), f);
-				templi = 0xF00FD33D;
-				efwrite(&templi, 1, sizeof(JE_longint), f); // Unknown long int that seems to have no effect
-				efwrite(&len, 1, sizeof(JE_byte), f);
-				efwrite(&t2kHighScores[z][y].playerName, 1, 29, f);
-				efwrite(&t2kHighScores[z][y].difficulty, 1, sizeof(JE_byte), f);
+				fwrite_s32_die(&templi, f);
+
+				templi = 0x12345678;
+				fwrite_s32_die(&templi, f); // Unknown long int that seems to have no effect
+
+				fwrite_u8_die(&len, 1, f);
+				fwrite_die(t2kHighScores[z][y].playerName, 1, 29, f);
+				fwrite_u8_die(&t2kHighScores[z][y].difficulty, 1, f);
 			}
 		}
 
@@ -1081,26 +1139,26 @@ void JE_saveConfiguration( void )
 	f = dir_fopen_warn(get_user_directory(), "tyrian.cfg", "wb");
 	if (f != NULL)
 	{
-		efwrite(&background2, 1, 1, f);
-		efwrite(&gameSpeed, 1, 1, f);
+		fwrite_bool_die(&background2, f);
+		fwrite_u8_die(&gameSpeed, 1, f);
 		
-		efwrite(&inputDevice_, 1, 1, f);
-		efwrite(&jConfigure, 1, 1, f);
+		fwrite_u8_die(&inputDevice_, 1, f);
+		fwrite_u8_die(&jConfigure, 1, f);
 		
-		efwrite(&versionNum, 1, 1, f);
-		efwrite(&processorType, 1, 1, f);
-		efwrite(&midiPort, 1, 1, f);
-		efwrite(&soundEffects, 1, 1, f);
-		efwrite(&gammaCorrection, 1, 1, f);
-		efwrite(&difficultyLevel, 1, 1, f);
-		efwrite(joyButtonAssign, 1, 4, f);
+		fwrite_u8_die(&versionNum, 1, f);
+		fwrite_u8_die(&processorType, 1, f);
+		fwrite_u8_die(&midiPort, 1, f);
+		fwrite_u8_die(&soundEffects, 1, f);
+		fwrite_u8_die(&gammaCorrection, 1, f);
+		fwrite_s8_die(&difficultyLevel, 1, f);
+		fwrite_u8_die(joyButtonAssign, 4, f);
 		
-		efwrite(&tyrMusicVolume, 2, 1, f);
-		efwrite(&fxVolume, 2, 1, f);
+		fwrite_u16_die(&tyrMusicVolume, f);
+		fwrite_u16_die(&fxVolume, f);
 		
-		efwrite(inputDevice, 1, 2, f);
+		fwrite_u8_die(inputDevice, 2, f);
 		
-		efwrite(keySettings, sizeof(*keySettings), COUNTOF(keySettings), f);
+		fwrite_u8_die(dosKeySettings, 8, f);
 		
 #if _POSIX_C_SOURCE >= 1 || _XOPEN_SOURCE || _POSIX_SOURCE
 		fsync(fileno(f));
