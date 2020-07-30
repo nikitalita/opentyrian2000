@@ -3832,8 +3832,18 @@ uint JE_makeEnemy( struct JE_SingleEnemyType *enemy, Uint16 eDatI, Sint16 unique
 
 	enemy->launchfreq = enemyDat[eDatI].elaunchfreq;
 	enemy->launchwait = enemyDat[eDatI].elaunchfreq;
-	enemy->launchtype = enemyDat[eDatI].elaunchtype % 1000;
-	enemy->launchspecial = enemyDat[eDatI].elaunchtype / 1000;
+
+	// T2000 ... Account for the second enemy bank only if we're creating something from it
+	if (eDatI > 1000)
+	{
+		enemy->launchtype = enemyDat[eDatI].elaunchtype;
+		enemy->launchspecial = 0;
+	}
+	else
+	{
+		enemy->launchtype = enemyDat[eDatI].elaunchtype % 1000;
+		enemy->launchspecial = enemyDat[eDatI].elaunchtype / 1000;
+	}
 
 	enemy->xaccel = enemyDat[eDatI].xaccel;
 	enemy->yaccel = enemyDat[eDatI].yaccel;
@@ -4850,6 +4860,31 @@ void JE_eventSystem( void )
 		}
 		break;
 
+	case 59: // Replace enemy
+	case 68: // Note: random explosions got moved to event 99 in T2000
+		// This implementation comes from ArcTyr, and may not be 100% accurate to Tyrian 2000
+		{
+			Uint16 eDatI = eventRec[eventLoc-1].eventdat;
+
+			for (temp = 0; temp < 100; temp++)
+			{
+				if (!(eventRec[eventLoc-1].eventdat4 == 99 || enemy[temp].linknum == eventRec[eventLoc-1].eventdat4))
+					continue;
+
+				const int enemy_offset = (enemyDat[eDatI].value > 30000) ? 100 : (temp - (temp % 25));
+				b = JE_newEnemy(enemy_offset, eDatI, 0);
+				if (b != 0)
+				{
+					enemy[b-1].ex = enemy[temp].ex;
+					enemy[b-1].ey = enemy[temp].ey;
+				}
+
+				enemyAvail[temp] = 1;
+			}			
+		}
+		break;
+		break;
+
 	case 60: /*Assign Special Enemy*/
 		for (temp = 0; temp < 100; temp++)
 		{
@@ -4900,10 +4935,6 @@ void JE_eventSystem( void )
 		levelTimer = (eventRec[eventLoc-1].eventdat == 1);
 		levelTimerCountdown = eventRec[eventLoc-1].eventdat3 * 100;
 		levelTimerJumpTo   = eventRec[eventLoc-1].eventdat2;
-		break;
-
-	case 68:
-		randomExplosions = (eventRec[eventLoc-1].eventdat == 1);
 		break;
 
 	case 69:
@@ -5059,6 +5090,22 @@ void JE_eventSystem( void )
 		levelTimer = (eventRec[eventLoc-1].eventdat == 1);
 		levelTimerCountdown = eventRec[eventLoc-1].eventdat3 * 100;
 		levelTimerJumpTo   = eventRec[eventLoc-1].eventdat2;
+		break;
+
+	case 85: // timed battle enemy from other enemies
+		if (timedBattleMode)
+		{
+			for (temp = 0; temp < 100; temp++)
+			{
+				if (enemy[temp].linknum == eventRec[eventLoc-1].eventdat4)
+					enemy[temp].enemydie = eventRec[eventLoc-1].eventdat;
+			}
+		}
+		break;
+
+
+	case 99:
+		randomExplosions = (eventRec[eventLoc-1].eventdat == 1);
 		break;
 
 	default:
