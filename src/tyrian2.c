@@ -4868,10 +4868,10 @@ void JE_eventSystem( void )
 
 			for (temp = 0; temp < 100; temp++)
 			{
-				if (!(eventRec[eventLoc-1].eventdat4 == 99 || enemy[temp].linknum == eventRec[eventLoc-1].eventdat4))
+				if (!(eventRec[eventLoc-1].eventdat4 == 0 || enemy[temp].linknum == eventRec[eventLoc-1].eventdat4))
 					continue;
 
-				const int enemy_offset = (enemyDat[eDatI].value > 30000) ? 100 : (temp - (temp % 25));
+				const int enemy_offset = temp - (temp % 25);
 				b = JE_newEnemy(enemy_offset, eDatI, 0);
 				if (b != 0)
 				{
