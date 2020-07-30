@@ -1970,7 +1970,7 @@ void JE_SFCodes( JE_byte playerNum_, JE_integer PX_, JE_integer PY_, JE_integer 
 
 void JE_playCredits( void )
 {
-	enum { lines_max = 131 };
+	enum { lines_max = 126 };
 	enum { line_max_length = 65 };
 
 	char credstr[lines_max][line_max_length + 1];

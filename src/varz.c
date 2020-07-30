@@ -38,8 +38,7 @@
 
 JE_integer tempDat, tempDat2, tempDat3;
 
-// TODO I have no clue what the SA ship progression is in T2K
-const JE_byte SANextShip[SA + 2] /* [0..SA + 1] */ = { 3, 9, 6, 2, 5, 1, 4, 3, 7 }; // 0 -> 3 -> 2 -> 6 -> 4 -> 5 -> 1 -> 9 -> 7
+const JE_byte SANextShip[SA + 2] /* [0..SA + 1] */ = { 3, 8, 6, 2, 5, 1, 4, 10, 9, 7, 3 };
 const JE_word SASpecialWeapon[SA] /* [1..SA] */  = { 7, 8, 9, 10, 11, 12, 13, 48, 47 };
 const JE_word SASpecialWeaponB[SA] /* [1..SA] */ = {37, 6, 15, 40, 16, 14, 41, 48, 47 };
 const JE_byte SAShip[SA] /* [1..SA] */ = { 3, 1, 5, 10, 2, 11, 12, 15, 17 };
@@ -151,7 +150,7 @@ const JE_byte shipCombosB[21] /* [1..21] */ =
   /*!! SUPER Tyrian !!*/
 const JE_byte superTyrianSpecials[4] /* [1..4] */ = {1,2,4,5};
 
-const JE_byte shipCombos[14][3] /* [0..12, 1..3] */ =
+const JE_byte shipCombos[19][3] /* [0..12, 1..3] */ =
 {
 	{ 5, 4, 7},  /*2nd Player ship*/
 	{ 1, 2, 0},  /*USP Talon*/
@@ -166,7 +165,12 @@ const JE_byte shipCombos[14][3] /* [0..12, 1..3] */ =
 	{ 7,16,17},  /*U-Ship*/
 	{ 2,11,12},  /*1st Player ship*/
 	{ 3, 8,10},  /*Nort ship*/
-	{ 0, 0, 0}   // Dummy entry added for Stalker 21.126
+	{ 0, 0, 0},  // Dummy entry added for Stalker 21.126
+	{ 1, 0, 0},  /*Storm*/
+	{ 4, 0, 0},  /*Red Dragon*/
+	{ 5, 9, 2},  /*Gencore II*/
+	{ 0, 0, 0},  /*PeteZoomer*/
+	{ 0, 0, 0}   /*Rum Bottle*/
 };
 
 /*Street-Fighter Commands*/
@@ -494,10 +498,10 @@ void JE_tyrianHalt( JE_byte code )
 		       "Sleep well, Trent, you deserve the rest.\n"
 		       "You now have permission to borrow my ship on your next mission.\n"
 		       "\n"
-		       "Also, you might want to try out the YESXMAS parameter.\n"
+		       "Also, you might want to try out the YESXMAS parameter in Dos.\n"
 		       "  Type: File0001 YESXMAS\n"
 		       "\n"
-		       "You'll need the 2.1 patch, though!\n"
+		       " Press a Key to Quit\n"
 		       "\n");
 	}
 
@@ -877,7 +881,7 @@ void JE_setupExplosion( signed int x, signed int y, signed int delta_y, unsigned
 	const struct {
 		JE_word sprite;
 		JE_byte ttl;
-	} explosion_data[53] /* [1..53] */ = {
+	} explosion_data[54] /* [1..54] */ = {
 		{ 144,  7 },
 		{ 120, 12 },
 		{ 190, 12 },
@@ -930,7 +934,8 @@ void JE_setupExplosion( signed int x, signed int y, signed int delta_y, unsigned
 		{ 208, 14 },
 		{ 246, 14 },
 		{ 227, 14 },
-		{ 265, 14 }
+		{ 265, 14 },
+		{  96,  3 }
 	};
 
 	if (y > -16 && y < 190)

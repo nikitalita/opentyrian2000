@@ -754,7 +754,7 @@ void JE_itemScreen( void )
 
 					// modify pallete for face
 					paletteChanged = true;
-					temp2 = facepal[face_sprite];
+					temp2 = (face_sprite < 12) ? facepal[face_sprite] : 0;
 					newPal = 0;
 
 					for (temp = 1; temp <= 255 - (3 * 16); temp++)

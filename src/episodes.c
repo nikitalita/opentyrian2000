@@ -186,7 +186,7 @@ void JE_loadItemDat( void )
 		fread_u16_die(&shields[i].itemgraphic, 1, f);
 		fread_u16_die(&shields[i].cost,        1, f);
 	}
-	
+
 	const int enemies_bounds[2][2] = {{0, ENEMY_END1}, {ENEMY_START2, ENEMY_NUM}};
 	for (int bank = 0; bank < 2; ++bank)
 	{
@@ -233,9 +233,9 @@ void JE_initEpisode( JE_byte newEpisode )
 	
 	episodeNum = newEpisode;
 	
-	sprintf(levelFile,    "tyrian%d.lvl",  episodeNum);
-	sprintf(cube_file,    "cubetxt%d.dat", episodeNum);
-	sprintf(episode_file, "levels%d.dat",  episodeNum);
+	sprintf(levelFile,    "tyrian%hhu.lvl",  episodeNum);
+	sprintf(cube_file,    "cubetxt%hhu.dat", episodeNum);
+	sprintf(episode_file, "levels%hhu.dat",  episodeNum);
 	
 	JE_analyzeLevel();
 	JE_loadItemDat();
