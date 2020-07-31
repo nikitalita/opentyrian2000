@@ -4234,7 +4234,8 @@ void JE_eventSystem( void )
 		backMove3 = 1;
 		break;
 
-	case 4:
+	case 4: // Map stop
+	case 83: // T2000: Also a map stop 
 		stopBackgrounds = true;
 		switch (eventRec[eventLoc-1].eventdat)
 		{
