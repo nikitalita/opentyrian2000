@@ -53,6 +53,11 @@ const DosKeySettings defaultDosKeySettings =
 	72, 80, 75, 77, 57, 28, 29, 56
 };
 
+const MouseSettings defaultMouseSettings =
+{
+	1, 4, 5
+};
+
 const KeySettings defaultKeySettings =
 {
 	SDL_SCANCODE_UP,
@@ -77,74 +82,24 @@ static const char *const keySettingNames[] =
 	"right sidekick",
 };
 
-const char defaultHighScoreNames[34][23] = /* [1..34] of string [22] */
-{/*1P*/
-/*TYR*/   "The Prime Chair", /*13*/
-          "Transon Lohk",
-          "Javi Onukala",
-          "Mantori",
-          "Nortaneous",
-          "Dougan",
-          "Reid",
-          "General Zinglon",
-          "Late Gyges Phildren",
-          "Vykromod",
-          "Beppo",
-          "Borogar",
-          "ShipMaster Carlos",
-
-/*OTHER*/ "Jill", /*5*/
-          "Darcy",
-          "Jake Stone",
-          "Malvineous Havershim",
-          "Marta Louise Velasquez",
-
-/*JAZZ*/  "Jazz Jackrabbit", /*3*/
-          "Eva Earlong",
-          "Devan Shell",
-
-/*OMF*/   "Crystal Devroe", /*11*/
-          "Steffan Tommas",
-          "Milano Angston",
-          "Christian",
-          "Shirro",
-          "Jean-Paul",
-          "Ibrahim Hothe",
-          "Angel",
-          "Cossette Akira",
-          "Raven",
-          "Hans Kreissack",
-
-/*DARE*/  "Tyler", /*2*/
-          "Rennis the Rat Guard"
-};
-
-const char defaultTeamNames[22][25] = /* [1..22] of string [24] */
+static const char *const mouseSettingNames[] =
 {
-	"Jackrabbits",
-	"Team Tyrian",
-	"The Elam Brothers",
-	"Dare to Dream Team",
-	"Pinball Freaks",
-	"Extreme Pinball Freaks",
-	"Team Vykromod",
-	"Epic All-Stars",
-	"Hans Keissack's WARriors",
-	"Team Overkill",
-	"Pied Pipers",
-	"Gencore Growlers",
-	"Microsol Masters",
-	"Beta Warriors",
-	"Team Loco",
-	"The Shellians",
-	"Jungle Jills",
-	"Murderous Malvineous",
-	"The Traffic Department",
-	"Clan Mikal",
-	"Clan Patrok",
-	"Carlos' Crawlers"
+	"left mouse",
+	"right mouse",
+	"middle mouse",
 };
 
+static const char *const mouseSettingValues[] =
+{
+	"fire main weapon",
+	"fire left sidekick",
+	"fire right sidekick",
+	"fire both sidekicks",
+	"change rear mode",
+};
+
+char defaultHighScoreNames[39][23]; /* [1..39] of string [22] */
+char defaultTeamNames[10][25]; /* [1..22] of string [24] */
 
 const JE_EditorItemAvailType initialItemAvail =
 {
@@ -199,6 +154,9 @@ JE_byte mainLevel, nextLevel, saveLevel;   /*Current Level #*/
 DosKeySettings dosKeySettings;
 KeySettings keySettings;
 
+/* Mouse settings */
+MouseSettings mouseSettings;
+
 /* Configuration */
 JE_shortint levelFilter, levelFilterNew, levelBrightness, levelBrightnessChg;
 JE_boolean  filtrationAvail, filterActive, filterFade, filterFadeStart;
@@ -233,7 +191,7 @@ JE_boolean explosionTransparent,
 
 JE_byte soundEffects; // dummy value for config
 JE_byte versionNum;   /* SW 1.0 and SW/Reg 1.1 = 0 or 1
-                       * EA 1.2 = 2 */
+                       * EA 1.2 = 2        T2K = 3*/
 
 JE_byte    fastPlay;
 JE_boolean pentiumMode;
@@ -303,6 +261,28 @@ bool load_opentyrian_config( void )
 		}
 	}
 
+	memcpy(mouseSettings, defaultMouseSettings, sizeof(mouseSettings));
+
+	section = config_find_section(config, "mouse", NULL);
+	if (section != NULL)
+	{
+		for (size_t i = 0; i < COUNTOF(mouseSettings); ++i)
+		{
+			const char *mouseValue;
+			if (config_get_string_option(section, mouseSettingNames[i], &mouseValue))
+			{
+				for (size_t val = 1; val <= COUNTOF(mouseSettingValues); ++val)
+				{
+					if (strcmp(mouseValue, mouseSettingValues[val - 1]))
+						continue;
+
+					mouseSettings[i] = val;
+					break;
+				}
+			}
+		}
+	}
+
 	fclose(file);
 	
 	return true;
@@ -341,11 +321,19 @@ bool save_opentyrian_config( void )
 #else
 	mkdir(get_user_directory());
 #endif
+
+	// Tyrian 2000 doesn't save mouse settings, so we do it ourselves
+	section = config_find_or_add_section(config, "mouse", NULL);
+	if (section == NULL)
+		exit(EXIT_FAILURE);  // out of memory
 	
+	for (size_t i = 0; i < COUNTOF(mouseSettings); ++i)
+		config_set_string_option(section, mouseSettingNames[i], mouseSettingValues[mouseSettings[i] - 1]);
+
 	FILE *file = dir_fopen(get_user_directory(), "opentyrian.cfg", "w");
 	if (file == NULL)
 		return false;
-	
+
 	config_write(config, file);
 	
 #if _POSIX_C_SOURCE >= 1 || _XOPEN_SOURCE || _POSIX_SOURCE
@@ -834,6 +822,7 @@ void JE_loadConfiguration( void )
 		gammaCorrection = 0;
 		processorType = 3;
 		gameSpeed = 4;
+		versionNum = 3;
 	}
 	
 	load_opentyrian_config();
@@ -978,9 +967,9 @@ void JE_loadConfiguration( void )
 			if (z % 6 > 2)
 			{
 				saveFiles[z].highScore2 = ((mt_rand() % 20) + 1) * 1000;
-				strcpy(saveFiles[z].highScoreName, defaultTeamNames[mt_rand() % 22]);
+				strcpy(saveFiles[z].highScoreName, defaultTeamNames[mt_rand() % COUNTOF(defaultTeamNames)]);
 			} else {
-				strcpy(saveFiles[z].highScoreName, defaultHighScoreNames[mt_rand() % 34]);
+				strcpy(saveFiles[z].highScoreName, defaultHighScoreNames[mt_rand() % COUNTOF(defaultHighScoreNames)]);
 			}
 		}
 
@@ -990,7 +979,7 @@ void JE_loadConfiguration( void )
 			{
 				// Timed Battle scores
 				t2kHighScores[z][y].score = ((mt_rand() % 50) + 1) * 100;
-				strcpy(t2kHighScores[z][y].playerName, defaultHighScoreNames[mt_rand() % 34]);
+				strcpy(t2kHighScores[z][y].playerName, defaultHighScoreNames[mt_rand() % COUNTOF(defaultHighScoreNames)]);
 			}
 		}
 		for (z = 10; z < 20; ++z)
@@ -1000,9 +989,9 @@ void JE_loadConfiguration( void )
 				// Main Game scores
 				t2kHighScores[z][y].score = ((mt_rand() % 20) + 1) * 1000;
 				if (z & 1)
-					strcpy(t2kHighScores[z][y].playerName, defaultTeamNames[mt_rand() % 22]);
+					strcpy(t2kHighScores[z][y].playerName, defaultTeamNames[mt_rand() % COUNTOF(defaultTeamNames)]);
 				else
-					strcpy(t2kHighScores[z][y].playerName, defaultHighScoreNames[mt_rand() % 34]);
+					strcpy(t2kHighScores[z][y].playerName, defaultHighScoreNames[mt_rand() % COUNTOF(defaultHighScoreNames)]);
 			}
 		}
 	}

@@ -154,6 +154,8 @@ void opentyrian_menu( void )
 		if (sel == MENU_FULLSCREEN || sel == MENU_SCALER || sel == MENU_SCALING_MODE) {
 			draw_font_hv_shadow(VGAScreen, VGAScreen->w / 2, 190, "Change option with Left/Right keys then press Enter.",
 					small_font, centered, 15, 2, true, 1);
+		} else {
+			draw_font_hv_shadow(VGAScreen, VGAScreen->w / 2, 190, opentyrian_version, small_font, centered, 15, 2, true, 1);
 		}
 
 		JE_showVGA();
@@ -335,11 +337,18 @@ int main( int argc, char *argv[] )
 		return -1;
 	}
 
-	JE_loadConfiguration();
+	// Note for this reorganization:
+	// Tyrian 2000 requires help text to be loaded before the configuration,
+	// because the default high score names are stored in help text
+
+	JE_paramCheck(argc, argv);
 
 	xmas = xmas_time();  // arg handler may override
 
-	JE_paramCheck(argc, argv);
+	JE_loadHelpText();
+	/*debuginfo("Help text complete");*/
+
+	JE_loadConfiguration();
 
 	JE_scanForEpisodes();
 
@@ -391,9 +400,6 @@ int main( int argc, char *argv[] )
 		printf("demo recording enabled (input limited to keyboard)\n");
 
 	JE_loadExtraShapes();  /*Editship*/
-
-	JE_loadHelpText();
-	/*debuginfo("Help text complete");*/
 
 	if (isNetworkGame)
 	{

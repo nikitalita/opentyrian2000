@@ -25,7 +25,7 @@
 
 #include <stdio.h>
 
-#define MENU_MAX 14
+#define MENU_MAX 15
 
 #define DESTRUCT_MODES 5
 
@@ -67,6 +67,9 @@ extern char destructHelp[25][22];
 extern char weaponNames[17][17];
 extern char destructModeName[DESTRUCT_MODES][13];
 extern char shipInfo[HELPTEXT_SHIPINFO_COUNT][2][256];
+extern char licensingInfo[3][46];
+extern char orderingInfo[6][32];
+extern char superTyrianText[6][64];
 extern char menuInt[MENU_MAX+1][11][18];
 
 void read_encrypted_pascal_string( char *s, size_t size, FILE *f );

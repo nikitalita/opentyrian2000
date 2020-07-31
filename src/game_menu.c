@@ -60,6 +60,7 @@ enum
 	MENU_LIMITED_OPTIONS = 11,  // Hides save/load menus.
 	MENU_JOYSTICK_CONFIG = 12,
 	MENU_SUPER_TYRIAN    = 13,
+	MENU_MOUSE_CONFIG    = 14,  // T2000
 };
 
 /*** Structs ***/
@@ -104,8 +105,8 @@ static PlayerItems old_items[2];  // TODO: should not be global if possible
 
 static struct cube_struct cube[4];
 
-static const JE_MenuChoiceType menuChoicesDefault = { 7, 9, 9, 0, 0, 11, (SAVE_FILES_NUM / 2) + 2, 0, 0, 6, 4, 6, 7, 5 };
-static const JE_byte menuEsc[MENU_MAX] = { 0, 1, 1, 1, 2, 3, 3, 1, 8, 0, 0, 11, 3, 0 };
+static const JE_MenuChoiceType menuChoicesDefault = { 7, 9, 9, 0, 0, 11, (SAVE_FILES_NUM / 2) + 2, 0, 0, 6, 4, 6, 7, 5, 6 };
+static const JE_byte menuEsc[MENU_MAX] = { 0, 1, 1, 1, 2, 3, 3, 1, 8, 0, 0, 11, 3, 0, 2 };
 static const JE_byte itemAvailMap[7] = { 1, 2, 3, 9, 4, 6, 7 };
 static const JE_word planetX[21] = { 200, 150, 240, 300, 270, 280, 320, 260, 220, 150, 160, 210, 80, 240, 220, 180, 310, 330, 150, 240, 200 };
 static const JE_word planetY[21] = {  40,  90,  90,  80, 170,  30,  50, 130, 120, 150, 220, 200, 80,  50, 160,  10,  55,  55,  90,  90,  40 };
@@ -307,9 +308,18 @@ void JE_itemScreen( void )
 		/* Draw menu choices for simple menus */
 		if ((curMenu >= MENU_FULL_GAME && curMenu <= MENU_PLAY_NEXT_LEVEL) ||
 		    (curMenu >= MENU_2_PLAYER_ARCADE && curMenu <= MENU_LIMITED_OPTIONS) ||
-		    curMenu == MENU_SUPER_TYRIAN)
+		    curMenu >= MENU_SUPER_TYRIAN)
 		{
 			JE_drawMenuChoices();
+		}
+
+		if (curMenu == MENU_MOUSE_CONFIG)
+		{
+			for (int i = 0; i < 3; ++i)
+			{
+				int tempY = 51 + i * 24;
+				JE_textShade(VGAScreen, 215, tempY, joyButtonNames[mouseSettings[i] - 1], 15, 2, PART_SHADE);
+			}
 		}
 
 		/* Data cube icons */
@@ -1155,7 +1165,7 @@ void JE_itemScreen( void )
 			    mouseX < 308 &&
 			    curMenu != MENU_DATA_CUBE_SUB)
 			{
-				const JE_byte mouseSelectionY[MENU_MAX] = { 16, 16, 16, 16, 26, 12, 11, 28, 0, 16, 16, 16, 8, 16 };
+				const JE_byte mouseSelectionY[MENU_MAX] = { 16, 16, 16, 16, 26, 12, 11, 28, 0, 16, 16, 16, 8, 16, 24 };
 
 				int selection = (mouseY - 38) / mouseSelectionY[curMenu]+2;
 
@@ -1983,6 +1993,11 @@ void JE_drawMenuChoices( void )
 			tempY -= 16;
 		}
 
+		if (curMenu == MENU_MOUSE_CONFIG)
+		{
+			tempY += (x-2) * 8;
+		}
+
 		str = malloc(strlen(menuInt[curMenu + 1][x-1])+2);
 		if (curSel[curMenu] == x)
 		{
@@ -2783,8 +2798,7 @@ void JE_menuFunction( JE_byte select )
 			curMenu = MENU_KEYBOARD_CONFIG;
 			break;
 		case 8:
-			// TODO Mouse settings menu
-			JE_playSampleNum(S_SPRING);
+			curMenu = MENU_MOUSE_CONFIG;
 			break;
 		case 9:
 			curMenu = MENU_FULL_GAME;
@@ -3119,6 +3133,24 @@ joystick_assign_done:
 			}
 		}
 		break;
+
+	case MENU_MOUSE_CONFIG:
+		switch(curSel[curMenu])
+		{
+			case 2:
+			case 3:
+			case 4:
+				temp = curSel[curMenu] - 2;
+				if (++mouseSettings[temp] > 5)
+					mouseSettings[temp] = 1;
+				break;
+			case 5:
+				memcpy(mouseSettings, defaultMouseSettings, sizeof(mouseSettings));
+				break;
+			case 6:
+				curMenu = MENU_OPTIONS;
+				break;
+		}
 	}
 
 	old_items[0] = player[0].items;

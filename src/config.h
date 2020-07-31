@@ -55,6 +55,8 @@ typedef JE_byte DosKeySettings[8];  // fka KeySettingType
 
 typedef SDL_Scancode KeySettings[8];
 
+typedef JE_byte MouseSettings[3];
+
 typedef JE_byte JE_PItemsType[12]; /* [1..12] */
 
 typedef JE_byte JE_EditorItemAvailType[100]; /* [1..100] */
@@ -103,8 +105,9 @@ extern T2KHighScoreType t2kHighScores[20][3];
 extern const JE_byte cryptKey[10];
 extern const DosKeySettings defaultDosKeySettings;  // fka defaultKeySettings
 extern const KeySettings defaultKeySettings;
-extern const char defaultHighScoreNames[34][23];
-extern const char defaultTeamNames[22][25];
+extern const MouseSettings defaultMouseSettings;
+extern char defaultHighScoreNames[39][23];
+extern char defaultTeamNames[10][25];
 extern const JE_EditorItemAvailType initialItemAvail;
 extern JE_boolean smoothies[9];
 extern JE_byte starShowVGASpecialCode;
@@ -137,6 +140,7 @@ extern char lastLevelName[11], levelName[11];
 extern JE_byte mainLevel, nextLevel, saveLevel;
 extern DosKeySettings dosKeySettings;  // fka keySettings
 extern KeySettings keySettings;
+extern MouseSettings mouseSettings;
 extern JE_shortint levelFilter, levelFilterNew, levelBrightness, levelBrightnessChg;
 extern JE_boolean filtrationAvail, filterActive, filterFade, filterFadeStart;
 extern JE_boolean gameJustLoaded;

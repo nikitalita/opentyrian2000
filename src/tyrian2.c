@@ -3344,7 +3344,10 @@ bool JE_titleScreen( JE_boolean animate )
 
 					JE_loadPic(VGAScreen, 4, false);
 
-					draw_font_hv_shadow(VGAScreen, 2, 192, opentyrian_version, small_font, left_aligned, 15, 0, false, 1);
+					// Version display moved to OT2K menu
+					draw_font_hv_shadow(VGAScreen, 2, 179, licensingInfo[2], small_font, left_aligned, 15, 0, true, 1);
+					draw_font_hv_shadow(VGAScreen, 2, 186, licensingInfo[1], small_font, left_aligned, 15, 0, true, 1);
+					draw_font_hv_shadow(VGAScreen, 2, 193, licensingInfo[0], small_font, left_aligned, 15, 0, true, 1);
 
 					memcpy(VGAScreen2->pixels, VGAScreen->pixels, VGAScreen2->pitch * VGAScreen2->h);
 
@@ -3465,15 +3468,15 @@ bool JE_titleScreen( JE_boolean animate )
 								initialDifficulty = keysactive[SDL_SCANCODE_SCROLLLOCK] ? 6 : 8;
 
 								JE_clr256(VGAScreen);
-								JE_outText(VGAScreen, 10, 10, "Cheat codes have been disabled.", 15, 4);
+								JE_outText(VGAScreen, 10, 10, superTyrianText[0], 15, 4);
 								if (initialDifficulty == 8)
-									JE_outText(VGAScreen, 10, 20, "Difficulty level has been set to Lord of Game.", 15, 4);
+									JE_outText(VGAScreen, 10, 20, superTyrianText[1], 15, 4);
 								else
-									JE_outText(VGAScreen, 10, 20, "Difficulty level has been set to Suicide.", 15, 4);
-								JE_outText(VGAScreen, 10, 30, "It is imperative that you discover the special codes.", 15, 4);
+									JE_outText(VGAScreen, 10, 20, superTyrianText[2], 15, 4);
+								JE_outText(VGAScreen, 10, 30, superTyrianText[3], 15, 4);
 								if (initialDifficulty == 8)
-									JE_outText(VGAScreen, 10, 40, "(Next time, for an easier challenge hold down SCROLL LOCK.)", 15, 4);
-								JE_outText(VGAScreen, 10, 60, "Prepare to play...", 15, 4);
+									JE_outText(VGAScreen, 10, 40, superTyrianText[4], 15, 4);
+								JE_outText(VGAScreen, 10, 60, superTyrianText[5], 15, 4);
 
 								char buf[10+1+15+1];
 								snprintf(buf, sizeof(buf), "%s %s", miscTextB[4], pName[0]);

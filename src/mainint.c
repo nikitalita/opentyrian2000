@@ -3156,10 +3156,10 @@ redo:
 				/* mouse input */
 				if ((inputDevice == 0 || inputDevice == 2) && has_mouse)
 				{
-					// TODO Tyrian 2000 remap mouse
 					button[0] |= mouse_pressed[0];
 					button[1] |= mouse_pressed[1];
 					button[2] |= mouse_pressed[2];
+					button[3] |= mouse_pressed[3];
 
 					if (input_grab_enabled)
 					{
