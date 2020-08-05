@@ -774,6 +774,7 @@ const char *get_user_directory( void )
 // for compatibility
 Uint8 joyButtonAssign[4] = {1, 4, 5, 5};
 Uint8 inputDevice_ = 0, jConfigure = 0, midiPort = 1;
+bool configuration_loaded = false;
 
 void JE_loadConfiguration( void )
 {
@@ -997,6 +998,7 @@ void JE_loadConfiguration( void )
 	}
 	
 	JE_initProcessorType();
+	configuration_loaded = true;
 }
 
 void JE_saveConfiguration( void )
@@ -1004,6 +1006,10 @@ void JE_saveConfiguration( void )
 	FILE *f;
 	JE_byte *p;
 	int z;
+
+	// Don't save nothing
+	if (!configuration_loaded)
+		return;
 
 	p = saveTemp;
 	for (z = 0; z < SAVE_FILES_NUM; z++)
