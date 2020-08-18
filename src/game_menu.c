@@ -510,8 +510,13 @@ void JE_itemScreen( void )
 			}
 
 			/* Get power level info for front and rear weapons */
-			if ((curSel[MENU_UPGRADES] == 3 && curSel[MENU_UPGRADE_SUB] < menuChoices[MENU_UPGRADE_SUB]) ||
-			    (curSel[MENU_UPGRADES] == 4 && curSel[MENU_UPGRADE_SUB] < menuChoices[MENU_UPGRADE_SUB] - 1))
+			if (curSel[MENU_UPGRADES] == 4 && itemAvail[itemAvailMap[curSel[MENU_UPGRADES]-2]-1][curSel[MENU_UPGRADE_SUB]-2] == 0)
+			{
+				// "None" on rear weapon menu cannot be upgraded
+				leftPower = false;
+				rightPower = false;
+			}
+			else if ((curSel[MENU_UPGRADES] == 3 || curSel[MENU_UPGRADES] == 4) && curSel[MENU_UPGRADE_SUB] < menuChoices[MENU_UPGRADE_SUB])
 			{
 				const uint port = curSel[MENU_UPGRADES] - 3,  // 0 or 1 (front or back)
 				           item_level = player[0].items.weapon[port].power;
@@ -3277,70 +3282,38 @@ void JE_weaponSimUpdate( void )
 	++weaponSimTime;
 	weaponSimTime %= 150;
 
-	if ((curMenu == MENU_UPGRADE_SUB) && (curSel[MENU_UPGRADES] == 4)
-		&& weaponPort[player[0].items.weapon[REAR_WEAPON].id].opnum == 2
-		&& (weaponSimTime >= 75))
+	if (leftPower || rightPower)
 	{
-		// [/] Rear Weapon Mode
-		JE_outText(VGAScreen, 28, 137, miscText[70], 1, 4);
-
-		if (curSel[4] < menuChoices[4] - 1)
-		{
-			if (!leftPower)
-				blit_sprite(VGAScreenSeg, 24, 149, OPTION_SHAPES, 13);  // downgrade disabled
-			if (!rightPower || !rightPowerAfford)
-				blit_sprite(VGAScreenSeg, 119, 149, OPTION_SHAPES, 14);  // upgrade disabled
-
-			temp = player[0].items.weapon[curSel[1]-3].power;
-
-			for (int x = 1; x <= temp; x++)
-			{
-				fill_rectangle_xy(VGAScreen, 39 + x * 6, 151, 39 + x * 6 + 4, 151, 251);
-				JE_pix(VGAScreen, 39 + x * 6, 151, 252);
-				fill_rectangle_xy(VGAScreen, 39 + x * 6, 152, 39 + x * 6 + 4, 164, 250);
-				fill_rectangle_xy(VGAScreen, 39 + x * 6, 165, 39 + x * 6 + 4, 165, 249);
-			}
-		}
-		else
-		{
-			leftPower = false;
-			rightPower = false;
-			blit_sprite(VGAScreenSeg, 20, 146, OPTION_SHAPES, 17);  // hide power level interface
-		}
-	}
-	else if ((curSel[MENU_UPGRADES] == 3 && curSel[MENU_UPGRADE_SUB] < menuChoices[MENU_UPGRADE_SUB]) ||
-		(curSel[MENU_UPGRADES] == 4 && curSel[MENU_UPGRADE_SUB] < menuChoices[MENU_UPGRADE_SUB] - 1) )
-	{
-		if (leftPower)
-		{
-			sprintf(buf, "%d", downgradeCost);
-			JE_outText(VGAScreen, 26, 137, buf, 1, 4);
-		}
-		else
-		{
+		if (!leftPower)
 			blit_sprite(VGAScreenSeg, 24, 149, OPTION_SHAPES, 13);  // downgrade disabled
-		}
-
-		if (rightPower)
-		{
-			if (!rightPowerAfford)
-			{
-				sprintf(buf, "%d", upgradeCost);
-				JE_outText(VGAScreen, 108, 137, buf, 7, 4);
-				blit_sprite(VGAScreenSeg, 119, 149, OPTION_SHAPES, 14);  // upgrade disabled
-			}
-			else
-			{
-				sprintf(buf, "%d", upgradeCost);
-				JE_outText(VGAScreen, 108, 137, buf, 1, 4);
-			}
-		}
-		else
-		{
+		if (!rightPower || !rightPowerAfford)
 			blit_sprite(VGAScreenSeg, 119, 149, OPTION_SHAPES, 14);  // upgrade disabled
-		}
 
 		temp = player[0].items.weapon[curSel[MENU_UPGRADES]-3].power;
+
+		if ((curMenu == MENU_UPGRADE_SUB) && (curSel[MENU_UPGRADES] == 4)
+			&& weaponPort[player[0].items.weapon[REAR_WEAPON].id].opnum == 2
+			&& (weaponSimTime >= 75))
+		{
+			// [/] Rear Weapon Mode
+			JE_outText(VGAScreen, 28, 137, miscText[70], 1, 4);
+		}
+		else
+		{
+			if (leftPower)
+			{
+				sprintf(buf, "%d", downgradeCost);
+				JE_outText(VGAScreen, 26, 137, buf, 1, 4);
+			}
+			if (rightPower)
+			{
+				sprintf(buf, "%d", upgradeCost);
+				JE_outText(VGAScreen, 108, 137, buf, (rightPowerAfford) ? 1 : 7, 4);
+			}
+
+			sprintf(buf, "%s %d", miscTextB[5], temp);
+			JE_outText(VGAScreen, 58, 137, buf, 15, 4);
+		}
 
 		for (int x = 1; x <= temp; x++)
 		{
@@ -3349,16 +3322,9 @@ void JE_weaponSimUpdate( void )
 			fill_rectangle_xy(VGAScreen, 39 + x * 6, 152, 39 + x * 6 + 4, 164, 250);
 			fill_rectangle_xy(VGAScreen, 39 + x * 6, 165, 39 + x * 6 + 4, 165, 249);
 		}
-
-		sprintf(buf, "%s %d", miscTextB[5], temp);
-		JE_outText(VGAScreen, 58, 137, buf, 15, 4);
 	}
 	else
-	{
-		leftPower = false;
-		rightPower = false;
 		blit_sprite(VGAScreenSeg, 20, 146, OPTION_SHAPES, 17);  // hide power level interface
-	}
 
 	JE_drawItem(1, player[0].items.ship, player[0].x - 5, player[0].y - 7);
 }
