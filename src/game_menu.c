@@ -510,29 +510,33 @@ void JE_itemScreen( void )
 			}
 
 			/* Get power level info for front and rear weapons */
-			if (curSel[MENU_UPGRADES] == 4 && itemAvail[itemAvailMap[curSel[MENU_UPGRADES]-2]-1][curSel[MENU_UPGRADE_SUB]-2] == 0)
+			if ((curSel[MENU_UPGRADES] == 3 || curSel[MENU_UPGRADES] == 4) && curSel[MENU_UPGRADE_SUB] < menuChoices[MENU_UPGRADE_SUB])
 			{
-				// "None" on rear weapon menu cannot be upgraded
-				leftPower = false;
-				rightPower = false;
-			}
-			else if ((curSel[MENU_UPGRADES] == 3 || curSel[MENU_UPGRADES] == 4) && curSel[MENU_UPGRADE_SUB] < menuChoices[MENU_UPGRADE_SUB])
-			{
-				const uint port = curSel[MENU_UPGRADES] - 3,  // 0 or 1 (front or back)
-				           item_level = player[0].items.weapon[port].power;
+				if (curSel[MENU_UPGRADES] == 4 && itemAvail[itemAvailMap[curSel[MENU_UPGRADES]-2]-1][curSel[MENU_UPGRADE_SUB]-2] == 0)
+				{
+					// "None" on rear weapon menu cannot be upgraded
+					// ("None" on front weapon menu can -- this is accurate to the original game)
+					leftPower = false;
+					rightPower = false;
+				}
+				else
+				{
+					const uint port = curSel[MENU_UPGRADES] - 3,  // 0 or 1 (front or back)
+					           item_level = player[0].items.weapon[port].power;
 
-				// calculate upgradeCost
-				JE_getCost(curSel[MENU_UPGRADES], itemAvail[itemAvailMap[curSel[MENU_UPGRADES]-2]-1][curSel[MENU_UPGRADE_SUB]-2]);
+					// calculate upgradeCost
+					JE_getCost(curSel[MENU_UPGRADES], itemAvail[itemAvailMap[curSel[MENU_UPGRADES]-2]-1][curSel[MENU_UPGRADE_SUB]-2]);
 
-				leftPower  = item_level > 1;  // can downgrade
-				rightPower = item_level < 11; // can upgrade
+					leftPower  = item_level > 1;  // can downgrade
+					rightPower = item_level < 11; // can upgrade
 
-				if (rightPower)
-					rightPowerAfford = JE_cashLeft() >= upgradeCost; // can afford upgrade
+					if (rightPower)
+						rightPowerAfford = JE_cashLeft() >= upgradeCost; // can afford upgrade
+				}
 			}
 			else
 			{
-				/* Nothing else can be upgraded / downgraded */
+				// Nothing else can be upgraded or downgraded
 				leftPower = false;
 				rightPower = false;
 			}
