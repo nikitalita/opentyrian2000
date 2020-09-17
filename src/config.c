@@ -214,13 +214,15 @@ bool load_opentyrian_config( void )
 	// defaults
 	fullscreen_display = -1;
 	set_scaler_by_name("Scale2x");
+	memcpy(keySettings, defaultKeySettings, sizeof(keySettings));
+	memcpy(mouseSettings, defaultMouseSettings, sizeof(mouseSettings));
 	
 	Config *config = &opentyrian_config;
 	
 	FILE *file = dir_fopen_warn(get_user_directory(), "opentyrian.cfg", "r");
 	if (file == NULL)
 		return false;
-	
+
 	if (!config_parse(config, file))
 	{
 		fclose(file);
@@ -244,8 +246,6 @@ bool load_opentyrian_config( void )
 			set_scaling_mode_by_name(scaling_mode);
 	}
 
-	memcpy(keySettings, defaultKeySettings, sizeof(keySettings));
-
 	section = config_find_section(config, "keyboard", NULL);
 	if (section != NULL)
 	{
@@ -260,8 +260,6 @@ bool load_opentyrian_config( void )
 			}
 		}
 	}
-
-	memcpy(mouseSettings, defaultMouseSettings, sizeof(mouseSettings));
 
 	section = config_find_section(config, "mouse", NULL);
 	if (section != NULL)
