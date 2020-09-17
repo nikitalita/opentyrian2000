@@ -903,7 +903,7 @@ void JE_loadConfiguration( void )
 		}
 
 		/* SYN: This is truncating to bytes. I have no idea what this is doing or why. */
-		/* TODO: Figure out what this is about and make sure it isn't broked. */
+		/* TODO: Figure out what this is about and make sure it isn't broken. */
 		editorLevel = (saveTemp[SIZEOF_SAVEGAMETEMP - 5] << 8) | saveTemp[SIZEOF_SAVEGAMETEMP - 6];
 
 		// T2K High Scores are unencrypted after saveTemp

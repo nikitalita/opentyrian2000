@@ -522,7 +522,7 @@ void JE_itemScreen( void )
 				           item_level = player[0].items.weapon[port].power;
 
 				// calculate upgradeCost
-				JE_getCost(curSel[MENU_UPGRADES], itemAvail[itemAvailMap[curSel[MENU_UPGRADES]-2]-1][curSel[MENU_KEYBOARD_CONFIG]-2]);
+				JE_getCost(curSel[MENU_UPGRADES], itemAvail[itemAvailMap[curSel[MENU_UPGRADES]-2]-1][curSel[MENU_UPGRADE_SUB]-2]);
 
 				leftPower  = item_level > 1;  // can downgrade
 				rightPower = item_level < 11; // can upgrade
@@ -619,7 +619,7 @@ void JE_itemScreen( void )
 					JE_drawItem(curSel[MENU_UPGRADES]-1, temp, 160, tempY-4);
 				}
 
-				/* Make selected text brigther */
+				/* Make selected text brighter */
 				temp2 = (tempW == curSel[curMenu]-1) ? 15 : 28;
 
 				/* Draw Cost: if it's not the DONE option */
@@ -767,7 +767,7 @@ void JE_itemScreen( void )
 
 					blit_sprite(VGAScreenSeg, face_x, face_y, FACE_SHAPES, face_sprite);  // datacube face
 
-					// modify pallete for face
+					// modify palette for face
 					paletteChanged = true;
 					temp2 = (face_sprite < 12) ? facepal[face_sprite] : 0;
 					newPal = 0;
