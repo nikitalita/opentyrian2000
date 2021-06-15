@@ -52,4 +52,5 @@ project: https://github.com/KScl/opentyrian2000
 
 * For OpenTyrian
 project: https://github.com/opentyrian/opentyrian
-forums:  http://tyrian2k.proboards.com/index.cgi?board=opentyriangeneral
+irc:     ircs://irc.oftc.net/#opentyrian
+forums:  https://tyrian2k.proboards.com/board/5
