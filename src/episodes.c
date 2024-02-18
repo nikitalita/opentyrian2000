@@ -24,7 +24,6 @@
 #include "lvlmast.h"
 #include "opentyr.h"
 
-
 /* MAIN Weapons Data */
 JE_WeaponPortType weaponPort;
 JE_WeaponType     weapons[WEAP_NUM + 1]; /* [0..weapnum] */
@@ -52,7 +51,7 @@ JE_boolean bonusLevel;
 /* Tells if the game jumped back to Episode 1 */
 JE_boolean jumpBackToEpisode1;
 
-void JE_loadItemDat( void )
+void JE_loadItemDat(void)
 {
 	FILE *f = NULL;
 	
@@ -226,22 +225,22 @@ void JE_loadItemDat( void )
 	fclose(f);
 }
 
-void JE_initEpisode( JE_byte newEpisode )
+void JE_initEpisode(JE_byte newEpisode)
 {
 	if (newEpisode == episodeNum)
 		return;
 	
 	episodeNum = newEpisode;
 	
-	sprintf(levelFile,    "tyrian%hhu.lvl",  episodeNum);
-	sprintf(cube_file,    "cubetxt%hhu.dat", episodeNum);
-	sprintf(episode_file, "levels%hhu.dat",  episodeNum);
+	snprintf(levelFile,    sizeof(levelFile),    "tyrian%hhu.lvl",  episodeNum);
+	snprintf(cube_file,    sizeof(cube_file),    "cubetxt%hhu.dat", episodeNum);
+	snprintf(episode_file, sizeof(episode_file), "levels%hhu.dat",  episodeNum);
 	
 	JE_analyzeLevel();
 	JE_loadItemDat();
 }
 
-void JE_scanForEpisodes( void )
+void JE_scanForEpisodes(void)
 {
 	for (int i = 0; i < EPISODE_MAX; ++i)
 	{
@@ -251,7 +250,7 @@ void JE_scanForEpisodes( void )
 	}
 }
 
-unsigned int JE_findNextEpisode( void )
+unsigned int JE_findNextEpisode(void)
 {
 	unsigned int newEpisode = episodeNum;
 	
@@ -276,4 +275,3 @@ unsigned int JE_findNextEpisode( void )
 	
 	return newEpisode;
 }
-

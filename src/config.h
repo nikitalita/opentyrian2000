@@ -37,6 +37,21 @@
 /*#define SAVE_FILES_SIZE (2502 - 4)
 #define SAVE_FILE_SIZE (SAVE_FILES_SIZE)*/
 
+enum
+{
+	DIFFICULTY_WIMP = 0,
+	DIFFICULTY_EASY,
+	DIFFICULTY_NORMAL,
+	DIFFICULTY_HARD,
+	DIFFICULTY_IMPOSSIBLE,
+	DIFFICULTY_INSANITY,
+	DIFFICULTY_SUICIDE,
+	DIFFICULTY_MANIACAL,
+	DIFFICULTY_ZINGLON,  // aka Lord of the Game
+	DIFFICULTY_NORTANEOUS,
+	DIFFICULTY_10,
+};
+
 // NOTE: Do not reorder.  This ordering corresponds to the keyboard
 //       configuration menu and to the bits stored in demo files.
 enum
@@ -82,8 +97,8 @@ typedef struct
 	JE_byte       initialDifficulty;
 
 	/* High Scores - Each episode has both sets of 1&2 player selections - with 3 in each */
-	JE_longint    highScore1,
-	              highScore2;
+	JE_longint    highScore1;
+	JE_longint    highScore2;  // unused
 	char          highScoreName[30]; /* string [29] */
 	JE_byte       highScoreDiff;
 } JE_SaveFileType;
@@ -115,7 +130,7 @@ extern JE_word lastCubeMax, cubeMax;
 extern JE_word cubeList[4];
 extern JE_boolean gameHasRepeated;
 extern JE_shortint difficultyLevel, oldDifficultyLevel, initialDifficulty;
-extern JE_byte battle_select;
+extern JE_byte timeBattleSelection;
 extern uint power, lastPower, powerAdd;
 extern JE_byte shieldWait, shieldT;
 
@@ -167,17 +182,16 @@ extern JE_word editorLevel;
 
 extern Config opentyrian_config;
 
-void JE_initProcessorType( void );
-void JE_setNewGameSpeed( void );
-const char *get_user_directory( void );
-void JE_loadConfiguration( void );
-void JE_saveConfiguration( void );
+void JE_initProcessorType(void);
+void JE_setNewGameSpeed(void);
+const char *get_user_directory(void);
+void JE_loadConfiguration(void);
+void JE_saveConfiguration(void);
 
-void JE_saveGame( JE_byte slot, const char *name );
-void JE_loadGame( JE_byte slot );
+void JE_saveGame(JE_byte slot, const char *name);
+void JE_loadGame(JE_byte slot);
 
-void JE_encryptSaveTemp( void );
-void JE_decryptSaveTemp( void );
+void JE_encryptSaveTemp(void);
+void JE_decryptSaveTemp(void);
 
 #endif /* CONFIG_H */
-

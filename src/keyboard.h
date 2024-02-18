@@ -25,36 +25,35 @@
 
 #include <stdbool.h>
 
-#define SDL_POLL_INTERVAL 5
+#define SDL_POLL_INTERVAL 10
 
 extern JE_boolean ESCPressed;
 extern JE_boolean newkey, newmouse, keydown, mousedown;
 extern SDL_Scancode lastkey_scan;
 extern SDL_Keymod lastkey_mod;
 extern Uint8 lastmouse_but;
-extern Uint16 lastmouse_x, lastmouse_y;
+extern Sint32 lastmouse_x, lastmouse_y;
 extern JE_boolean mouse_pressed[4];
-extern Uint16 mouse_x, mouse_y;
+extern Sint32 mouse_x, mouse_y;
 extern Uint8 keysactive[SDL_NUM_SCANCODES];
+
+extern bool windowHasFocus;
 
 extern bool new_text;
 extern char last_text[SDL_TEXTINPUTEVENT_TEXT_SIZE];
 
-extern bool input_grab_enabled;
+void flush_events_buffer(void);
+void wait_input(JE_boolean keyboard, JE_boolean mouse, JE_boolean joystick);
+void wait_noinput(JE_boolean keyboard, JE_boolean mouse, JE_boolean joystick);
+void init_keyboard(void);
+void mouseSetRelative(bool enable);
+JE_word JE_mousePosition(JE_word *mouseX, JE_word *mouseY);
+void mouseGetRelativePosition(Sint32 *out_x, Sint32 *out_y);
 
-void flush_events_buffer( void );
-void wait_input( JE_boolean keyboard, JE_boolean mouse, JE_boolean joystick );
-void wait_noinput( JE_boolean keyboard, JE_boolean mouse, JE_boolean joystick );
-void init_keyboard( void );
-void input_grab( bool enable );
-JE_word JE_mousePosition( JE_word *mouseX, JE_word *mouseY );
-void set_mouse_position( int x, int y );
+void service_SDL_events(JE_boolean clear_new);
 
-void service_SDL_events( JE_boolean clear_new );
+void sleep_game(void);
 
-void sleep_game( void );
-
-void JE_clearKeyboard( void );
+void JE_clearKeyboard(void);
 
 #endif /* KEYBOARD_H */
-

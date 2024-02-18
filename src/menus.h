@@ -22,13 +22,14 @@
 #include "opentyr.h"
 
 #define GAMEPLAY_NAME_COUNT 6
-extern char episode_name[6][31], difficulty_name[7][21], gameplay_name[GAMEPLAY_NAME_COUNT][26];
+extern char episode_name[6][31];
+extern char difficulty_name[7][21];
+extern char gameplay_name[GAMEPLAY_NAME_COUNT][26];
 extern char timed_battle_name[4][23];
 
-bool select_gameplay( void );
-bool select_episode( void );
-bool select_difficulty( void );
-bool select_timed_battle( void );
+bool gameplaySelect(void);
+bool episodeSelect(void);
+bool difficultySelect(void);
+bool timedBattleSelect(void);
 
 #endif /* MENUS_H */
-

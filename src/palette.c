@@ -25,7 +25,7 @@
 
 #include <assert.h>
 
-static Uint32 rgb_to_yuv( int r, int g, int b );
+static Uint32 rgb_to_yuv(int r, int g, int b);
 
 #define PALETTE_COUNT 24
 
@@ -37,7 +37,7 @@ Uint32 rgb_palette[256], yuv_palette[256];
 
 Palette colors;
 
-void JE_loadPals( void )
+void JE_loadPals(void)
 {
 	FILE *f = dir_fopen_die(data_dir(), "palette.dat", "rb");
 	
@@ -65,7 +65,7 @@ void JE_loadPals( void )
 	fclose(f);
 }
 
-void set_palette( Palette colors, unsigned int first_color, unsigned int last_color )
+void set_palette(Palette colors, unsigned int first_color, unsigned int last_color)
 {
 	for (uint i = first_color; i <= last_color; ++i)
 	{
@@ -75,7 +75,7 @@ void set_palette( Palette colors, unsigned int first_color, unsigned int last_co
 	}
 }
 
-void set_colors( SDL_Color color, unsigned int first_color, unsigned int last_color )
+void set_colors(SDL_Color color, unsigned int first_color, unsigned int last_color)
 {
 	for (uint i = first_color; i <= last_color; ++i)
 	{
@@ -85,7 +85,7 @@ void set_colors( SDL_Color color, unsigned int first_color, unsigned int last_co
 	}
 }
 
-void init_step_fade_palette( int diff[256][3], Palette colors, unsigned int first_color, unsigned int last_color )
+void init_step_fade_palette(int diff[256][3], Palette colors, unsigned int first_color, unsigned int last_color)
 {
 	for (unsigned int i = first_color; i <= last_color; i++)
 	{
@@ -95,7 +95,7 @@ void init_step_fade_palette( int diff[256][3], Palette colors, unsigned int firs
 	}
 }
 
-void init_step_fade_solid( int diff[256][3], SDL_Color color, unsigned int first_color, unsigned int last_color )
+void init_step_fade_solid(int diff[256][3], SDL_Color color, unsigned int first_color, unsigned int last_color)
 {
 	for (unsigned int i = first_color; i <= last_color; i++)
 	{
@@ -105,13 +105,13 @@ void init_step_fade_solid( int diff[256][3], SDL_Color color, unsigned int first
 	}
 }
 
-void step_fade_palette( int diff[256][3], int steps, unsigned int first_color, unsigned int last_color )
+void step_fade_palette(int diff[256][3], int steps, unsigned int first_color, unsigned int last_color)
 {
 	assert(steps > 0);
 	
 	for (unsigned int i = first_color; i <= last_color; i++)
 	{
-		int delta[3] = { diff[i][0] / steps, diff[i][1] / steps, diff[i][2] / steps };
+		const int delta[3] = { diff[i][0] / steps, diff[i][1] / steps, diff[i][2] / steps };
 		
 		diff[i][0] -= delta[0];
 		diff[i][1] -= delta[1];
@@ -126,8 +126,7 @@ void step_fade_palette( int diff[256][3], int steps, unsigned int first_color, u
 	}
 }
 
-
-void fade_palette( Palette colors, int steps, unsigned int first_color, unsigned int last_color )
+void fade_palette(Palette colors, int steps, unsigned int first_color, unsigned int last_color)
 {
 	assert(steps > 0);
 	
@@ -136,17 +135,17 @@ void fade_palette( Palette colors, int steps, unsigned int first_color, unsigned
 	
 	for (; steps > 0; steps--)
 	{
-		setdelay(1);
+		setDelay(1);
 		
 		step_fade_palette(diff, steps, first_color, last_color);
 		
 		JE_showVGA();
 		
-		wait_delay();
+		service_wait_delay();
 	}
 }
 
-void fade_solid( SDL_Color color, int steps, unsigned int first_color, unsigned int last_color )
+void fade_solid(SDL_Color color, int steps, unsigned int first_color, unsigned int last_color)
 {
 	assert(steps > 0);
 	
@@ -155,33 +154,32 @@ void fade_solid( SDL_Color color, int steps, unsigned int first_color, unsigned 
 	
 	for (; steps > 0; steps--)
 	{
-		setdelay(1);
+		setDelay(1);
 		
 		step_fade_palette(diff, steps, first_color, last_color);
 		
 		JE_showVGA();
 		
-		wait_delay();
+		service_wait_delay();
 	}
 }
 
-void fade_black( int steps )
+void fade_black(int steps)
 {
 	SDL_Color black = { 0, 0, 0 };
 	fade_solid(black, steps, 0, 255);
 }
 
-void fade_white( int steps )
+void fade_white(int steps)
 {
 	SDL_Color white = { 255, 255, 255 };
 	fade_solid(white, steps, 0, 255);
 }
 
-static Uint32 rgb_to_yuv( int r, int g, int b )
+static Uint32 rgb_to_yuv(int r, int g, int b)
 {
 	int y = (r + g + b) >> 2,
 	    u = 128 + ((r - b) >> 2),
 	    v = 128 + ((-r + 2 * g - b) >> 3);
 	return (y << 16) + (u << 8) + v;
 }
-

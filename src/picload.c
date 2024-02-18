@@ -27,7 +27,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-void JE_loadPic(SDL_Surface *screen, JE_byte PCXnumber, JE_boolean storepal )
+void JE_loadPic(SDL_Surface *screen, JE_byte PCXnumber, JE_boolean storepal)
 {
 	PCXnumber--;
 
@@ -84,4 +84,3 @@ void JE_loadPic(SDL_Surface *screen, JE_byte PCXnumber, JE_boolean storepal )
 	if (storepal)
 		set_palette(colors, 0, 255);
 }
-

@@ -29,7 +29,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-const char *scaling_mode_names[ScalingMode_MAX] = {
+const char *const scaling_mode_names[ScalingMode_MAX] = {
 	"Center",
 	"Integer",
 	"Fit 8:5",
@@ -51,17 +51,17 @@ static SDL_Texture *main_window_texture = NULL;
 
 static ScalerFunction scaler_function;
 
-static void init_renderer( void );
-static void deinit_renderer( void );
-static void init_texture( void );
-static void deinit_texture( void );
+static void init_renderer(void);
+static void deinit_renderer(void);
+static void init_texture(void);
+static void deinit_texture(void);
 
-static int window_get_display_index( void );
-static void window_center_in_display( int display_index );
-static void calc_dst_render_rect( SDL_Surface *src_surface, SDL_Rect *dst_rect );
-static void scale_and_flip( SDL_Surface * );
+static int window_get_display_index(void);
+static void window_center_in_display(int display_index);
+static void calc_dst_render_rect(SDL_Surface *src_surface, SDL_Rect *dst_rect);
+static void scale_and_flip(SDL_Surface *);
 
-void init_video( void )
+void init_video(void)
 {
 	if (SDL_WasInit(SDL_INIT_VIDEO))
 		return;
@@ -105,10 +105,12 @@ void init_video( void )
 
 	SDL_ShowWindow(main_window);
 
-	input_grab(input_grab_enabled);
+	SDL_SetRenderDrawColor(main_window_renderer, 0, 0, 0, 255);
+	SDL_RenderClear(main_window_renderer);
+	SDL_RenderPresent(main_window_renderer);
 }
 
-void deinit_video( void )
+void deinit_video(void)
 {
 	deinit_texture();
 	deinit_renderer();
@@ -122,7 +124,7 @@ void deinit_video( void )
 	SDL_QuitSubSystem(SDL_INIT_VIDEO);
 }
 
-static void init_renderer( void )
+static void init_renderer(void)
 {
 	main_window_renderer = SDL_CreateRenderer(main_window, -1, 0);
 
@@ -133,7 +135,7 @@ static void init_renderer( void )
 	}
 }
 
-static void deinit_renderer( void )
+static void deinit_renderer(void)
 {
 	if (main_window_renderer != NULL)
 	{
@@ -142,7 +144,7 @@ static void deinit_renderer( void )
 	}
 }
 
-static void init_texture( void )
+static void init_texture(void)
 {
 	assert(main_window_renderer != NULL);
 
@@ -162,7 +164,7 @@ static void init_texture( void )
 	}
 }
 
-static void deinit_texture( void )
+static void deinit_texture(void)
 {
 	if (main_window_texture != NULL)
 	{
@@ -177,12 +179,12 @@ static void deinit_texture( void )
 	}
 }
 
-static int window_get_display_index( void )
+static int window_get_display_index(void)
 {
 	return SDL_GetWindowDisplayIndex(main_window);
 }
 
-static void window_center_in_display( int display_index )
+static void window_center_in_display(int display_index)
 {
 	int win_w, win_h;
 	SDL_GetWindowSize(main_window, &win_w, &win_h);
@@ -193,7 +195,7 @@ static void window_center_in_display( int display_index )
 	SDL_SetWindowPosition(main_window, bounds.x + (bounds.w - win_w) / 2, bounds.y + (bounds.h - win_h) / 2);
 }
 
-void reinit_fullscreen( int new_display )
+void reinit_fullscreen(int new_display)
 {
 	fullscreen_display = new_display;
 
@@ -221,7 +223,7 @@ void reinit_fullscreen( int new_display )
 	}
 }
 
-void video_on_win_resize( void )
+void video_on_win_resize(void)
 {
 	int w, h;
 	int scaler_w, scaler_h;
@@ -242,16 +244,15 @@ void video_on_win_resize( void )
 	}
 }
 
-void toggle_fullscreen( void )
+void toggle_fullscreen(void)
 {
-	if (fullscreen_display != -1) {
+	if (fullscreen_display != -1)
 		reinit_fullscreen(-1);
-	} else {
+	else
 		reinit_fullscreen(SDL_GetWindowDisplayIndex(main_window));
-	}
 }
 
-bool init_scaler( unsigned int new_scaler )
+bool init_scaler(unsigned int new_scaler)
 {
 	int w = scalers[new_scaler].width,
 	    h = scalers[new_scaler].height;
@@ -292,7 +293,7 @@ bool init_scaler( unsigned int new_scaler )
 	return true;
 }
 
-bool set_scaling_mode_by_name( const char *name )
+bool set_scaling_mode_by_name(const char *name)
 {
 	for (int i = 0; i < ScalingMode_MAX; ++i)
 	{
@@ -305,17 +306,17 @@ bool set_scaling_mode_by_name( const char *name )
 	return false;
 }
 
-void JE_clr256( SDL_Surface *screen )
+void JE_clr256(SDL_Surface *screen)
 {
 	SDL_FillRect(screen, NULL, 0);
 }
 
-void JE_showVGA( void ) 
+void JE_showVGA(void) 
 { 
 	scale_and_flip(VGAScreen); 
 }
 
-static void calc_dst_render_rect( SDL_Surface *const src_surface, SDL_Rect *const dst_rect )
+static void calc_dst_render_rect(SDL_Surface *const src_surface, SDL_Rect *const dst_rect)
 {
 	// Decides how the logical output texture (after software scaling applied) will fit
 	// in the window.
@@ -378,7 +379,7 @@ static void calc_dst_render_rect( SDL_Surface *const src_surface, SDL_Rect *cons
 	dst_rect->y = (win_h - dst_rect->h) / 2;
 }
 
-static void scale_and_flip( SDL_Surface *src_surface )
+static void scale_and_flip(SDL_Surface *src_surface)
 {
 	assert(src_surface->format->BitsPerPixel == 8);
 
@@ -399,18 +400,23 @@ static void scale_and_flip( SDL_Surface *src_surface )
 	last_output_rect = dst_rect;
 }
 
-/** Converts the given point from the game screen coordinates to the window
- * coordinates, after scaling. */
-void map_screen_to_window_pos( int *const inout_x, int *const inout_y )
+/** Maps a specified point in game screen coordinates to window coordinates. */
+void mapScreenPointToWindow(Sint32 *const inout_x, Sint32 *const inout_y)
 {
-	*inout_x = (*inout_x * last_output_rect.w / VGAScreen->w) + last_output_rect.x;
-	*inout_y = (*inout_y * last_output_rect.h / VGAScreen->h) + last_output_rect.y;
+	*inout_x = (2 * *inout_x + 1) * last_output_rect.w / (2 * VGAScreen->w) + last_output_rect.x;
+	*inout_y = (2 * *inout_y + 1) * last_output_rect.h / (2 * VGAScreen->h) + last_output_rect.y;
 }
 
-/** Converts the given point from window coordinates (after scaling) to game
- * screen coordinates. */
-void map_window_to_screen_pos( int *const inout_x, int *const inout_y )
+/** Maps a specified point in window coordinates to game screen coordinates. */
+void mapWindowPointToScreen(Sint32 *const inout_x, Sint32 *const inout_y)
 {
-	*inout_x = (*inout_x - last_output_rect.x) * VGAScreen->w / last_output_rect.w;
-	*inout_y = (*inout_y - last_output_rect.y) * VGAScreen->h / last_output_rect.h;
+	*inout_x = (2 * (*inout_x - last_output_rect.x) + 1) * VGAScreen->w / (2 * last_output_rect.w);
+	*inout_y = (2 * (*inout_y - last_output_rect.y) + 1) * VGAScreen->h / (2 * last_output_rect.h);
+}
+
+/** Scales a distance in window coordinates to game screen coordinates. */
+void scaleWindowDistanceToScreen(Sint32 *const inout_x, Sint32 *const inout_y)
+{
+	*inout_x = (2 * *inout_x + 1) * VGAScreen->w / (2 * last_output_rect.w);
+	*inout_y = (2 * *inout_y + 1) * VGAScreen->h / (2 * last_output_rect.h);
 }

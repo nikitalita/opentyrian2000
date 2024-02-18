@@ -32,7 +32,7 @@
 #include <stdio.h>
 #include <string.h>
 
-void JE_pix( SDL_Surface *surface, int x, int y, JE_byte c )
+void JE_pix(SDL_Surface *surface, int x, int y, JE_byte c)
 {
 	/* Bad things happen if we don't clip */
 	if (x <  surface->pitch && y <  surface->h)
@@ -42,7 +42,7 @@ void JE_pix( SDL_Surface *surface, int x, int y, JE_byte c )
 	}
 }
 
-void JE_pix3( SDL_Surface *surface, int x, int y, JE_byte c )
+void JE_pix3(SDL_Surface *surface, int x, int y, JE_byte c)
 {
 	/* Originally implemented as several direct accesses */
 	JE_pix(surface, x, y, c);
@@ -52,7 +52,7 @@ void JE_pix3( SDL_Surface *surface, int x, int y, JE_byte c )
 	JE_pix(surface, x, y + 1, c);
 }
 
-void JE_rectangle( SDL_Surface *surface, int a, int b, int c, int d, int e ) /* x1, y1, x2, y2, color */
+void JE_rectangle(SDL_Surface *surface, int a, int b, int c, int d, int e) /* x1, y1, x2, y2, color */
 {
 	if (a < surface->pitch && b < surface->h &&
 	    c < surface->pitch && d < surface->h)
@@ -77,18 +77,20 @@ void JE_rectangle( SDL_Surface *surface, int a, int b, int c, int d, int e ) /* 
 		{
 			vga[i] = e;
 		}
-	} else {
+	}
+	else
+	{
 		printf("!!! WARNING: Rectangle clipped: %d %d %d %d %d\n", a, b, c, d, e);
 	}
 }
 
-void fill_rectangle_xy( SDL_Surface *surface, int x, int y, int x2, int y2, Uint8 color )
+void fill_rectangle_xy(SDL_Surface *surface, int x, int y, int x2, int y2, Uint8 color)
 {
 	SDL_Rect rect = { x, y, x2 - x + 1, y2 - y + 1 };
 	SDL_FillRect(surface, &rect, color);
 }
 
-void JE_barShade( SDL_Surface *surface, int a, int b, int c, int d ) /* x1, y1, x2, y2 */
+void JE_barShade(SDL_Surface *surface, int a, int b, int c, int d) /* x1, y1, x2, y2 */
 {
 	if (a < surface->pitch && b < surface->h &&
 	    c < surface->pitch && d < surface->h)
@@ -105,12 +107,14 @@ void JE_barShade( SDL_Surface *surface, int a, int b, int c, int d ) /* x1, y1, 
 				vga[i + j] = ((vga[i + j] & 0x0F) >> 1) | (vga[i + j] & 0xF0);
 			}
 		}
-	} else {
+	}
+	else
+	{
 		printf("!!! WARNING: Darker Rectangle clipped: %d %d %d %d\n", a,b,c,d);
 	}
 }
 
-void JE_barBright( SDL_Surface *surface, int a, int b, int c, int d ) /* x1, y1, x2, y2 */
+void JE_barBright(SDL_Surface *surface, int a, int b, int c, int d) /* x1, y1, x2, y2 */
 {
 	if (a < surface->pitch && b < surface->h &&
 	    c < surface->pitch && d < surface->h)
@@ -138,12 +142,14 @@ void JE_barBright( SDL_Surface *surface, int a, int b, int c, int d ) /* x1, y1,
 				vga[i + j] = al + ah;
 			}
 		}
-	} else {
+	}
+	else
+	{
 		printf("!!! WARNING: Brighter Rectangle clipped: %d %d %d %d\n", a,b,c,d);
 	}
 }
 
-void draw_segmented_gauge( SDL_Surface *surface, int x, int y, Uint8 color, uint segment_width, uint segment_height, uint segment_value, uint value )
+void draw_segmented_gauge(SDL_Surface *surface, int x, int y, Uint8 color, uint segment_width, uint segment_height, uint segment_value, uint value)
 {
 	assert(segment_width > 0 && segment_height > 0);
 
@@ -158,4 +164,3 @@ void draw_segmented_gauge( SDL_Surface *surface, int x, int y, Uint8 color, uint
 	if (partial_segment > 0)
 		fill_rectangle_wh(surface, x, y, segment_width, segment_height, color + (12 * partial_segment / segment_value));
 }
-

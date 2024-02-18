@@ -50,11 +50,13 @@ void SZ_Init(sizebuf_t * sz, Uint8 * buf, unsigned int size)
 	sz->bufferPos = 0;
 	sz->error = false;
 }
+
 /* Check error flags */
 bool SZ_Error(sizebuf_t * sz)
 {
-	return(sz->error);
+	return sz->error;
 }
+
 /* mimic memset */
 void SZ_Memset(sizebuf_t * sz, int value, size_t count)
 {
@@ -69,21 +71,8 @@ void SZ_Memset(sizebuf_t * sz, int value, size_t count)
 	memset(sz->data + sz->bufferPos, value, count);
 	sz->bufferPos += count;
 }
-/* Mimic memcpy.  Two versions, one for buffers, one for sizebuf objects.
- * Overload in C++. */
-void SZ_Memcpy(sizebuf_t * sz, const Uint8 * buf, size_t count)
-{
-	/* State checking */
-	if (sz->error || sz->bufferPos + count > sz->bufferLen)
-	{
-		sz->error = true;
-		return;
-	}
 
-	/* Memcpy & increment */
-	memcpy(sz->data + sz->bufferPos, buf, count);
-	sz->bufferPos += count;
-}
+/* Mimic memcpy. */
 void SZ_Memcpy2(sizebuf_t * sz, sizebuf_t * bf, size_t count)
 {
 	/* State checking */
@@ -103,12 +92,13 @@ void SZ_Memcpy2(sizebuf_t * sz, sizebuf_t * bf, size_t count)
 	sz->bufferPos += count;
 	bf->bufferPos += count;
 }
+
 /* Reposition buffer pointer */
 void SZ_Seek(sizebuf_t * sz, long count, int mode)
 {
 	/* Okay, it's reasonable to reset the error bool on seeking... */
 
-	switch(mode)
+	switch (mode)
 	{
 		case SEEK_SET:
 			sz->bufferPos = count;
@@ -125,100 +115,43 @@ void SZ_Seek(sizebuf_t * sz, long count, int mode)
 
 	/* Check errors */
 	if (sz->bufferPos > sz->bufferLen)
-	{
 		sz->error = true;
-	} else {
+	else
 		sz->error = false;
-	}
-}
-const Uint8 * SZ_GetCurBufferPtr (sizebuf_t * sz)
-{
-	return(sz->data);
 }
 
 /* The code below makes use of pointer casts, similar to what is in efread.
  * It's not the ONLY way to write ints to a stream, but it's probably the
  * cleanest of the lot.  Better to have it here than littered all over the code.
  */
-void MSG_WriteByte(sizebuf_t * sz, unsigned int value)
-{
-	if (sz->error || sz->bufferPos + 1 > sz->bufferLen)
-	{
-		sz->error = true;
-		return;
-	}
-
-	sz->data[sz->bufferPos] = value;
-	sz->bufferPos++;
-}
-void MSG_WriteWord(sizebuf_t * sz, unsigned int value)
-{
-	if (sz->error || sz->bufferPos + 2 > sz->bufferLen)
-	{
-		sz->error = true;
-		return;
-	}
-
-	*((Uint16 *)(sz->data + sz->bufferPos)) = SDL_SwapLE16( ((Uint16)value) );
-	sz->bufferPos += 2;
-}
-void MSG_WriteDWord(sizebuf_t * sz, unsigned int value)
-{
-	if (sz->error || sz->bufferPos + 4 > sz->bufferLen)
-	{
-		sz->error = true;
-		return;
-	}
-
-	*((Uint32 *)(sz->data + sz->bufferPos)) = SDL_SwapLE32( ((Uint32)value) );
-	sz->bufferPos += 4;
-}
-
 unsigned int MSG_ReadByte(sizebuf_t * sz)
 {
 	unsigned int ret;
 
-
 	if (sz->error || sz->bufferPos + 1 > sz->bufferLen)
 	{
 		sz->error = true;
-		return(0);
+		return 0;
 	}
 
 	ret = sz->data[sz->bufferPos];
 	sz->bufferPos += 1;
 
-	return(ret);
+	return ret;
 }
+
 unsigned int MSG_ReadWord(sizebuf_t * sz)
 {
 	unsigned int ret;
 
-
 	if (sz->error || sz->bufferPos + 2 > sz->bufferLen)
 	{
 		sz->error = true;
-		return(0);
+		return 0;
 	}
 
 	ret = SDL_SwapLE16(*((Uint16 *)(sz->data + sz->bufferPos)));
 	sz->bufferPos += 2;
 
-	return(ret);
-}
-unsigned int MSG_ReadDWord(sizebuf_t * sz)
-{
-	unsigned int ret;
-
-
-	if (sz->error || sz->bufferPos + 4 > sz->bufferLen)
-	{
-		sz->error = true;
-		return(0);
-	}
-
-	ret = SDL_SwapLE32(*((Uint32 *)(sz->data + sz->bufferPos)));
-	sz->bufferPos += 4;
-
-	return(ret);
+	return ret;
 }

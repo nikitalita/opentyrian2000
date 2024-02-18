@@ -21,7 +21,9 @@
 
 #include "opentyr.h"
 
-#define SAMPLE_COUNT 40
+#define SFX_COUNT 31
+#define VOICE_COUNT 9
+#define SOUND_COUNT (SFX_COUNT + VOICE_COUNT)
 
 enum
 {
@@ -69,8 +71,7 @@ enum
 	V_ACCELERATE       = 40,  // "Unexplained speed increase."
 };
 
-extern const char soundTitle[SAMPLE_COUNT][9];
+extern const char soundTitle[SOUND_COUNT][9];
 extern const JE_byte windowTextSamples[9];
 
 #endif /* SNDMAST_H */
-

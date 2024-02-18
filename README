@@ -20,9 +20,7 @@ as freeware:
 
 == Keyboard Controls ===========================================================
 
-ctrl-backspace -- kill OpenTyrian2000
-alt-enter      -- fullscreen
-ctrl-f10       -- ungrab mouse
+alt-enter      -- toggle full-screen
 
 arrow keys     -- ship movement
 space          -- fire weapons

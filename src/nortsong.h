@@ -26,39 +26,29 @@
 
 #include "SDL.h"
 
-extern Uint32 target, target2;
+extern JE_word frameCountMax;
 
-extern JE_word frameCount, frameCount2, frameCountMax;
-
-extern JE_byte *digiFx[SAMPLE_COUNT];
-extern JE_word fxSize[SAMPLE_COUNT];
+extern Sint16 *soundSamples[SOUND_COUNT];
+extern size_t soundSampleCount[SOUND_COUNT];
 
 extern JE_word tyrMusicVolume, fxVolume;
-extern JE_word fxPlayVol;
+extern const JE_word fxPlayVol;
 extern JE_word tempVolume;
 
-extern JE_word speed;
+void setDelay(int delay);
+void setDelay2(int delay);
+Uint32 getDelayTicks(void);
+Uint32 getDelayTicks2(void);
 
-extern float jasondelay;
+void wait_delay(void);
+void service_wait_delay(void);
+void wait_delayorinput(void);
 
-void setdelay( JE_byte delay );
-void setjasondelay( int delay );
-void setjasondelay2( int delay );
-int delaycount( void );
-int delaycount2( void );
+void setDelaySpeed(Uint16 speed);
 
-void wait_delay( void );
-void service_wait_delay( void );
-void wait_delayorinput( JE_boolean keyboard, JE_boolean mouse, JE_boolean joystick );
+void JE_changeVolume(JE_word *music, int music_delta, JE_word *sample, int sample_delta);
 
-void JE_resetTimerInt( void );
-void JE_setTimerInt( void );
-
-void JE_calcFXVol( void );
-void JE_changeVolume( JE_word *music, int music_delta, JE_word *sample, int sample_delta );
-
-void JE_loadSndFile( const char *effects_sndfile, const char *voices_sndfile );
-void JE_playSampleNum( JE_byte samplenum );
+void loadSndFile(bool xmas);
+void JE_playSampleNum(JE_byte samplenum);
 
 #endif /* NORTSONG_H */
-
