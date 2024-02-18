@@ -3077,7 +3077,11 @@ void JE_inGameDisplays(void)
 	for (uint i = 0; i < ((twoPlayerMode && !galagaMode) ? 2 : 1); ++i)
 	{
 		snprintf(tempstr, sizeof(tempstr), "%lu", player[i].cash);
-		JE_textShade(VGAScreen, 30 + 200 * i, 175, tempstr, 2, 4, FULL_SHADE);
+
+		if (smoothies[6-1])
+			JE_textShade(VGAScreen, 30 + 200 * i, 175, tempstr, 8, 8, FULL_SHADE);
+		else
+			JE_textShade(VGAScreen, 30 + 200 * i, 175, tempstr, 2, 4, FULL_SHADE);
 	}
 
 	/*Special Weapon?*/
