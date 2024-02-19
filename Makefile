@@ -124,25 +124,25 @@ installdirs :
 install : $(TARGET) installdirs
 	$(INSTALL_PROGRAM) $(TARGET) $(DESTDIR)$(bindir)/
 	$(INSTALL_DATA) NEWS README $(DESTDIR)$(docdir)/
-	$(INSTALL_DATA) linux/man/opentyrian.6 $(DESTDIR)$(man6dir)/opentyrian2000$(man6ext)
-	$(INSTALL_DATA) linux/opentyrian.desktop $(DESTDIR)$(desktopdir)/
-	$(INSTALL_DATA) linux/icons/tyrian-22.png $(DESTDIR)$(icondir)/hicolor/22x22/apps/opentyrian.png
-	$(INSTALL_DATA) linux/icons/tyrian-24.png $(DESTDIR)$(icondir)/hicolor/24x24/apps/opentyrian.png
-	$(INSTALL_DATA) linux/icons/tyrian-32.png $(DESTDIR)$(icondir)/hicolor/32x32/apps/opentyrian.png
-	$(INSTALL_DATA) linux/icons/tyrian-48.png $(DESTDIR)$(icondir)/hicolor/48x48/apps/opentyrian.png
-	$(INSTALL_DATA) linux/icons/tyrian-128.png $(DESTDIR)$(icondir)/hicolor/128x128/apps/opentyrian.png
+	$(INSTALL_DATA) linux/man/opentyrian2000.6 $(DESTDIR)$(man6dir)/opentyrian2000$(man6ext)
+	$(INSTALL_DATA) linux/opentyrian2000.desktop $(DESTDIR)$(desktopdir)/
+	$(INSTALL_DATA) linux/icons/tyrian2000-22.png $(DESTDIR)$(icondir)/hicolor/22x22/apps/opentyrian2000.png
+	$(INSTALL_DATA) linux/icons/tyrian2000-24.png $(DESTDIR)$(icondir)/hicolor/24x24/apps/opentyrian2000.png
+	$(INSTALL_DATA) linux/icons/tyrian2000-32.png $(DESTDIR)$(icondir)/hicolor/32x32/apps/opentyrian2000.png
+	$(INSTALL_DATA) linux/icons/tyrian2000-48.png $(DESTDIR)$(icondir)/hicolor/48x48/apps/opentyrian2000.png
+	$(INSTALL_DATA) linux/icons/tyrian2000-128.png $(DESTDIR)$(icondir)/hicolor/128x128/apps/opentyrian2000.png
 
 .PHONY : uninstall
 uninstall :
 	rm -f $(DESTDIR)$(bindir)/$(TARGET)
 	rm -f $(DESTDIR)$(docdir)/NEWS $(DESTDIR)$(docdir)/README
 	rm -f $(DESTDIR)$(man6dir)/opentyrian2000$(man6ext)
-	rm -f $(DESTDIR)$(desktopdir)/opentyrian.desktop
-	rm -f $(DESTDIR)$(icondir)/hicolor/22x22/apps/opentyrian.png
-	rm -f $(DESTDIR)$(icondir)/hicolor/24x24/apps/opentyrian.png
-	rm -f $(DESTDIR)$(icondir)/hicolor/32x32/apps/opentyrian.png
-	rm -f $(DESTDIR)$(icondir)/hicolor/48x48/apps/opentyrian.png
-	rm -f $(DESTDIR)$(icondir)/hicolor/128x128/apps/opentyrian.png
+	rm -f $(DESTDIR)$(desktopdir)/opentyrian2000.desktop
+	rm -f $(DESTDIR)$(icondir)/hicolor/22x22/apps/opentyrian2000.png
+	rm -f $(DESTDIR)$(icondir)/hicolor/24x24/apps/opentyrian2000.png
+	rm -f $(DESTDIR)$(icondir)/hicolor/32x32/apps/opentyrian2000.png
+	rm -f $(DESTDIR)$(icondir)/hicolor/48x48/apps/opentyrian2000.png
+	rm -f $(DESTDIR)$(icondir)/hicolor/128x128/apps/opentyrian2000.png
 
 .PHONY : clean
 clean :
