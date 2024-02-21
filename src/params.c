@@ -113,6 +113,7 @@ void JE_paramCheck(int argc, char *argv[])
 			break;
 			
 		case 'x':
+			override_xmas = true;
 			xmas = false;
 			break;
 			
@@ -190,6 +191,7 @@ void JE_paramCheck(int argc, char *argv[])
 			break;
 		}
 		case 'X':
+			override_xmas = true;
 			xmas = true;
 			break;
 			
@@ -250,9 +252,11 @@ void JE_paramCheck(int argc, char *argv[])
 					audio_disabled = true;
 					break;
 				case 6:
+					override_xmas = true;
 					xmas = false;
 					break;
 				case 7:
+					override_xmas = true;
 					xmas = true;
 					break;
 					

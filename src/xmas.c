@@ -31,6 +31,7 @@
 #include <time.h>
 
 bool xmas = false;
+bool override_xmas = false;
 
 bool xmas_time(void)
 {

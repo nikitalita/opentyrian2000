@@ -22,6 +22,7 @@
 #include <stdbool.h>
 
 extern bool xmas;
+extern bool override_xmas;
 
 bool xmas_time(void);
 bool xmas_prompt(void);

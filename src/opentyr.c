@@ -770,7 +770,8 @@ int main(int argc, char *argv[])
 
 	JE_paramCheck(argc, argv);
 
-	xmas = xmas_time();  // arg handler may override
+	if (!override_xmas) // arg handler may override
+		xmas = xmas_time();
 
 	JE_loadHelpText();
 	/*debuginfo("Help text complete");*/
@@ -794,7 +795,7 @@ int main(int argc, char *argv[])
 	JE_loadPals();
 	JE_loadMainShapeTables(xmas ? "tyrianc.shp" : "tyrian.shp");
 
-	if (xmas && !xmas_prompt())
+	if (xmas && !override_xmas && !xmas_prompt())
 	{
 		xmas = false;
 
