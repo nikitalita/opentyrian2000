@@ -765,14 +765,14 @@ int main(int argc, char *argv[])
 
 #if defined(__APPLE__) && defined(__MACH__)
     printf("\nWelcome to... >> %s v%s <<\n\n", getBundleName(), getBundleVersion());
-#else
-	printf("\nWelcome to... >> %s %s <<\n\n", opentyrian_str, opentyrian_version);
-#endif
 
     printf("Identifier: %s\n", getBundleID());
     printf("Executable: %s\n", getExecutablePath());
     printf("Resources:  %s\n", getBundlePath());
     printf("Frameworks: %s\n\n", getFrameworksPath());
+#else
+	printf("\nWelcome to... >> %s %s <<\n\n", opentyrian_str, opentyrian_version);
+#endif
 
     printf("Current architecture: ");
 #if defined(__i386__)
