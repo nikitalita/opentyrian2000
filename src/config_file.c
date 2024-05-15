@@ -831,11 +831,7 @@ bool config_parse(Config *config, FILE *file)
 					buffer = new_buffer;
 				}
 
-#if defined(_MSC_VER) && __STDC_WANT_SECURE_LIB__
-                size_t read = fread_s(&buffer[buffer_end - 1], (sizeof(char) * (buffer_cap - buffer_end)), sizeof(char), buffer_cap - buffer_end, file);
-#else
                 size_t read = fread(&buffer[buffer_end - 1], sizeof(char), buffer_cap - buffer_end, file);
-#endif
 
 				if (read == 0)
 					break;

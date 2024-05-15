@@ -49,11 +49,7 @@ static inline void fread_bool_die(bool *buffer, FILE *stream)
 // 8-bit fread
 static inline size_t fread_u8(Uint8 *buffer, size_t count, FILE *stream)
 {
-#if defined(_MSC_VER) && __STDC_WANT_SECURE_LIB__
-    return fread_s(buffer, (sizeof(Uint8) * count), sizeof(Uint8), count, stream);
-#else
 	return fread(buffer, sizeof(Uint8), count, stream);
-#endif
 }
 
 // 8-bit fread that dies if read fails
