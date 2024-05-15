@@ -226,7 +226,7 @@
 		</data>
 		<key>Resources/opentyrian2000.icns</key>
 		<data>
-		/WMJ4kawawb2+r0ySHhDp9cW1WY=
+		i7tBJYUXBceX9ddoBYYrJhcLe2I=
 		</data>
 		<key>Resources/palette.dat</key>
 		<data>
@@ -337,23 +337,14 @@
 			<key>requirement</key>
 			<string>identifier "com.AnV.Software.OpenTyrian2000" and anchor apple generic and certificate leaf[subject.CN] = "Apple Development: catvampire35@gmail.com (VC2F3CGZ22)" and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */</string>
 		</dict>
-		<key>Frameworks/libSDL3.0.dylib</key>
-		<dict>
-			<key>cdhash</key>
-			<data>
-			bupXDTKpRFgKx3UfrbigByMLtDA=
-			</data>
-			<key>requirement</key>
-			<string>identifier "com.AnV.Software.OpenTyrian2000" and anchor apple generic and certificate leaf[subject.CN] = "Apple Development: catvampire35@gmail.com (VC2F3CGZ22)" and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */</string>
-		</dict>
 		<key>Frameworks/libSDL3.dylib</key>
 		<dict>
 			<key>cdhash</key>
 			<data>
-			9lbGFdOFutysUpkaLW7QJg89e1k=
+			RZpqHUHIHDculJnf9h2+jKSxPvw=
 			</data>
 			<key>requirement</key>
-			<string>identifier "com.AnV.Software.OpenTyrian2000" and anchor apple generic and certificate leaf[subject.CN] = "Apple Development: catvampire35@gmail.com (VC2F3CGZ22)" and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */</string>
+			<string>identifier libSDL3 and anchor apple generic and certificate leaf[subject.CN] = "Apple Development: catvampire35@gmail.com (VC2F3CGZ22)" and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */</string>
 		</dict>
 		<key>Frameworks/libfreetype.6.dylib</key>
 		<dict>
@@ -924,7 +915,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			Cle6nXhlDeUeJvjhkbG5JRAr6Mst+9593IWpyPAZUUg=
+			48jt6/BbpH+M8jkcR6h8LPDZyViPTXqBMMOJs+Ne/d8=
 			</data>
 		</dict>
 		<key>Resources/palette.dat</key>

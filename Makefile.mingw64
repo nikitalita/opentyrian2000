@@ -13,6 +13,7 @@ SHELL = /bin/sh
 
 HOSTCC = /usr/bin/clang
 CC = /usr/local/bin/x86_64-w64-mingw32-gcc
+RC = /usr/local/bin/x86_64-w64-mingw32-windres
 
 INSTALL = /usr/bin/install
 PKG_CONFIG = /usr/local/bin/pkg-config
@@ -46,7 +47,7 @@ gamesdir ?= $(datadir)/games
 TARGET := opentyrian2000
 
 SRCS := $(wildcard src/*.c)
-OBJS := $(SRCS:src/%.c=obj/%.o)
+OBJS := $(SRCS:src/%.c=obj/%.o) obj/opentyrian2000.o
 DEPS := $(SRCS:src/%.c=obj/%.d)
 
 ###
@@ -127,3 +128,9 @@ obj/getver.o: getver.c
 obj/%.o : src/%.c
 	@mkdir -p "$(dir $@)"
 	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS) -c -o $@ $<
+
+obj/%.o: src/%.rc
+	$(RC) -I/usr/local/x86_64-w64-mingw32/include -o $@ -i $<
+
+obj/%.o: src/%.rc
+	$(RC) -I/usr/local/x86_64-w64-mingw32/includes -i $< -o $@
