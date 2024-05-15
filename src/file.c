@@ -28,11 +28,31 @@
 #include <stdlib.h>
 #include <string.h>
 
+#if defined(__APPLE__) & defined(__MACH__)
+#include "macos-bundle.h"
+
+#define fseek fseeko
+#define ftell ftello
+#elif defined(_WIN32) || defined(WIN32)
+#define fseek fseeko64
+#define ftell ftello64
+#define fopen fopen64
+#endif
+
 const char *custom_data_dir = NULL;
 
 // finds the Tyrian data directory
 const char *data_dir(void)
 {
+#if defined(__APPLE__) & defined(__MACH__)
+    const char *const dirs[] =
+    {
+        custom_data_dir,
+        getBundlePath(),
+        "data",
+        ".",
+    };
+#else
 	const char *const dirs[] =
 	{
 		custom_data_dir,
@@ -40,6 +60,7 @@ const char *data_dir(void)
 		"data",
 		".",
 	};
+#endif
 
 	static const char *dir = NULL;
 
@@ -71,7 +92,7 @@ const char *data_dir(void)
 FILE *dir_fopen(const char *dir, const char *file, const char *mode)
 {
 	char *path = malloc(strlen(dir) + 1 + strlen(file) + 1);
-	sprintf(path, "%s/%s", dir, file);
+	snprintf(path, (strlen(dir) + 1 + strlen(file) + 1), "%s/%s", dir, file);
 
 	FILE *f = fopen(path, mode);
 
@@ -132,21 +153,31 @@ long ftell_eof(FILE *f)
 void fread_die(void *buffer, size_t size, size_t count, FILE *stream)
 {
 	size_t result = fread(buffer, size, count, stream);
-	if (result != count)
+    
+#ifdef HANDLE_RESULT
+	if (result <= count)
 	{
 		fprintf(stderr, "error: An unexpected problem occurred while reading from a file.\n");
 		SDL_Quit();
 		exit(EXIT_FAILURE);
 	}
+#else
+    fprintf(stderr, "fread_die - size=%llu.\n", (unsigned long long)result);
+#endif
 }
 
 void fwrite_die(const void *buffer, size_t size, size_t count, FILE *stream)
 {
 	size_t result = fwrite(buffer, size, count, stream);
-	if (result != count)
+
+#ifdef HANDLE_RESULT
+	if (result <= count)
 	{
 		fprintf(stderr, "error: An unexpected problem occurred while writing to a file.\n");
 		SDL_Quit();
 		exit(EXIT_FAILURE);
 	}
+#else
+    fprintf(stderr, "fwrite_die - size=%llu.\n", (unsigned long long)result);
+#endif
 }

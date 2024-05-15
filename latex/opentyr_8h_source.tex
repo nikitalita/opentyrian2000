@@ -1,0 +1,67 @@
+\doxysection{opentyr.\+h}
+\hypertarget{opentyr_8h_source}{}\label{opentyr_8h_source}\index{src/opentyr.h@{src/opentyr.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ OpenTyrian:\ A\ modern\ cross-\/platform\ port\ of\ Tyrian}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *\ Copyright\ (C)\ 2007-\/2009\ \ The\ OpenTyrian\ Development\ Team}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *\ This\ program\ is\ free\ software;\ you\ can\ redistribute\ it\ and/or}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ modify\ it\ under\ the\ terms\ of\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *\ as\ published\ by\ the\ Free\ Software\ Foundation;\ either\ version\ 2}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ of\ the\ License,\ or\ (at\ your\ option)\ any\ later\ version.}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *\ This\ program\ is\ distributed\ in\ the\ hope\ that\ it\ will\ be\ useful,}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ but\ WITHOUT\ ANY\ WARRANTY;\ without\ even\ the\ implied\ warranty\ of}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ MERCHANTABILITY\ or\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE.\ \ See\ the}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *\ GNU\ General\ Public\ License\ for\ more\ details.}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ You\ should\ have\ received\ a\ copy\ of\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *\ along\ with\ this\ program;\ if\ not,\ write\ to\ the\ Free\ Software}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ Foundation,\ Inc.,\ 51\ Franklin\ Street,\ Fifth\ Floor,\ Boston,\ MA\ \ 02110-\/1301,\ USA.}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#ifndef\ OPENTYR\_H}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#define\ OPENTYR\_H}}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#include\ "{}SDL\_types.h"{}}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#include\ <math.h>}}
+\DoxyCodeLine{00025\ \textcolor{preprocessor}{\#include\ <stdbool.h>}}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#define\ COUNTOF(x)\ ((unsigned)(sizeof(x)\ /\ sizeof\ *(x)))\ \ }\textcolor{comment}{//\ use\ only\ on\ arrays!}}
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#define\ MIN(a,\ b)\ ((a)\ <\ (b)\ ?\ (a)\ :\ (b))}}
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#define\ MAX(a,\ b)\ ((a)\ >\ (b)\ ?\ (a)\ :\ (b))}}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#ifndef\ M\_PI}}
+\DoxyCodeLine{00032\ \textcolor{preprocessor}{\#define\ M\_PI\ \ \ \ 3.14159265358979323846\ \ }\textcolor{comment}{//\ pi}}
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#ifndef\ M\_PI\_2}}
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#define\ M\_PI\_2\ \ 1.57079632679489661923\ \ }\textcolor{comment}{//\ pi/2}}
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00037\ \textcolor{preprocessor}{\#ifndef\ M\_PI\_4}}
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\#define\ M\_PI\_4\ \ 0.78539816339744830962\ \ }\textcolor{comment}{//\ pi/4}}
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \textcolor{keyword}{typedef}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ uint;}
+\DoxyCodeLine{00042\ \textcolor{keyword}{typedef}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ ulong;}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \textcolor{comment}{//\ Pascal\ types,\ yuck.}}
+\DoxyCodeLine{00045\ \textcolor{keyword}{typedef}\ Sint32\ JE\_longint;}
+\DoxyCodeLine{00046\ \textcolor{keyword}{typedef}\ Sint16\ JE\_integer;}
+\DoxyCodeLine{00047\ \textcolor{keyword}{typedef}\ Sint8\ \ JE\_shortint;}
+\DoxyCodeLine{00048\ \textcolor{keyword}{typedef}\ Uint16\ JE\_word;}
+\DoxyCodeLine{00049\ \textcolor{keyword}{typedef}\ Uint8\ \ JE\_byte;}
+\DoxyCodeLine{00050\ \textcolor{keyword}{typedef}\ \textcolor{keywordtype}{bool}\ \ \ JE\_boolean;}
+\DoxyCodeLine{00051\ \textcolor{keyword}{typedef}\ \textcolor{keywordtype}{char}\ \ \ JE\_char;}
+\DoxyCodeLine{00052\ \textcolor{keyword}{typedef}\ \textcolor{keywordtype}{float}\ \ JE\_real;}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \textcolor{preprocessor}{\#define\ TYRIAN\_VERSION\ "{}2000"{}}}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \textcolor{keyword}{extern}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *opentyrian\_str;}
+\DoxyCodeLine{00057\ \textcolor{keyword}{extern}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *opentyrian\_version;}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \textcolor{keywordtype}{void}\ setupMenu(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ OPENTYR\_H\ */}\textcolor{preprocessor}{}}
+
+\end{DoxyCode}

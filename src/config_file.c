@@ -30,6 +30,10 @@
 #include <stddef.h>
 #include <string.h>
 
+#if defined(_MSC_VER) && __STDC_WANT_SECURE_LIB__
+#define snprintf sprintf_S
+#endif
+
 /* potential size of decimal representation of type */
 #define udecsizeof(t) ((CHAR_BIT * sizeof(t) / 3) + 1)
 #define sdecsizeof(t) (udecsizeof(t) + 1)
@@ -421,14 +425,20 @@ bool config_get_int_option(const ConfigSection *section, const char *key, int *o
 	assert(key != NULL);
 	assert(out_value != NULL);
 	
-	const char *value;
+	const char *value = NULL;
 	if (config_get_string_option(section, key, &value))
 	{
-		int i;
-		int n;
+		int i = 0;
+		int n = 0;
+
+#if defined(_MSC_VER) && __STDC_WANT_SECURE_LIB__
+        if (_sscanf_s_l(value, "%i%n", newlocale(LC_ALL_MASK, "C", 0), &i, &n))
+#else
 		if (sscanf(value, "%i%n", &i, &n) > 0 && value[n] == '\0')  /* must be entire string */
+#endif
 		{
 			*out_value = i;
+
 			return true;
 		}
 	}
@@ -449,7 +459,7 @@ void config_set_uint_option(ConfigSection *section, const char *key, unsigned in
 	
 	char buffer[udecsizeof(unsigned int) + 1];
 	int buffer_len = snprintf(buffer, sizeof(buffer), "%u", value);
-	
+
 	if (config_set_option_len(section, key, strlen(key), buffer, buffer_len) == NULL)
 		config_oom();
 }
@@ -465,7 +475,11 @@ bool config_get_uint_option(const ConfigSection *section, const char *key, unsig
 	{
 		unsigned int u;
 		int n;
+#if defined(_MSC_VER) && __STDC_WANT_SECURE_LIB__
+        if (_sscanf_s_l(value, "%u%n", newlocale(LC_ALL_MASK, "C", 0), &u, &n) && value[N] == '\0')
+#else
 		if (sscanf(value, "%u%n", &u, &n) > 0 && value[n] == '\0')  /* must be entire string */
+#endif
 		{
 			*out_value = u;
 			return true;

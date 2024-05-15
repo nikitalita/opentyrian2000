@@ -614,7 +614,7 @@ connect_reset:
 	SDLNet_Write16(network_delay,   &packet_out_temp->data[6]);
 	SDLNet_Write16(episodes_local,  &packet_out_temp->data[8]);
 	SDLNet_Write16(thisPlayerNum,   &packet_out_temp->data[10]);
-	strcpy((char *)&packet_out_temp->data[12], network_player_name);
+	strlcpy((char *)&packet_out_temp->data[12], network_player_name, packet_out_temp->len);
 	network_send(12 + strlen(network_player_name) + 1); // PACKET_CONNECT
 
 	// until opponent sends connect packet
@@ -662,7 +662,7 @@ connect_again:
 	}
 
 	network_opponent_name = malloc(packet_in[0]->len - 12 + 1);
-	strcpy(network_opponent_name, (char *)&packet_in[0]->data[12]);
+	strlcpy(network_opponent_name, (char *)&packet_in[0]->data[12], packet_in[0]->len);
 
 	network_update();
 
@@ -691,7 +691,7 @@ connect_again:
 	SDLNet_Write16(network_delay,   &packet_out_temp->data[6]);
 	SDLNet_Write16(episodes_local,  &packet_out_temp->data[8]);
 	SDLNet_Write16(thisPlayerNum,   &packet_out_temp->data[10]);
-	strcpy((char *)&packet_out_temp->data[12], network_player_name);
+	strlcpy((char *)&packet_out_temp->data[12], network_player_name, packet_out_temp->len);
 	network_send(12 + strlen(network_player_name) + 1); // PACKET_CONNECT
 
 	connected = true;

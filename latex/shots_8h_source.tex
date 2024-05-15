@@ -1,0 +1,59 @@
+\doxysection{shots.\+h}
+\hypertarget{shots_8h_source}{}\label{shots_8h_source}\index{src/shots.h@{src/shots.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ OpenTyrian:\ A\ modern\ cross-\/platform\ port\ of\ Tyrian}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *\ Copyright\ (C)\ 2007-\/2013\ \ The\ OpenTyrian\ Development\ Team}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *\ This\ program\ is\ free\ software;\ you\ can\ redistribute\ it\ and/or}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ modify\ it\ under\ the\ terms\ of\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *\ as\ published\ by\ the\ Free\ Software\ Foundation;\ either\ version\ 2}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ of\ the\ License,\ or\ (at\ your\ option)\ any\ later\ version.}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *\ This\ program\ is\ distributed\ in\ the\ hope\ that\ it\ will\ be\ useful,}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ but\ WITHOUT\ ANY\ WARRANTY;\ without\ even\ the\ implied\ warranty\ of}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ MERCHANTABILITY\ or\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE.\ \ See\ the}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *\ GNU\ General\ Public\ License\ for\ more\ details.}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ You\ should\ have\ received\ a\ copy\ of\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *\ along\ with\ this\ program;\ if\ not,\ write\ to\ the\ Free\ Software}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ Foundation,\ Inc.,\ 51\ Franklin\ Street,\ Fifth\ Floor,\ Boston,\ MA\ \ 02110-\/1301,\ USA.}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#ifndef\ SHOTS\_H}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#define\ SHOTS\_H}}
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#include\ "{}opentyr.h"{}}}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00024\ \ \ \ \ JE\_integer\ shotX,\ shotY,\ shotXM,\ shotYM,\ shotXC,\ shotYC;}
+\DoxyCodeLine{00025\ \ \ \ \ JE\_boolean\ shotComplicated;}
+\DoxyCodeLine{00026\ \ \ \ \ JE\_integer\ shotDevX,\ shotDirX,\ shotDevY,\ shotDirY,\ shotCirSizeX,\ shotCirSizeY;}
+\DoxyCodeLine{00027\ \ \ \ \ JE\_byte\ shotTrail;}
+\DoxyCodeLine{00028\ \ \ \ \ JE\_word\ shotGr,\ shotAni,\ shotAniMax;}
+\DoxyCodeLine{00029\ \ \ \ \ Uint8\ shotDmg;}
+\DoxyCodeLine{00030\ \ \ \ \ JE\_byte\ shotBlastFilter,\ chainReaction,\ playerNumber,\ aimAtEnemy,\ aimDelay,\ aimDelayMax;}
+\DoxyCodeLine{00031\ \}\ \mbox{\hyperlink{struct_player_shot_data_type}{PlayerShotDataType}};}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#define\ MAX\_PWEAPON\ \ \ \ \ 81\ }\textcolor{comment}{/*\ 81*/}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00034\ \textcolor{keyword}{extern}\ \mbox{\hyperlink{struct_player_shot_data_type}{PlayerShotDataType}}\ playerShotData[MAX\_PWEAPON\ +\ 1];}
+\DoxyCodeLine{00035\ \textcolor{keyword}{extern}\ JE\_byte\ shotAvail[MAX\_PWEAPON];}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00038\ \textcolor{keywordtype}{void}\ simulate\_player\_shots(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00041\ \textcolor{keywordtype}{void}\ player\_shot\_set\_direction(JE\_integer\ shot\_id,\ uint\ weapon\_id,\ JE\_real\ direction);}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00046\ \textcolor{keywordtype}{bool}\ player\_shot\_move\_and\_draw(}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keywordtype}{int}\ shot\_id,\ \textcolor{keywordtype}{bool}\ *out\_is\_special,}
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordtype}{int}\ *out\_shotx,\ \textcolor{keywordtype}{int}\ *out\_shoty,}
+\DoxyCodeLine{00049\ \ \ \ \ JE\_integer\ *out\_shot\_damage,\ JE\_byte\ *out\_blast\_filter,}
+\DoxyCodeLine{00050\ \ \ \ \ JE\_byte\ *out\_chain,\ JE\_byte\ *out\_playerNum,}
+\DoxyCodeLine{00051\ \ \ \ \ JE\_word\ *out\_special\_radiusw,\ JE\_word\ *out\_special\_radiush);}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00054\ JE\_integer\ player\_shot\_create(}
+\DoxyCodeLine{00055\ \ \ \ \ JE\_word\ portnum,\ uint\ shot\_i,\ JE\_word\ px,\ JE\_word\ py,}
+\DoxyCodeLine{00056\ \ \ \ \ JE\_word\ mousex,\ JE\_word\ mousey,}
+\DoxyCodeLine{00057\ \ \ \ \ JE\_word\ wpnum,\ JE\_byte\ playernum);}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ SHOTS\_H}}
+
+\end{DoxyCode}

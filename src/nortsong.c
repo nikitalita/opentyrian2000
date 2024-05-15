@@ -123,8 +123,8 @@ void loadSndFile(bool xmas)
 
 	// Read number of sounds.
 	fread_u16_die(&sfxCount, 1, f);
-	if (sfxCount != SFX_COUNT)
-		goto die;
+	/*if (sfxCount != SFX_COUNT)
+		goto die;*/
 
 	// Read positions of sounds.
 	fread_u32_die(sfxPositions, sfxCount, f);

@@ -499,7 +499,7 @@ const char *assignment_to_code(const Joystick_assignment *assignment)
 	switch (assignment->type)
 	{
 	case NONE:
-		strcpy(name, "");
+		strlcpy(name, "", sizeof(name));
 		break;
 		
 	case AXIS:

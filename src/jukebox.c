@@ -187,7 +187,7 @@ void jukebox(void)  // FKA Setup.jukeboxGo
 		{
 			palette_fade_steps = 15;
 			
-			SDL_Color black = { 0, 0, 0 };
+			SDL_Color black = { 0, 0, 0, 0 };
 			init_step_fade_solid(diff, black, 0, 255);
 			
 			quitting = true;

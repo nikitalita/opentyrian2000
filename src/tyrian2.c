@@ -54,6 +54,10 @@
 #include <string.h>
 #include <stdint.h>
 
+#if defined(_MSC_VER) && __STDC_WANT_SECURE_LIB__
+#define snprintf sprintf_S
+#endif
+
 inline static void blit_enemy(SDL_Surface *surface, unsigned int i, signed int x_offset, signed int y_offset, signed int sprite_offset);
 
 boss_bar_t boss_bar[2];
@@ -944,7 +948,7 @@ start_level_first:
 
 		do
 		{
-			sprintf(tempStr, "demorec.%d", new_demo_num++);
+			snprintf(tempStr, sizeof(tempStr), "demorec.%d", new_demo_num++);
 		} while (dir_file_exists(get_user_directory(), tempStr)); // until file doesn't exist
 
 		demo_file = dir_fopen_warn(get_user_directory(), tempStr, "wb");
@@ -2096,18 +2100,18 @@ draw_player_shot_loop_end:
 			tempStr[i] = '0' + smoothies[i];
 		}
 		tempStr[9] = '\0';
-		sprintf(buffer, "SM = %s", tempStr);
+		snprintf(buffer, sizeof(buffer), "SM = %s", tempStr);
 		JE_outText(VGAScreen, 30, 70, buffer, 4, 0);
 
-		sprintf(buffer, "Memory left = %d", -1);
+		snprintf(buffer, sizeof(buffer), "Memory left = %d", -1);
 		JE_outText(VGAScreen, 30, 80, buffer, 4, 0);
-		sprintf(buffer, "Enemies onscreen = %d", enemyOnScreen);
+		snprintf(buffer, sizeof(buffer), "Enemies onscreen = %d", enemyOnScreen);
 		JE_outText(VGAScreen, 30, 90, buffer, 6, 0);
 
 		debugHist = debugHist + abs((JE_longint)debugTime - (JE_longint)lastDebugTime);
 		debugHistCount++;
-		sprintf(tempStr, "%2.3f", 1000.0f / roundf(debugHist / debugHistCount));
-		sprintf(buffer, "X:%d Y:%-5d  %s FPS  %d %d %d %d", (mapX - 1) * 12 + player[0].x, curLoc, tempStr, player[0].x_velocity, player[0].y_velocity, player[0].x, player[0].y);
+		snprintf(tempStr, sizeof(tempStr), "%2.3f", 1000.0f / roundf(debugHist / debugHistCount));
+		snprintf(buffer, sizeof(buffer), "X:%d Y:%-5d  %s FPS  %d %d %d %d", (mapX - 1) * 12 + player[0].x, curLoc, tempStr, player[0].x_velocity, player[0].y_velocity, player[0].x, player[0].y);
 		JE_outText(VGAScreen, 45, 175, buffer, 15, 3);
 		lastDebugTime = debugTime;
 	}
@@ -2153,7 +2157,7 @@ draw_player_shot_loop_end:
 
 		JE_textShade (VGAScreen, 140, 6, miscText[66], 7, (levelTimerCountdown % 20) / 3, FULL_SHADE);
 		// Don't use floats due to rounding.
-		sprintf(buffer, "%d.%d", levelTimerCountdown / 100, (levelTimerCountdown / 10) % 10);
+		snprintf(buffer, sizeof(buffer), "%d.%d", levelTimerCountdown / 100, (levelTimerCountdown / 10) % 10);
 		JE_dString (VGAScreen, 100, 2, buffer, SMALL_FONT_SHAPES);
 	}
 
@@ -2313,7 +2317,7 @@ draw_player_shot_loop_end:
 					if (SDLNet_Read16(&packet_state_in[0]->data[18 + i * 2]) != SDLNet_Read16(&packet_state_out[network_delay]->data[18 + i * 2]) || SDLNet_Read16(&packet_state_in[0]->data[20 + i * 2]) != SDLNet_Read16(&packet_state_out[network_delay]->data[20 + i * 2]))
 					{
 						char temp[64];
-						sprintf(temp, "Player %d is unsynchronized!", i + 1);
+						snprintf(temp, sizeof(temp), "Player %d is unsynchronized!", i + 1);
 
 						JE_textShade(game_screen, 40, 110 + i * 10, temp, 9, 2, FULL_SHADE);
 					}
@@ -2469,7 +2473,7 @@ new_game:
 						goto new_game;
 				}
 
-				strcpy(s, " ");
+				strlcpy(s, " ", sizeof(s));
 				read_encrypted_pascal_string(s, sizeof(s), ep_f);
 
 				if (s[0] == ']')
@@ -2651,13 +2655,13 @@ new_game:
 						{
 							for (uint i = 0; i < 2; ++i)
 								snprintf(levelWarningText[i], sizeof(*levelWarningText), "%s %lu", miscText[40 + i], player[i].cash);
-							strcpy(levelWarningText[2], "");
+							strlcpy(levelWarningText[2], "", 1);
 							levelWarningLines = 3;
 						}
 						else
 						{
-							sprintf(levelWarningText[0], "%s %lu", miscText[37], JE_totalScore(&player[0]));
-							strcpy(levelWarningText[1], "");
+							snprintf(levelWarningText[0], sizeof(levelWarningText[0]), "%s %lu", miscText[37], JE_totalScore(&player[0]));
+							strlcpy(levelWarningText[1], "", 1);
 							levelWarningLines = 2;
 						}
 
@@ -2672,7 +2676,7 @@ new_game:
 						do
 						{
 							read_encrypted_pascal_string(s, sizeof(s), ep_f);
-							strcpy(levelWarningText[levelWarningLines], s);
+							strlcpy(levelWarningText[levelWarningLines], s, sizeof(levelWarningText[levelWarningLines]));
 							levelWarningLines++;
 						} while (s[0] != '#');
 						levelWarningLines--;
@@ -2702,10 +2706,10 @@ new_game:
 							{
 								if (SANextShip[superArcadeMode] == SA_ENGAGE)
 								{
-									sprintf(buffer, "%s %s", miscTextB[4], pName[0]);
+									snprintf(buffer, sizeof(buffer), "%s %s", miscTextB[4], pName[0]);
 									JE_dString(VGAScreen, JE_fontCenter(buffer, FONT_SHAPES), 100, buffer, FONT_SHAPES);
 
-									sprintf(buffer, "Or play... %s", specialName[SA_DESTRUCT - 1]);
+									snprintf(buffer, sizeof(buffer), "Or play... %s", specialName[SA_DESTRUCT - 1]);
 									JE_dString(VGAScreen, 80, 180, buffer, SMALL_FONT_SHAPES);
 								}
 								else
@@ -2719,7 +2723,7 @@ new_game:
 								else if (SANextShip[superArcadeMode] == SA_NORTSHIPZ)
 									trentWin = true;
 
-								sprintf(buffer, "Type %s at Title", specialName[SANextShip[superArcadeMode]-1]);
+								snprintf(buffer, sizeof(buffer), "Type %s at Title", specialName[SANextShip[superArcadeMode]-1]);
 								JE_dString(VGAScreen, JE_fontCenter(buffer, SMALL_FONT_SHAPES), 160, buffer, SMALL_FONT_SHAPES);
 								JE_showVGA();
 
@@ -2967,7 +2971,7 @@ new_game:
 
 									if (s[0] != '#')
 									{
-										strcpy(levelWarningText[levelWarningLines], s);
+										strlcpy(levelWarningText[levelWarningLines], s, sizeof(levelWarningText[levelWarningLines]));
 										levelWarningLines++;
 									}
 								} while (!(s[0] == '#'));
@@ -3085,7 +3089,7 @@ new_game:
 	}
 
 	/* Read Shapes.DAT */
-	sprintf(tempStr, "shapes%c.dat", tolower((unsigned char)char_shapeFile));
+	snprintf(tempStr, sizeof(tempStr), "shapes%c.dat", tolower((unsigned char)char_shapeFile));
 	FILE *shpFile = dir_fopen_die(data_dir(), tempStr, "rb");
 
 	for (int z = 0; z < 600; z++)
@@ -3525,7 +3529,7 @@ bool titleScreen(void)
 							JE_playSampleNum(V_DANGER);
 
 							JE_whoa();
-							set_colors((SDL_Color) { 0, 0, 0 }, 0, 255);
+                            set_colors((SDL_Color) { 0, 0, 0, 0 }, 0, 255);
 
 							if (newSuperTyrianGame())
 								return true;

@@ -22,11 +22,23 @@
 #include "opentyr.h"
 #include "config_file.h"
 
-#include "SDL.h"
+#include "SDL2/SDL.h"
 
 #include <stdio.h>
 
+#if defined(_WIN32) || defined(WIN32)
+#ifndef strlcpy
+#define strlcpy SDL_strlcpy
+#endif
+
+#ifndef strlcat
+#define strlcat SDL_strlcat
+#endif
+#endif
+
+#ifndef SAVE_FILES_NUM
 #define SAVE_FILES_NUM (11 * 2)
+#endif /*  SAVE_FILES_NUM */
 
 /* These are necessary because the size of the structure has changed from the original, but we
    need to know the original sizes in order to find things in TYRIAN.SAV */

@@ -1,0 +1,188 @@
+\doxysection{file.\+h}
+\hypertarget{file_8h_source}{}\label{file_8h_source}\index{src/file.h@{src/file.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ OpenTyrian:\ A\ modern\ cross-\/platform\ port\ of\ Tyrian}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *\ Copyright\ (C)\ 2007-\/2009\ \ The\ OpenTyrian\ Development\ Team}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *\ This\ program\ is\ free\ software;\ you\ can\ redistribute\ it\ and/or}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ modify\ it\ under\ the\ terms\ of\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *\ as\ published\ by\ the\ Free\ Software\ Foundation;\ either\ version\ 2}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ of\ the\ License,\ or\ (at\ your\ option)\ any\ later\ version.}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *\ This\ program\ is\ distributed\ in\ the\ hope\ that\ it\ will\ be\ useful,}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ but\ WITHOUT\ ANY\ WARRANTY;\ without\ even\ the\ implied\ warranty\ of}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ MERCHANTABILITY\ or\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE.\ \ See\ the}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *\ GNU\ General\ Public\ License\ for\ more\ details.}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ You\ should\ have\ received\ a\ copy\ of\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *\ along\ with\ this\ program;\ if\ not,\ write\ to\ the\ Free\ Software}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ Foundation,\ Inc.,\ 51\ Franklin\ Street,\ Fifth\ Floor,\ Boston,\ MA\ \ 02110-\/1301,\ USA.}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#ifndef\ FILE\_H}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#define\ FILE\_H}}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#include\ "{}SDL\_endian.h"{}}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#include\ <stdbool.h>}}
+\DoxyCodeLine{00025\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \textcolor{keyword}{extern}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *custom\_data\_dir;}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *data\_dir(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ FILE\ *dir\_fopen(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *dir,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *file,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *mode);}
+\DoxyCodeLine{00032\ FILE\ *dir\_fopen\_warn(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *dir,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *file,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *mode);}
+\DoxyCodeLine{00033\ FILE\ *dir\_fopen\_die(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *dir,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *file,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *mode);}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \textcolor{keywordtype}{bool}\ dir\_file\_exists(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *dir,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *file);}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \textcolor{keywordtype}{long}\ ftell\_eof(FILE\ *f);}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \textcolor{keywordtype}{void}\ fread\_die(\textcolor{keywordtype}{void}\ *buffer,\ \textcolor{keywordtype}{size\_t}\ size,\ \textcolor{keywordtype}{size\_t}\ count,\ FILE\ *stream);}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \textcolor{comment}{//\ 8-\/bit\ fread\ that\ dies\ if\ read\ fails}}
+\DoxyCodeLine{00042\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ fread\_bool\_die(\textcolor{keywordtype}{bool}\ *buffer,\ FILE\ *stream)}
+\DoxyCodeLine{00043\ \{}
+\DoxyCodeLine{00044\ \ \ \ \ Uint8\ temp;}
+\DoxyCodeLine{00045\ \ \ \ \ fread\_die(\&temp,\ \textcolor{keyword}{sizeof}(Uint8),\ 1,\ stream);}
+\DoxyCodeLine{00046\ \ \ \ \ *buffer\ =\ temp\ !=\ 0;}
+\DoxyCodeLine{00047\ \}}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \textcolor{comment}{//\ 8-\/bit\ fread}}
+\DoxyCodeLine{00050\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{size\_t}\ fread\_u8(Uint8\ *buffer,\ \textcolor{keywordtype}{size\_t}\ count,\ FILE\ *stream)}
+\DoxyCodeLine{00051\ \{}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordflow}{return}\ fread(buffer,\ \textcolor{keyword}{sizeof}(Uint8),\ count,\ stream);}
+\DoxyCodeLine{00053\ \}}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \textcolor{comment}{//\ 8-\/bit\ fread\ that\ dies\ if\ read\ fails}}
+\DoxyCodeLine{00056\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ fread\_u8\_die(Uint8\ *buffer,\ \textcolor{keywordtype}{size\_t}\ count,\ FILE\ *stream)}
+\DoxyCodeLine{00057\ \{}
+\DoxyCodeLine{00058\ \ \ \ \ fread\_die(buffer,\ \textcolor{keyword}{sizeof}(Uint8),\ count,\ stream);}
+\DoxyCodeLine{00059\ \}}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \textcolor{comment}{//\ 8-\/bit\ fread\ that\ dies\ if\ read\ fails}}
+\DoxyCodeLine{00062\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ fread\_s8\_die(Sint8\ *buffer,\ \textcolor{keywordtype}{size\_t}\ count,\ FILE\ *stream)}
+\DoxyCodeLine{00063\ \{}
+\DoxyCodeLine{00064\ \ \ \ \ fread\_die(buffer,\ \textcolor{keyword}{sizeof}(Sint8),\ count,\ stream);}
+\DoxyCodeLine{00065\ \}}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00067\ \textcolor{comment}{//\ 16-\/bit\ endian-\/swapping\ fread\ that\ dies\ if\ read\ fails}}
+\DoxyCodeLine{00068\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ fread\_u16\_die(Uint16\ *buffer,\ \textcolor{keywordtype}{size\_t}\ count,\ FILE\ *stream)}
+\DoxyCodeLine{00069\ \{}
+\DoxyCodeLine{00070\ \ \ \ \ fread\_die(buffer,\ \textcolor{keyword}{sizeof}(Uint16),\ count,\ stream);}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00072\ \textcolor{preprocessor}{\#if\ SDL\_BYTEORDER\ ==\ SDL\_BIG\_ENDIAN}}
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ count;\ ++i)}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ buffer[i]\ =\ SDL\_Swap16(buffer[i]);}
+\DoxyCodeLine{00075\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00076\ \}}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00078\ \textcolor{comment}{//\ 16-\/bit\ endian-\/swapping\ fread\ that\ dies\ if\ read\ fails}}
+\DoxyCodeLine{00079\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ fread\_s16\_die(Sint16\ *buffer,\ \textcolor{keywordtype}{size\_t}\ count,\ FILE\ *stream)}
+\DoxyCodeLine{00080\ \{}
+\DoxyCodeLine{00081\ \ \ \ \ fread\_die(buffer,\ \textcolor{keyword}{sizeof}(Sint16),\ count,\ stream);}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00083\ \textcolor{preprocessor}{\#if\ SDL\_BYTEORDER\ ==\ SDL\_BIG\_ENDIAN}}
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ count;\ ++i)}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ buffer[i]\ =\ SDL\_Swap16(buffer[i]);}
+\DoxyCodeLine{00086\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00087\ \}}
+\DoxyCodeLine{00088\ }
+\DoxyCodeLine{00089\ \textcolor{comment}{//\ 32-\/bit\ endian-\/swapping\ fread\ that\ dies\ if\ read\ fails}}
+\DoxyCodeLine{00090\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ fread\_u32\_die(Uint32\ *buffer,\ \textcolor{keywordtype}{size\_t}\ count,\ FILE\ *stream)}
+\DoxyCodeLine{00091\ \{}
+\DoxyCodeLine{00092\ \ \ \ \ fread\_die(buffer,\ \textcolor{keyword}{sizeof}(Uint32),\ count,\ stream);}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00094\ \textcolor{preprocessor}{\#if\ SDL\_BYTEORDER\ ==\ SDL\_BIG\_ENDIAN}}
+\DoxyCodeLine{00095\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ count;\ ++i)}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ buffer[i]\ =\ SDL\_Swap32(buffer[i]);}
+\DoxyCodeLine{00097\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00098\ \}}
+\DoxyCodeLine{00099\ }
+\DoxyCodeLine{00100\ \textcolor{comment}{//\ 32-\/bit\ endian-\/swapping\ fread\ that\ dies\ if\ read\ fails}}
+\DoxyCodeLine{00101\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ fread\_s32\_die(Sint32\ *buffer,\ \textcolor{keywordtype}{size\_t}\ count,\ FILE\ *stream)}
+\DoxyCodeLine{00102\ \{}
+\DoxyCodeLine{00103\ \ \ \ \ fread\_die(buffer,\ \textcolor{keyword}{sizeof}(Sint32),\ count,\ stream);}
+\DoxyCodeLine{00104\ }
+\DoxyCodeLine{00105\ \textcolor{preprocessor}{\#if\ SDL\_BYTEORDER\ ==\ SDL\_BIG\_ENDIAN}}
+\DoxyCodeLine{00106\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ count;\ ++i)}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ buffer[i]\ =\ SDL\_Swap32(buffer[i]);}
+\DoxyCodeLine{00108\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00109\ \}}
+\DoxyCodeLine{00110\ }
+\DoxyCodeLine{00111\ \textcolor{keywordtype}{void}\ fwrite\_die(\textcolor{keyword}{const}\ \textcolor{keywordtype}{void}\ *buffer,\ \textcolor{keywordtype}{size\_t}\ size,\ \textcolor{keywordtype}{size\_t}\ count,\ FILE\ *stream);}
+\DoxyCodeLine{00112\ }
+\DoxyCodeLine{00113\ \textcolor{comment}{//\ 8-\/bit\ fwrite\ that\ dies\ if\ write\ fails}}
+\DoxyCodeLine{00114\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ fwrite\_bool\_die(\textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ *buffer,\ FILE\ *stream)}
+\DoxyCodeLine{00115\ \{}
+\DoxyCodeLine{00116\ \ \ \ \ Uint8\ temp\ =\ *buffer\ ?\ 1\ :\ 0;}
+\DoxyCodeLine{00117\ \ \ \ \ fwrite\_die(\&temp,\ \textcolor{keyword}{sizeof}(Uint8),\ 1,\ stream);}
+\DoxyCodeLine{00118\ \}}
+\DoxyCodeLine{00119\ }
+\DoxyCodeLine{00120\ \textcolor{comment}{//\ 8-\/bit\ fwrite}}
+\DoxyCodeLine{00121\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{size\_t}\ fwrite\_u8(\textcolor{keyword}{const}\ Uint8\ *buffer,\ \textcolor{keywordtype}{size\_t}\ count,\ FILE\ *stream)}
+\DoxyCodeLine{00122\ \{}
+\DoxyCodeLine{00123\ \ \ \ \ \textcolor{keywordflow}{return}\ fwrite(buffer,\ \textcolor{keyword}{sizeof}(Uint8),\ count,\ stream);}
+\DoxyCodeLine{00124\ \}}
+\DoxyCodeLine{00125\ }
+\DoxyCodeLine{00126\ \textcolor{comment}{//\ 8-\/bit\ fwrite\ that\ dies\ if\ write\ fails}}
+\DoxyCodeLine{00127\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ fwrite\_u8\_die(\textcolor{keyword}{const}\ Uint8\ *buffer,\ \textcolor{keywordtype}{size\_t}\ count,\ FILE\ *stream)}
+\DoxyCodeLine{00128\ \{}
+\DoxyCodeLine{00129\ \ \ \ \ fwrite\_die(buffer,\ \textcolor{keyword}{sizeof}(Uint8),\ count,\ stream);}
+\DoxyCodeLine{00130\ \}}
+\DoxyCodeLine{00131\ }
+\DoxyCodeLine{00132\ \textcolor{comment}{//\ 8-\/bit\ fwrite\ that\ dies\ if\ write\ fails}}
+\DoxyCodeLine{00133\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ fwrite\_s8\_die(\textcolor{keyword}{const}\ Sint8\ *buffer,\ \textcolor{keywordtype}{size\_t}\ count,\ FILE\ *stream)}
+\DoxyCodeLine{00134\ \{}
+\DoxyCodeLine{00135\ \ \ \ \ fwrite\_die(buffer,\ \textcolor{keyword}{sizeof}(Sint8),\ count,\ stream);}
+\DoxyCodeLine{00136\ \}}
+\DoxyCodeLine{00137\ }
+\DoxyCodeLine{00138\ \textcolor{comment}{//\ 16-\/bit\ endian-\/swapping\ fwrite\ that\ dies\ if\ write\ fails}}
+\DoxyCodeLine{00139\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ fwrite\_u16\_die(\textcolor{keyword}{const}\ Uint16\ *buffer,\ FILE\ *stream)}
+\DoxyCodeLine{00140\ \{}
+\DoxyCodeLine{00141\ \textcolor{preprocessor}{\#if\ SDL\_BYTEORDER\ ==\ SDL\_BIG\_ENDIAN}}
+\DoxyCodeLine{00142\ \ \ \ \ Uint16\ temp\ =\ SDL\_Swap16(*buffer);}
+\DoxyCodeLine{00143\ \ \ \ \ buffer\ =\ \&temp;}
+\DoxyCodeLine{00144\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00145\ }
+\DoxyCodeLine{00146\ \ \ \ \ fwrite\_die(buffer,\ \textcolor{keyword}{sizeof}(Uint16),\ 1,\ stream);}
+\DoxyCodeLine{00147\ \}}
+\DoxyCodeLine{00148\ }
+\DoxyCodeLine{00149\ \textcolor{comment}{//\ 16-\/bit\ endian-\/swapping\ fwrite\ that\ dies\ if\ write\ fails}}
+\DoxyCodeLine{00150\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ fwrite\_s16\_die(\textcolor{keyword}{const}\ Sint16\ *buffer,\ FILE\ *stream)}
+\DoxyCodeLine{00151\ \{}
+\DoxyCodeLine{00152\ \textcolor{preprocessor}{\#if\ SDL\_BYTEORDER\ ==\ SDL\_BIG\_ENDIAN}}
+\DoxyCodeLine{00153\ \ \ \ \ Sint16\ temp\ =\ SDL\_Swap16(*buffer);}
+\DoxyCodeLine{00154\ \ \ \ \ buffer\ =\ \&temp;}
+\DoxyCodeLine{00155\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00156\ }
+\DoxyCodeLine{00157\ \ \ \ \ fwrite\_die(buffer,\ \textcolor{keyword}{sizeof}(Sint16),\ 1,\ stream);}
+\DoxyCodeLine{00158\ \}}
+\DoxyCodeLine{00159\ }
+\DoxyCodeLine{00160\ \textcolor{comment}{//\ 32-\/bit\ endian-\/swapping\ fwrite\ that\ dies\ if\ write\ fails}}
+\DoxyCodeLine{00161\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ fwrite\_u32\_die(\textcolor{keyword}{const}\ Uint32\ *buffer,\ FILE\ *stream)}
+\DoxyCodeLine{00162\ \{}
+\DoxyCodeLine{00163\ \textcolor{preprocessor}{\#if\ SDL\_BYTEORDER\ ==\ SDL\_BIG\_ENDIAN}}
+\DoxyCodeLine{00164\ \ \ \ \ Uint32\ temp\ =\ SDL\_Swap32(*buffer);}
+\DoxyCodeLine{00165\ \ \ \ \ buffer\ =\ \&temp;}
+\DoxyCodeLine{00166\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00167\ }
+\DoxyCodeLine{00168\ \ \ \ \ fwrite\_die(buffer,\ \textcolor{keyword}{sizeof}(Uint32),\ 1,\ stream);}
+\DoxyCodeLine{00169\ \}}
+\DoxyCodeLine{00170\ }
+\DoxyCodeLine{00171\ \textcolor{comment}{//\ 32-\/bit\ endian-\/swapping\ fwrite\ that\ dies\ if\ write\ fails}}
+\DoxyCodeLine{00172\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ fwrite\_s32\_die(\textcolor{keyword}{const}\ Sint32\ *buffer,\ FILE\ *stream)}
+\DoxyCodeLine{00173\ \{}
+\DoxyCodeLine{00174\ \textcolor{preprocessor}{\#if\ SDL\_BYTEORDER\ ==\ SDL\_BIG\_ENDIAN}}
+\DoxyCodeLine{00175\ \ \ \ \ Sint32\ temp\ =\ SDL\_Swap32(*buffer);}
+\DoxyCodeLine{00176\ \ \ \ \ buffer\ =\ \&temp;}
+\DoxyCodeLine{00177\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00178\ }
+\DoxyCodeLine{00179\ \ \ \ \ fwrite\_die(buffer,\ \textcolor{keyword}{sizeof}(Sint32),\ 1,\ stream);}
+\DoxyCodeLine{00180\ \}}
+\DoxyCodeLine{00181\ }
+\DoxyCodeLine{00182\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ FILE\_H}}
+
+\end{DoxyCode}

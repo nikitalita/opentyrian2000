@@ -65,6 +65,10 @@
 
 #include <assert.h>
 
+#if defined(_MSC_VER) && __STDC_WANT_SECURE_LIB__
+#define snprintf sprintf_S
+#endif
+
 /*** Defines ***/
 #define UNIT_HEIGHT 12
 #define MAX_KEY_OPTIONS 4
@@ -2311,9 +2315,9 @@ static void DE_RunTickDrawHUD(void)
 		blit_sprite2(VGAScreen, startX +  4, 0, destructSpriteSheet, 191 + curUnit->shotType);
 
 		JE_outText   (VGAScreen, startX + 20, 3, weaponNames[curUnit->shotType], 15, 2);
-		sprintf      (tempstr, "dmg~%d~", curUnit->health);
+		snprintf      (tempstr, sizeof(tempstr), "dmg~%d~", curUnit->health);
 		JE_outText   (VGAScreen, startX + 75, 3, tempstr, 15, 0);
-		sprintf      (tempstr, "pts~%d~", destruct_player[i].score);
+		snprintf      (tempstr, sizeof(tempstr), "pts~%d~", destruct_player[i].score);
 		JE_outText   (VGAScreen, startX + 110, 3, tempstr, 15, 0);
 	}
 }

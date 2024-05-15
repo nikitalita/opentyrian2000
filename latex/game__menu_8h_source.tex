@@ -1,0 +1,64 @@
+\doxysection{game\+\_\+menu.\+h}
+\hypertarget{game__menu_8h_source}{}\label{game__menu_8h_source}\index{src/game\_menu.h@{src/game\_menu.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ OpenTyrian:\ A\ modern\ cross-\/platform\ port\ of\ Tyrian}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *\ Copyright\ (C)\ 2007-\/2009\ \ The\ OpenTyrian\ Development\ Team}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *\ This\ program\ is\ free\ software;\ you\ can\ redistribute\ it\ and/or}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ modify\ it\ under\ the\ terms\ of\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *\ as\ published\ by\ the\ Free\ Software\ Foundation;\ either\ version\ 2}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ of\ the\ License,\ or\ (at\ your\ option)\ any\ later\ version.}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *\ This\ program\ is\ distributed\ in\ the\ hope\ that\ it\ will\ be\ useful,}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ but\ WITHOUT\ ANY\ WARRANTY;\ without\ even\ the\ implied\ warranty\ of}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ MERCHANTABILITY\ or\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE.\ \ See\ the}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *\ GNU\ General\ Public\ License\ for\ more\ details.}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ You\ should\ have\ received\ a\ copy\ of\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *\ along\ with\ this\ program;\ if\ not,\ write\ to\ the\ Free\ Software}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ Foundation,\ Inc.,\ 51\ Franklin\ Street,\ Fifth\ Floor,\ Boston,\ MA\ \ 02110-\/1301,\ USA.}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#ifndef\ GAME\_MENU\_H}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#define\ GAME\_MENU\_H}}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#include\ "{}helptext.h"{}}}
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#include\ "{}opentyr.h"{}}}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \textcolor{keyword}{typedef}\ JE\_byte\ JE\_MenuChoiceType[MENU\_MAX];}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ JE\_longint\ JE\_cashLeft(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00028\ \textcolor{keywordtype}{void}\ JE\_itemScreen(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \textcolor{keywordtype}{void}\ load\_cubes(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00031\ \textcolor{keywordtype}{bool}\ load\_cube(\textcolor{keywordtype}{int}\ cube\_slot,\ \textcolor{keywordtype}{int}\ cube\_index);}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \textcolor{keywordtype}{void}\ JE\_drawItem(JE\_byte\ itemType,\ JE\_word\ itemNum,\ JE\_word\ x,\ JE\_word\ y);}
+\DoxyCodeLine{00034\ \textcolor{keywordtype}{void}\ JE\_drawMenuHeader(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00035\ \textcolor{keywordtype}{void}\ JE\_drawMenuChoices(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00036\ \textcolor{keywordtype}{void}\ JE\_updateNavScreen(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00037\ \textcolor{keywordtype}{void}\ JE\_drawNavLines(JE\_boolean\ dark);}
+\DoxyCodeLine{00038\ \textcolor{keywordtype}{void}\ JE\_drawLines(SDL\_Surface\ *surface,\ JE\_boolean\ dark);}
+\DoxyCodeLine{00039\ \textcolor{keywordtype}{void}\ JE\_drawDots(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00040\ \textcolor{keywordtype}{void}\ JE\_drawPlanet(JE\_byte\ planetNum);}
+\DoxyCodeLine{00041\ \textcolor{keywordtype}{void}\ draw\_ship\_illustration(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00042\ \textcolor{keywordtype}{void}\ JE\_scaleBitmap(SDL\_Surface\ *dst,\ \textcolor{keyword}{const}\ SDL\_Surface\ *src,\ \textcolor{keywordtype}{int}\ x1,\ \textcolor{keywordtype}{int}\ y1,\ \textcolor{keywordtype}{int}\ x2,\ \textcolor{keywordtype}{int}\ y2);}
+\DoxyCodeLine{00043\ \textcolor{keywordtype}{void}\ JE\_initWeaponView(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00044\ \textcolor{keywordtype}{void}\ JE\_computeDots(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00045\ JE\_integer\ JE\_partWay(JE\_integer\ start,\ JE\_integer\ finish,\ JE\_byte\ dots,\ JE\_byte\ dist);}
+\DoxyCodeLine{00046\ \textcolor{keywordtype}{void}\ JE\_doShipSpecs(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00047\ \textcolor{keywordtype}{void}\ JE\_drawMainMenuHelpText(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00048\ JE\_boolean\ JE\_saveRequest(JE\_byte\ slot,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *savename);}
+\DoxyCodeLine{00049\ JE\_boolean\ JE\_quitRequest(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00050\ \textcolor{keywordtype}{void}\ JE\_genItemMenu(JE\_byte\ itemnum);}
+\DoxyCodeLine{00051\ \textcolor{keywordtype}{void}\ JE\_scaleInPicture(SDL\_Surface\ *dst,\ \textcolor{keyword}{const}\ SDL\_Surface\ *src);}
+\DoxyCodeLine{00052\ \textcolor{keywordtype}{void}\ JE\_drawScore(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00053\ \textcolor{keywordtype}{void}\ JE\_menuFunction(JE\_byte\ select);}
+\DoxyCodeLine{00054\ \textcolor{keywordtype}{void}\ JE\_drawShipSpecs(SDL\_Surface\ *,\ SDL\_Surface\ *);}
+\DoxyCodeLine{00055\ \textcolor{keywordtype}{void}\ JE\_weaponSimUpdate(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00056\ \textcolor{keywordtype}{void}\ JE\_weaponViewFrame(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ GAME\_MENU\_H}}
+
+\end{DoxyCode}

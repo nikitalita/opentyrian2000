@@ -50,6 +50,10 @@
 
 #include "SDL.h"
 
+#if defined(_WIN32) || defined(WIN32)
+#include <Windows.h>
+#endif
+
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -141,12 +145,12 @@ void setupMenu(void)
 		[MENU_SETUP] = {
 			.header = "Setup",
 			.items = {
-				{ MENU_ITEM_GRAPHICS, "Graphics...", "Change the graphics settings." },
-				{ MENU_ITEM_SOUND, "Sound...", "Change the sound settings." },
-				{ MENU_ITEM_JUKEBOX, "Jukebox", "Listen to the music of Tyrian." },
-				// { MENU_ITEM_DESTRUCT, "Destruct", "Play a bonus mini-game." },
-				{ MENU_ITEM_DONE, "Done", "Return to the main menu." },
-				{ -1 }
+				{ MENU_ITEM_GRAPHICS, "Graphics...", "Change the graphics settings.", NULL, NULL },
+				{ MENU_ITEM_SOUND, "Sound...", "Change the sound settings.", NULL, NULL },
+				{ MENU_ITEM_JUKEBOX, "Jukebox", "Listen to the music of Tyrian.", NULL, NULL },
+				// { MENU_ITEM_DESTRUCT, "Destruct", "Play a bonus mini-game.", NULL, NULL },
+				{ MENU_ITEM_DONE, "Done", "Return to the main menu.", NULL, NULL },
+				{ -1, NULL, NULL, NULL, NULL }
 			},
 		},
 		[MENU_GRAPHICS] = {
@@ -155,17 +159,17 @@ void setupMenu(void)
 				{ MENU_ITEM_DISPLAY, "Display:", "Change the display mode.", getDisplayPickerItemsCount, getDisplayPickerItem },
 				{ MENU_ITEM_SCALER, "Scaler:", "Change the pixel art scaling algorithm.", getScalerPickerItemsCount, getScalerPickerItem },
 				{ MENU_ITEM_SCALING_MODE, "Scaling Mode:", "Change the scaling mode.", getScalingModePickerItemsCount, getScalingModePickerItem },
-				{ MENU_ITEM_DONE, "Done", "Return to the previous menu." },
-				{ -1 }
+				{ MENU_ITEM_DONE, "Done", "Return to the previous menu.", NULL, NULL },
+				{ -1, NULL, NULL, NULL, NULL }
 			},
 		},
 		[MENU_SOUND] = {
 			.header = "Sound",
 			.items = {
-				{ MENU_ITEM_MUSIC_VOLUME, "Music Volume", "Change volume with the left/right arrow keys." },
-				{ MENU_ITEM_SOUND_VOLUME, "Sound Volume", "Change volume with the left/right arrow keys." },
-				{ MENU_ITEM_DONE, "Done", "Return to the previous menu." },
-				{ -1 }
+				{ MENU_ITEM_MUSIC_VOLUME, "Music Volume", "Change volume with the left/right arrow keys.", NULL, NULL },
+				{ MENU_ITEM_SOUND_VOLUME, "Sound Volume", "Change volume with the left/right arrow keys.", NULL, NULL },
+                { MENU_ITEM_DONE, "Done", "Return to the previous menu.", NULL, NULL },
+				{ -1, NULL, NULL, NULL, NULL }
 			},
 		},
 	};
@@ -745,7 +749,11 @@ void setupMenu(void)
 	}
 }
 
+#if defined(_WIN32) || defined(WIN32)
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR argv, int argc)
+#else /* USE_WINMAIN */
 int main(int argc, char *argv[])
+#endif
 {
 	mt_srand(time(NULL));
 

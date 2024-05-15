@@ -230,9 +230,9 @@ void JE_loadHelpText(void)
 	skip_pascal_string(f);
 
 	// OpenTyrian2000 Override
-	strcpy(menuText[6], menuText[5]);
-	strcpy(menuText[5], menuText[4]);
-	strcpy(menuText[4], "Setup");
+	strlcpy(menuText[6], menuText[5], sizeof(menuText[6]));
+	strlcpy(menuText[5], menuText[4], sizeof(menuText[5]));
+	strlcpy(menuText[4], "Setup", sizeof(menuText[4]));
 
 	/*Event text*/
 	skip_pascal_string(f);

@@ -1,0 +1,172 @@
+# BUILD SETTINGS ###############################################################
+
+ifneq ($(filter Msys Cygwin, $(shell uname -o)), )
+    PLATFORM := WIN32
+    TYRIAN_DIR = "C:\\TYRIAN"
+else
+ifneq ($(filter Darwin, $(shell uname -o)), )
+   PLATFORM := MACOS
+   TYRIAN_DIR = "/Applications/OpenTyrian2000.app/Contents/MacOS"
+else
+    PLATFORM := UNIX
+    TYRIAN_DIR = "/usr/local/bin"
+endif
+endif
+
+WITH_NETWORK := true
+
+################################################################################
+# see https://www.gnu.org/prep/standards/html_node/Makefile-Conventions.html
+################################################################################
+
+SHELL = /bin/sh
+
+################################################################################
+# Mac OS X Deployment Target Version
+################################################################################
+MACOSX_DEPLOYMENT_TARGET = 10.14
+
+################################################################################
+# Signing executable (codesign)
+################################################################################
+# CODESIGN = /usr/bin/codesign -f -s - -i com.AnV.Software.OpenTyrian2000
+CODESIGN = /usr/bin/codesign -f -s "Apple Development" -i com.AnV.Software.OpenTyrian2000
+
+CC = /usr/bin/clang
+INSTALL = /usr/bin/install
+PKG_CONFIG = /usr/local/bin/pkg-config
+INSTALL_NAME_TOOL = /usr/bin/install_name_tool
+
+# VCS_IDREV ?= (git describe --tags || git rev-parse --short HEAD)
+VCS_IDREV = "\"$(shell echo "SDL2 v$(shell pkg-config SDL2 --modversion), SDL2_net v$(shell pkg-config SDL2_net --modversion), $(shell ./getver)")\""
+
+INSTALL_PROGRAM = $(INSTALL) -m 755
+INSTALL_DATA = $(INSTALL) -m 644
+
+APPLICATIONS = /Applications
+prefix ?= /usr/local
+exec_prefix ?= $(prefix)
+
+bindir ?= $(exec_prefix)/bin
+datarootdir ?= $(prefix)/share
+datadir ?= $(datarootdir)
+docdir ?= $(datarootdir)/doc/opentyrian2000
+mandir ?= $(datarootdir)/man
+man6dir ?= $(mandir)/man6
+man6ext ?= .6
+desktopdir ?= $(datarootdir)/applications
+icondir ?= $(datarootdir)/icons
+
+# see https://www.pathname.com/fhs/pub/fhs-2.3.html
+
+gamesdir ?= $(datadir)/games
+
+###
+
+TARGET := opentyrian2000
+
+SRCS := $(wildcard src/*.c) $(wildcard src/*.m)
+OBJS := $(SRCS:src/%.c=obj/%.o) obj/macos-bundle.o
+DEPS := $(SRCS:src/%.c=obj/%.d)
+
+###
+
+ifeq ($(WITH_NETWORK), true)
+    EXTRA_CPPFLAGS += -DWITH_NETWORK
+endif
+
+OPENTYRIAN_VERSION := $(VCS_IDREV)\
+
+EXTRA_CPPFLAGS += -DOPENTYRIAN_VERSION=$(OPENTYRIAN_VERSION)
+
+ifeq ($(_DEBUG), 1)
+CPPFLAGS = -D_DEBUG=1 -UNDEBUG
+CFLAGS += -arch arm64 -arch x86_64 -g3 -O0 -mmacosx-version-min=$(MACOSX_DEPLOYMENT_TARGET) $(EXTRA_CPPFLAGS) -Werror -pedantic -Wall -Wextra -Werror
+else
+CPPFLAGS = -MMD -DNDEBUG
+CFLAGS = -arch arm64 -arch x86_64 -g0 -O3 -mmacosx-version-min=$(MACOSX_DEPLOYMENT_TARGET) $(EXTRA_CPPFLAGS) -pedantic -Wall -Wextra -Werror
+endif
+
+LDFLAGS ?= -arch arm64 -arch x86_64 -mmacosx-version-min=10.14
+LDLIBS ?= -framework Foundation -lobjc
+
+ifeq ($(WITH_NETWORK), true)
+    SDL_CPPFLAGS := $(shell pkg-config SDL2 --cflags) $(shell pkg-config SDL2_net --cflags)
+    SDL_LDFLAGS :=
+    SDL_LDLIBS := $(shell pkg-config SDL2 --libs) $(shell pkg-config SDL2_net --libs)
+else
+    SDL_CPPFLAGS := $(shell pkg-config SDL2 --cflags)
+    SDL_LDFLAGS :=
+    SDL_LDLIBS := $(shell pkg-config SDL2 --libs)
+endif
+
+ALL_CPPFLAGS = \
+	       -DTARGET_$(PLATFORM) \
+               -DTYRIAN_DIR='"$(TYRIAN_DIR)"' \
+               $(EXTRA_CPPFLAGS) \
+               $(SDL_CPPFLAGS) \
+               $(CPPFLAGS)
+ALL_CFLAGS = \
+             $(CFLAGS)
+ALL_LDFLAGS = $(SDL_LDFLAGS) \
+              $(LDFLAGS)
+ALL_LDLIBS = -lm \
+             $(SDL_LDLIBS) \
+             $(LDLIBS)
+
+###
+
+.PHONY : all
+all : getver $(TARGET) $(TARGET).app
+
+$(TARGET).app: getver $(TARGET)
+	mkdir -p $@/Contents/MacOS
+	mkdir -p $@/Contents/Resources
+	iconutil --convert icns -o $@/Contents/Resources/opentyrian2000.icns opentyrian2000.iconset
+	$(INSTALL) PkgInfo Info.plist $@/Contents/
+	$(INSTALL) $(TARGET) $@/Contents/MacOS/$(TARGET)
+	macdeployqt $@
+	$(INSTALL) data/* $@/Contents/Resources/
+	rm -Rf $@/Contents/Frameworks/*.framework $@/Contents/PlugIns
+	$(CODESIGN) $@/Contents/Frameworks/*.dylib $@
+
+.PHONY : installdirs
+installdirs :
+	mkdir -p $(DESTDIR)$(man6dir)
+
+.PHONY : install
+install : $(TARGET) installdirs
+	cp -Rf $(TARGET).app $(APPLICATIONS)/$(TARGET).app
+	$(INSTALL_DATA) linux/man/opentyrian2000.6 $(DESTDIR)$(man6dir)/opentyrian2000$(man6ext)
+
+.PHONY : uninstall
+uninstall :
+	rm -Rf /Applications/$(TARGET).app
+	rm -f $(DESTDIR)$(man6dir)/opentyrian2000$(man6ext)
+
+.PHONY : clean
+clean :
+	rm -f $(OBJS)
+	rm -f $(DEPS)
+	rm -f $(TARGET)
+	rm -f getver
+
+$(TARGET) : $(OBJS)
+	$(CC) $(ALL_CFLAGS) $(ALL_LDFLAGS) -o $@ $^ $(ALL_LDLIBS)
+	$(INSTALL_NAME_TOOL) -add_rpath @executable_path/../Frameworks $@
+
+-include $(DEPS)
+
+getver: getver.c
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $<
+
+obj/%.o : src/%.c
+	@mkdir -p "$(dir $@)"
+	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS) -c -o $@ $<
+
+obj/%.o : src/%.mm
+	@mkdir -p "$(dir $@)"
+	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS) -c -o $@ $<
+
+obj/macos-bundle.o : src/macos-bundle.mm
+	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS) -c -o $@ $<

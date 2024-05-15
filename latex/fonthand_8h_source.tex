@@ -1,0 +1,63 @@
+\doxysection{fonthand.\+h}
+\hypertarget{fonthand_8h_source}{}\label{fonthand_8h_source}\index{src/fonthand.h@{src/fonthand.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ OpenTyrian:\ A\ modern\ cross-\/platform\ port\ of\ Tyrian}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *\ Copyright\ (C)\ 2007-\/2009\ \ The\ OpenTyrian\ Development\ Team}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *\ This\ program\ is\ free\ software;\ you\ can\ redistribute\ it\ and/or}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ modify\ it\ under\ the\ terms\ of\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *\ as\ published\ by\ the\ Free\ Software\ Foundation;\ either\ version\ 2}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ of\ the\ License,\ or\ (at\ your\ option)\ any\ later\ version.}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *\ This\ program\ is\ distributed\ in\ the\ hope\ that\ it\ will\ be\ useful,}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ but\ WITHOUT\ ANY\ WARRANTY;\ without\ even\ the\ implied\ warranty\ of}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ MERCHANTABILITY\ or\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE.\ \ See\ the}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *\ GNU\ General\ Public\ License\ for\ more\ details.}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ You\ should\ have\ received\ a\ copy\ of\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *\ along\ with\ this\ program;\ if\ not,\ write\ to\ the\ Free\ Software}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ Foundation,\ Inc.,\ 51\ Franklin\ Street,\ Fifth\ Floor,\ Boston,\ MA\ \ 02110-\/1301,\ USA.}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#ifndef\ FONTHAND\_H}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#define\ FONTHAND\_H}}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#include\ "{}opentyr.h"{}}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#include\ "{}SDL.h"{}}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#define\ PART\_SHADE\ 0}}
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#define\ FULL\_SHADE\ 1}}
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#define\ DARKEN\ \ \ \ \ 2}}
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#define\ TRICK\ \ \ \ \ \ 3}}
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#define\ NO\_SHADE\ 255}}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \textcolor{keyword}{extern}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ font\_ascii[256];}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \textcolor{keyword}{extern}\ JE\_byte\ textGlowFont,\ textGlowBrightness;}
+\DoxyCodeLine{00035\ \textcolor{keyword}{extern}\ JE\_boolean\ levelWarningDisplay;}
+\DoxyCodeLine{00036\ \textcolor{keyword}{extern}\ JE\_byte\ levelWarningLines;}
+\DoxyCodeLine{00037\ \textcolor{keyword}{extern}\ \textcolor{keywordtype}{char}\ levelWarningText[12][61];}
+\DoxyCodeLine{00038\ \textcolor{keyword}{extern}\ JE\_boolean\ warningRed;}
+\DoxyCodeLine{00039\ \textcolor{keyword}{extern}\ JE\_byte\ warningSoundDelay;}
+\DoxyCodeLine{00040\ \textcolor{keyword}{extern}\ JE\_word\ armorShipDelay;}
+\DoxyCodeLine{00041\ \textcolor{keyword}{extern}\ JE\_byte\ warningCol;}
+\DoxyCodeLine{00042\ \textcolor{keyword}{extern}\ JE\_shortint\ warningColChange;}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \textcolor{keywordtype}{void}\ JE\_dString(SDL\_Surface\ *\ screen,\ \textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *s,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ font);}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \textcolor{keywordtype}{int}\ JE\_fontCenter(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *s,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ font);}
+\DoxyCodeLine{00047\ \textcolor{keywordtype}{int}\ JE\_textWidth(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *s,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ font);}
+\DoxyCodeLine{00048\ \textcolor{keywordtype}{void}\ JE\_textShade(SDL\_Surface\ *\ screen,\ \textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *s,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ colorbank,\ \textcolor{keywordtype}{int}\ brightness,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ shadetype);}
+\DoxyCodeLine{00049\ \textcolor{keywordtype}{void}\ JE\_outText(SDL\_Surface\ *\ screen,\ \textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *s,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ colorbank,\ \textcolor{keywordtype}{int}\ brightness);}
+\DoxyCodeLine{00050\ \textcolor{keywordtype}{void}\ JE\_outTextModify(SDL\_Surface\ *\ screen,\ \textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *s,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ filter,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ brightness,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ font);}
+\DoxyCodeLine{00051\ \textcolor{keywordtype}{void}\ JE\_outTextAdjust(SDL\_Surface\ *\ screen,\ \textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *s,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ filter,\ \textcolor{keywordtype}{int}\ brightness,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ font,\ \textcolor{keywordtype}{bool}\ shadow);}
+\DoxyCodeLine{00052\ \textcolor{keywordtype}{void}\ JE\_outTextAndDarken(SDL\_Surface\ *\ screen,\ \textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *s,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ colorbank,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ brightness,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ font);}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \textcolor{keywordtype}{void}\ JE\_updateWarning(SDL\_Surface\ *\ screen);}
+\DoxyCodeLine{00055\ \textcolor{keywordtype}{void}\ JE\_outTextGlow(SDL\_Surface\ *\ screen,\ \textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *s);}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ FONTHAND\_H\ */}\textcolor{preprocessor}{}}
+
+\end{DoxyCode}

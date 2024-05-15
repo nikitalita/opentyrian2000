@@ -1,0 +1,144 @@
+\doxysection{sprite.\+h}
+\hypertarget{sprite_8h_source}{}\label{sprite_8h_source}\index{src/sprite.h@{src/sprite.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ OpenTyrian:\ A\ modern\ cross-\/platform\ port\ of\ Tyrian}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *\ Copyright\ (C)\ 2007-\/2009\ \ The\ OpenTyrian\ Development\ Team}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *\ This\ program\ is\ free\ software;\ you\ can\ redistribute\ it\ and/or}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ modify\ it\ under\ the\ terms\ of\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *\ as\ published\ by\ the\ Free\ Software\ Foundation;\ either\ version\ 2}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ of\ the\ License,\ or\ (at\ your\ option)\ any\ later\ version.}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *\ This\ program\ is\ distributed\ in\ the\ hope\ that\ it\ will\ be\ useful,}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ but\ WITHOUT\ ANY\ WARRANTY;\ without\ even\ the\ implied\ warranty\ of}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ MERCHANTABILITY\ or\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE.\ \ See\ the}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *\ GNU\ General\ Public\ License\ for\ more\ details.}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ You\ should\ have\ received\ a\ copy\ of\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *\ along\ with\ this\ program;\ if\ not,\ write\ to\ the\ Free\ Software}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ Foundation,\ Inc.,\ 51\ Franklin\ Street,\ Fifth\ Floor,\ Boston,\ MA\ \ 02110-\/1301,\ USA.}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#ifndef\ SPRITE\_H}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#define\ SPRITE\_H}}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#include\ "{}opentyr.h"{}}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#include\ "{}SDL.h"{}}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#include\ <assert.h>}}
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#define\ FONT\_SHAPES\ \ \ \ \ \ \ 0}}
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#define\ SMALL\_FONT\_SHAPES\ 1}}
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#define\ TINY\_FONT\ \ \ \ \ \ \ \ \ 2}}
+\DoxyCodeLine{00032\ \textcolor{preprocessor}{\#define\ PLANET\_SHAPES\ \ \ \ \ 3}}
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#define\ FACE\_SHAPES\ \ \ \ \ \ \ 4}}
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#define\ OPTION\_SHAPES\ \ \ \ \ 5\ }\textcolor{comment}{/*Also\ contains\ help\ shapes*/}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#define\ WEAPON\_SHAPES\ \ \ \ \ 6}}
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\#define\ EXTRA\_SHAPES\ \ \ \ \ \ 7\ }\textcolor{comment}{/*Used\ for\ Ending\ pics*/}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\#define\ SPRITE\_TABLES\_MAX\ \ \ \ \ \ \ \ 8}}
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#define\ SPRITES\_PER\_TABLE\_MAX\ \ 152}}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}}
+\DoxyCodeLine{00042\ \{}
+\DoxyCodeLine{00043\ \ \ \ \ Uint16\ width,\ height;}
+\DoxyCodeLine{00044\ \ \ \ \ Uint16\ size;}
+\DoxyCodeLine{00045\ \ \ \ \ Uint8\ *data;}
+\DoxyCodeLine{00046\ \}}
+\DoxyCodeLine{00047\ \mbox{\hyperlink{struct_sprite}{Sprite}};}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}}
+\DoxyCodeLine{00050\ \{}
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ count;}
+\DoxyCodeLine{00052\ \ \ \ \ \mbox{\hyperlink{struct_sprite}{Sprite}}\ sprite[SPRITES\_PER\_TABLE\_MAX];}
+\DoxyCodeLine{00053\ \}}
+\DoxyCodeLine{00054\ \mbox{\hyperlink{struct_sprite__array}{Sprite\_array}};}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \textcolor{keyword}{extern}\ \mbox{\hyperlink{struct_sprite__array}{Sprite\_array}}\ sprite\_table[SPRITE\_TABLES\_MAX];\ \ \textcolor{comment}{//\ fka\ shapearray,\ shapex,\ shapey,\ shapesize,\ shapexist,\ maxshape}}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{struct_sprite}{Sprite}}\ *sprite(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ table,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ index)}
+\DoxyCodeLine{00059\ \{}
+\DoxyCodeLine{00060\ \ \ \ \ assert(table\ <\ \mbox{\hyperlink{config__file_8h_ad0add60b29474b53705e3863a72935d4}{COUNTOF}}(sprite\_table));}
+\DoxyCodeLine{00061\ \ \ \ \ assert(index\ <\ \mbox{\hyperlink{config__file_8h_ad0add60b29474b53705e3863a72935d4}{COUNTOF}}(sprite\_table-\/>sprite));}
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordflow}{return}\ \&sprite\_table[table].sprite[index];}
+\DoxyCodeLine{00063\ \}}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ sprite\_exists(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ table,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ index)}
+\DoxyCodeLine{00066\ \{}
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keywordflow}{return}\ (sprite(table,\ index)-\/>data\ !=\ NULL);}
+\DoxyCodeLine{00068\ \}}
+\DoxyCodeLine{00069\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ Uint16\ get\_sprite\_width(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ table,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ index)}
+\DoxyCodeLine{00070\ \{}
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keywordflow}{return}\ (sprite\_exists(table,\ index)\ ?\ sprite(table,\ index)-\/>width\ :\ 0);}
+\DoxyCodeLine{00072\ \}}
+\DoxyCodeLine{00073\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ Uint16\ get\_sprite\_height(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ table,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ index)}
+\DoxyCodeLine{00074\ \{}
+\DoxyCodeLine{00075\ \ \ \ \ \textcolor{keywordflow}{return}\ (sprite\_exists(table,\ index)\ ?\ sprite(table,\ index)-\/>height\ :\ 0);}
+\DoxyCodeLine{00076\ \}}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00078\ \textcolor{keywordtype}{void}\ load\_sprites\_file(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ table,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *filename);}
+\DoxyCodeLine{00079\ \textcolor{keywordtype}{void}\ load\_sprites(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ table,\ FILE\ *f);}
+\DoxyCodeLine{00080\ \textcolor{keywordtype}{void}\ free\_sprites(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ table);}
+\DoxyCodeLine{00081\ }
+\DoxyCodeLine{00082\ \textcolor{keywordtype}{void}\ blit\_sprite(SDL\_Surface\ *,\ \textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ table,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ index);\ \textcolor{comment}{//\ JE\_newDrawCShapeNum}}
+\DoxyCodeLine{00083\ \textcolor{keywordtype}{void}\ blit\_sprite\_blend(SDL\_Surface\ *,\ \textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ table,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ index);\ \textcolor{comment}{//\ JE\_newDrawCShapeTrick}}
+\DoxyCodeLine{00084\ \textcolor{keywordtype}{void}\ blit\_sprite\_hv\_unsafe(SDL\_Surface\ *,\ \textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ table,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ index,\ Uint8\ hue,\ Sint8\ value);\ \textcolor{comment}{//\ JE\_newDrawCShapeBright}}
+\DoxyCodeLine{00085\ \textcolor{keywordtype}{void}\ blit\_sprite\_hv(SDL\_Surface\ *,\ \textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ table,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ index,\ Uint8\ hue,\ Sint8\ value);\ \textcolor{comment}{//\ JE\_newDrawCShapeAdjust}}
+\DoxyCodeLine{00086\ \textcolor{keywordtype}{void}\ blit\_sprite\_hv\_blend(SDL\_Surface\ *,\ \textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ table,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ index,\ Uint8\ hue,\ Sint8\ value);\ \textcolor{comment}{//\ JE\_newDrawCShapeModify}}
+\DoxyCodeLine{00087\ \textcolor{keywordtype}{void}\ blit\_sprite\_dark(SDL\_Surface\ *,\ \textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ table,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ index,\ \textcolor{keywordtype}{bool}\ black);\ \textcolor{comment}{//\ JE\_newDrawCShapeDarken,\ JE\_newDrawCShapeShadow}}
+\DoxyCodeLine{00088\ }
+\DoxyCodeLine{00089\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}}
+\DoxyCodeLine{00090\ \{}
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ size;}
+\DoxyCodeLine{00092\ \ \ \ \ Uint8\ *data;}
+\DoxyCodeLine{00093\ \}}
+\DoxyCodeLine{00094\ \mbox{\hyperlink{struct_sprite2__array}{Sprite2\_array}};}
+\DoxyCodeLine{00095\ }
+\DoxyCodeLine{00096\ \textcolor{comment}{//\ Shop\ icons\ and\ arrows\ sprite\ sheet.}}
+\DoxyCodeLine{00097\ \textcolor{keyword}{extern}\ \mbox{\hyperlink{struct_sprite2__array}{Sprite2\_array}}\ shopSpriteSheet;\ \ \textcolor{comment}{//\ fka\ shapes6}}
+\DoxyCodeLine{00098\ }
+\DoxyCodeLine{00099\ \textcolor{comment}{//\ Explosions\ sprite\ sheet.}}
+\DoxyCodeLine{00100\ \textcolor{keyword}{extern}\ \mbox{\hyperlink{struct_sprite2__array}{Sprite2\_array}}\ explosionSpriteSheet;\ \ \textcolor{comment}{//\ fka\ shapes6}}
+\DoxyCodeLine{00101\ }
+\DoxyCodeLine{00102\ \textcolor{comment}{//\ Enemy\ sprite\ sheet\ banks.}}
+\DoxyCodeLine{00103\ \textcolor{keyword}{extern}\ \mbox{\hyperlink{struct_sprite2__array}{Sprite2\_array}}\ enemySpriteSheets[4];\ \ \textcolor{comment}{//\ fka\ eShapes1,\ eShapes2,\ eShapes3,\ eShapes4}}
+\DoxyCodeLine{00104\ \textcolor{keyword}{extern}\ Uint8\ enemySpriteSheetIds[4];\ \ \textcolor{comment}{//\ fka\ enemyShapeTables}}
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00106\ \textcolor{comment}{//\ Destruct\ sprite\ sheet.}}
+\DoxyCodeLine{00107\ \textcolor{keyword}{extern}\ \mbox{\hyperlink{struct_sprite2__array}{Sprite2\_array}}\ destructSpriteSheet;\ \ \textcolor{comment}{//\ fka\ shapes6}}
+\DoxyCodeLine{00108\ }
+\DoxyCodeLine{00109\ \textcolor{comment}{//\ Static\ sprite\ sheets.\ \ Player\ shots,\ player\ ships,\ power-\/ups,\ coins,\ etc.}}
+\DoxyCodeLine{00110\ \textcolor{keyword}{extern}\ \mbox{\hyperlink{struct_sprite2__array}{Sprite2\_array}}\ spriteSheet8;\ \ \textcolor{comment}{//\ fka\ shapesC1}}
+\DoxyCodeLine{00111\ \textcolor{keyword}{extern}\ \mbox{\hyperlink{struct_sprite2__array}{Sprite2\_array}}\ spriteSheet9;\ \ \textcolor{comment}{//\ fka\ shapes9}}
+\DoxyCodeLine{00112\ \textcolor{keyword}{extern}\ \mbox{\hyperlink{struct_sprite2__array}{Sprite2\_array}}\ spriteSheet10;\ \ \textcolor{comment}{//\ fka\ eShapes6}}
+\DoxyCodeLine{00113\ \textcolor{keyword}{extern}\ \mbox{\hyperlink{struct_sprite2__array}{Sprite2\_array}}\ spriteSheet11;\ \ \textcolor{comment}{//\ fka\ eShapes5}}
+\DoxyCodeLine{00114\ \textcolor{keyword}{extern}\ \mbox{\hyperlink{struct_sprite2__array}{Sprite2\_array}}\ spriteSheet12;\ \ \textcolor{comment}{//\ fka\ shapesW2}}
+\DoxyCodeLine{00115\ \textcolor{keyword}{extern}\ \mbox{\hyperlink{struct_sprite2__array}{Sprite2\_array}}\ spriteSheetT2000;\ \textcolor{comment}{//\ fka\ shapesT2k}}
+\DoxyCodeLine{00116\ }
+\DoxyCodeLine{00117\ \textcolor{keywordtype}{void}\ JE\_loadCompShapes(\mbox{\hyperlink{struct_sprite2__array}{Sprite2\_array}}\ *,\ \textcolor{keywordtype}{char}\ s);}
+\DoxyCodeLine{00118\ \textcolor{keywordtype}{void}\ JE\_loadCompShapesB(\mbox{\hyperlink{struct_sprite2__array}{Sprite2\_array}}\ *,\ FILE\ *f);}
+\DoxyCodeLine{00119\ \textcolor{keywordtype}{void}\ free\_sprite2s(\mbox{\hyperlink{struct_sprite2__array}{Sprite2\_array}}\ *);}
+\DoxyCodeLine{00120\ }
+\DoxyCodeLine{00121\ \textcolor{keywordtype}{void}\ blit\_sprite2(SDL\_Surface\ *,\ \textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y,\ \mbox{\hyperlink{struct_sprite2__array}{Sprite2\_array}},\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ index);}
+\DoxyCodeLine{00122\ \textcolor{keywordtype}{void}\ blit\_sprite2\_clip(SDL\_Surface\ *,\ \textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y,\ \mbox{\hyperlink{struct_sprite2__array}{Sprite2\_array}},\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ index);}
+\DoxyCodeLine{00123\ \textcolor{keywordtype}{void}\ blit\_sprite2\_blend(SDL\_Surface\ *,\ \ \textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y,\ \mbox{\hyperlink{struct_sprite2__array}{Sprite2\_array}},\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ index);}
+\DoxyCodeLine{00124\ \textcolor{keywordtype}{void}\ blit\_sprite2\_darken(SDL\_Surface\ *,\ \textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y,\ \mbox{\hyperlink{struct_sprite2__array}{Sprite2\_array}},\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ index);}
+\DoxyCodeLine{00125\ \textcolor{keywordtype}{void}\ blit\_sprite2\_filter(SDL\_Surface\ *,\ \textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y,\ \mbox{\hyperlink{struct_sprite2__array}{Sprite2\_array}},\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ index,\ Uint8\ filter);}
+\DoxyCodeLine{00126\ \textcolor{keywordtype}{void}\ blit\_sprite2\_filter\_clip(SDL\_Surface\ *,\ \textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y,\ \mbox{\hyperlink{struct_sprite2__array}{Sprite2\_array}},\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ index,\ Uint8\ filter);}
+\DoxyCodeLine{00127\ }
+\DoxyCodeLine{00128\ \textcolor{keywordtype}{void}\ blit\_sprite2x2(SDL\_Surface\ *,\ \textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y,\ \mbox{\hyperlink{struct_sprite2__array}{Sprite2\_array}},\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ index);}
+\DoxyCodeLine{00129\ \textcolor{keywordtype}{void}\ blit\_sprite2x2\_clip(SDL\_Surface\ *,\ \textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y,\ \mbox{\hyperlink{struct_sprite2__array}{Sprite2\_array}},\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ index);}
+\DoxyCodeLine{00130\ \textcolor{keywordtype}{void}\ blit\_sprite2x2\_blend(SDL\_Surface\ *,\ \textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y,\ \mbox{\hyperlink{struct_sprite2__array}{Sprite2\_array}},\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ index);}
+\DoxyCodeLine{00131\ \textcolor{keywordtype}{void}\ blit\_sprite2x2\_darken(SDL\_Surface\ *,\ \textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y,\ \mbox{\hyperlink{struct_sprite2__array}{Sprite2\_array}},\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ index);}
+\DoxyCodeLine{00132\ \textcolor{keywordtype}{void}\ blit\_sprite2x2\_filter(SDL\_Surface\ *,\ \textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y,\ \mbox{\hyperlink{struct_sprite2__array}{Sprite2\_array}},\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ index,\ Uint8\ filter);}
+\DoxyCodeLine{00133\ \textcolor{keywordtype}{void}\ blit\_sprite2x2\_filter\_clip(SDL\_Surface\ *,\ \textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y,\ \mbox{\hyperlink{struct_sprite2__array}{Sprite2\_array}},\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ index,\ Uint8\ filter);}
+\DoxyCodeLine{00134\ }
+\DoxyCodeLine{00135\ \textcolor{keywordtype}{void}\ JE\_loadMainShapeTables(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *shpfile);}
+\DoxyCodeLine{00136\ \textcolor{keywordtype}{void}\ free\_main\_shape\_tables(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00137\ }
+\DoxyCodeLine{00138\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ SPRITE\_H}}
+
+\end{DoxyCode}

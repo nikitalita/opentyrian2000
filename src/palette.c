@@ -166,13 +166,13 @@ void fade_solid(SDL_Color color, int steps, unsigned int first_color, unsigned i
 
 void fade_black(int steps)
 {
-	SDL_Color black = { 0, 0, 0 };
+	SDL_Color black = { 0, 0, 0, 0 };
 	fade_solid(black, steps, 0, 255);
 }
 
 void fade_white(int steps)
 {
-	SDL_Color white = { 255, 255, 255 };
+	SDL_Color white = { 255, 255, 255, 0 };
 	fade_solid(white, steps, 0, 255);
 }
 

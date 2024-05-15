@@ -419,7 +419,7 @@ void JE_saveGame(JE_byte slot, const char *name)
 	saveFiles[slot-1].input1 = inputDevice[0];
 	saveFiles[slot-1].input2 = inputDevice[1];
 
-	strcpy(saveFiles[slot-1].name, name);
+	strlcpy(saveFiles[slot-1].name, name, sizeof(saveFiles[slot-1].name));
 	
 	for (uint port = 0; port < 2; ++port)
 	{
@@ -758,11 +758,11 @@ const char *get_user_directory(void)
 			}
 			else
 			{
-				strcpy(user_dir, ".");
+				strlcpy(user_dir, ".", 2);
 			}
 		}
 #else
-		strcpy(user_dir, ".");
+		strlcpy(user_dir, ".", 2);
 #endif
 	}
 	
@@ -967,11 +967,11 @@ void JE_loadConfiguration(void)
 			if (z % 6 > 2)
 			{
 				saveFiles[z].highScore2 = ((mt_rand() % 20) + 1) * 1000;
-				strcpy(saveFiles[z].highScoreName, defaultTeamNames[mt_rand() % COUNTOF(defaultTeamNames)]);
+				strlcpy(saveFiles[z].highScoreName, defaultTeamNames[mt_rand() % COUNTOF(defaultTeamNames)], sizeof(saveFiles[z].highScoreName));
 			}
 			else
 			{
-				strcpy(saveFiles[z].highScoreName, defaultHighScoreNames[mt_rand() % COUNTOF(defaultHighScoreNames)]);
+				strlcpy(saveFiles[z].highScoreName, defaultHighScoreNames[mt_rand() % COUNTOF(defaultHighScoreNames)], sizeof(saveFiles[z].highScoreName));
 			}
 		}
 
@@ -981,7 +981,7 @@ void JE_loadConfiguration(void)
 			{
 				// Timed Battle scores
 				t2kHighScores[z][y].score = ((mt_rand() % 50) + 1) * 100;
-				strcpy(t2kHighScores[z][y].playerName, defaultHighScoreNames[mt_rand() % COUNTOF(defaultHighScoreNames)]);
+				strlcpy(t2kHighScores[z][y].playerName, defaultHighScoreNames[mt_rand() % COUNTOF(defaultHighScoreNames)], sizeof(t2kHighScores[z][y].playerName));
 			}
 		}
 		for (z = 10; z < 20; ++z)
@@ -991,9 +991,9 @@ void JE_loadConfiguration(void)
 				// Main Game scores
 				t2kHighScores[z][y].score = ((mt_rand() % 20) + 1) * 1000;
 				if (z & 1)
-					strcpy(t2kHighScores[z][y].playerName, defaultTeamNames[mt_rand() % COUNTOF(defaultTeamNames)]);
+					strlcpy(t2kHighScores[z][y].playerName, defaultTeamNames[mt_rand() % COUNTOF(defaultTeamNames)], sizeof(t2kHighScores[z][y].playerName));
 				else
-					strcpy(t2kHighScores[z][y].playerName, defaultHighScoreNames[mt_rand() % COUNTOF(defaultHighScoreNames)]);
+					strlcpy(t2kHighScores[z][y].playerName, defaultHighScoreNames[mt_rand() % COUNTOF(defaultHighScoreNames)], sizeof(t2kHighScores[z][y].playerName));
 			}
 		}
 	}

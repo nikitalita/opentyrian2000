@@ -1,0 +1,203 @@
+\doxysection{config.\+h}
+\hypertarget{config_8h_source}{}\label{config_8h_source}\index{src/config.h@{src/config.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ OpenTyrian:\ A\ modern\ cross-\/platform\ port\ of\ Tyrian}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *\ Copyright\ (C)\ 2007-\/2009\ \ The\ OpenTyrian\ Development\ Team}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *\ This\ program\ is\ free\ software;\ you\ can\ redistribute\ it\ and/or}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ modify\ it\ under\ the\ terms\ of\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *\ as\ published\ by\ the\ Free\ Software\ Foundation;\ either\ version\ 2}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ of\ the\ License,\ or\ (at\ your\ option)\ any\ later\ version.}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *\ This\ program\ is\ distributed\ in\ the\ hope\ that\ it\ will\ be\ useful,}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ but\ WITHOUT\ ANY\ WARRANTY;\ without\ even\ the\ implied\ warranty\ of}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ MERCHANTABILITY\ or\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE.\ \ See\ the}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *\ GNU\ General\ Public\ License\ for\ more\ details.}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ You\ should\ have\ received\ a\ copy\ of\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *\ along\ with\ this\ program;\ if\ not,\ write\ to\ the\ Free\ Software}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ Foundation,\ Inc.,\ 51\ Franklin\ Street,\ Fifth\ Floor,\ Boston,\ MA\ \ 02110-\/1301,\ USA.}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#ifndef\ CONFIG\_H}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#define\ CONFIG\_H}}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#include\ "{}opentyr.h"{}}}
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{config__file_8h}{config\_file.h}}"{}}}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \textcolor{preprocessor}{\#include\ "{}SDL.h"{}}}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#define\ SAVE\_FILES\_NUM\ (11\ *\ 2)}}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \textcolor{comment}{/*\ These\ are\ necessary\ because\ the\ size\ of\ the\ structure\ has\ changed\ from\ the\ original,\ but\ we}}
+\DoxyCodeLine{00032\ \textcolor{comment}{\ \ \ need\ to\ know\ the\ original\ sizes\ in\ order\ to\ find\ things\ in\ TYRIAN.SAV\ */}}
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#define\ SAVE\_FILES\_SIZE\ 2398}}
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#define\ SIZEOF\_SAVEGAMETEMP\ SAVE\_FILES\_SIZE\ +\ 4\ +\ 100}}
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#define\ SAVE\_FILE\_SIZE\ (SIZEOF\_SAVEGAMETEMP\ -\/\ 4)}}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \textcolor{comment}{/*\#define\ SAVE\_FILES\_SIZE\ (2502\ -\/\ 4)}}
+\DoxyCodeLine{00038\ \textcolor{comment}{\#define\ SAVE\_FILE\_SIZE\ (SAVE\_FILES\_SIZE)*/}}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \textcolor{keyword}{enum}}
+\DoxyCodeLine{00041\ \{}
+\DoxyCodeLine{00042\ \ \ \ \ DIFFICULTY\_WIMP\ =\ 0,}
+\DoxyCodeLine{00043\ \ \ \ \ DIFFICULTY\_EASY,}
+\DoxyCodeLine{00044\ \ \ \ \ DIFFICULTY\_NORMAL,}
+\DoxyCodeLine{00045\ \ \ \ \ DIFFICULTY\_HARD,}
+\DoxyCodeLine{00046\ \ \ \ \ DIFFICULTY\_IMPOSSIBLE,}
+\DoxyCodeLine{00047\ \ \ \ \ DIFFICULTY\_INSANITY,}
+\DoxyCodeLine{00048\ \ \ \ \ DIFFICULTY\_SUICIDE,}
+\DoxyCodeLine{00049\ \ \ \ \ DIFFICULTY\_MANIACAL,}
+\DoxyCodeLine{00050\ \ \ \ \ DIFFICULTY\_ZINGLON,\ \ \textcolor{comment}{//\ aka\ Lord\ of\ the\ Game}}
+\DoxyCodeLine{00051\ \ \ \ \ DIFFICULTY\_NORTANEOUS,}
+\DoxyCodeLine{00052\ \ \ \ \ DIFFICULTY\_10,}
+\DoxyCodeLine{00053\ \};}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \textcolor{comment}{//\ NOTE:\ Do\ not\ reorder.\ \ This\ ordering\ corresponds\ to\ the\ keyboard}}
+\DoxyCodeLine{00056\ \textcolor{comment}{//\ \ \ \ \ \ \ configuration\ menu\ and\ to\ the\ bits\ stored\ in\ demo\ files.}}
+\DoxyCodeLine{00057\ \textcolor{keyword}{enum}}
+\DoxyCodeLine{00058\ \{}
+\DoxyCodeLine{00059\ \ \ \ \ KEY\_SETTING\_UP,}
+\DoxyCodeLine{00060\ \ \ \ \ KEY\_SETTING\_DOWN,}
+\DoxyCodeLine{00061\ \ \ \ \ KEY\_SETTING\_LEFT,}
+\DoxyCodeLine{00062\ \ \ \ \ KEY\_SETTING\_RIGHT,}
+\DoxyCodeLine{00063\ \ \ \ \ KEY\_SETTING\_FIRE,}
+\DoxyCodeLine{00064\ \ \ \ \ KEY\_SETTING\_CHANGE\_FIRE,}
+\DoxyCodeLine{00065\ \ \ \ \ KEY\_SETTING\_LEFT\_SIDEKICK,}
+\DoxyCodeLine{00066\ \ \ \ \ KEY\_SETTING\_RIGHT\_SIDEKICK,}
+\DoxyCodeLine{00067\ \};}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ \textcolor{keyword}{typedef}\ JE\_byte\ DosKeySettings[8];\ \ \textcolor{comment}{//\ fka\ KeySettingType}}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00071\ \textcolor{keyword}{typedef}\ SDL\_Scancode\ KeySettings[8];}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ \textcolor{keyword}{typedef}\ JE\_byte\ MouseSettings[3];}
+\DoxyCodeLine{00074\ }
+\DoxyCodeLine{00075\ \textcolor{keyword}{typedef}\ JE\_byte\ JE\_PItemsType[12];\ \textcolor{comment}{/*\ [1..12]\ */}}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00077\ \textcolor{keyword}{typedef}\ JE\_byte\ JE\_EditorItemAvailType[100];\ \textcolor{comment}{/*\ [1..100]\ */}}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00079\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}}
+\DoxyCodeLine{00080\ \{}
+\DoxyCodeLine{00081\ \ \ \ \ JE\_word\ \ \ \ \ \ \ encode;}
+\DoxyCodeLine{00082\ \ \ \ \ JE\_word\ \ \ \ \ \ \ level;}
+\DoxyCodeLine{00083\ \ \ \ \ JE\_PItemsType\ items;}
+\DoxyCodeLine{00084\ \ \ \ \ JE\_longint\ \ \ \ score;}
+\DoxyCodeLine{00085\ \ \ \ \ JE\_longint\ \ \ \ score2;}
+\DoxyCodeLine{00086\ \ \ \ \ \textcolor{keywordtype}{char}\ \ \ \ \ \ \ \ \ \ levelName[11];\ \textcolor{comment}{/*\ string\ [9];\ */}\ \textcolor{comment}{/*\ SYN:\ Added\ one\ more\ byte\ to\ match\ lastLevelName\ below\ */}}
+\DoxyCodeLine{00087\ \ \ \ \ JE\_char\ \ \ \ \ \ \ name[15];\ \textcolor{comment}{/*\ [1..14]\ */}\ \textcolor{comment}{/*\ SYN:\ Added\ extra\ byte\ for\ null\ */}}
+\DoxyCodeLine{00088\ \ \ \ \ JE\_byte\ \ \ \ \ \ \ cubes;}
+\DoxyCodeLine{00089\ \ \ \ \ JE\_byte\ \ \ \ \ \ \ power[2];\ \textcolor{comment}{/*\ [1..2]\ */}}
+\DoxyCodeLine{00090\ \ \ \ \ JE\_byte\ \ \ \ \ \ \ episode;}
+\DoxyCodeLine{00091\ \ \ \ \ JE\_PItemsType\ lastItems;}
+\DoxyCodeLine{00092\ \ \ \ \ JE\_byte\ \ \ \ \ \ \ difficulty;}
+\DoxyCodeLine{00093\ \ \ \ \ JE\_byte\ \ \ \ \ \ \ secretHint;}
+\DoxyCodeLine{00094\ \ \ \ \ JE\_byte\ \ \ \ \ \ \ input1;}
+\DoxyCodeLine{00095\ \ \ \ \ JE\_byte\ \ \ \ \ \ \ input2;}
+\DoxyCodeLine{00096\ \ \ \ \ JE\_boolean\ \ \ \ gameHasRepeated;\ \textcolor{comment}{/*See\ if\ you\ went\ from\ one\ episode\ to\ another*/}}
+\DoxyCodeLine{00097\ \ \ \ \ JE\_byte\ \ \ \ \ \ \ initialDifficulty;}
+\DoxyCodeLine{00098\ }
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{comment}{/*\ High\ Scores\ -\/\ Each\ episode\ has\ both\ sets\ of\ 1\&2\ player\ selections\ -\/\ with\ 3\ in\ each\ */}}
+\DoxyCodeLine{00100\ \ \ \ \ JE\_longint\ \ \ \ highScore1;}
+\DoxyCodeLine{00101\ \ \ \ \ JE\_longint\ \ \ \ highScore2;\ \ \textcolor{comment}{//\ unused}}
+\DoxyCodeLine{00102\ \ \ \ \ \textcolor{keywordtype}{char}\ \ \ \ \ \ \ \ \ \ highScoreName[30];\ \textcolor{comment}{/*\ string\ [29]\ */}}
+\DoxyCodeLine{00103\ \ \ \ \ JE\_byte\ \ \ \ \ \ \ highScoreDiff;}
+\DoxyCodeLine{00104\ \}\ \mbox{\hyperlink{struct_j_e___save_file_type}{JE\_SaveFileType}};}
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00106\ \textcolor{keyword}{typedef}\ \mbox{\hyperlink{struct_j_e___save_file_type}{JE\_SaveFileType}}\ JE\_SaveFilesType[SAVE\_FILES\_NUM];\ \textcolor{comment}{/*\ [1..savefilesnum]\ */}}
+\DoxyCodeLine{00107\ \textcolor{keyword}{typedef}\ JE\_byte\ JE\_SaveGameTemp[SAVE\_FILES\_SIZE\ +\ 4\ +\ 100];\ \textcolor{comment}{/*\ [1..sizeof(savefilestype)\ +\ 4\ +\ 100]\ */}}
+\DoxyCodeLine{00108\ }
+\DoxyCodeLine{00109\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}}
+\DoxyCodeLine{00110\ \{}
+\DoxyCodeLine{00111\ \ \ \ \ \textcolor{comment}{//\ Tyrian\ 2000\ uses\ a\ different\ high\ scores\ struct\ and\ appends\ it\ to\ TYRIAN.SAV}}
+\DoxyCodeLine{00112\ \ \ \ \ JE\_longint\ \ \ \ score;}
+\DoxyCodeLine{00113\ \ \ \ \ \textcolor{keywordtype}{char}\ \ \ \ \ \ \ \ \ \ playerName[30];}
+\DoxyCodeLine{00114\ \ \ \ \ JE\_byte\ \ \ \ \ \ \ difficulty;}
+\DoxyCodeLine{00115\ \}\ \mbox{\hyperlink{struct_t2_k_high_score_type}{T2KHighScoreType}};}
+\DoxyCodeLine{00116\ }
+\DoxyCodeLine{00117\ \textcolor{comment}{//\ First\ 10\ are\ timed\ battle,\ next\ 10\ are\ episodes}}
+\DoxyCodeLine{00118\ \textcolor{keyword}{extern}\ \mbox{\hyperlink{struct_t2_k_high_score_type}{T2KHighScoreType}}\ t2kHighScores[20][3];}
+\DoxyCodeLine{00119\ }
+\DoxyCodeLine{00120\ \textcolor{keyword}{extern}\ \textcolor{keyword}{const}\ JE\_byte\ cryptKey[10];}
+\DoxyCodeLine{00121\ \textcolor{keyword}{extern}\ \textcolor{keyword}{const}\ DosKeySettings\ defaultDosKeySettings;\ \ \textcolor{comment}{//\ fka\ defaultKeySettings}}
+\DoxyCodeLine{00122\ \textcolor{keyword}{extern}\ \textcolor{keyword}{const}\ KeySettings\ defaultKeySettings;}
+\DoxyCodeLine{00123\ \textcolor{keyword}{extern}\ \textcolor{keyword}{const}\ MouseSettings\ defaultMouseSettings;}
+\DoxyCodeLine{00124\ \textcolor{keyword}{extern}\ \textcolor{keywordtype}{char}\ defaultHighScoreNames[39][23];}
+\DoxyCodeLine{00125\ \textcolor{keyword}{extern}\ \textcolor{keywordtype}{char}\ defaultTeamNames[10][25];}
+\DoxyCodeLine{00126\ \textcolor{keyword}{extern}\ \textcolor{keyword}{const}\ JE\_EditorItemAvailType\ initialItemAvail;}
+\DoxyCodeLine{00127\ \textcolor{keyword}{extern}\ JE\_boolean\ smoothies[9];}
+\DoxyCodeLine{00128\ \textcolor{keyword}{extern}\ JE\_byte\ starShowVGASpecialCode;}
+\DoxyCodeLine{00129\ \textcolor{keyword}{extern}\ JE\_word\ lastCubeMax,\ cubeMax;}
+\DoxyCodeLine{00130\ \textcolor{keyword}{extern}\ JE\_word\ cubeList[4];}
+\DoxyCodeLine{00131\ \textcolor{keyword}{extern}\ JE\_boolean\ gameHasRepeated;}
+\DoxyCodeLine{00132\ \textcolor{keyword}{extern}\ JE\_shortint\ difficultyLevel,\ oldDifficultyLevel,\ initialDifficulty;}
+\DoxyCodeLine{00133\ \textcolor{keyword}{extern}\ JE\_byte\ timeBattleSelection;}
+\DoxyCodeLine{00134\ \textcolor{keyword}{extern}\ uint\ power,\ lastPower,\ powerAdd;}
+\DoxyCodeLine{00135\ \textcolor{keyword}{extern}\ JE\_byte\ shieldWait,\ shieldT;}
+\DoxyCodeLine{00136\ }
+\DoxyCodeLine{00137\ \textcolor{keyword}{enum}}
+\DoxyCodeLine{00138\ \{}
+\DoxyCodeLine{00139\ \ \ \ \ SHOT\_FRONT,}
+\DoxyCodeLine{00140\ \ \ \ \ SHOT\_REAR,}
+\DoxyCodeLine{00141\ \ \ \ \ SHOT\_LEFT\_SIDEKICK,}
+\DoxyCodeLine{00142\ \ \ \ \ SHOT\_RIGHT\_SIDEKICK,}
+\DoxyCodeLine{00143\ \ \ \ \ SHOT\_MISC,}
+\DoxyCodeLine{00144\ \ \ \ \ SHOT\_P2\_CHARGE,}
+\DoxyCodeLine{00145\ \ \ \ \ SHOT\_P1\_SUPERBOMB,}
+\DoxyCodeLine{00146\ \ \ \ \ SHOT\_P2\_SUPERBOMB,}
+\DoxyCodeLine{00147\ \ \ \ \ SHOT\_SPECIAL,}
+\DoxyCodeLine{00148\ \ \ \ \ SHOT\_NORTSPARKS,}
+\DoxyCodeLine{00149\ \ \ \ \ SHOT\_SPECIAL2}
+\DoxyCodeLine{00150\ \};}
+\DoxyCodeLine{00151\ }
+\DoxyCodeLine{00152\ \textcolor{keyword}{extern}\ JE\_byte\ shotRepeat[11],\ shotMultiPos[11];}
+\DoxyCodeLine{00153\ \textcolor{keyword}{extern}\ JE\_boolean\ portConfigChange,\ portConfigDone;}
+\DoxyCodeLine{00154\ \textcolor{keyword}{extern}\ \textcolor{keywordtype}{char}\ lastLevelName[11],\ levelName[11];}
+\DoxyCodeLine{00155\ \textcolor{keyword}{extern}\ JE\_byte\ mainLevel,\ nextLevel,\ saveLevel;}
+\DoxyCodeLine{00156\ \textcolor{keyword}{extern}\ DosKeySettings\ dosKeySettings;\ \ \textcolor{comment}{//\ fka\ keySettings}}
+\DoxyCodeLine{00157\ \textcolor{keyword}{extern}\ KeySettings\ keySettings;}
+\DoxyCodeLine{00158\ \textcolor{keyword}{extern}\ MouseSettings\ mouseSettings;}
+\DoxyCodeLine{00159\ \textcolor{keyword}{extern}\ JE\_shortint\ levelFilter,\ levelFilterNew,\ levelBrightness,\ levelBrightnessChg;}
+\DoxyCodeLine{00160\ \textcolor{keyword}{extern}\ JE\_boolean\ filtrationAvail,\ filterActive,\ filterFade,\ filterFadeStart;}
+\DoxyCodeLine{00161\ \textcolor{keyword}{extern}\ JE\_boolean\ gameJustLoaded;}
+\DoxyCodeLine{00162\ \textcolor{keyword}{extern}\ JE\_boolean\ galagaMode;}
+\DoxyCodeLine{00163\ \textcolor{keyword}{extern}\ JE\_boolean\ extraGame;}
+\DoxyCodeLine{00164\ \textcolor{keyword}{extern}\ JE\_boolean\ twoPlayerMode,\ twoPlayerLinked,\ onePlayerAction,\ timedBattleMode,\ superTyrian,\ trentWin;}
+\DoxyCodeLine{00165\ \textcolor{keyword}{extern}\ JE\_byte\ superArcadeMode;}
+\DoxyCodeLine{00166\ \textcolor{keyword}{extern}\ JE\_byte\ superArcadePowerUp;}
+\DoxyCodeLine{00167\ \textcolor{keyword}{extern}\ JE\_real\ linkGunDirec;}
+\DoxyCodeLine{00168\ \textcolor{keyword}{extern}\ JE\_byte\ inputDevice[2];}
+\DoxyCodeLine{00169\ \textcolor{keyword}{extern}\ JE\_byte\ secretHint;}
+\DoxyCodeLine{00170\ \textcolor{keyword}{extern}\ JE\_byte\ background3over;}
+\DoxyCodeLine{00171\ \textcolor{keyword}{extern}\ JE\_byte\ background2over;}
+\DoxyCodeLine{00172\ \textcolor{keyword}{extern}\ JE\_byte\ gammaCorrection;}
+\DoxyCodeLine{00173\ \textcolor{keyword}{extern}\ JE\_boolean\ superPause,\ explosionTransparent,\ youAreCheating,\ displayScore,\ background2,\ smoothScroll,\ wild,\ superWild,\ starActive,\ topEnemyOver,\ skyEnemyOverAll,\ background2notTransparent;}
+\DoxyCodeLine{00174\ \textcolor{keyword}{extern}\ JE\_byte\ versionNum;}
+\DoxyCodeLine{00175\ \textcolor{keyword}{extern}\ JE\_byte\ fastPlay;}
+\DoxyCodeLine{00176\ \textcolor{keyword}{extern}\ JE\_boolean\ pentiumMode;}
+\DoxyCodeLine{00177\ \textcolor{keyword}{extern}\ JE\_byte\ gameSpeed;}
+\DoxyCodeLine{00178\ \textcolor{keyword}{extern}\ JE\_byte\ processorType;}
+\DoxyCodeLine{00179\ \textcolor{keyword}{extern}\ JE\_SaveFilesType\ saveFiles;}
+\DoxyCodeLine{00180\ \textcolor{keyword}{extern}\ JE\_SaveGameTemp\ saveTemp;}
+\DoxyCodeLine{00181\ \textcolor{keyword}{extern}\ JE\_word\ editorLevel;}
+\DoxyCodeLine{00182\ }
+\DoxyCodeLine{00183\ \textcolor{keyword}{extern}\ \mbox{\hyperlink{struct_config}{Config}}\ opentyrian\_config;}
+\DoxyCodeLine{00184\ }
+\DoxyCodeLine{00185\ \textcolor{keywordtype}{void}\ JE\_initProcessorType(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00186\ \textcolor{keywordtype}{void}\ JE\_setNewGameSpeed(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00187\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *get\_user\_directory(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00188\ \textcolor{keywordtype}{void}\ JE\_loadConfiguration(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00189\ \textcolor{keywordtype}{void}\ JE\_saveConfiguration(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00190\ }
+\DoxyCodeLine{00191\ \textcolor{keywordtype}{void}\ JE\_saveGame(JE\_byte\ slot,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *name);}
+\DoxyCodeLine{00192\ \textcolor{keywordtype}{void}\ JE\_loadGame(JE\_byte\ slot);}
+\DoxyCodeLine{00193\ }
+\DoxyCodeLine{00194\ \textcolor{keywordtype}{void}\ JE\_encryptSaveTemp(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00195\ \textcolor{keywordtype}{void}\ JE\_decryptSaveTemp(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00196\ }
+\DoxyCodeLine{00197\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ CONFIG\_H\ */}\textcolor{preprocessor}{}}
+
+\end{DoxyCode}

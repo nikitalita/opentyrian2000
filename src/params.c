@@ -45,30 +45,30 @@ void JE_paramCheck(int argc, char *argv[])
 	const Options options[] =
 	{
 		{ 'h', 'h', "help",              false },
-		
+
 		{ 's', 's', "no-sound",          false },
 		{ 'j', 'j', "no-joystick",       false },
 		{ 'x', 'x', "no-xmas",           false },
-		
+
 		{ 't', 't', "data",              true },
-		
+
 		{ 'n', 'n', "net",               true },
 		{ 256, 0,   "net-player-name",   true }, // TODO: no short codes because there should
 		{ 257, 0,   "net-player-number", true }, //       be a menu for entering these in the future
 		{ 'p', 'p', "net-port",          true },
 		{ 'd', 'd', "net-delay",         true },
-		
+
 		{ 'X', 'X', "xmas",              false },
 		{ 'c', 'c', "constant",          false },
 		{ 'k', 'k', "death",             false },
 		{ 'r', 'r', "record",            false },
 		{ 'l', 'l', "loot",              false },
-		
+
 		{ 0, 0, NULL, false}
 	};
-	
+
 	Option option;
-	
+
 	for (; ; )
 	{
 		option = parse_args(argc, (const char **)argv, options);
@@ -117,6 +117,11 @@ void JE_paramCheck(int argc, char *argv[])
 			xmas = false;
 			break;
 			
+		case 'X':
+			override_xmas = true;
+			xmas = true;
+			break;
+			
 		// set custom Tyrian data directory
 		case 't':
 			custom_data_dir = option.arg;
@@ -129,7 +134,7 @@ void JE_paramCheck(int argc, char *argv[])
 			if (temp)
 			{
 				temp -= (intptr_t)option.arg;
-				
+
 				int temp_port = atoi(&option.arg[temp + 1]);
 				if (temp_port > 0 && temp_port < 49152)
 					network_opponent_port = temp_port;
@@ -138,22 +143,22 @@ void JE_paramCheck(int argc, char *argv[])
 					fprintf(stderr, "%s: error: invalid network port number\n", argv[0]);
 					exit(EXIT_FAILURE);
 				}
-				
+
 				network_opponent_host = malloc(temp + 1);
 				SDL_strlcpy(network_opponent_host, option.arg, temp + 1);
 			}
 			else
 			{
 				network_opponent_host = malloc(strlen(option.arg) + 1);
-				strcpy(network_opponent_host, option.arg);
+				strlcpy(network_opponent_host, option.arg, strlen(option.arg) + 1);
 			}
 			break;
-			
+
 		case 256: // --net-player-name
 			network_player_name = malloc(strlen(option.arg) + 1);
-			strcpy(network_player_name, option.arg);
+			strlcpy(network_player_name, option.arg, (strlen(option.arg) + 1));
 			break;
-			
+
 		case 257: // --net-player-number
 		{
 			int temp = atoi(option.arg);
@@ -166,6 +171,7 @@ void JE_paramCheck(int argc, char *argv[])
 			}
 			break;
 		}
+
 		case 'p':
 		{
 			int temp = atoi(option.arg);
@@ -190,12 +196,8 @@ void JE_paramCheck(int argc, char *argv[])
 			}
 			break;
 		}
-		case 'X':
-			override_xmas = true;
-			xmas = true;
-			break;
-			
-		case 'c':
+
+        case 'c':
 			/* Constant play for testing purposes (C key activates invincibility)
 			   This might be useful for publishers to see everything - especially
 			   those who can't play it */

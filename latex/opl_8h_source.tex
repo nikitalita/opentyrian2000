@@ -1,0 +1,57 @@
+\doxysection{opl.\+h}
+\hypertarget{opl_8h_source}{}\label{opl_8h_source}\index{src/opl.h@{src/opl.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ \ Copyright\ (C)\ 2002-\/2010\ \ The\ DOSBox\ Team}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *\ \ OPL2/OPL3\ emulation\ library}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *\ \ This\ library\ is\ free\ software;\ you\ can\ redistribute\ it\ and/or}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ \ modify\ it\ under\ the\ terms\ of\ the\ GNU\ Lesser\ General\ Public}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *\ \ License\ as\ published\ by\ the\ Free\ Software\ Foundation;\ either}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ \ version\ 2.1\ of\ the\ License,\ or\ (at\ your\ option)\ any\ later\ version.}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *\ }}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *\ \ This\ library\ is\ distributed\ in\ the\ hope\ that\ it\ will\ be\ useful,}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ \ but\ WITHOUT\ ANY\ WARRANTY;\ without\ even\ the\ implied\ warranty\ of}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ \ MERCHANTABILITY\ or\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE.\ \ See\ the\ GNU}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *\ \ Lesser\ General\ Public\ License\ for\ more\ details.}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *\ }}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ \ You\ should\ have\ received\ a\ copy\ of\ the\ GNU\ Lesser\ General\ Public}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *\ \ License\ along\ with\ this\ library;\ if\ not,\ write\ to\ the\ Free\ Software}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ \ Foundation,\ Inc.,\ 51\ Franklin\ Street,\ Fifth\ Floor,\ Boston,\ MA\ \ 02110-\/1301\ \ USA}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#ifndef\ OPL\_H}}
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#define\ OPL\_H}}
+\DoxyCodeLine{00022\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00023\ \textcolor{comment}{\ *\ Originally\ based\ on\ ADLIBEMU.C,\ an\ AdLib/OPL2\ emulation\ library\ by\ Ken\ Silverman}}
+\DoxyCodeLine{00024\ \textcolor{comment}{\ *\ Copyright\ (C)\ 1998-\/2001\ Ken\ Silverman}}
+\DoxyCodeLine{00025\ \textcolor{comment}{\ *\ Ken\ Silverman's\ official\ web\ site:\ "{}http://www.advsys.net/ken"{}}}
+\DoxyCodeLine{00026\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \textcolor{keyword}{typedef}\ uintptr\_t\ \ \ Bitu;}
+\DoxyCodeLine{00031\ \textcolor{keyword}{typedef}\ intptr\_t\ \ \ \ Bits;}
+\DoxyCodeLine{00032\ \textcolor{keyword}{typedef}\ uint32\_t\ \ \ \ Bit32u;}
+\DoxyCodeLine{00033\ \textcolor{keyword}{typedef}\ int32\_t\ \ \ \ \ Bit32s;}
+\DoxyCodeLine{00034\ \textcolor{keyword}{typedef}\ uint16\_t\ \ \ \ Bit16u;}
+\DoxyCodeLine{00035\ \textcolor{keyword}{typedef}\ int16\_t\ \ \ \ \ Bit16s;}
+\DoxyCodeLine{00036\ \textcolor{keyword}{typedef}\ uint8\_t\ \ \ \ \ Bit8u;}
+\DoxyCodeLine{00037\ \textcolor{keyword}{typedef}\ int8\_t\ \ \ \ \ \ Bit8s;}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \textcolor{comment}{//\ general\ functions}}
+\DoxyCodeLine{00040\ \textcolor{keywordtype}{void}\ adlib\_init(Bit32u\ samplerate);}
+\DoxyCodeLine{00041\ \textcolor{keywordtype}{void}\ adlib\_write(Bitu\ idx,\ Bit8u\ val);}
+\DoxyCodeLine{00042\ \textcolor{keywordtype}{void}\ adlib\_getsample(Bit16s*\ sndptr,\ Bits\ numsamples);}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ Bitu\ adlib\_reg\_read(Bitu\ port);}
+\DoxyCodeLine{00045\ \textcolor{keywordtype}{void}\ adlib\_write\_index(Bitu\ port,\ Bit8u\ val);}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \textcolor{preprocessor}{\#define\ opl\_init()\ adlib\_init(audioSampleRate)}}
+\DoxyCodeLine{00048\ \textcolor{preprocessor}{\#define\ opl\_write(reg,\ val)\ adlib\_write(reg,\ val)}}
+\DoxyCodeLine{00049\ \textcolor{preprocessor}{\#define\ opl\_update(buf,\ num)\ adlib\_getsample(buf,\ num)}}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ OPL\_H\ */}\textcolor{preprocessor}{}}
+
+\end{DoxyCode}

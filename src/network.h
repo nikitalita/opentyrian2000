@@ -21,9 +21,10 @@
 
 #include "opentyr.h"
 
-#include "SDL.h"
+#include "SDL2/SDL.h"
+
 #ifdef WITH_NETWORK
-#	include "SDL_net.h"
+#	include "SDL2/SDL_net.h"
 #endif
 
 #define PACKET_ACKNOWLEDGE   0x00    // 

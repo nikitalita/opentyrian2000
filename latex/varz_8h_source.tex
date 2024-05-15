@@ -1,0 +1,363 @@
+\doxysection{varz.\+h}
+\hypertarget{varz_8h_source}{}\label{varz_8h_source}\index{src/varz.h@{src/varz.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*\ }}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ OpenTyrian:\ A\ modern\ cross-\/platform\ port\ of\ Tyrian}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *\ Copyright\ (C)\ 2007-\/2009\ \ The\ OpenTyrian\ Development\ Team}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *\ This\ program\ is\ free\ software;\ you\ can\ redistribute\ it\ and/or}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ modify\ it\ under\ the\ terms\ of\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *\ as\ published\ by\ the\ Free\ Software\ Foundation;\ either\ version\ 2}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ of\ the\ License,\ or\ (at\ your\ option)\ any\ later\ version.}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *\ This\ program\ is\ distributed\ in\ the\ hope\ that\ it\ will\ be\ useful,}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ but\ WITHOUT\ ANY\ WARRANTY;\ without\ even\ the\ implied\ warranty\ of}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ MERCHANTABILITY\ or\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE.\ \ See\ the}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *\ GNU\ General\ Public\ License\ for\ more\ details.}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ You\ should\ have\ received\ a\ copy\ of\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *\ along\ with\ this\ program;\ if\ not,\ write\ to\ the\ Free\ Software}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ Foundation,\ Inc.,\ 51\ Franklin\ Street,\ Fifth\ Floor,\ Boston,\ MA\ \ 02110-\/1301,\ USA.}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#ifndef\ VARZ\_H}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#define\ VARZ\_H}}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#include\ "{}episodes.h"{}}}
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#include\ "{}opentyr.h"{}}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#include\ "{}player.h"{}}}
+\DoxyCodeLine{00025\ \textcolor{preprocessor}{\#include\ "{}sprite.h"{}}}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#include\ <stdbool.h>}}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#define\ SA\ 9}}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \textcolor{keyword}{enum}}
+\DoxyCodeLine{00032\ \{}
+\DoxyCodeLine{00033\ \ \ \ \ SA\_NONE\ =\ 0,}
+\DoxyCodeLine{00034\ \ \ \ \ SA\_NORTSHIPZ\ =\ 7,}
+\DoxyCodeLine{00035\ \ \ \ \ SA\_LASTSHIP\ =\ 9,}
+\DoxyCodeLine{00036\ \ \ \ \ }
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{comment}{//\ only\ used\ for\ code\ entry}}
+\DoxyCodeLine{00038\ \ \ \ \ SA\_DESTRUCT\ =\ 10,}
+\DoxyCodeLine{00039\ \ \ \ \ SA\_ENGAGE\ =\ 11,}
+\DoxyCodeLine{00040\ \ \ \ \ }
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{comment}{//\ only\ used\ in\ pItems[P\_SUPERARCADE]}}
+\DoxyCodeLine{00042\ \ \ \ \ SA\_SUPERTYRIAN\ =\ 254,}
+\DoxyCodeLine{00043\ \ \ \ \ SA\_ARCADE\ =\ 255}
+\DoxyCodeLine{00044\ \};}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \textcolor{preprocessor}{\#define\ ENEMY\_SHOT\_MAX\ \ 60\ }\textcolor{comment}{/*\ 60*/}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \textcolor{preprocessor}{\#define\ CURRENT\_KEY\_SPEED\ 1\ \ }\textcolor{comment}{/*Keyboard/Joystick\ movement\ rate*/}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \textcolor{preprocessor}{\#define\ MAX\_EXPLOSIONS\ \ \ \ \ \ \ \ \ \ \ 200}}
+\DoxyCodeLine{00051\ \textcolor{preprocessor}{\#define\ MAX\_REPEATING\_EXPLOSIONS\ 20}}
+\DoxyCodeLine{00052\ \textcolor{preprocessor}{\#define\ MAX\_SUPERPIXELS\ \ \ \ \ \ \ \ \ \ 101}}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_j_e___single_enemy_type}{JE\_SingleEnemyType}}}
+\DoxyCodeLine{00055\ \{}
+\DoxyCodeLine{00056\ \ \ \ \ JE\_byte\ \ \ \ \ fillbyte;}
+\DoxyCodeLine{00057\ \ \ \ \ JE\_integer\ \ ex,\ ey;\ \ \ \ \ \textcolor{comment}{/*\ POSITION\ */}}
+\DoxyCodeLine{00058\ \ \ \ \ JE\_shortint\ exc,\ eyc;\ \ \ \textcolor{comment}{/*\ CURRENT\ SPEED\ */}}
+\DoxyCodeLine{00059\ \ \ \ \ JE\_shortint\ exca,\ eyca;\ \textcolor{comment}{/*\ RANDOM\ ACCELERATION\ */}}
+\DoxyCodeLine{00060\ \ \ \ \ JE\_shortint\ excc,\ eycc;\ \textcolor{comment}{/*\ FIXED\ ACCELERATION\ WAITTIME\ */}}
+\DoxyCodeLine{00061\ \ \ \ \ JE\_shortint\ exccw,\ eyccw;}
+\DoxyCodeLine{00062\ \ \ \ \ JE\_byte\ \ \ \ \ armorleft;}
+\DoxyCodeLine{00063\ \ \ \ \ JE\_byte\ \ \ \ \ eshotwait[3],\ eshotmultipos[3];\ \textcolor{comment}{/*\ [1..3]\ */}}
+\DoxyCodeLine{00064\ \ \ \ \ JE\_byte\ \ \ \ \ enemycycle;}
+\DoxyCodeLine{00065\ \ \ \ \ JE\_byte\ \ \ \ \ ani;}
+\DoxyCodeLine{00066\ \ \ \ \ JE\_word\ \ \ \ \ egr[20];\ \textcolor{comment}{/*\ [1..20]\ */}}
+\DoxyCodeLine{00067\ \ \ \ \ JE\_byte\ \ \ \ \ size;}
+\DoxyCodeLine{00068\ \ \ \ \ JE\_byte\ \ \ \ \ linknum;}
+\DoxyCodeLine{00069\ \ \ \ \ JE\_byte\ \ \ \ \ aniactive;}
+\DoxyCodeLine{00070\ \ \ \ \ JE\_byte\ \ \ \ \ animax;}
+\DoxyCodeLine{00071\ \ \ \ \ JE\_byte\ \ \ \ \ aniwhenfire;}
+\DoxyCodeLine{00072\ \ \ \ \ \mbox{\hyperlink{struct_sprite2__array}{Sprite2\_array}}\ *sprite2s;}
+\DoxyCodeLine{00073\ \ \ \ \ JE\_shortint\ exrev,\ eyrev;}
+\DoxyCodeLine{00074\ \ \ \ \ JE\_integer\ \ exccadd,\ eyccadd;}
+\DoxyCodeLine{00075\ \ \ \ \ JE\_byte\ \ \ \ \ exccwmax,\ eyccwmax;}
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keywordtype}{void}\ \ \ \ \ \ \ *enemydatofs;}
+\DoxyCodeLine{00077\ \ \ \ \ JE\_boolean\ \ edamaged;}
+\DoxyCodeLine{00078\ \ \ \ \ JE\_word\ \ \ \ \ enemytype;}
+\DoxyCodeLine{00079\ \ \ \ \ JE\_byte\ \ \ \ \ animin;}
+\DoxyCodeLine{00080\ \ \ \ \ JE\_word\ \ \ \ \ edgr;}
+\DoxyCodeLine{00081\ \ \ \ \ JE\_shortint\ edlevel;}
+\DoxyCodeLine{00082\ \ \ \ \ JE\_shortint\ edani;}
+\DoxyCodeLine{00083\ \ \ \ \ JE\_byte\ \ \ \ \ fill1;}
+\DoxyCodeLine{00084\ \ \ \ \ JE\_byte\ \ \ \ \ filter;}
+\DoxyCodeLine{00085\ \ \ \ \ JE\_integer\ \ evalue;}
+\DoxyCodeLine{00086\ \ \ \ \ JE\_integer\ \ fixedmovey;}
+\DoxyCodeLine{00087\ \ \ \ \ JE\_byte\ \ \ \ \ freq[3];\ \textcolor{comment}{/*\ [1..3]\ */}}
+\DoxyCodeLine{00088\ \ \ \ \ JE\_byte\ \ \ \ \ launchwait;}
+\DoxyCodeLine{00089\ \ \ \ \ JE\_word\ \ \ \ \ launchtype;}
+\DoxyCodeLine{00090\ \ \ \ \ JE\_byte\ \ \ \ \ launchfreq;}
+\DoxyCodeLine{00091\ \ \ \ \ JE\_byte\ \ \ \ \ xaccel;}
+\DoxyCodeLine{00092\ \ \ \ \ JE\_byte\ \ \ \ \ yaccel;}
+\DoxyCodeLine{00093\ \ \ \ \ JE\_byte\ \ \ \ \ tur[3];\ \textcolor{comment}{/*\ [1..3]\ */}}
+\DoxyCodeLine{00094\ \ \ \ \ JE\_word\ \ \ \ \ enemydie;\ \textcolor{comment}{/*\ Enemy\ created\ when\ this\ one\ dies\ */}}
+\DoxyCodeLine{00095\ \ \ \ \ JE\_boolean\ \ enemyground;}
+\DoxyCodeLine{00096\ \ \ \ \ JE\_byte\ \ \ \ \ explonum;}
+\DoxyCodeLine{00097\ \ \ \ \ JE\_word\ \ \ \ \ mapoffset;}
+\DoxyCodeLine{00098\ \ \ \ \ JE\_boolean\ \ scoreitem;}
+\DoxyCodeLine{00099\ }
+\DoxyCodeLine{00100\ \ \ \ \ JE\_boolean\ \ special;}
+\DoxyCodeLine{00101\ \ \ \ \ JE\_byte\ \ \ \ \ flagnum;}
+\DoxyCodeLine{00102\ \ \ \ \ JE\_boolean\ \ setto;}
+\DoxyCodeLine{00103\ }
+\DoxyCodeLine{00104\ \ \ \ \ JE\_byte\ \ \ \ \ iced;\ \textcolor{comment}{/*Duration*/}}
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00106\ \ \ \ \ JE\_byte\ \ \ \ \ launchspecial;}
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00108\ \ \ \ \ JE\_integer\ \ xminbounce;}
+\DoxyCodeLine{00109\ \ \ \ \ JE\_integer\ \ xmaxbounce;}
+\DoxyCodeLine{00110\ \ \ \ \ JE\_integer\ \ yminbounce;}
+\DoxyCodeLine{00111\ \ \ \ \ JE\_integer\ \ ymaxbounce;}
+\DoxyCodeLine{00112\ \ \ \ \ JE\_byte\ \ \ \ \ fill[3];\ \textcolor{comment}{/*\ [1..3]\ */}}
+\DoxyCodeLine{00113\ \};}
+\DoxyCodeLine{00114\ }
+\DoxyCodeLine{00115\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_j_e___single_enemy_type}{JE\_SingleEnemyType}}\ JE\_MultiEnemyType[100];\ \textcolor{comment}{/*\ [1..100]\ */}}
+\DoxyCodeLine{00116\ }
+\DoxyCodeLine{00117\ \textcolor{keyword}{typedef}\ JE\_byte\ JE\_DanCShape[24\ *\ 28];\ \textcolor{comment}{/*\ [1..(24*28)\ div\ 2]\ OF\ WORD\ */}}
+\DoxyCodeLine{00118\ }
+\DoxyCodeLine{00119\ \textcolor{keyword}{typedef}\ JE\_char\ JE\_CharString[256];\ \textcolor{comment}{/*\ [1..256]\ */}}
+\DoxyCodeLine{00120\ }
+\DoxyCodeLine{00121\ \textcolor{keyword}{typedef}\ JE\_byte\ JE\_Map1Buffer[24\ *\ 28\ *\ 13\ *\ 4];\ \textcolor{comment}{/*\ [1..24*28*13*4]\ */}}
+\DoxyCodeLine{00122\ }
+\DoxyCodeLine{00123\ \textcolor{keyword}{typedef}\ JE\_byte\ *JE\_MapType[300][14];\ \textcolor{comment}{/*\ [1..300,\ 1..14]\ */}}
+\DoxyCodeLine{00124\ \textcolor{keyword}{typedef}\ JE\_byte\ *JE\_MapType2[600][14];\ \textcolor{comment}{/*\ [1..600,\ 1..14]\ */}}
+\DoxyCodeLine{00125\ \textcolor{keyword}{typedef}\ JE\_byte\ *JE\_MapType3[600][15];\ \textcolor{comment}{/*\ [1..600,\ 1..15]\ */}}
+\DoxyCodeLine{00126\ }
+\DoxyCodeLine{00127\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_j_e___event_rec_type}{JE\_EventRecType}}}
+\DoxyCodeLine{00128\ \{}
+\DoxyCodeLine{00129\ \ \ \ \ JE\_word\ \ \ \ \ eventtime;}
+\DoxyCodeLine{00130\ \ \ \ \ JE\_byte\ \ \ \ \ eventtype;}
+\DoxyCodeLine{00131\ \ \ \ \ JE\_integer\ \ eventdat,\ eventdat2;}
+\DoxyCodeLine{00132\ \ \ \ \ JE\_shortint\ eventdat3,\ eventdat5,\ eventdat6;}
+\DoxyCodeLine{00133\ \ \ \ \ JE\_byte\ \ \ \ \ eventdat4;}
+\DoxyCodeLine{00134\ \};}
+\DoxyCodeLine{00135\ }
+\DoxyCodeLine{00136\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_j_e___mega_data_type1}{JE\_MegaDataType1}}}
+\DoxyCodeLine{00137\ \{}
+\DoxyCodeLine{00138\ \ \ \ \ JE\_MapType\ mainmap;}
+\DoxyCodeLine{00139\ \ \ \ \ \textcolor{keyword}{struct}}
+\DoxyCodeLine{00140\ \ \ \ \ \{}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ JE\_DanCShape\ sh;}
+\DoxyCodeLine{00142\ \ \ \ \ \}\ shapes[72];\ \textcolor{comment}{/*\ [0..71]\ */}}
+\DoxyCodeLine{00143\ \ \ \ \ JE\_byte\ tempdat1;}
+\DoxyCodeLine{00144\ \ \ \ \ \textcolor{comment}{/*JE\_DanCShape\ filler;*/}}
+\DoxyCodeLine{00145\ \};}
+\DoxyCodeLine{00146\ }
+\DoxyCodeLine{00147\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_j_e___mega_data_type2}{JE\_MegaDataType2}}}
+\DoxyCodeLine{00148\ \{}
+\DoxyCodeLine{00149\ \ \ \ \ JE\_MapType2\ mainmap;}
+\DoxyCodeLine{00150\ \ \ \ \ \textcolor{keyword}{struct}}
+\DoxyCodeLine{00151\ \ \ \ \ \{}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ JE\_byte\ nothing[3];\ \textcolor{comment}{/*\ [1..3]\ */}}
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ JE\_byte\ fill;}
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ JE\_DanCShape\ sh;}
+\DoxyCodeLine{00155\ \ \ \ \ \}\ shapes[71];\ \textcolor{comment}{/*\ [0..70]\ */}}
+\DoxyCodeLine{00156\ \ \ \ \ JE\_byte\ tempdat2;}
+\DoxyCodeLine{00157\ \};}
+\DoxyCodeLine{00158\ }
+\DoxyCodeLine{00159\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_j_e___mega_data_type3}{JE\_MegaDataType3}}}
+\DoxyCodeLine{00160\ \{}
+\DoxyCodeLine{00161\ \ \ \ \ JE\_MapType3\ mainmap;}
+\DoxyCodeLine{00162\ \ \ \ \ \textcolor{keyword}{struct}}
+\DoxyCodeLine{00163\ \ \ \ \ \{}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ JE\_byte\ nothing[3];\ \textcolor{comment}{/*\ [1..3]\ */}}
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ JE\_byte\ fill;}
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ JE\_DanCShape\ sh;}
+\DoxyCodeLine{00167\ \ \ \ \ \}\ shapes[70];\ \textcolor{comment}{/*\ [0..69]\ */}}
+\DoxyCodeLine{00168\ \ \ \ \ JE\_byte\ tempdat3;}
+\DoxyCodeLine{00169\ \};}
+\DoxyCodeLine{00170\ }
+\DoxyCodeLine{00171\ \textcolor{keyword}{typedef}\ JE\_byte\ JE\_EnemyAvailType[100];\ \textcolor{comment}{/*\ [1..100]\ */}}
+\DoxyCodeLine{00172\ }
+\DoxyCodeLine{00173\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00174\ \ \ \ \ JE\_integer\ sx,\ sy;}
+\DoxyCodeLine{00175\ \ \ \ \ JE\_integer\ sxm,\ sym;}
+\DoxyCodeLine{00176\ \ \ \ \ JE\_shortint\ sxc,\ syc;}
+\DoxyCodeLine{00177\ \ \ \ \ JE\_byte\ tx,\ ty;}
+\DoxyCodeLine{00178\ \ \ \ \ JE\_word\ sgr;}
+\DoxyCodeLine{00179\ \ \ \ \ JE\_byte\ sdmg;}
+\DoxyCodeLine{00180\ \ \ \ \ JE\_byte\ duration;}
+\DoxyCodeLine{00181\ \ \ \ \ JE\_word\ animate;}
+\DoxyCodeLine{00182\ \ \ \ \ JE\_word\ animax;}
+\DoxyCodeLine{00183\ \ \ \ \ JE\_byte\ fill[12];}
+\DoxyCodeLine{00184\ \}\ \mbox{\hyperlink{struct_enemy_shot_type}{EnemyShotType}};}
+\DoxyCodeLine{00185\ }
+\DoxyCodeLine{00186\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00187\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ ttl;}
+\DoxyCodeLine{00188\ \ \ \ \ \textcolor{keywordtype}{signed}\ \textcolor{keywordtype}{int}\ x,\ y;}
+\DoxyCodeLine{00189\ \ \ \ \ \textcolor{keywordtype}{signed}\ \textcolor{keywordtype}{int}\ delta\_x,\ delta\_y;}
+\DoxyCodeLine{00190\ \ \ \ \ \textcolor{keywordtype}{bool}\ fixed\_position;}
+\DoxyCodeLine{00191\ \ \ \ \ \textcolor{keywordtype}{bool}\ follow\_player;}
+\DoxyCodeLine{00192\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ sprite;}
+\DoxyCodeLine{00193\ \}\ \mbox{\hyperlink{structexplosion__type}{explosion\_type}};}
+\DoxyCodeLine{00194\ }
+\DoxyCodeLine{00195\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00196\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ delay;}
+\DoxyCodeLine{00197\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ ttl;}
+\DoxyCodeLine{00198\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ x,\ y;}
+\DoxyCodeLine{00199\ \ \ \ \ \textcolor{keywordtype}{bool}\ big;}
+\DoxyCodeLine{00200\ \}\ \mbox{\hyperlink{structrep__explosion__type}{rep\_explosion\_type}};}
+\DoxyCodeLine{00201\ }
+\DoxyCodeLine{00202\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00203\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ x,\ y,\ z;}
+\DoxyCodeLine{00204\ \ \ \ \ \textcolor{keywordtype}{signed}\ \textcolor{keywordtype}{int}\ delta\_x,\ delta\_y;}
+\DoxyCodeLine{00205\ \ \ \ \ Uint8\ color;}
+\DoxyCodeLine{00206\ \}\ \mbox{\hyperlink{structsuperpixel__type}{superpixel\_type}};}
+\DoxyCodeLine{00207\ }
+\DoxyCodeLine{00208\ \textcolor{keyword}{extern}\ JE\_integer\ tempDat,\ tempDat2,\ tempDat3;}
+\DoxyCodeLine{00209\ \textcolor{keyword}{extern}\ \textcolor{keyword}{const}\ JE\_byte\ SANextShip[SA\ +\ 2];}
+\DoxyCodeLine{00210\ \textcolor{keyword}{extern}\ \textcolor{keyword}{const}\ JE\_word\ SASpecialWeapon[SA];}
+\DoxyCodeLine{00211\ \textcolor{keyword}{extern}\ \textcolor{keyword}{const}\ JE\_word\ SASpecialWeaponB[SA];}
+\DoxyCodeLine{00212\ \textcolor{keyword}{extern}\ \textcolor{keyword}{const}\ JE\_byte\ SAShip[SA];}
+\DoxyCodeLine{00213\ \textcolor{keyword}{extern}\ \textcolor{keyword}{const}\ JE\_word\ SAWeapon[SA][5];}
+\DoxyCodeLine{00214\ \textcolor{keyword}{extern}\ \textcolor{keyword}{const}\ JE\_byte\ specialArcadeWeapon[PORT\_NUM];}
+\DoxyCodeLine{00215\ \textcolor{keyword}{extern}\ \textcolor{keyword}{const}\ JE\_byte\ optionSelect[16][3][2];}
+\DoxyCodeLine{00216\ \textcolor{keyword}{extern}\ \textcolor{keyword}{const}\ JE\_word\ PGR[21];}
+\DoxyCodeLine{00217\ \textcolor{keyword}{extern}\ \textcolor{keyword}{const}\ JE\_byte\ PAni[21];}
+\DoxyCodeLine{00218\ \textcolor{keyword}{extern}\ \textcolor{keyword}{const}\ JE\_word\ linkGunWeapons[38];}
+\DoxyCodeLine{00219\ \textcolor{keyword}{extern}\ \textcolor{keyword}{const}\ JE\_word\ chargeGunWeapons[38];}
+\DoxyCodeLine{00220\ \textcolor{keyword}{extern}\ \textcolor{keyword}{const}\ JE\_byte\ randomEnemyLaunchSounds[3];}
+\DoxyCodeLine{00221\ \textcolor{keyword}{extern}\ \textcolor{keyword}{const}\ JE\_byte\ keyboardCombos[26][8];}
+\DoxyCodeLine{00222\ \textcolor{keyword}{extern}\ \textcolor{keyword}{const}\ JE\_byte\ shipCombosB[21];}
+\DoxyCodeLine{00223\ \textcolor{keyword}{extern}\ \textcolor{keyword}{const}\ JE\_byte\ superTyrianSpecials[4];}
+\DoxyCodeLine{00224\ \textcolor{keyword}{extern}\ \textcolor{keyword}{const}\ JE\_byte\ shipCombos[19][3];}
+\DoxyCodeLine{00225\ \textcolor{keyword}{extern}\ JE\_byte\ SFCurrentCode[2][21];}
+\DoxyCodeLine{00226\ \textcolor{keyword}{extern}\ JE\_byte\ SFExecuted[2];}
+\DoxyCodeLine{00227\ \textcolor{keyword}{extern}\ JE\_byte\ lvlFileNum;}
+\DoxyCodeLine{00228\ \textcolor{keyword}{extern}\ JE\_word\ maxEvent,\ eventLoc;}
+\DoxyCodeLine{00229\ \textcolor{keyword}{extern}\ JE\_word\ tempBackMove,\ explodeMove;}
+\DoxyCodeLine{00230\ \textcolor{keyword}{extern}\ JE\_byte\ levelEnd;}
+\DoxyCodeLine{00231\ \textcolor{keyword}{extern}\ JE\_word\ levelEndFxWait;}
+\DoxyCodeLine{00232\ \textcolor{keyword}{extern}\ JE\_shortint\ levelEndWarp;}
+\DoxyCodeLine{00233\ \textcolor{keyword}{extern}\ JE\_boolean\ endLevel,\ reallyEndLevel,\ waitToEndLevel,\ playerEndLevel,\ normalBonusLevelCurrent,\ bonusLevelCurrent,\ smallEnemyAdjust,\ readyToEndLevel,\ quitRequested;}
+\DoxyCodeLine{00234\ \textcolor{keyword}{extern}\ JE\_byte\ newPL[10];}
+\DoxyCodeLine{00235\ \textcolor{keyword}{extern}\ JE\_word\ returnLoc;}
+\DoxyCodeLine{00236\ \textcolor{keyword}{extern}\ JE\_boolean\ returnActive;}
+\DoxyCodeLine{00237\ \textcolor{keyword}{extern}\ JE\_word\ galagaShotFreq;}
+\DoxyCodeLine{00238\ \textcolor{keyword}{extern}\ JE\_longint\ galagaLife;}
+\DoxyCodeLine{00239\ \textcolor{keyword}{extern}\ JE\_boolean\ debug;}
+\DoxyCodeLine{00240\ \textcolor{keyword}{extern}\ Uint32\ debugTime,\ lastDebugTime;}
+\DoxyCodeLine{00241\ \textcolor{keyword}{extern}\ JE\_longint\ debugHistCount;}
+\DoxyCodeLine{00242\ \textcolor{keyword}{extern}\ JE\_real\ debugHist;}
+\DoxyCodeLine{00243\ \textcolor{keyword}{extern}\ JE\_word\ curLoc;}
+\DoxyCodeLine{00244\ \textcolor{keyword}{extern}\ JE\_boolean\ firstGameOver,\ gameLoaded,\ enemyStillExploding;}
+\DoxyCodeLine{00245\ \textcolor{keyword}{extern}\ JE\_word\ totalEnemy;}
+\DoxyCodeLine{00246\ \textcolor{keyword}{extern}\ JE\_word\ enemyKilled;}
+\DoxyCodeLine{00247\ \textcolor{keyword}{extern}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_j_e___mega_data_type1}{JE\_MegaDataType1}}\ megaData1;}
+\DoxyCodeLine{00248\ \textcolor{keyword}{extern}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_j_e___mega_data_type2}{JE\_MegaDataType2}}\ megaData2;}
+\DoxyCodeLine{00249\ \textcolor{keyword}{extern}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_j_e___mega_data_type3}{JE\_MegaDataType3}}\ megaData3;}
+\DoxyCodeLine{00250\ \textcolor{keyword}{extern}\ JE\_byte\ flash;}
+\DoxyCodeLine{00251\ \textcolor{keyword}{extern}\ JE\_shortint\ flashChange;}
+\DoxyCodeLine{00252\ \textcolor{keyword}{extern}\ JE\_byte\ displayTime;}
+\DoxyCodeLine{00253\ }
+\DoxyCodeLine{00254\ \textcolor{keyword}{extern}\ \textcolor{keywordtype}{bool}\ play\_demo,\ record\_demo,\ stopped\_demo;}
+\DoxyCodeLine{00255\ \textcolor{keyword}{extern}\ Uint8\ demo\_num;}
+\DoxyCodeLine{00256\ \textcolor{keyword}{extern}\ FILE\ *demo\_file;}
+\DoxyCodeLine{00257\ }
+\DoxyCodeLine{00258\ \textcolor{keyword}{extern}\ Uint8\ demo\_keys;}
+\DoxyCodeLine{00259\ \textcolor{keyword}{extern}\ Uint16\ demo\_keys\_wait;}
+\DoxyCodeLine{00260\ }
+\DoxyCodeLine{00261\ \textcolor{keyword}{extern}\ JE\_byte\ soundQueue[8];}
+\DoxyCodeLine{00262\ \textcolor{keyword}{extern}\ JE\_boolean\ enemyContinualDamage;}
+\DoxyCodeLine{00263\ \textcolor{keyword}{extern}\ JE\_boolean\ enemiesActive;}
+\DoxyCodeLine{00264\ \textcolor{keyword}{extern}\ JE\_boolean\ forceEvents;}
+\DoxyCodeLine{00265\ \textcolor{keyword}{extern}\ JE\_boolean\ stopBackgrounds;}
+\DoxyCodeLine{00266\ \textcolor{keyword}{extern}\ JE\_byte\ stopBackgroundNum;}
+\DoxyCodeLine{00267\ \textcolor{keyword}{extern}\ JE\_byte\ damageRate;}
+\DoxyCodeLine{00268\ \textcolor{keyword}{extern}\ JE\_boolean\ background3x1;}
+\DoxyCodeLine{00269\ \textcolor{keyword}{extern}\ JE\_boolean\ background3x1b;}
+\DoxyCodeLine{00270\ \textcolor{keyword}{extern}\ JE\_boolean\ levelTimer;}
+\DoxyCodeLine{00271\ \textcolor{keyword}{extern}\ JE\_word\ levelTimerCountdown;}
+\DoxyCodeLine{00272\ \textcolor{keyword}{extern}\ JE\_word\ levelTimerJumpTo;}
+\DoxyCodeLine{00273\ \textcolor{keyword}{extern}\ JE\_boolean\ randomExplosions;}
+\DoxyCodeLine{00274\ \textcolor{keyword}{extern}\ JE\_boolean\ editShip1,\ editShip2;}
+\DoxyCodeLine{00275\ \textcolor{keyword}{extern}\ JE\_boolean\ globalFlags[10];}
+\DoxyCodeLine{00276\ \textcolor{keyword}{extern}\ JE\_byte\ levelSong;}
+\DoxyCodeLine{00277\ \textcolor{keyword}{extern}\ JE\_boolean\ loadDestruct;}
+\DoxyCodeLine{00278\ \textcolor{keyword}{extern}\ JE\_word\ mapOrigin,\ mapPNum;}
+\DoxyCodeLine{00279\ \textcolor{keyword}{extern}\ JE\_byte\ mapPlanet[5],\ mapSection[5];}
+\DoxyCodeLine{00280\ \textcolor{keyword}{extern}\ JE\_boolean\ moveTyrianLogoUp;}
+\DoxyCodeLine{00281\ \textcolor{keyword}{extern}\ JE\_boolean\ skipStarShowVGA;}
+\DoxyCodeLine{00282\ \textcolor{keyword}{extern}\ JE\_MultiEnemyType\ enemy;}
+\DoxyCodeLine{00283\ \textcolor{keyword}{extern}\ JE\_EnemyAvailType\ enemyAvail;}
+\DoxyCodeLine{00284\ \textcolor{keyword}{extern}\ JE\_word\ enemyOffset;}
+\DoxyCodeLine{00285\ \textcolor{keyword}{extern}\ JE\_word\ enemyOnScreen;}
+\DoxyCodeLine{00286\ \textcolor{keyword}{extern}\ JE\_word\ superEnemy254Jump;}
+\DoxyCodeLine{00287\ \textcolor{keyword}{extern}\ \mbox{\hyperlink{structexplosion__type}{explosion\_type}}\ explosions[MAX\_EXPLOSIONS];}
+\DoxyCodeLine{00288\ \textcolor{keyword}{extern}\ JE\_integer\ explosionFollowAmountX,\ explosionFollowAmountY;}
+\DoxyCodeLine{00289\ \textcolor{keyword}{extern}\ JE\_boolean\ fireButtonHeld;}
+\DoxyCodeLine{00290\ \textcolor{keyword}{extern}\ JE\_boolean\ enemyShotAvail[ENEMY\_SHOT\_MAX];}
+\DoxyCodeLine{00291\ \textcolor{keyword}{extern}\ \mbox{\hyperlink{struct_enemy_shot_type}{EnemyShotType}}\ enemyShot[ENEMY\_SHOT\_MAX];}
+\DoxyCodeLine{00292\ \textcolor{keyword}{extern}\ JE\_byte\ zinglonDuration;}
+\DoxyCodeLine{00293\ \textcolor{keyword}{extern}\ JE\_byte\ astralDuration;}
+\DoxyCodeLine{00294\ \textcolor{keyword}{extern}\ JE\_word\ flareDuration;}
+\DoxyCodeLine{00295\ \textcolor{keyword}{extern}\ JE\_boolean\ flareStart;}
+\DoxyCodeLine{00296\ \textcolor{keyword}{extern}\ JE\_shortint\ flareColChg;}
+\DoxyCodeLine{00297\ \textcolor{keyword}{extern}\ JE\_byte\ specialWait;}
+\DoxyCodeLine{00298\ \textcolor{keyword}{extern}\ JE\_byte\ nextSpecialWait;}
+\DoxyCodeLine{00299\ \textcolor{keyword}{extern}\ JE\_boolean\ spraySpecial;}
+\DoxyCodeLine{00300\ \textcolor{keyword}{extern}\ JE\_byte\ doIced;}
+\DoxyCodeLine{00301\ \textcolor{keyword}{extern}\ JE\_boolean\ infiniteShot;}
+\DoxyCodeLine{00302\ \textcolor{keyword}{extern}\ JE\_boolean\ allPlayersGone;}
+\DoxyCodeLine{00303\ \textcolor{keyword}{extern}\ \textcolor{keyword}{const}\ uint\ shadowYDist;}
+\DoxyCodeLine{00304\ \textcolor{keyword}{extern}\ JE\_real\ optionSatelliteRotate;}
+\DoxyCodeLine{00305\ \textcolor{keyword}{extern}\ JE\_integer\ optionAttachmentMove;}
+\DoxyCodeLine{00306\ \textcolor{keyword}{extern}\ JE\_boolean\ optionAttachmentLinked,\ optionAttachmentReturn;}
+\DoxyCodeLine{00307\ \textcolor{keyword}{extern}\ JE\_byte\ chargeWait,\ chargeLevel,\ chargeMax,\ chargeGr,\ chargeGrWait;}
+\DoxyCodeLine{00308\ \textcolor{keyword}{extern}\ JE\_word\ neat;}
+\DoxyCodeLine{00309\ \textcolor{keyword}{extern}\ \mbox{\hyperlink{structrep__explosion__type}{rep\_explosion\_type}}\ rep\_explosions[MAX\_REPEATING\_EXPLOSIONS];}
+\DoxyCodeLine{00310\ \textcolor{keyword}{extern}\ \mbox{\hyperlink{structsuperpixel__type}{superpixel\_type}}\ superpixels[MAX\_SUPERPIXELS];}
+\DoxyCodeLine{00311\ \textcolor{keyword}{extern}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ last\_superpixel;}
+\DoxyCodeLine{00312\ \textcolor{keyword}{extern}\ JE\_byte\ temp,\ temp2,\ temp3;}
+\DoxyCodeLine{00313\ \textcolor{keyword}{extern}\ JE\_word\ tempX,\ tempY;}
+\DoxyCodeLine{00314\ \textcolor{keyword}{extern}\ JE\_word\ tempW;}
+\DoxyCodeLine{00315\ \textcolor{keyword}{extern}\ JE\_boolean\ doNotSaveBackup;}
+\DoxyCodeLine{00316\ \textcolor{keyword}{extern}\ JE\_word\ x,\ y;}
+\DoxyCodeLine{00317\ \textcolor{keyword}{extern}\ JE\_integer\ b;}
+\DoxyCodeLine{00318\ \textcolor{keyword}{extern}\ JE\_byte\ **BKwrap1to,\ **BKwrap2to,\ **BKwrap3to,\ **BKwrap1,\ **BKwrap2,\ **BKwrap3;}
+\DoxyCodeLine{00319\ \textcolor{keyword}{extern}\ JE\_shortint\ specialWeaponFilter,\ specialWeaponFreq;}
+\DoxyCodeLine{00320\ \textcolor{keyword}{extern}\ JE\_word\ specialWeaponWpn;}
+\DoxyCodeLine{00321\ \textcolor{keyword}{extern}\ JE\_boolean\ linkToPlayer;}
+\DoxyCodeLine{00322\ \textcolor{keyword}{extern}\ JE\_word\ shipGr,\ shipGr2;}
+\DoxyCodeLine{00323\ \textcolor{keyword}{extern}\ \mbox{\hyperlink{struct_sprite2__array}{Sprite2\_array}}\ *shipGrPtr,\ *shipGr2ptr;}
+\DoxyCodeLine{00324\ }
+\DoxyCodeLine{00325\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ hud\_sidekick\_y[2][2]\ =}
+\DoxyCodeLine{00326\ \{}
+\DoxyCodeLine{00327\ \ \ \ \ \{\ \ 64,\ \ 82\ \},\ \textcolor{comment}{//\ one\ player\ HUD}}
+\DoxyCodeLine{00328\ \ \ \ \ \{\ 108,\ 126\ \},\ \textcolor{comment}{//\ two\ player\ HUD}}
+\DoxyCodeLine{00329\ \};}
+\DoxyCodeLine{00330\ }
+\DoxyCodeLine{00331\ \textcolor{keywordtype}{void}\ JE\_getShipInfo(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00332\ JE\_word\ JE\_SGr(JE\_word\ ship,\ \mbox{\hyperlink{struct_sprite2__array}{Sprite2\_array}}\ **ptr);}
+\DoxyCodeLine{00333\ }
+\DoxyCodeLine{00334\ \textcolor{keywordtype}{void}\ JE\_drawOptions(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00335\ }
+\DoxyCodeLine{00336\ \textcolor{keywordtype}{void}\ JE\_tyrianHalt(JE\_byte\ code);\ \textcolor{comment}{/*\ This\ ends\ the\ game\ */}}
+\DoxyCodeLine{00337\ \textcolor{keywordtype}{void}\ JE\_specialComplete(JE\_byte\ playernum,\ JE\_byte\ specialType);}
+\DoxyCodeLine{00338\ \textcolor{keywordtype}{void}\ JE\_doSpecialShot(JE\_byte\ playernum,\ uint\ *armor,\ uint\ *shield);}
+\DoxyCodeLine{00339\ }
+\DoxyCodeLine{00340\ \textcolor{keywordtype}{void}\ JE\_wipeShieldArmorBars(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00341\ JE\_byte\ JE\_playerDamage(JE\_byte\ temp,\ \mbox{\hyperlink{struct_player}{Player}}\ *);}
+\DoxyCodeLine{00342\ }
+\DoxyCodeLine{00343\ \textcolor{keywordtype}{void}\ JE\_setupExplosion(\textcolor{keywordtype}{signed}\ \textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{signed}\ \textcolor{keywordtype}{int}\ y,\ \textcolor{keywordtype}{signed}\ \textcolor{keywordtype}{int}\ delta\_y,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ type,\ \textcolor{keywordtype}{bool}\ fixed\_position,\ \textcolor{keywordtype}{bool}\ follow\_player);}
+\DoxyCodeLine{00344\ \textcolor{keywordtype}{void}\ JE\_setupExplosionLarge(JE\_boolean\ enemyground,\ JE\_byte\ explonum,\ JE\_integer\ x,\ JE\_integer\ y);}
+\DoxyCodeLine{00345\ }
+\DoxyCodeLine{00346\ \textcolor{keywordtype}{void}\ JE\_drawShield(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00347\ \textcolor{keywordtype}{void}\ JE\_drawArmor(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00348\ }
+\DoxyCodeLine{00349\ JE\_word\ JE\_portConfigs(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00350\ }
+\DoxyCodeLine{00351\ \textcolor{comment}{/*SuperPixels*/}}
+\DoxyCodeLine{00352\ \textcolor{keywordtype}{void}\ JE\_doSP(JE\_word\ x,\ JE\_word\ y,\ JE\_word\ num,\ JE\_byte\ explowidth,\ JE\_byte\ color);}
+\DoxyCodeLine{00353\ \textcolor{keywordtype}{void}\ JE\_drawSP(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00354\ }
+\DoxyCodeLine{00355\ \textcolor{keywordtype}{void}\ JE\_drawOptionLevel(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00356\ }
+\DoxyCodeLine{00357\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ VARZ\_H\ */}\textcolor{preprocessor}{}}
+
+\end{DoxyCode}

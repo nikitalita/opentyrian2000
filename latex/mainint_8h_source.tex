@@ -1,0 +1,95 @@
+\doxysection{mainint.\+h}
+\hypertarget{mainint_8h_source}{}\label{mainint_8h_source}\index{src/mainint.h@{src/mainint.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ OpenTyrian:\ A\ modern\ cross-\/platform\ port\ of\ Tyrian}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *\ Copyright\ (C)\ 2007-\/2009\ \ The\ OpenTyrian\ Development\ Team}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *\ This\ program\ is\ free\ software;\ you\ can\ redistribute\ it\ and/or}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ modify\ it\ under\ the\ terms\ of\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *\ as\ published\ by\ the\ Free\ Software\ Foundation;\ either\ version\ 2}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ of\ the\ License,\ or\ (at\ your\ option)\ any\ later\ version.}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *\ This\ program\ is\ distributed\ in\ the\ hope\ that\ it\ will\ be\ useful,}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ but\ WITHOUT\ ANY\ WARRANTY;\ without\ even\ the\ implied\ warranty\ of}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ MERCHANTABILITY\ or\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE.\ \ See\ the}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *\ GNU\ General\ Public\ License\ for\ more\ details.}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ You\ should\ have\ received\ a\ copy\ of\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *\ along\ with\ this\ program;\ if\ not,\ write\ to\ the\ Free\ Software}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ Foundation,\ Inc.,\ 51\ Franklin\ Street,\ Fifth\ Floor,\ Boston,\ MA\ \ 02110-\/1301,\ USA.}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#ifndef\ MAININT\_H}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#define\ MAININT\_H}}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#include\ "{}config.h"{}}}
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#include\ "{}opentyr.h"{}}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#include\ "{}palette.h"{}}}
+\DoxyCodeLine{00025\ \textcolor{preprocessor}{\#include\ "{}player.h"{}}}
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#include\ "{}sprite.h"{}}}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \textcolor{keyword}{extern}\ \textcolor{keywordtype}{bool}\ button[4];\ \textcolor{comment}{//\ fire,\ left\ fire,\ right\ fire,\ mode\ swap}}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \textcolor{keyword}{extern}\ JE\_shortint\ constantLastX;}
+\DoxyCodeLine{00031\ \textcolor{keyword}{extern}\ JE\_word\ textErase;}
+\DoxyCodeLine{00032\ \textcolor{keyword}{extern}\ JE\_word\ upgradeCost;}
+\DoxyCodeLine{00033\ \textcolor{keyword}{extern}\ JE\_word\ downgradeCost;}
+\DoxyCodeLine{00034\ \textcolor{keyword}{extern}\ JE\_boolean\ performSave;}
+\DoxyCodeLine{00035\ \textcolor{keyword}{extern}\ JE\_boolean\ jumpSection;}
+\DoxyCodeLine{00036\ \textcolor{keyword}{extern}\ JE\_boolean\ useLastBank;}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \textcolor{keyword}{extern}\ \textcolor{keywordtype}{bool}\ pause\_pressed,\ ingamemenu\_pressed;}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \textcolor{comment}{/*void\ JE\_textMenuWait(JE\_word\ waittime,\ JE\_boolean\ dogamma);*/}}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \textcolor{keywordtype}{void}\ JE\_drawTextWindow(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *text);}
+\DoxyCodeLine{00043\ \textcolor{keywordtype}{void}\ JE\_initPlayerData(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00044\ \textcolor{keywordtype}{void}\ JE\_highScoreScreen(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00045\ \textcolor{keywordtype}{void}\ JE\_gammaCorrect\_func(JE\_byte\ *col,\ JE\_real\ r);}
+\DoxyCodeLine{00046\ \textcolor{keywordtype}{void}\ JE\_gammaCorrect(Palette\ *colorBuffer,\ JE\_byte\ gamma);}
+\DoxyCodeLine{00047\ JE\_boolean\ JE\_gammaCheck(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00048\ \textcolor{comment}{/*\ void\ JE\_textMenuWait(JE\_word\ *waitTime,\ JE\_boolean\ doGamma);\ /!\(\backslash\)\ In\ setup.h\ */}}
+\DoxyCodeLine{00049\ \textcolor{keywordtype}{void}\ JE\_nextEpisode(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00050\ \textcolor{keywordtype}{void}\ JE\_helpSystem(JE\_byte\ startTopic);}
+\DoxyCodeLine{00051\ \textcolor{keywordtype}{void}\ JE\_doInGameSetup(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00052\ JE\_boolean\ JE\_inGameSetup(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00053\ \textcolor{keywordtype}{void}\ JE\_inGameHelp(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00054\ \textcolor{keywordtype}{void}\ JE\_sortHighScores(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00055\ \textcolor{keywordtype}{void}\ JE\_highScoreCheck(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00056\ \textcolor{keywordtype}{void}\ adjust\_difficulty(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \textcolor{keywordtype}{bool}\ load\_next\_demo(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00059\ \textcolor{keywordtype}{bool}\ replay\_demo\_keys(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \textcolor{keywordtype}{void}\ JE\_SFCodes(JE\_byte\ playerNum\_,\ JE\_integer\ PX\_,\ JE\_integer\ PY\_,\ JE\_integer\ mouseX\_,\ JE\_integer\ mouseY\_);}
+\DoxyCodeLine{00062\ \textcolor{keywordtype}{void}\ JE\_sort(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00064\ \textcolor{keywordtype}{long}\ weapon\_upgrade\_cost(\textcolor{keywordtype}{long}\ base\_cost,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ power);}
+\DoxyCodeLine{00065\ ulong\ JE\_getCost(JE\_byte\ itemType,\ JE\_word\ itemNum);}
+\DoxyCodeLine{00066\ JE\_longint\ JE\_getValue(JE\_byte\ itemType,\ JE\_word\ itemNum);}
+\DoxyCodeLine{00067\ ulong\ JE\_totalScore(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_player}{Player}}\ *);}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ \textcolor{keywordtype}{void}\ JE\_drawPortConfigButtons(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00070\ \textcolor{keywordtype}{void}\ JE\_outCharGlow(JE\_word\ x,\ JE\_word\ y,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *s);}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00072\ \textcolor{keywordtype}{void}\ JE\_playCredits(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00073\ \textcolor{keywordtype}{void}\ JE\_endLevelAni(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00074\ \textcolor{keywordtype}{void}\ JE\_drawCube(SDL\_Surface\ *\ screen,\ JE\_word\ x,\ JE\_word\ y,\ JE\_byte\ filter,\ JE\_byte\ brightness);}
+\DoxyCodeLine{00075\ \textcolor{keywordtype}{void}\ JE\_handleChat(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00076\ \textcolor{keywordtype}{bool}\ str\_pop\_int(\textcolor{keywordtype}{char}\ *str,\ \textcolor{keywordtype}{int}\ *val);}
+\DoxyCodeLine{00077\ \textcolor{keywordtype}{bool}\ JE\_loadScreen(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00078\ \textcolor{keywordtype}{void}\ JE\_operation(JE\_byte\ slot);}
+\DoxyCodeLine{00079\ \textcolor{keywordtype}{void}\ JE\_inGameDisplays(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00080\ \textcolor{keywordtype}{void}\ JE\_mainKeyboardInput(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00081\ \textcolor{keywordtype}{void}\ JE\_pauseGame(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00083\ \textcolor{keywordtype}{void}\ JE\_playerMovement(\mbox{\hyperlink{struct_player}{Player}}\ *this\_player,\ JE\_byte\ inputDevice,\ JE\_byte\ playerNum,\ JE\_word\ shipGr,\ \mbox{\hyperlink{struct_sprite2__array}{Sprite2\_array}}\ *shipGrPtr\_,\ JE\_word\ *mouseX,\ JE\_word\ *mouseY);}
+\DoxyCodeLine{00084\ \textcolor{keywordtype}{void}\ JE\_mainGamePlayerFunctions(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00085\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *JE\_getName(JE\_byte\ pnum);}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00087\ \textcolor{keywordtype}{void}\ JE\_playerCollide(\mbox{\hyperlink{struct_player}{Player}}\ *this\_player,\ JE\_byte\ playerNum);}
+\DoxyCodeLine{00088\ }
+\DoxyCodeLine{00089\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ MAININT\_H\ */}\textcolor{preprocessor}{}}
+
+\end{DoxyCode}
