@@ -94,7 +94,7 @@ FILE *dir_fopen(const char *dir, const char *file, const char *mode)
 	char *path = malloc(strlen(dir) + 1 + strlen(file) + 1);
 	snprintf(path, (strlen(dir) + 1 + strlen(file) + 1), "%s/%s", dir, file);
 
-#if (defined(_MSC_VER) || defined(__GNUC__)) && __STDC_WANT_SECURE_LIB__
+#if defined(_MSC_VER) && __STDC_WANT_SECURE_LIB__
     FILE *f = NULL;
     fopen_s(&f, path, mode);
 #else
@@ -157,7 +157,7 @@ long ftell_eof(FILE *f)
 
 void fread_die(void *buffer, size_t size, size_t count, FILE *stream)
 {
-#if (defined(_MSC_VER) || defined(__GNUC__)) && __STDC_WANT_SECURE_LIB__
+#if defined(_MSC_VER) && __STDC_WANT_SECURE_LIB__
     size_t result = fread_s(buffer, size, size, count, stream);
 #else
 	size_t result = fread(buffer, size, count, stream);

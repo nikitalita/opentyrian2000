@@ -36,7 +36,7 @@
 #define LC_ALL_MASK ((int)(~0))
 #endif
 
-#if (defined(_MSC_VER) || defined(__GNUC__)) && __STDC_WANT_SECURE_LIB__
+#if defined(_MSC_VER) && __STDC_WANT_SECURE_LIB__
 #define sscanf(a, ...) sscanf_s(a, __VA_ARGS__)
 #endif
 

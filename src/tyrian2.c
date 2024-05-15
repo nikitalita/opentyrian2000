@@ -54,7 +54,7 @@
 #include <string.h>
 #include <stdint.h>
 
-#if (defined(_MSC_VER) || defined(__GNUC__)) && __STDC_WANT_SECURE_LIB__
+#if defined(_MSC_VER) && __STDC_WANT_SECURE_LIB__
 #define snprintf sprintf_s
 #endif
 
