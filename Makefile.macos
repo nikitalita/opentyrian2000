@@ -38,7 +38,7 @@ PKG_CONFIG = /usr/local/bin/pkg-config
 INSTALL_NAME_TOOL = /usr/bin/install_name_tool
 
 # VCS_IDREV ?= (git describe --tags || git rev-parse --short HEAD)
-VCS_IDREV = "\"$(shell echo "SDL2 v$(shell pkg-config SDL2 --modversion), SDL2_net v$(shell pkg-config SDL2_net --modversion), $(shell ./getver)")\""
+VCS_IDREV = "\"$(shell echo "$(shell ./getver)")\""
 
 INSTALL_PROGRAM = $(INSTALL) -m 755
 INSTALL_DATA = $(INSTALL) -m 644

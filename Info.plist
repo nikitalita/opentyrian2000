@@ -11,7 +11,7 @@
 	<key>CFBundleExecutable</key>
 	<string>opentyrian2000</string>
 	<key>CFBundleGetInfoString</key>
-	<string>OpenTyrian 2000 v2.1.0, Copyright 2022-2024 OpenTyrian2000 Team, copyright 2024 AnV Software</string>
+	<string>OpenTyrian 2000 v2.2.0, Copyright (C) 2022-2024 The OpenTyrian Development Team, copyright (C) 2022-2024 Kaito Sinclaire, copyright (C) 2024 AnV Software</string>
 	<key>CFBundleIconFile</key>
 	<string>opentyrian2000.icns</string>
 	<key>CFBundleIdentifier</key>
@@ -21,13 +21,19 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.1.0</string>
+	<string>2.2.0</string>
 	<key>CFBundleSignature</key>
 	<string>OTYR</string>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.games</string>
+	<key>CFBundleDisplayName</key>
+	<string>OpenTyrian 2000 v2.2.0</string>
 	<key>CFBundleVersion</key>
-	<string>2.1.0</string>
+	<string>2.2.0</string>
+	<key>CFBundleName</key>
+	<string>OpenTyrian 2000</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright 2022-2024 OpenTyrian2000 Team, copyright 2024 AnV Software</string>
+	<string>Copyright (C) 2022-2024 The OpenTyrian Development Team, copyright (C) 2022-2024 Kaito Sinclaire, copyright (C) 2024 AnV Software</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>10.14</string>
 </dict>

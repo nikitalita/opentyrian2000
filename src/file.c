@@ -155,6 +155,10 @@ long ftell_eof(FILE *f)
 	return size;
 }
 
+#ifndef HANDLE_RESULT
+#define HANDLE_RESULT 1
+#endif
+
 void fread_die(void *buffer, size_t size, size_t count, FILE *stream)
 {
 #if defined(_MSC_VER) && __STDC_WANT_SECURE_LIB__

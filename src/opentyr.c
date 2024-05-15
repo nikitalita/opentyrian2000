@@ -16,7 +16,13 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
+
+#undef OPENTYRIAN_VERSION
+
 #include "opentyr.h"
+#include "opentyrian_version.h"
+
+#include "macos-bundle.h"
 
 #include "config.h"
 #include "destruct.h"
@@ -48,7 +54,8 @@
 #include "video_scale.h"
 #include "xmas.h"
 
-#include "SDL.h"
+#include "SDL2/SDL.h"
+#include "SDL2/SDL_net.h"
 
 #if defined(_WIN32) || defined(WIN32)
 #include <Windows.h>
@@ -60,7 +67,7 @@
 #include <string.h>
 #include <time.h>
 
-const char *opentyrian_str = "OpenTyrian2000";
+const char *opentyrian_str = "OpenTyrian " TYRIAN_VERSION;
 const char *opentyrian_version = OPENTYRIAN_VERSION;
 
 static size_t getDisplayPickerItemsCount(void)
@@ -749,23 +756,63 @@ void setupMenu(void)
 	}
 }
 
-/*#if defined(_WIN32) || defined(WIN32)
-int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR argv, int argc)
-#else*/ /* USE_WINMAIN */
 int main(int argc, char *argv[])
-//#endif
 {
-/*#if defined(_WIN32) || defined(WIN32)
-    (void)hInstance;
-    (void)hPrevInstance;
-#endif*/
+    SDL_version sdlver;
+    const SDLNet_version *sdlnetver = NULL;
 
 	mt_srand(time(NULL));
 
+#if defined(__APPLE__) && defined(__MACH__)
+    printf("\nWelcome to... >> %s v%s <<\n\n", getBundleName(), getBundleVersion());
+#else
 	printf("\nWelcome to... >> %s %s <<\n\n", opentyrian_str, opentyrian_version);
+#endif
 
-	printf("Copyright (C) 2022 The OpenTyrian Development Team\n");
-	printf("Copyright (C) 2022 Kaito Sinclaire\n\n");
+    printf("Identifier: %s\n", getBundleID());
+    printf("Executable: %s\n", getExecutablePath());
+    printf("Resources:  %s\n", getBundlePath());
+    printf("Frameworks: %s\n\n", getFrameworksPath());
+
+    printf("Current architecture: ");
+#if defined(__i386__)
+    printf("I386\n");
+#elif defined(__x86_64__)
+    printf("X86_64\n");
+#elif defined(__ppc__)
+    printf("PPC\n");
+#elif defined(__ppc64__)
+    printf("PPC64\n");
+#elif defined(__arm__)
+    printf("ARM\n");
+#elif defined(__arm64__)
+    printf("ARM64\n");
+#else
+    printf("Unknown\n");
+#endif
+
+#if defined(__APPLE__) && defined(__MACH__)
+    printf("Minimum OS version: %s\n", getMinimumOS());
+#endif
+
+    SDL_GetVersion(&sdlver);
+    sdlnetver = SDLNet_Linked_Version();
+
+    printf("SDL version %d.%d.%d\n", sdlver.major, sdlver.minor, sdlver.patch);
+
+#ifdef WITH_NETWORK
+    printf("SDL_net version %d.%d.%d\n\n", sdlnetver->major, sdlnetver->minor, sdlnetver->patch);
+#endif /* WITH_NETWORK */
+
+    printf("\n");
+
+#if defined(__APPLE__) && defined(__MACH__)
+    printf("%s\n\n", getCopyRight());
+#else
+	printf("Copyright (C) 2022-2024 The OpenTyrian Development Team\n");
+	printf("Copyright (C) 2022-2024 Kaito Sinclaire\n");
+    printf("Copyright (C) 2024 AnV Software\n\n");
+#endif
 
 	printf("This program comes with ABSOLUTELY NO WARRANTY.\n");
 	printf("This is free software, and you are welcome to redistribute it\n");
@@ -876,7 +923,7 @@ int main(int argc, char *argv[])
 			networkStartScreen();
 		}
 		else
-#endif
+#endif /* WITH_NETWORK */
 		{
 			if (!titleScreen())
 			{

@@ -3,12 +3,13 @@
 #endif /* OPENTYRIAN_VERSION */
 
 #include "src/opentyrian_version.h"
+#include "src/opentyr.h"
 
 #include <stdio.h>
 
 int main(void)
 {
-	printf ("OpenTyrian2000 %s\n", OPENTYRIAN_VERSION);
+    printf ("OpenTyrian %s %s\n", TYRIAN_VERSION, OPENTYRIAN_VERSION);
 
 	return 0;
 }

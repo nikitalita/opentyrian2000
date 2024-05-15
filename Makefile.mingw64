@@ -20,7 +20,7 @@ PKG_CONFIG = /usr/local/bin/pkg-config
 PKG_CONFIG_PATH=/usr/local/x86_64-w64-mingw32/lib/pkg-config
 
 # VCS_IDREV ?= (git describe --tags || git rev-parse --short HEAD)
-VCS_IDREV = "\"$(shell echo "SDL2 v$(shell pkg-config SDL2 --modversion), SDL2_net v$(shell pkg-config SDL2_net --modversion), $(shell ./getver)")\""
+VCS_IDREV = "\"$(shell echo "$(shell ./getver)")\""
 
 INSTALL_PROGRAM = $(INSTALL) -m 755
 INSTALL_DATA = $(INSTALL) -m 644
@@ -112,18 +112,15 @@ clean :
 	rm -f $(OBJS)
 	rm -f $(DEPS)
 	rm -f $(TARGET).exe
-	rm -f getver obj/getver.o obj/opentyrian2000.o
+	rm -f getver obj/opentyrian2000.o
 
 $(TARGET).exe : $(OBJS)
 	$(CC) $(ALL_CFLAGS) $(ALL_LDFLAGS) -o $@ $^ $(ALL_LDLIBS)
 
 -include $(DEPS)
 
-getver: obj/getver.o
+getver: obj/getver.c
 	$(HOSTCC) -o $@ $<
-
-obj/getver.o: getver.c
-	$(HOSTCC) -o $@ -c $<
 
 obj/%.o : src/%.c
 	@mkdir -p "$(dir $@)"
