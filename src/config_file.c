@@ -30,8 +30,16 @@
 #include <stddef.h>
 #include <string.h>
 
-#if defined(_MSC_VER) && __STDC_WANT_SECURE_LIB__
-#define snprintf sprintf_S
+#if defined(_WIN32) || defined(WIN32)
+#include <Windows.h>
+#endif
+
+#ifndef LC_ALL_MASK
+#define LC_ALL_MASK ((int)(~0))
+#endif
+
+#if (defined(_MSC_VER) || defined(__GNUC__)) && __STDC_WANT_SECURE_LIB__
+#define snprintf sprintf_s
 #endif
 
 /* potential size of decimal representation of type */
@@ -431,10 +439,10 @@ bool config_get_int_option(const ConfigSection *section, const char *key, int *o
 		int i = 0;
 		int n = 0;
 
-#if defined(_MSC_VER) && __STDC_WANT_SECURE_LIB__
-        if (_sscanf_s_l(value, "%i%n", newlocale(LC_ALL_MASK, "C", 0), &i, &n))
+#if (defined(_MSC_VER) || defined(__GNUC__)) && __STDC_WANT_SECURE_LIB__
+        if ((sscanf_s(value, "%i%n", &i, &n) > 0) && (value[n] == '\0'))
 #else
-		if (sscanf(value, "%i%n", &i, &n) > 0 && value[n] == '\0')  /* must be entire string */
+		if ((sscanf(value, "%i%n", &i, &n) > 0) && (value[n] == '\0'))  /* must be entire string */
 #endif
 		{
 			*out_value = i;
@@ -475,10 +483,10 @@ bool config_get_uint_option(const ConfigSection *section, const char *key, unsig
 	{
 		unsigned int u;
 		int n;
-#if defined(_MSC_VER) && __STDC_WANT_SECURE_LIB__
-        if (_sscanf_s_l(value, "%u%n", newlocale(LC_ALL_MASK, "C", 0), &u, &n) && value[N] == '\0')
+#if (defined(_MSC_VER) || defined(__GNUC__)) && __STDC_WANT_SECURE_LIB__
+        if ((sscanf_s(value, "%u%n", &u, &n) > 0) && (value[n] == '\0'))
 #else
-		if (sscanf(value, "%u%n", &u, &n) > 0 && value[n] == '\0')  /* must be entire string */
+		if ((sscanf(value, "%u%n", &u, &n) > 0) && (value[n] == '\0'))  /* must be entire string */
 #endif
 		{
 			*out_value = u;
@@ -822,8 +830,13 @@ bool config_parse(Config *config, FILE *file)
 						config_oom();
 					buffer = new_buffer;
 				}
-				
-				size_t read = fread(&buffer[buffer_end - 1], sizeof(char), buffer_cap - buffer_end, file);
+
+#if (defined(_MSC_VER) || defined(__GNUC__)) && __STDC_WANT_SECURE_LIB__
+                size_t read = fread_s(&buffer[buffer_end - 1], (sizeof(char) * (buffer_cap - buffer_end)), sizeof(char), buffer_cap - buffer_end, file);
+#else
+                size_t read = fread(&buffer[buffer_end - 1], sizeof(char), buffer_cap - buffer_end, file);
+#endif
+
 				if (read == 0)
 					break;
 				

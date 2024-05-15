@@ -54,8 +54,8 @@
 #include <string.h>
 #include <stdint.h>
 
-#if defined(_MSC_VER) && __STDC_WANT_SECURE_LIB__
-#define snprintf sprintf_S
+#if (defined(_MSC_VER) || defined(__GNUC__)) && __STDC_WANT_SECURE_LIB__
+#define snprintf sprintf_s
 #endif
 
 inline static void blit_enemy(SDL_Surface *surface, unsigned int i, signed int x_offset, signed int y_offset, signed int sprite_offset);

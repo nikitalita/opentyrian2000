@@ -34,8 +34,10 @@
 #include <stdio.h>
 #include <sys/stat.h>
 
-#ifdef _MSC_VER
+#if defined(_MSC_VER) || (defined(__GNUC__) && (defined(_WIN32) || defined(WIN32)))
 #include <direct.h>
+
+#undef  mkdir
 #define mkdir _mkdir
 #else
 #include <unistd.h>

@@ -32,6 +32,14 @@
 #include <ctype.h>
 #include <string.h>
 
+#ifndef LC_ALL_MASK
+#define LC_ALL_MASK ((int)(~0))
+#endif
+
+#if (defined(_MSC_VER) || defined(__GNUC__)) && __STDC_WANT_SECURE_LIB__
+#define sscanf(a, ...) sscanf_s(a, __VA_ARGS__)
+#endif
+
 int joystick_axis_threshold(int j, int value);
 int check_assigned(SDL_Joystick *joystick_handle, const Joystick_assignment assignment[2]);
 

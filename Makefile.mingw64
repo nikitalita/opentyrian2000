@@ -61,9 +61,9 @@ OPENTYRIAN_VERSION := $(VCS_IDREV)\
 EXTRA_CPPFLAGS += -DOPENTYRIAN_VERSION=$(OPENTYRIAN_VERSION)
 
 CPPFLAGS = -MMD -DNDEBUG=1
-CFLAGS = -g0 -O3 $(EXTRA_CPPFLAGS) -pedantic -Wall -Wextra
+CFLAGS = -g0 -O3 $(EXTRA_CPPFLAGS) -pedantic -Wall -Wextra -D__STDC_WANT_SECURE_LIB__=1
 LDFLAGS ?=
-LDLIBS ?= -L/usr/local/x86_64-w64-mingw32/lib -lws2_32 -liphlpapi -lmingw32 -lSDL2main -lSDL2 -mwindows  -Wl,--dynamicbase -Wl,--nxcompat -lm -ldinput8 -ldxguid -ldxerr8 -luser32 -lgdi32 -lwinmm -limm32 -lole32 -loleaut32 -lshell32 -lsetupapi -lversion -luuid
+LDLIBS ?= -L/usr/local/x86_64-w64-mingw32/lib -lws2_32 -liphlpapi -lmingw32 -lSDL2main -lSDL2 -mwindows  -Wl,--dynamicbase -Wl,--nxcompat -lm -ldinput8 -ldxguid -ldxerr8 -luser32 -lgdi32 -lwinmm -limm32 -lole32 -loleaut32 -lshell32 -lsetupapi -lversion -luuid -lmsvcr120
 
 ifeq ($(WITH_NETWORK), true)
     SDL_CPPFLAGS := -I/usr/local/x86_64-w64-mingw32/include
@@ -112,7 +112,7 @@ clean :
 	rm -f $(OBJS)
 	rm -f $(DEPS)
 	rm -f $(TARGET).exe
-	rm -f getver obj/getver.o
+	rm -f getver obj/getver.o obj/opentyrian2000.o
 
 $(TARGET).exe : $(OBJS)
 	$(CC) $(ALL_CFLAGS) $(ALL_LDFLAGS) -o $@ $^ $(ALL_LDLIBS)

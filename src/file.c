@@ -94,7 +94,12 @@ FILE *dir_fopen(const char *dir, const char *file, const char *mode)
 	char *path = malloc(strlen(dir) + 1 + strlen(file) + 1);
 	snprintf(path, (strlen(dir) + 1 + strlen(file) + 1), "%s/%s", dir, file);
 
+#if (defined(_MSC_VER) || defined(__GNUC__)) && __STDC_WANT_SECURE_LIB__
+    FILE *f = NULL;
+    fopen_s(&f, path, mode);
+#else
 	FILE *f = fopen(path, mode);
+#endif
 
 	free(path);
 
@@ -152,10 +157,14 @@ long ftell_eof(FILE *f)
 
 void fread_die(void *buffer, size_t size, size_t count, FILE *stream)
 {
+#if (defined(_MSC_VER) || defined(__GNUC__)) && __STDC_WANT_SECURE_LIB__
+    size_t result = fread_s(buffer, size, size, count, stream);
+#else
 	size_t result = fread(buffer, size, count, stream);
-    
+#endif
+
 #ifdef HANDLE_RESULT
-	if (result <= count)
+	if (result != count)
 	{
 		fprintf(stderr, "error: An unexpected problem occurred while reading from a file.\n");
 		SDL_Quit();
@@ -171,7 +180,7 @@ void fwrite_die(const void *buffer, size_t size, size_t count, FILE *stream)
 	size_t result = fwrite(buffer, size, count, stream);
 
 #ifdef HANDLE_RESULT
-	if (result <= count)
+	if (result != count)
 	{
 		fprintf(stderr, "error: An unexpected problem occurred while writing to a file.\n");
 		SDL_Quit();

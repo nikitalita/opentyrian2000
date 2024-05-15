@@ -24,9 +24,15 @@
 #include <math.h>
 #include <stdbool.h>
 
+#ifndef COUNTOF
 #define COUNTOF(x) ((unsigned)(sizeof(x) / sizeof *(x)))  // use only on arrays!
+#endif
+#ifndef MIN
 #define MIN(a, b) ((a) < (b) ? (a) : (b))
+#endif
+#ifndef MAX
 #define MAX(a, b) ((a) > (b) ? (a) : (b))
+#endif
 
 #ifndef M_PI
 #define M_PI    3.14159265358979323846  // pi
@@ -51,7 +57,9 @@ typedef bool   JE_boolean;
 typedef char   JE_char;
 typedef float  JE_real;
 
+#ifndef TYRIAN_VERSION
 #define TYRIAN_VERSION "2000"
+#endif
 
 extern const char *opentyrian_str;
 extern const char *opentyrian_version;

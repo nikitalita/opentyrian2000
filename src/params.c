@@ -186,8 +186,13 @@ void JE_paramCheck(int argc, char *argv[])
 		}
 		case 'd':
 		{
-			int temp;
+			int temp = 0;
+
+#if (defined(_MSC_VER) || defined(__GNUC__)) && __STDC_WANT_SECURE_LIB__
+            if (sscanf_s(option.arg, "%d", &temp) == 1)
+#else
 			if (sscanf(option.arg, "%d", &temp) == 1)
+#endif
 				network_delay = 1 + temp;
 			else
 			{

@@ -749,12 +749,17 @@ void setupMenu(void)
 	}
 }
 
-#if defined(_WIN32) || defined(WIN32)
+/*#if defined(_WIN32) || defined(WIN32)
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR argv, int argc)
-#else /* USE_WINMAIN */
+#else*/ /* USE_WINMAIN */
 int main(int argc, char *argv[])
-#endif
+//#endif
 {
+/*#if defined(_WIN32) || defined(WIN32)
+    (void)hInstance;
+    (void)hPrevInstance;
+#endif*/
+
 	mt_srand(time(NULL));
 
 	printf("\nWelcome to... >> %s %s <<\n\n", opentyrian_str, opentyrian_version);
@@ -776,7 +781,7 @@ int main(int argc, char *argv[])
 	// Tyrian 2000 requires help text to be loaded before the configuration,
 	// because the default high score names are stored in help text
 
-	JE_paramCheck(argc, argv);
+	JE_paramCheck(argc, (char **)argv);
 
 	if (!override_xmas) // arg handler may override
 		xmas = xmas_time();
