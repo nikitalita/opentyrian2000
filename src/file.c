@@ -33,7 +33,7 @@
 
 #define fseek fseeko
 #define ftell ftello
-#elif defined(_WIN32) || defined(WIN32)
+#elif (defined(_WIN32) || defined(WIN32)) && !defined(_MSC_VER)
 #define fseek fseeko64
 #define ftell ftello64
 #define fopen fopen64
