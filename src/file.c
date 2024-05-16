@@ -52,6 +52,14 @@ const char *data_dir(void)
         "data",
         ".",
     };
+#elif defined(__linux__)
+    const char *const dirs[] =
+    {
+        custom_data_dir,
+        TYRIAN_DIR,
+        "/usr/share/tyriandata",
+        ".",
+    };
 #else
 	const char *const dirs[] =
 	{
