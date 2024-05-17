@@ -39,7 +39,7 @@ bool xmas_time(void)
 #if defined(_MSC_VER) && __STDC_WANT_SECURE_LIB__
     struct tm loctime;
 
-    localtime_s(&loctime, now);
+    localtime_s(&loctime, &now);
 
     return loctime.tm_mon == 11;
 #else

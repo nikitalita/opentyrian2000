@@ -118,9 +118,19 @@ FILE *dir_fopen(const char *dir, const char *file, const char *mode)
 FILE *dir_fopen_warn(const char *dir, const char *file, const char *mode)
 {
 	FILE *f = dir_fopen(dir, file, mode);
+#if defined(_MSC_VER) && __STDC_WANT_SECURE_LIB__
+	char err[256];
+#endif
 
 	if (f == NULL)
+	{
+#if defined(_MSC_VER) && __STDC_WANT_SECURE_LIB__
+		strerror_s(err, sizeof(err), errno);
+		fprintf(stderr, "warning: faile to open '%s': %s\n", file, err);
+#else
 		fprintf(stderr, "warning: failed to open '%s': %s\n", file, strerror(errno));
+#endif
+	}
 
 	return f;
 }
@@ -129,10 +139,18 @@ FILE *dir_fopen_warn(const char *dir, const char *file, const char *mode)
 FILE *dir_fopen_die(const char *dir, const char *file, const char *mode)
 {
 	FILE *f = dir_fopen(dir, file, mode);
+#if defined(_MSC_VER) && __STDC_WANT_SECURE_LIB__
+	char err[256];
+#endif
 
 	if (f == NULL)
 	{
+#if defined(_MSC_VER) && __STDC_WANT_SECURE_LIB__
+		strerror_s(err, sizeof(err), errno);
+		fprintf(stderr, "error: failed to open '%s': %s\n", file, err);
+#else
 		fprintf(stderr, "error: failed to open '%s': %s\n", file, strerror(errno));
+#endif
 		fprintf(stderr, "error: One or more of the required Tyrian " TYRIAN_VERSION " data files could not be found.\n"
 		                "       Please read the README file.\n");
 		JE_tyrianHalt(1);
