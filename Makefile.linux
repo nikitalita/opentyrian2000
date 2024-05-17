@@ -98,7 +98,7 @@ ALL_LDLIBS = -lm \
 ###
 
 .PHONY : all
-all : getver $(TARGET) $(TARGET).app
+all : getver $(TARGET)
 
 .PHONY : installdirs
 installdirs :
