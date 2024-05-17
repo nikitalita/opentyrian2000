@@ -13,6 +13,10 @@
       <Configuration>Release</Configuration>
       <Platform>ARM64</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|ARM64EC">
+      <Configuration>Release</Configuration>
+      <Platform>ARM64EC</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Win32">
       <Configuration>Release</Configuration>
       <Platform>Win32</Platform>
@@ -119,8 +123,15 @@
   <ItemDefinitionGroup Condition="'$(Platform)'=='ARM64'">
     <ClCompile />
     <Link>
-      <AdditionalLibraryDirectories>$(SDL2BaseDir)\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalLibraryDirectories Condition="'$(WITH_NETWORK)'=='true'">$(SDL2netBaseDir)\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SDL2BaseDir)\lib\arm64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories Condition="'$(WITH_NETWORK)'=='true'">$(SDL2netBaseDir)\lib\arm64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Platform)'=='ARM64EC'">
+    <ClCompile />
+    <Link>
+      <AdditionalLibraryDirectories>$(SDL2BaseDir)\lib\arm64ec;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories Condition="'$(WITH_NETWORK)'=='true'">$(SDL2netBaseDir)\lib\arm64ec;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -235,8 +246,12 @@
     <Dependency Condition="$(WITH_NETWORK)=='true'" Include="$(SDL2netBaseDir)\lib\x64\*.dll" />
   </ItemGroup>
   <ItemGroup Condition="'$(Platform)'=='ARM64'">
-    <Dependency Include="$(SDL2BaseDir)\lib\x64\*.dll" />
-    <Dependency Include="$(SDL2netBaseDir)\lib\x64\*.dll" Condition="$(WITH_NETWORK)=='true'" />
+    <Dependency Include="$(SDL2BaseDir)\lib\arm64\*.dll" />
+    <Dependency Include="$(SDL2netBaseDir)\lib\arm64\*.dll" Condition="$(WITH_NETWORK)=='true'" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(Platform)'=='ARM64EC'">
+    <Dependency Include="$(SDL2BaseDir)\lib\arm64ec\*.dll" />
+    <Dependency Include="$(SDL2netBaseDir)\lib\arm64ec\*.dll" Condition="$(WITH_NETWORK)=='true'" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\src\opentyrian2000.rc" />
