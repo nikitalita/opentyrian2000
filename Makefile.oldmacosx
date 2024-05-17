@@ -125,7 +125,9 @@ $(TARGET).app: getver $(TARGET)
 	iconutil --convert icns -o $@/Contents/Resources/opentyrian2000.icns opentyrian2000.iconset
 	$(INSTALL) PkgInfo Info.plist $@/Contents/
 	$(INSTALL) $(TARGET) $@/Contents/MacOS/$(TARGET)
-	macdeployqt $@
+	mkdir -p "$@/Contents/Frameworks"
+	$(INSTALL) /usr/local/lib/libSDL2-2.0.0.dylib $@/Contents/Frameworks/
+	$(INSTALL) /usr/local/lib/libSDL2_net-2.0.0.dylib $@/Contents/Frameworks/
 	$(INSTALL) data/* $@/Contents/Resources/
 	rm -Rf $@/Contents/Frameworks/*.framework $@/Contents/PlugIns
 	$(CODESIGN) $@/Contents/Frameworks/*.dylib $@
