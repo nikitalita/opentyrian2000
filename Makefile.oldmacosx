@@ -156,8 +156,8 @@ clean :
 
 $(TARGET) : $(OBJS)
 	$(CC) $(ALL_CFLAGS) $(ALL_LDFLAGS) -o $@ $^ $(ALL_LDLIBS)
-	$(INSTALL_NAME_TOOL) -change /usr/local/lib/libSDL2-2.0.0.dylib  executable_path/../Frameworks/libSDL2-2.0.0.dylib $(TARGET)
-	$(INSTALL_NAME_TOOL) -change /usr/local/lib/libSDL2_net-2.0.0.dylib  executable_path/../Frameworks/libSDL2_net-2.0.0.dylib $(TARGET)
+	$(INSTALL_NAME_TOOL) -change /usr/local/lib/libSDL2-2.0.0.dylib @executable_path/../Frameworks/libSDL2-2.0.0.dylib $@
+	$(INSTALL_NAME_TOOL) -change /usr/local/lib/libSDL2_net-2.0.0.dylib @executable_path/../Frameworks/libSDL2_net-2.0.0.dylib $@
 
 -include $(DEPS)
 
