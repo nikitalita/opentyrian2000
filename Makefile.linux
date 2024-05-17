@@ -1,7 +1,7 @@
 # BUILD SETTINGS ###############################################################
 
 PLATFORM := UNIX
-TYRIAN_DIR = "/usr/bin"
+TYRIAN_DIR = /usr/bin
 
 WITH_NETWORK := true
 
