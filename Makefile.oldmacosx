@@ -129,6 +129,7 @@ $(TARGET).app: getver $(TARGET)
 	mkdir -p "$@/Contents/Frameworks"
 	$(INSTALL) /usr/local/lib/libSDL2-2.0.0.dylib $@/Contents/Frameworks/
 	$(INSTALL) /usr/local/lib/libSDL2_net-2.0.0.dylib $@/Contents/Frameworks/
+	$(INSTALL_NAME_TOOL) -change /usr/local/lib/libSDL2-2.0.0.dylib @executable_path/../Frameworks/libSDL2-2.0.0.dylib $@/Contents/Frameworks/libSDL2_net-2.0.0.dylib
 	$(INSTALL) data/* $@/Contents/Resources/
 	rm -Rf $@/Contents/Frameworks/*.framework $@/Contents/PlugIns
 	$(CODESIGN) $@/Contents/Frameworks/*.dylib $@
