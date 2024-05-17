@@ -36,7 +36,15 @@ bool override_xmas = false;
 bool xmas_time(void)
 {
 	time_t now = time(NULL);
+#if defined(_MSC_VER) && __STDC_WANT_SECURE_LIB__
+    struct tm loctime;
+
+    localtime_s(&loctime, now);
+
+    return loctime.tm_mon == 11;
+#else
 	return localtime(&now)->tm_mon == 11;
+#endif
 }
 
 bool xmas_prompt(void)
