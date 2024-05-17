@@ -66,4 +66,14 @@ extern const char *opentyrian_version;
 
 void setupMenu(void);
 
+#ifdef __linux__
+#ifndef strlcpy
+#define strlcpy SDL_strlcpy
+#endif /* strlcpy */
+
+#ifndef strlcat
+#define strlcat SDL_strlcat
+#endif /* strlcat */
+#endif /* __linux__ */
+
 #endif /* OPENTYR_H */

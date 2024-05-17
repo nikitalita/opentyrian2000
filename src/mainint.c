@@ -2130,7 +2130,7 @@ void JE_highScoreCheck(void)
 						flash = (flash == 8 * 16 + 10) ? 8 * 16 + 2 : 8 * 16 + 10;
 						temp3 = (temp3 == 6) ? 2 : 6;
 
-						strncpy(tempstr, stemp, temp);
+						strlcpy(tempstr, stemp, temp);
 						tempstr[temp] = '\0';
 						JE_outText(VGAScreen, 65, 89, tempstr, 8, 3);
 						tempW = 65 + JE_textWidth(tempstr, TINY_FONT);

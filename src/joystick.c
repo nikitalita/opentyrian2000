@@ -454,7 +454,7 @@ bool save_joystick_assignments(Config *config, int j)
 // fills buffer with comma separated list of assigned joystick functions
 void joystick_assignments_to_string(char *buffer, size_t buffer_len, const Joystick_assignment *assignments)
 {
-	strncpy(buffer, "", buffer_len);
+	strlcpy(buffer, "", buffer_len);
 	
 	bool comma = false;
 	for (uint i = 0; i < COUNTOF(*joystick->assignment); ++i)
