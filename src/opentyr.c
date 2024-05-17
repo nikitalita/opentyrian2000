@@ -775,17 +775,17 @@ int main(int argc, char *argv[])
 #endif
 
     printf("Current architecture: ");
-#if defined(__i386__)
+#if defined(__i386__) || defined(_M_IX86)
     printf("I386\n");
-#elif defined(__x86_64__)
+#elif defined(__x86_64__) || defined(_M_AMD64)
     printf("X86_64\n");
 #elif defined(__ppc__)
     printf("PPC\n");
 #elif defined(__ppc64__)
     printf("PPC64\n");
-#elif defined(__arm__)
+#elif defined(__arm__) || defined(_M_ARM)
     printf("ARM\n");
-#elif defined(__arm64__)
+#elif defined(__arm64__) || defined(__aarch64__) || defined(_M_ARM64) || defined(_M_ARM64EC)
     printf("ARM64\n");
 #else
     printf("Unknown\n");
