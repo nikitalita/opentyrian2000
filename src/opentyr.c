@@ -779,9 +779,9 @@ int main(int argc, char *argv[])
     printf("I386\n");
 #elif defined(__x86_64__) || defined(_M_AMD64)
     printf("X86_64\n");
-#elif defined(__ppc__)
+#elif defined(__ppc__) || defined(_M_PPC)
     printf("PPC\n");
-#elif defined(__ppc64__)
+#elif defined(__ppc64__) || defined(_M_PPC64)
     printf("PPC64\n");
 #elif defined(__arm__) || defined(_M_ARM)
     printf("ARM\n");
