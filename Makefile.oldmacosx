@@ -1,10 +1,11 @@
+
 # BUILD SETTINGS ###############################################################
 
-ifneq ($(filter Msys Cygwin, $(shell uname -o)), )
+ifneq ($(filter Msys Cygwin, $(shell uname -s)), )
     PLATFORM := WIN32
     TYRIAN_DIR = "C:\\TYRIAN"
 else
-ifneq ($(filter Darwin, $(shell uname -o)), )
+ifneq ($(filter Darwin, $(shell uname -s)), )
    PLATFORM := MACOS
    TYRIAN_DIR = "/Applications/OpenTyrian2000.app/Contents/MacOS"
 else
@@ -29,12 +30,12 @@ MACOSX_DEPLOYMENT_TARGET = 10.5
 ################################################################################
 # Signing executable (codesign)
 ################################################################################
+CODESIGN = echo
 # CODESIGN = /usr/bin/codesign -f -s - -i com.AnV.Software.OpenTyrian2000
-CODESIGN = /usr/bin/codesign -f -s "Apple Development" -i com.AnV.Software.OpenTyrian2000
+# CODESIGN = /usr/bin/codesign -f -s "Apple Development" -i com.AnV.Software.OpenTyrian2000
 
-CC = /usr/bin/clang
+CC = gcc
 INSTALL = /usr/bin/install
-PKG_CONFIG = /usr/local/bin/pkg-config
 INSTALL_NAME_TOOL = /usr/bin/install_name_tool
 
 # VCS_IDREV ?= (git describe --tags || git rev-parse --short HEAD)
@@ -65,7 +66,7 @@ gamesdir ?= $(datadir)/games
 
 TARGET := opentyrian2000
 
-SRCS := $(wildcard src/*.c) $(wildcard src/*.m)
+SRCS := $(wildcard src/*.c)
 OBJS := $(SRCS:src/%.c=obj/%.o) obj/macos-bundle.o
 DEPS := $(SRCS:src/%.c=obj/%.d)
 
@@ -81,23 +82,23 @@ EXTRA_CPPFLAGS += -DOPENTYRIAN_VERSION=$(OPENTYRIAN_VERSION)
 
 ifeq ($(_DEBUG), 1)
 CPPFLAGS = -D_DEBUG=1 -UNDEBUG
-CFLAGS += -arch ppc -arch i386 -arch x86_64 -g3 -O0 -mmacosx-version-min=$(MACOSX_DEPLOYMENT_TARGET) $(EXTRA_CPPFLAGS) -Werror -pedantic -Wall -Wextra -Werror
+CFLAGS += -std=gnu99 -arch ppc -arch i386 -arch x86_64 -g3 -O0 -mmacosx-version-min=$(MACOSX_DEPLOYMENT_TARGET) $(EXTRA_CPPFLAGS) -Werror -pedantic -Wall -Wextra -Werror
 else
-CPPFLAGS = -MMD -DNDEBUG
-CFLAGS = -arch ppc -arch i386 -arch x86_64 -g0 -O3 -mmacosx-version-min=$(MACOSX_DEPLOYMENT_TARGET) $(EXTRA_CPPFLAGS) -pedantic -Wall -Wextra -Werror
+CPPFLAGS = -DNDEBUG
+CFLAGS = -std=gnu99 -arch ppc -arch i386 -arch x86_64 -g0 -O3 -mmacosx-version-min=$(MACOSX_DEPLOYMENT_TARGET) $(EXTRA_CPPFLAGS) -pedantic -Wall -Wextra -Werror
 endif
 
 LDFLAGS ?= -arch ppc -arch i386 -arch x86_64 -mmacosx-version-min=$(MACOSX_DEPLOYMENT_TARGET)
 LDLIBS ?= -framework Foundation -lobjc
 
 ifeq ($(WITH_NETWORK), true)
-    SDL_CPPFLAGS := $(shell pkg-config SDL2 --cflags) $(shell pkg-config SDL2_net --cflags)
+    SDL_CPPFLAGS := -I/usr/local/include/SDL2
     SDL_LDFLAGS :=
-    SDL_LDLIBS := $(shell pkg-config SDL2 --libs) $(shell pkg-config SDL2_net --libs)
+    SDL_LDLIBS := -lSDL2 -lSDL2_net
 else
-    SDL_CPPFLAGS := $(shell pkg-config SDL2 --cflags)
+    SDL_CPPFLAGS := -I/usr/local/include/SDL2
     SDL_LDFLAGS :=
-    SDL_LDLIBS := $(shell pkg-config SDL2 --libs)
+    SDL_LDLIBS := -lSDL2
 endif
 
 ALL_CPPFLAGS = \
@@ -122,7 +123,7 @@ all : getver $(TARGET) $(TARGET).app
 $(TARGET).app: getver $(TARGET)
 	mkdir -p $@/Contents/MacOS
 	mkdir -p $@/Contents/Resources
-	iconutil --convert icns -o $@/Contents/Resources/opentyrian2000.icns opentyrian2000.iconset
+	$(INSTALL) opentyrian2000-legacy.icns $@/Contents/Resources/opentyrian2000.icns
 	$(INSTALL) PkgInfo Info.plist $@/Contents/
 	$(INSTALL) $(TARGET) $@/Contents/MacOS/$(TARGET)
 	mkdir -p "$@/Contents/Frameworks"
@@ -155,7 +156,8 @@ clean :
 
 $(TARGET) : $(OBJS)
 	$(CC) $(ALL_CFLAGS) $(ALL_LDFLAGS) -o $@ $^ $(ALL_LDLIBS)
-	$(INSTALL_NAME_TOOL) -add_rpath @executable_path/../Frameworks $@
+	$(INSTALL_NAME_TOOL) -change /usr/local/lib/libSDL2-2.0.0.dylib  executable_path/../Frameworks/libSDL2-2.0.0.dylib $(TARGET)
+	$(INSTALL_NAME_TOOL) -change /usr/local/lib/libSDL2_net-2.0.0.dylib  executable_path/../Frameworks/libSDL2_net-2.0.0.dylib $(TARGET)
 
 -include $(DEPS)
 
@@ -166,9 +168,9 @@ obj/%.o : src/%.c
 	@mkdir -p "$(dir $@)"
 	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS) -c -o $@ $<
 
-obj/%.o : src/%.mm
-	@mkdir -p "$(dir $@)"
-	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS) -c -o $@ $<
+# obj/%.o : src/%.m
+#	@mkdir -p "$(dir $@)"
+#	$(CC) -arch i386 -arch x86_64 -arch ppc -c -o $@ $<
 
-obj/macos-bundle.o : src/macos-bundle.mm
-	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS) -c -o $@ $<
+# obj/macos-bundle.o : src/macos-bundle.m
+#	$(CC) -arch i386 -arch x86_64 -arch ppc -o $@ -c $<
