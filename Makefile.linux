@@ -124,7 +124,7 @@ install : $(TARGET) installdirs
 	$(INSTALL_DATA) linux/icons/tyrian2000-32.png $(DESTDIR)$(icondir)/hicolor/32x32/apps/opentyrian2000.png
 	$(INSTALL_DATA) linux/icons/tyrian2000-48.png $(DESTDIR)$(icondir)/hicolor/48x48/apps/opentyrian2000.png
 	$(INSTALL_DATA) linux/icons/tyrian2000-128.png $(DESTDIR)$(icondir)/hicolor/128x128/apps/opentyrian2000.png
-	cp -Rf data $(DESTDIR)/$(bindir)/
+	cp -Rf data $(datarootdir)/tyriandata
 
 .PHONY : uninstall
 uninstall :
