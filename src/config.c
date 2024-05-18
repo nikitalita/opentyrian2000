@@ -43,6 +43,17 @@
 #include <unistd.h>
 #endif
 
+#if defined(__APPLE__) & defined(__MACH__)
+#include "macos-bundle.h"
+
+#define fseek fseeko
+#define ftell ftello
+#elif (defined(_WIN32) || defined(WIN32)) && !defined(_MSC_VER)
+#define fseek fseeko64
+#define ftell ftello64
+#define fopen fopen64
+#endif
+
 /* Configuration Load/Save handler */
 
 const JE_byte cryptKey[10] = /* [1..10] */
