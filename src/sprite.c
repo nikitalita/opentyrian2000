@@ -26,6 +26,17 @@
 #include <ctype.h>
 #include <stdlib.h>
 
+#if defined(__APPLE__) & defined(__MACH__)
+#include "macos-bundle.h"
+
+#define fseek fseeko
+#define ftell ftello
+#elif (defined(_WIN32) || defined(WIN32)) && !defined(_MSC_VER)
+#define fseek fseeko64
+#define ftell ftello64
+#define fopen fopen64
+#endif
+
 Sprite_array sprite_table[SPRITE_TABLES_MAX];
 
 Sprite2_array shopSpriteSheet;

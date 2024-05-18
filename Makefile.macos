@@ -65,7 +65,7 @@ gamesdir ?= $(datadir)/games
 
 TARGET := opentyrian2000
 
-SRCS := $(wildcard src/*.c) $(wildcard src/*.m)
+SRCS := $(wildcard src/*.c)
 OBJS := $(SRCS:src/%.c=obj/%.o) obj/macos-bundle.o
 DEPS := $(SRCS:src/%.c=obj/%.d)
 
