@@ -12,7 +12,7 @@ const char *getBundlePath(void)
 
 const char *getBundleVersion(void)
 {
-    NSDictionary<NSString *, id> *infodict = [[NSBundle mainBundle] infoDictionary];
+    NSDictionary *infodict = [[NSBundle mainBundle] infoDictionary];
     NSString *bundlever = [infodict objectForKey:@"CFBundleVersion"];
 
     return ((const char *)[bundlever cStringUsingEncoding:NSUTF8StringEncoding]);
@@ -20,7 +20,7 @@ const char *getBundleVersion(void)
 
 const char *getBundleName(void)
 {
-    NSDictionary<NSString *, id> *infodict = [[NSBundle mainBundle] infoDictionary];
+    NSDictionary *infodict = [[NSBundle mainBundle] infoDictionary];
     NSString *bundlename = [infodict objectForKey:@"CFBundleName"];
 
     return ((const char *)[bundlename cStringUsingEncoding:NSUTF8StringEncoding]);
@@ -28,7 +28,7 @@ const char *getBundleName(void)
 
 const char *getCopyRight(void)
 {
-    NSDictionary<NSString *, id> *infodict = [[NSBundle mainBundle] infoDictionary];
+    NSDictionary *infodict = [[NSBundle mainBundle] infoDictionary];
     NSString *bundlecr = [infodict objectForKey:@"NSHumanReadableCopyright"];
 
     return ((const char *)[bundlecr cStringUsingEncoding:NSUTF8StringEncoding]);
@@ -36,7 +36,7 @@ const char *getCopyRight(void)
 
 const char *getMinimumOS(void)
 {
-    NSDictionary<NSString *, id> *infodict = [[NSBundle mainBundle] infoDictionary];
+    NSDictionary *infodict = [[NSBundle mainBundle] infoDictionary];
     NSString *bundleminver = [infodict objectForKey:@"LSMinimumSystemVersion"];
 
     return ((const char *)[bundleminver cStringUsingEncoding:NSUTF8StringEncoding]);
