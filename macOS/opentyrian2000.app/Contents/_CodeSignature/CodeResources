@@ -226,7 +226,7 @@
 		</data>
 		<key>Resources/opentyrian2000.icns</key>
 		<data>
-		Vap3WNIK0Syvl5WpTWcBA/V3lOc=
+		9KzXoz6WE1SGBRb5pUOdfv+cRdg=
 		</data>
 		<key>Resources/palette.dat</key>
 		<data>
@@ -350,15 +350,19 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
+			bupXDTKpRFgKx3UfrbigByMLtDA=
+			</data>
+			<key>requirement</key>
+			<string>identifier "com.AnV.Software.OpenTyrian2000" and anchor apple generic and certificate leaf[subject.CN] = "Apple Development: catvampire35@gmail.com (VC2F3CGZ22)" and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */</string>
+		</dict>
+		<key>Frameworks/libSDL3.dylib</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
 			RZpqHUHIHDculJnf9h2+jKSxPvw=
 			</data>
 			<key>requirement</key>
 			<string>identifier libSDL3 and anchor apple generic and certificate leaf[subject.CN] = "Apple Development: catvampire35@gmail.com (VC2F3CGZ22)" and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */</string>
-		</dict>
-		<key>Frameworks/libSDL3.dylib</key>
-		<dict>
-			<key>symlink</key>
-			<string>libSDL3.0.dylib</string>
 		</dict>
 		<key>Frameworks/libfreetype.6.dylib</key>
 		<dict>
@@ -929,7 +933,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			TFlFHZ0jtiRdoGoCZ589m4hAaDdAGuZ1cFaPTX77aYk=
+			8Ih/cHU3z6VTMqmcKE/karGoMeNst/iIbzc0G7KrxDU=
 			</data>
 		</dict>
 		<key>Resources/palette.dat</key>
