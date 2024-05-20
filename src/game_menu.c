@@ -1852,8 +1852,8 @@ bool load_cube(int cube_slot, int cube_index)
 				if (line < COUNTOF(cube->text))
 				{
 					if (prepend_space)
-						strlcat(cube[cube_slot].text[line], " ", 2);
-					strlcat(cube[cube_slot].text[line], word, sizeof(cube[cube_slot].text[line]));
+                        strncat(cube[cube_slot].text[line], " ", 2);
+					strncat(cube[cube_slot].text[line], word, sizeof(cube[cube_slot].text[line]));
 
 					// track last line with text
 					cube[cube_slot].last_line = line + 1;
