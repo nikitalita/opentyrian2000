@@ -1852,8 +1852,13 @@ bool load_cube(int cube_slot, int cube_index)
 				if (line < COUNTOF(cube->text))
 				{
 					if (prepend_space)
+#if defined(_MSC_VER) && __STDC_WANT_SECURE_LIB__
+						strncat_s(cube[cube_slot].text[line], sizeof(cube[cube_slot].text[line]), " ", 2);
+					strncat_s(cube[cube_slot].text[line], sizeof(cube[cube_slot].text[line]), word, sizeof(cube[cube_slot].text[line]));
+#else
                         strncat(cube[cube_slot].text[line], " ", 2);
 					strncat(cube[cube_slot].text[line], word, sizeof(cube[cube_slot].text[line]));
+#endif
 
 					// track last line with text
 					cube[cube_slot].last_line = line + 1;
