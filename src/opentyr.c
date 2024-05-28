@@ -108,6 +108,31 @@ static const char *getScalingModePickerItem(size_t i, char *buffer, size_t buffe
 	return scaling_mode_names[i];
 }
 
+static size_t getMusicDevicePickerItemsCount(void)
+{
+#ifndef WITH_MIDI
+	return (size_t)1;
+#else
+	#ifdef NO_NATIVE_MIDI
+	return (size_t)MUSIC_DEVICE_MAX - 1;
+	#else
+	return (size_t)MUSIC_DEVICE_MAX;
+	#endif
+#endif
+}
+
+static const char *getMusicDevicePickerItem(size_t i, char *buffer, size_t bufferSize)
+{
+	(void)buffer, (void)bufferSize;
+#ifndef WITH_MIDI
+	(void)i;
+	return music_device_names[0];
+#else
+	return music_device_names[i];
+#endif
+}
+
+
 void setupMenu(void)
 {
 	typedef enum
@@ -123,6 +148,7 @@ void setupMenu(void)
 		MENU_ITEM_SCALING_MODE,
 		MENU_ITEM_MUSIC_VOLUME,
 		MENU_ITEM_SOUND_VOLUME,
+		MENU_ITEM_MUSIC_DEVICE,
 	} MenuItemId;
 
 	typedef enum
@@ -175,6 +201,7 @@ void setupMenu(void)
 			.items = {
 				{ MENU_ITEM_MUSIC_VOLUME, "Music Volume", "Change volume with the left/right arrow keys.", NULL, NULL },
 				{ MENU_ITEM_SOUND_VOLUME, "Sound Volume", "Change volume with the left/right arrow keys.", NULL, NULL },
+				{ MENU_ITEM_MUSIC_DEVICE, "Music Device", "Change the music device.", getMusicDevicePickerItemsCount, getMusicDevicePickerItem},
                 { MENU_ITEM_DONE, "Done", "Return to the previous menu.", NULL, NULL },
 				{ -1, NULL, NULL, NULL, NULL }
 			},
@@ -282,6 +309,10 @@ void setupMenu(void)
 				JE_rectangle(VGAScreen, xMenuItemValue - 2, y - 2, xMenuItemValue + 96, y + 11, 242);
 				break;
 
+			case MENU_ITEM_MUSIC_DEVICE:
+				draw_font_hv_shadow(VGAScreen, xMenuItemValue, y, music_device_names[music_device], normal_font, left_aligned, 15, -3 + (selected ? 2 : 0) + (disabled ? -4 : 0), false, 2);
+				break;
+
 			default:
 				break;
 			}
@@ -387,6 +418,7 @@ void setupMenu(void)
 									case MENU_ITEM_DISPLAY:
 									case MENU_ITEM_SCALER:
 									case MENU_ITEM_SCALING_MODE:
+									case MENU_ITEM_MUSIC_DEVICE:
 									{
 										action = true;
 										break;
@@ -595,6 +627,14 @@ void setupMenu(void)
 					pickerSelectedIndex = scaling_mode;
 					break;
 				}
+				case MENU_ITEM_MUSIC_DEVICE:
+				{
+					JE_playSampleNum(S_CLICK);
+
+					currentPicker = selectedMenuItemId;
+					pickerSelectedIndex = music_device;
+					break;
+				}
 				case MENU_ITEM_MUSIC_VOLUME:
 				{
 					JE_playSampleNum(S_CLICK);
@@ -744,6 +784,12 @@ void setupMenu(void)
 				case MENU_ITEM_SCALING_MODE:
 				{
 					scaling_mode = pickerSelectedIndex;
+					break;
+				}
+				case MENU_ITEM_MUSIC_DEVICE:
+				{
+					music_device = pickerSelectedIndex;
+					restart_audio();
 					break;
 				}
 				default:

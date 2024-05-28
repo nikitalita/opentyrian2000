@@ -14,6 +14,7 @@ endif
 endif
 
 WITH_NETWORK := true
+WITH_MIDI := true
 
 ################################################################################
 # see https://www.gnu.org/prep/standards/html_node/Makefile-Conventions.html
@@ -75,6 +76,14 @@ ifeq ($(WITH_NETWORK), true)
     EXTRA_CPPFLAGS += -DWITH_NETWORK
 endif
 
+ifeq ($(WITH_MIDI), true)
+    EXTRA_CPPFLAGS += -DWITH_MIDI
+endif
+
+ifeq ($(OS), linux)
+    EXTRA_CPPFLAGS += -DNO_NATIVE_MIDI
+endif
+
 OPENTYRIAN_VERSION := $(VCS_IDREV)\
 
 EXTRA_CPPFLAGS += -DOPENTYRIAN_VERSION=$(OPENTYRIAN_VERSION)
@@ -89,15 +98,32 @@ endif
 
 LDFLAGS ?= -arch arm64 -arch x86_64 -mmacosx-version-min=10.14
 LDLIBS ?= -framework Foundation -lobjc
+libmidiconv_PC_PATH :=
 
 ifeq ($(WITH_NETWORK), true)
-    SDL_CPPFLAGS := $(shell pkg-config SDL2 --cflags) $(shell pkg-config SDL2_net --cflags)
+    SDL_CPPFLAGS := -F/Library/Frameworks -I/Library/Frameworks/SDL2.framework/Versions/A/Headers -I/Library/Frameworks/SDL2_net.framework/Versions/A/Headers
     SDL_LDFLAGS :=
-    SDL_LDLIBS := $(shell pkg-config SDL2 --libs) $(shell pkg-config SDL2_net --libs)
+    SDL_LDLIBS := -F/Library/Frameworks -framework SDL2 -framework SDL2_net
 else
-    SDL_CPPFLAGS := $(shell pkg-config SDL2 --cflags)
+    SDL_CPPFLAGS := -F/Library/Frameworks -I/Library/Frameworks/SDL2.framework/Versions/A/Headers
     SDL_LDFLAGS :=
-    SDL_LDLIBS := $(shell pkg-config SDL2 --libs)
+    SDL_LDLIBS := -F/Library/Frameworks -framework SDL2
+endif
+
+ifeq ($(WITH_MIDI), true)
+    SDL_PACKAGES := SDL2_mixer_ext
+    MIDIPROC_LIBS := midiproc fluidsynth
+endif
+
+ifeq ($(WITH_MIDI), true)
+    SDL_CPPFLAGS += $(shell pkg-config $(MIDIPROC_LIBS) --cflags)
+    SDL_LDFLAGS :=
+    SDL_LDLIBS += $(shell pkg-config $(MIDIPROC_LIBS) --libs) -framework AudioToolbox -L/usr/local/lib -lSDL2_mixer_ext
+endif
+
+# add stdc++ to the ldlibs if using midiproc
+ifneq ($(MIDIPROC_LIBS), )
+    SDL_LDLIBS += -lc++ -lc++abi
 endif
 
 ALL_CPPFLAGS = \
@@ -125,10 +151,14 @@ $(TARGET).app: getver $(TARGET)
 	iconutil --convert icns -o $@/Contents/Resources/opentyrian2000.icns opentyrian2000.iconset
 	$(INSTALL) PkgInfo Info.plist $@/Contents/
 	$(INSTALL) $(TARGET) $@/Contents/MacOS/$(TARGET)
-	macdeployqt $@
+	mkdir -p $@/Contents/Frameworks
+	cp -Rf /usr/local/lib/libMoltenVK.dylib $@/Contents/Frameworks
+	cp -Rf /Library/Frameworks/SDL2.framework $@/Contents/Frameworks
+	cp -Rf /Library/Frameworks/SDL2_net.framework $@/Contents/Frameworks
+	cp -Rf /Library/Frameworks/FluidSynth.framework $@/Contents/Frameworks
+	$(INSTALL_NAME_TOOL) -change FluidSynth.framework/Versions/3/FluidSynth @rpath/FluidSynth.framework/Versions/3/FluidSynth $@/Contents/MacOS/opentyrian2000
 	$(INSTALL) data/* $@/Contents/Resources/
-	rm -Rf $@/Contents/Frameworks/*.framework $@/Contents/PlugIns
-	$(CODESIGN) $@/Contents/Frameworks/*.dylib $@
+	$(CODESIGN) $@/Contents/Frameworks/*.framework $@/Contents/Frameworks/*.dylib $@
 
 .PHONY : installdirs
 installdirs :
@@ -150,6 +180,7 @@ clean :
 	rm -f $(DEPS)
 	rm -f $(TARGET)
 	rm -f getver
+	rm -Rf opentyrian2000.app
 
 $(TARGET) : $(OBJS)
 	$(CC) $(ALL_CFLAGS) $(ALL_LDFLAGS) -o $@ $^ $(ALL_LDLIBS)
