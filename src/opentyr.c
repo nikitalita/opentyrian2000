@@ -467,7 +467,6 @@ void setupMenu(void)
 					currentMenu = menuParents[currentMenu];
 				}
 			}
-#ifndef __ANDROID__
 			else if (newkey)
 			{
 				switch (lastkey_scan)
@@ -553,7 +552,6 @@ void setupMenu(void)
 					break;
 				}
 			}
-#endif
 
 			if (action)
 			{
@@ -717,7 +715,6 @@ void setupMenu(void)
 					currentPicker = MENU_ITEM_NONE;
 				}
 			}
-#ifndef __ANDROID__
 			else if (newkey)
 			{
 				switch (lastkey_scan)
@@ -761,7 +758,6 @@ void setupMenu(void)
 					break;
 				}
 			}
-#endif
 
 			if (action)
 			{
