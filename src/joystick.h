@@ -1,4 +1,4 @@
-/* 
+/*
  * OpenTyrian: A modern cross-platform port of Tyrian
  * Copyright (C) 2007-2009  The OpenTyrian Development Team
  *
@@ -22,7 +22,7 @@
 #include "opentyr.h"
 #include "config_file.h"
 
-#include "SDL.h"
+#include "SDL2/SDL.h"
 
 typedef enum
 {
@@ -37,10 +37,10 @@ typedef struct
 {
 	Joystick_assignment_types type;
 	int num;
-	
+
 	// if hat
 	bool x_axis; // else y_axis
-	
+
 	// if hat or axis
 	bool negative_axis; // else positive
 }
@@ -49,19 +49,19 @@ Joystick_assignment;
 typedef struct
 {
 	SDL_Joystick *handle;
-	
+
 	Joystick_assignment assignment[10][2]; // 0-3: directions, 4-9: actions
-	
+
 	bool analog;
 	int sensitivity, threshold;
-	
+
 	signed int x, y;
 	int analog_direction[4];
 	bool direction[4], direction_pressed[4]; // up, right, down, left  (_pressed, for emulating key presses)
-	
+
 	bool confirm, cancel;
 	bool action[6], action_pressed[6]; // fire, mode swap, left fire, right fire, menu, pause
-	
+
 	Uint32 joystick_delay;
 	bool input_pressed;
 }

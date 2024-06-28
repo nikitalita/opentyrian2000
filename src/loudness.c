@@ -24,7 +24,7 @@
 #include "opentyr.h"
 #include "params.h"
 
-#include <SDL.h>
+#include <SDL2/SDL.h>
 #ifdef WITH_MIDI
 #include <SDL_mixer_ext.h>
 #include <midiproc.h>
@@ -214,7 +214,7 @@ bool _play_midi(Uint32 songnum){
 	}
 	assert((midi_tracks[songnum] != NULL));
 	Sint32 loops = -1; // loop forever
-	// Not setting loops to 0 for no loop because it will either loop anyway 
+	// Not setting loops to 0 for no loop because it will either loop anyway
 	// or continue playing for like 4+ seconds after the end; we stop it manually below
 	Mix_RewindMusicStream(midi_tracks[songnum]);
 	if (Mix_PlayMusic(midi_tracks[songnum], loops) != 0)
@@ -243,7 +243,7 @@ const char * get_midi_params(void){
 }
 
 bool load_midi(unsigned int song_num){
-	// This is outside of the audio lock because it can take a while 
+	// This is outside of the audio lock because it can take a while
 	if (midi_tracks[song_num] == NULL){
 		const char * params = get_midi_params();
 		midi_tracks[song_num] = Mix_LoadMUSType_RW_ARG(SDL_RWFromConstMem(midi_data[song_num].data, midi_data[song_num].size), MUS_MID, 1, params);
@@ -372,7 +372,7 @@ static void audioCallback(void *userdata, Uint8 *stream, int size)
 						samples[i] = 0;
 					time_playing = 0;
 					unwated_loop = false;
-				} else if (!has_loop && 
+				} else if (!has_loop &&
 					((cur_position < time_playing) ||
 					(cur_position >= midi_data[song_playing].duration + 100))) {
 					unwated_loop = true; // stop it the next time
@@ -664,7 +664,7 @@ void fade_song(void)  // FKA Player.selectSong($C001)
 		{
 			Mix_FadeOutMusic(6000);
 		}
-	} 
+	}
 	else
 #endif
 	{

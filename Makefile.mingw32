@@ -4,6 +4,7 @@ PLATFORM := WIN32
 TYRIAN_DIR = C:\\TYRIAN
 
 WITH_NETWORK := true
+WITH_MIDI := true
 
 ################################################################################
 # see https://www.gnu.org/prep/standards/html_node/Makefile-Conventions.html
@@ -56,6 +57,14 @@ ifeq ($(WITH_NETWORK), true)
     EXTRA_CPPFLAGS += -DWITH_NETWORK
 endif
 
+ifeq ($(WITH_MIDI), true)
+    EXTRA_CPPFLAGS += -DWITH_MIDI
+endif
+
+ifeq ($(OS), linux)
+    EXTRA_CPPFLAGS += -DNO_NATIVE_MIDI
+endif
+
 OPENTYRIAN_VERSION := $(VCS_IDREV)\
 
 EXTRA_CPPFLAGS += -DOPENTYRIAN_VERSION=$(OPENTYRIAN_VERSION)
@@ -73,6 +82,22 @@ else
     SDL_CPPFLAGS := -I/usr/local/x86_64-w64-mingw32/include
     SDL_LDFLAGS :=
     SDL_LDLIBS := -L/usr/local/x86_64-w64-mingw32/lib32 -lSDL2
+endif
+
+ifeq ($(WITH_MIDI), true)
+    SDL_PACKAGES := SDL2_mixer_ext
+    MIDIPROC_LIBS := midiproc fluidsynth
+endif
+
+ifeq ($(WITH_MIDI), true)
+    SDL_CPPFLAGS += -I/usr/local/x86_64-w64-mingw32/include -I/usr/local/x86_64-w64-mingw32/include/SDL2 -I/usr/local/x86_64-w64-mingw32/include/midiproc
+    SDL_LDFLAGS :=
+    SDL_LDLIBS += -L/usr/local/x86_64-w64-mingw32/lib32 -lmidiproc -lfluidsynth.dll -lSDL2_mixer_ext
+endif
+
+# add stdc++ to the ldlibs if using midiproc
+ifneq ($(MIDIPROC_LIBS), )
+    SDL_LDLIBS += /usr/local/x86_64-w64-mingw32/lib32/libstdc++.dll.a -lsupc++ -lgcc_s
 endif
 
 ALL_CPPFLAGS = -DTARGET_$(PLATFORM) \

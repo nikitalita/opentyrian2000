@@ -19,6 +19,12 @@
 #ifndef OPENTYR_H
 #define OPENTYR_H
 
+#if defined(ANDROID) || defined(__ANDROID__)
+#ifndef WITH_NETWORK
+#define WITH_NETWORK 1
+#endif
+#endif
+
 #include "SDL2/SDL_types.h"
 
 #include <math.h>

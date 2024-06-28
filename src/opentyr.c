@@ -54,8 +54,11 @@
 #include "video_scale.h"
 #include "xmas.h"
 
-#include "SDL2/SDL.h"
-#include "SDL2/SDL_net.h"
+#include <SDL2/SDL.h>
+
+#ifdef WITH_NETWORK
+#include <SDL2/SDL_net.h>
+#endif
 
 #if defined(_WIN32) || defined(WIN32)
 #include <Windows.h>
@@ -464,6 +467,7 @@ void setupMenu(void)
 					currentMenu = menuParents[currentMenu];
 				}
 			}
+#ifndef __ANDROID__
 			else if (newkey)
 			{
 				switch (lastkey_scan)
@@ -549,6 +553,7 @@ void setupMenu(void)
 					break;
 				}
 			}
+#endif
 
 			if (action)
 			{
@@ -712,6 +717,7 @@ void setupMenu(void)
 					currentPicker = MENU_ITEM_NONE;
 				}
 			}
+#ifndef __ANDROID__
 			else if (newkey)
 			{
 				switch (lastkey_scan)
@@ -755,6 +761,7 @@ void setupMenu(void)
 					break;
 				}
 			}
+#endif
 
 			if (action)
 			{
@@ -805,7 +812,9 @@ void setupMenu(void)
 int main(int argc, char *argv[])
 {
     SDL_version sdlver;
+#ifdef WITH_NETWORK
     const SDLNet_version *sdlnetver = NULL;
+#endif
 
 	mt_srand(time(NULL));
 
@@ -842,7 +851,10 @@ int main(int argc, char *argv[])
 #endif
 
     SDL_GetVersion(&sdlver);
+
+#ifdef WITH_NETWORK
     sdlnetver = SDLNet_Linked_Version();
+#endif
 
     printf("SDL version %d.%d.%d\n", sdlver.major, sdlver.minor, sdlver.patch);
 

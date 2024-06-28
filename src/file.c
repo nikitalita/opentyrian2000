@@ -21,7 +21,7 @@
 #include "opentyr.h"
 #include "varz.h"
 
-#include "SDL.h"
+#include "SDL2/SDL.h"
 
 #include <errno.h>
 #include <stdio.h>
@@ -39,7 +39,16 @@
 #define fopen fopen64
 #endif
 
+#if defined(ANDROID) || defined(__ANDROID__)
+#include <android/asset_manager.h>
+#include <android/asset_manager_jni.h>
+#endif
+
 const char *custom_data_dir = NULL;
+
+#ifndef TYRIAN_DIR
+#define TYRIAN_DIR "."
+#endif
 
 // finds the Tyrian data directory
 const char *data_dir(void)
@@ -50,6 +59,14 @@ const char *data_dir(void)
         custom_data_dir,
         getBundlePath(),
         "data",
+        ".",
+    };
+#elif defined(ANDROID) || defined(__ANDROID__)
+    const char *const dirs[] =
+    {
+        custom_data_dir,
+        "/sdcard/Android/tyriandata",
+        TYRIAN_DIR,
         ".",
     };
 #elif defined(__linux__)
@@ -103,8 +120,8 @@ FILE *dir_fopen(const char *dir, const char *file, const char *mode)
 	snprintf(path, (strlen(dir) + 1 + strlen(file) + 1), "%s/%s", dir, file);
 
 #if defined(_MSC_VER) && __STDC_WANT_SECURE_LIB__
-    FILE *f = NULL;
-    fopen_s(&f, path, mode);
+	FILE *f = NULL;
+	fopen_s(&f, path, mode);
 #else
 	FILE *f = fopen(path, mode);
 #endif

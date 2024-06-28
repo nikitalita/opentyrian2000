@@ -1,4 +1,4 @@
-/* 
+/*
  * OpenTyrian: A modern cross-platform port of Tyrian
  * Copyright (C) 2007-2009  The OpenTyrian Development Team
  *
@@ -28,7 +28,7 @@
 #include "sndmast.h"
 #include "vga256d.h"
 
-#include "SDL.h"
+#include "SDL2/SDL.h"
 
 #if defined(__APPLE__) & defined(__MACH__)
 #include "macos-bundle.h"
@@ -268,7 +268,7 @@ void JE_changeVolume(JE_word *music, int music_delta, JE_word *sample, int sampl
 {
 	int music_temp = *music + music_delta,
 	    sample_temp = *sample + sample_delta;
-	
+
 	if (music_delta)
 	{
 		if (music_temp > 255)
@@ -282,7 +282,7 @@ void JE_changeVolume(JE_word *music, int music_delta, JE_word *sample, int sampl
 			JE_playSampleNum(S_CLINK);
 		}
 	}
-	
+
 	if (sample_delta)
 	{
 		if (sample_temp > 255)
@@ -296,9 +296,9 @@ void JE_changeVolume(JE_word *music, int music_delta, JE_word *sample, int sampl
 			JE_playSampleNum(S_CLINK);
 		}
 	}
-	
+
 	*music = music_temp;
 	*sample = sample_temp;
-	
+
 	set_volume(*music, *sample);
 }

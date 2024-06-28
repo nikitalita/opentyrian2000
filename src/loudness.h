@@ -1,4 +1,4 @@
-/* 
+/*
  * OpenTyrian: A modern cross-platform port of Tyrian
  * Copyright (C) 2007-2009  The OpenTyrian Development Team
  *
@@ -22,7 +22,7 @@
 #include "opentyr.h"
 #include "opl.h"
 
-#include "SDL.h"
+#include "SDL2/SDL.h"
 
 extern int audioSampleRate;
 
