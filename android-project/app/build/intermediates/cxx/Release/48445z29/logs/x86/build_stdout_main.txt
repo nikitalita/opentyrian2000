@@ -1,0 +1,55 @@
+Android NDK: WARNING:/Users/andyvand/Downloads/opentyrian2000-AnV/android-project/app/jni/src/Android.mk:main: non-system libraries in linker flags: -lSDL2_net    
+Android NDK:     This is likely to result in incorrect builds. Try using LOCAL_STATIC_LIBRARIES    
+Android NDK:     or LOCAL_SHARED_LIBRARIES instead to list the library dependencies of the    
+Android NDK:     current module    
+[x86] Compile        : main <= animlib.c
+[x86] Compile        : main <= arg_parse.c
+[x86] Compile        : main <= backgrnd.c
+[x86] Compile        : main <= config.c
+[x86] Compile        : main <= config_file.c
+[x86] Compile        : main <= destruct.c
+[x86] Compile        : main <= editship.c
+[x86] Compile        : main <= episodes.c
+[x86] Compile        : main <= file.c
+[x86] Compile        : main <= font.c
+[x86] Compile        : main <= fonthand.c
+[x86] Compile        : main <= game_menu.c
+[x86] Compile        : main <= helptext.c
+[x86] Compile        : main <= joystick.c
+[x86] Compile        : main <= jukebox.c
+[x86] Compile        : main <= keyboard.c
+[x86] Compile        : main <= lds_play.c
+[x86] Compile        : main <= loudness.c
+[x86] Compile        : main <= lvllib.c
+[x86] Compile        : main <= lvlmast.c
+[x86] Compile        : main <= mainint.c
+[x86] Compile        : main <= menus.c
+[x86] Compile        : main <= mouse.c
+[x86] Compile        : main <= mtrand.c
+[x86] Compile        : main <= musmast.c
+[x86] Compile        : main <= network.c
+[x86] Compile        : main <= nortsong.c
+[x86] Compile        : main <= nortvars.c
+[x86] Compile        : main <= opentyr.c
+[x86] Compile        : main <= opl.c
+[x86] Compile        : main <= palette.c
+[x86] Compile        : main <= params.c
+[x86] Compile        : main <= pcxload.c
+[x86] Compile        : main <= pcxmast.c
+[x86] Compile        : main <= picload.c
+[x86] Compile        : main <= player.c
+[x86] Compile        : main <= shots.c
+[x86] Compile        : main <= sizebuf.c
+[x86] Compile        : main <= sndmast.c
+[x86] Compile        : main <= sprite.c
+[x86] Compile        : main <= starlib.c
+[x86] Compile        : main <= tyrian2.c
+[x86] Compile        : main <= varz.c
+[x86] Compile        : main <= vga256d.c
+[x86] Compile        : main <= vga_palette.c
+[x86] Compile        : main <= video.c
+[x86] Compile        : main <= video_scale.c
+[x86] Compile        : main <= video_scale_hqNx.c
+[x86] Compile        : main <= xmas.c
+[x86] Prebuilt       : libSDL2.so <= /Users/andyvand/Downloads/opentyrian2000-AnV/android-project/app/jni/src/lib/x86/
+[x86] SharedLibrary  : libmain.so

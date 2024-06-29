@@ -1,0 +1,2 @@
+/Users/andyvand/Downloads/opentyrian2000-AnV/android-project/app/jni/Android.mk
+/Users/andyvand/Downloads/opentyrian2000-AnV/android-project/app/jni/Application.mk
