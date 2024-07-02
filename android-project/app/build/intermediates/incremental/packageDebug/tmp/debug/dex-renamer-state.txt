@@ -1,4 +1,4 @@
-#Fri Jun 28 18:46:02 CEST 2024
+#Tue Jul 02 00:39:28 CEST 2024
 base.0=/Users/andyvand/Downloads/opentyrian2000-AnV/android-project/app/build/intermediates/dex/debug/mergeProjectDexDebug/0/classes.dex
 base.1=/Users/andyvand/Downloads/opentyrian2000-AnV/android-project/app/build/intermediates/dex/debug/mergeProjectDexDebug/2/classes.dex
 path.0=0/classes.dex

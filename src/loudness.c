@@ -26,7 +26,7 @@
 
 #include <SDL2/SDL.h>
 #ifdef WITH_MIDI
-#include <SDL_mixer_ext.h>
+#include <SDL2/SDL_mixer_ext.h>
 #include <midiproc.h>
 #endif
 #include <assert.h>
@@ -230,7 +230,7 @@ bool _play_midi(Uint32 songnum){
 
 const char * get_midi_params(void){
 	if (music_device == FLUIDSYNTH){
-#if defined(__APPLE__) && defined(__MACH__)
+#if (defined(__APPLE__) && defined(__MACH__)) || defined(ANDROID) || defined(__ANDROID__)
         return "s1;p512;";
 #else
 		return "s4;p512;";

@@ -23,6 +23,14 @@
 #ifndef WITH_NETWORK
 #define WITH_NETWORK 1
 #endif
+
+#ifndef WITH_MIDI
+#define WITH_MIDI 1
+#endif
+
+#ifndef NO_NATIVE_MIDI
+#define NO_NATIVE_MIDI 1
+#endif
 #endif
 
 #include "SDL2/SDL_types.h"

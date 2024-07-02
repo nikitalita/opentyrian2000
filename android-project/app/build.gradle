@@ -8,12 +8,6 @@ else {
 }
 
 android {
-    signingConfigs {
-        debug {
-            storeFile file('/Users/andyvand/Andy Vandijck.keystore')
-            storePassword '274905'
-        }
-    }
     compileSdkVersion(35)
     if (buildAsApplication) {
         namespace "org.libsdl.app"

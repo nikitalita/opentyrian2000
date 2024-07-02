@@ -226,7 +226,7 @@
 		</data>
 		<key>Resources/opentyrian2000.icns</key>
 		<data>
-		weSEZ/gzNFB43qGrCl16w/4GrAU=
+		iAXZShd77tQ/f42z9LYu6EmLOlc=
 		</data>
 		<key>Resources/palette.dat</key>
 		<data>
@@ -315,7 +315,7 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			rgTc2CU9LXlNkGxgMBRbST6O5Mk=
+			Z8XRu0YzDHGQK7r8lXtxNUVGS+w=
 			</data>
 			<key>requirement</key>
 			<string>identifier "com.AnV.Software.OpenTyrian2000" and anchor apple generic and certificate leaf[subject.CN] = "Apple Development: catvampire35@gmail.com (VC2F3CGZ22)" and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */</string>
@@ -343,51 +343,6 @@
 			<key>cdhash</key>
 			<data>
 			LqqXq7W5DUwkVuQf+s4evGf8GLg=
-			</data>
-			<key>requirement</key>
-			<string>identifier "com.AnV.Software.OpenTyrian2000" and anchor apple generic and certificate leaf[subject.CN] = "Apple Development: catvampire35@gmail.com (VC2F3CGZ22)" and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */</string>
-		</dict>
-		<key>Frameworks/libglib-2.0.0.dylib</key>
-		<dict>
-			<key>cdhash</key>
-			<data>
-			olCzLP8NO65DK21G+95/G6b1VSc=
-			</data>
-			<key>requirement</key>
-			<string>identifier "com.AnV.Software.OpenTyrian2000" and anchor apple generic and certificate leaf[subject.CN] = "Apple Development: catvampire35@gmail.com (VC2F3CGZ22)" and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */</string>
-		</dict>
-		<key>Frameworks/libgthread-2.0.0.dylib</key>
-		<dict>
-			<key>cdhash</key>
-			<data>
-			w/Avxa5RxFNQ54709TacPbC+U0M=
-			</data>
-			<key>requirement</key>
-			<string>identifier "com.AnV.Software.OpenTyrian2000" and anchor apple generic and certificate leaf[subject.CN] = "Apple Development: catvampire35@gmail.com (VC2F3CGZ22)" and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */</string>
-		</dict>
-		<key>Frameworks/libiconv.2.dylib</key>
-		<dict>
-			<key>cdhash</key>
-			<data>
-			b9kJQPKqXA+lSKZ6hIF4f3W8BVs=
-			</data>
-			<key>requirement</key>
-			<string>identifier "com.AnV.Software.OpenTyrian2000" and anchor apple generic and certificate leaf[subject.CN] = "Apple Development: catvampire35@gmail.com (VC2F3CGZ22)" and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */</string>
-		</dict>
-		<key>Frameworks/libintl.8.dylib</key>
-		<dict>
-			<key>cdhash</key>
-			<data>
-			66Ygdg8kRm7z4g/O3PhYBuQIJLM=
-			</data>
-			<key>requirement</key>
-			<string>identifier "com.AnV.Software.OpenTyrian2000" and anchor apple generic and certificate leaf[subject.CN] = "Apple Development: catvampire35@gmail.com (VC2F3CGZ22)" and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */</string>
-		</dict>
-		<key>Frameworks/libpcre2-8.0.dylib</key>
-		<dict>
-			<key>cdhash</key>
-			<data>
-			wj1DQVKopFIwtal/7qjX2ei0dks=
 			</data>
 			<key>requirement</key>
 			<string>identifier "com.AnV.Software.OpenTyrian2000" and anchor apple generic and certificate leaf[subject.CN] = "Apple Development: catvampire35@gmail.com (VC2F3CGZ22)" and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */</string>
@@ -781,7 +736,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			zCARfVC7ZH5/viOG5jxSqBzHDJFYNVHtkgLNTgXc/jw=
+			fnY+w/ipG/oLrXfaJbUEFDTyevxMLJd4QQ+mOrmBfBw=
 			</data>
 		</dict>
 		<key>Resources/palette.dat</key>

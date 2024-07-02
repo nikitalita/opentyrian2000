@@ -76,11 +76,11 @@ LDLIBS ?=
 ifeq ($(WITH_NETWORK), true)
     SDL_CPPFLAGS := -I/Users/andyvand/Library/Android/sdk/ndk/27.0.11902837/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/SDL2 /Users/andyvand/Library/Android/sdk/ndk/27.0.11902837/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include -I/Users/andyvand/Library/Android/sdk/ndk/27.0.11902837/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/i686-linux-android
     SDL_LDFLAGS :=
-    SDL_LDLIBS := -L/Users/andyvand/Library/Android/sdk/ndk/27.0.11902837/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib -lSDL2 -lSDL2_net
+    SDL_LDLIBS := -L/Users/andyvand/Library/Android/sdk/ndk/27.0.11902837/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/i686-linux-android -lSDL2 -lSDL2_net -lSDL2main
 else
     SDL_CPPFLAGS := -I/Users/andyvand/Library/Android/sdk/ndk/27.0.11902837/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/SDL2 -I/Users/andyvand/Library/Android/sdk/ndk/27.0.11902837/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include -I/Users/andyvand/Library/Android/sdk/ndk/27.0.11902837/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/i686-linux-android
     SDL_LDFLAGS :=
-    SDL_LDLIBS := -L/Users/andyvand/Library/Android/sdk/ndk/27.0.11902837/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib -lSDL2
+    SDL_LDLIBS := -L/Users/andyvand/Library/Android/sdk/ndk/27.0.11902837/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/i686-linux-android -lSDL2 -lSDL2main
 endif
 
 ALL_CPPFLAGS = -DTARGET_$(PLATFORM) \

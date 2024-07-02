@@ -112,13 +112,13 @@ endif
 
 ifeq ($(WITH_MIDI), true)
     SDL_PACKAGES := SDL2_mixer_ext
-    MIDIPROC_LIBS := midiproc fluidsynth
+    MIDIPROC_LIBS := -L/usr/local/lib -lmidiproc -F/Library/Frameworks -framework FluidSynth
 endif
 
 ifeq ($(WITH_MIDI), true)
     SDL_CPPFLAGS += $(shell pkg-config $(MIDIPROC_LIBS) --cflags)
     SDL_LDFLAGS :=
-    SDL_LDLIBS += $(shell pkg-config $(MIDIPROC_LIBS) --libs) -framework AudioToolbox -L/usr/local/lib -lSDL2_mixer_ext
+    SDL_LDLIBS += -L/usr/local/lib -lmidiproc -F/Library/Frameworks -framework FluidSynth -framework AudioToolbox -lSDL2_mixer_ext
 endif
 
 # add stdc++ to the ldlibs if using midiproc
