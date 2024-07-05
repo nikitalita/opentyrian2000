@@ -235,7 +235,7 @@ bool _play_midi(Uint32 songnum){
 
 const char * get_midi_params(void){
 	if (music_device == FLUIDSYNTH){
-#if (defined(__APPLE__) && defined(__MACH__)) || defined(ANDROID) || defined(__ANDROID__) || defined(WIN32) || defined(_WIN32)
+#if (defined(__APPLE__) && defined(__MACH__)) || defined(WIN32) || defined(_WIN32) || defined(__linux__)
         return "s1;p512;";
 #else
 		return "s4;p512;";
