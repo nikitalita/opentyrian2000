@@ -3,32 +3,32 @@
 3    package="org.libsdl.app.test" >
 4
 5    <uses-sdk
-5-->/Users/andyvand/Downloads/opentyrian2000-AnV/android-project/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest11890893827745008870.xml:5:5-74
+5-->/Users/andyvand/Downloads/opentyrian2000-AnV/android-project/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest10864327204015820008.xml:5:5-74
 6        android:minSdkVersion="31"
-6-->/Users/andyvand/Downloads/opentyrian2000-AnV/android-project/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest11890893827745008870.xml:5:15-41
+6-->/Users/andyvand/Downloads/opentyrian2000-AnV/android-project/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest10864327204015820008.xml:5:15-41
 7        android:targetSdkVersion="35" />
-7-->/Users/andyvand/Downloads/opentyrian2000-AnV/android-project/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest11890893827745008870.xml:5:42-71
+7-->/Users/andyvand/Downloads/opentyrian2000-AnV/android-project/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest10864327204015820008.xml:5:42-71
 8
 9    <instrumentation
-9-->/Users/andyvand/Downloads/opentyrian2000-AnV/android-project/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest11890893827745008870.xml:11:5-15:64
+9-->/Users/andyvand/Downloads/opentyrian2000-AnV/android-project/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest10864327204015820008.xml:11:5-15:64
 10        android:name="android.test.InstrumentationTestRunner"
-10-->/Users/andyvand/Downloads/opentyrian2000-AnV/android-project/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest11890893827745008870.xml:11:22-75
+10-->/Users/andyvand/Downloads/opentyrian2000-AnV/android-project/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest10864327204015820008.xml:11:22-75
 11        android:functionalTest="false"
-11-->/Users/andyvand/Downloads/opentyrian2000-AnV/android-project/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest11890893827745008870.xml:14:22-52
+11-->/Users/andyvand/Downloads/opentyrian2000-AnV/android-project/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest10864327204015820008.xml:14:22-52
 12        android:handleProfiling="false"
-12-->/Users/andyvand/Downloads/opentyrian2000-AnV/android-project/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest11890893827745008870.xml:13:22-53
+12-->/Users/andyvand/Downloads/opentyrian2000-AnV/android-project/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest10864327204015820008.xml:13:22-53
 13        android:label="Tests for org.libsdl.app"
-13-->/Users/andyvand/Downloads/opentyrian2000-AnV/android-project/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest11890893827745008870.xml:15:22-62
+13-->/Users/andyvand/Downloads/opentyrian2000-AnV/android-project/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest10864327204015820008.xml:15:22-62
 14        android:targetPackage="org.libsdl.app" />
-14-->/Users/andyvand/Downloads/opentyrian2000-AnV/android-project/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest11890893827745008870.xml:12:22-60
+14-->/Users/andyvand/Downloads/opentyrian2000-AnV/android-project/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest10864327204015820008.xml:12:22-60
 15
 16    <application
-16-->/Users/andyvand/Downloads/opentyrian2000-AnV/android-project/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest11890893827745008870.xml:7:5-9:19
+16-->/Users/andyvand/Downloads/opentyrian2000-AnV/android-project/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest10864327204015820008.xml:7:5-9:19
 17        android:debuggable="true"
 18        android:extractNativeLibs="false" >
 19        <uses-library android:name="android.test.runner" />
-19-->/Users/andyvand/Downloads/opentyrian2000-AnV/android-project/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest11890893827745008870.xml:8:9-60
-19-->/Users/andyvand/Downloads/opentyrian2000-AnV/android-project/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest11890893827745008870.xml:8:23-57
+19-->/Users/andyvand/Downloads/opentyrian2000-AnV/android-project/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest10864327204015820008.xml:8:9-60
+19-->/Users/andyvand/Downloads/opentyrian2000-AnV/android-project/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest10864327204015820008.xml:8:23-57
 20    </application>
 21
 22</manifest>

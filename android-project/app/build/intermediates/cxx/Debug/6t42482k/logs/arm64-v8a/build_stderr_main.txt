@@ -1,1 +1,6 @@
 fcntl(): Bad file descriptor
+/Users/andyvand/Downloads/opentyrian2000-AnV/android-project/app/jni/src/../../../../src/loudness.c:29:10: fatal error: 'SDL_mixer_ext/SDL_mixer_ext.h' file not found
+#include <SDL_mixer_ext/SDL_mixer_ext.h>
+         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1 error generated.
+make: *** [/Users/andyvand/Library/Android/sdk/ndk/26.1.10909125/build/core/build-binary.mk:413: /Users/andyvand/Downloads/opentyrian2000-AnV/android-project/app/build/intermediates/cxx/Debug/6t42482k/obj/local/arm64-v8a/objs-debug/main/__/__/__/__/src/loudness.o] Error 1

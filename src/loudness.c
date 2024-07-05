@@ -26,7 +26,12 @@
 
 #include <SDL2/SDL.h>
 #ifdef WITH_MIDI
+#if defined(_WIN32) || defined(WIN32)
 #include <SDL_mixer_ext/SDL_mixer_ext.h>
+#else
+#include <SDL2/SDL_mixer_ext.h>
+#endif
+
 #include <midiproc.h>
 #endif
 #include <assert.h>

@@ -1,4 +1,0 @@
-#Tue Jul 02 00:39:54 CEST 2024
-base.0=/Users/andyvand/Downloads/opentyrian2000-AnV/android-project/app/build/intermediates/dex/release/mergeDexRelease/classes.dex
-path.0=classes.dex
-renamed.0=classes.dex
