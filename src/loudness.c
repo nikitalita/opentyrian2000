@@ -366,10 +366,10 @@ static void audioCallback(void *userdata, Uint8 *stream, int size)
 				double cur_position = midi_tracks[song_playing] ? Mix_GetMusicPosition(midi_tracks[song_playing]) : 0;
 				cur_position *= factor;
 				// check the duration of the song and see if it looped
-				bool has_loop = midi_data[song_playing].loop_end <= midi_data[song_playing].duration;
+                bool has_loop = (bool)(midi_data[song_playing].loop_end <= midi_data[song_playing].duration);
 				#ifdef _DEBUG
 				fprintf(stderr, "cur_position: %f, time_playing: %f, duration: %d, loop_end: %d\n", cur_position, time_playing, midi_data[song_playing].duration, midi_data[song_playing].loop_end);
-				#endif
+                #endif
 				if (unwated_loop && !has_loop) {
 					// this is to get around a bug in fluidsynth where it plays songs twice even if no loops are set
 					_stop_midi();
