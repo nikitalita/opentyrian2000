@@ -4,6 +4,7 @@ PLATFORM := UNIX
 TYRIAN_DIR = /usr/bin
 
 WITH_NETWORK := true
+WITH_MIDI := true
 
 ################################################################################
 # see https://www.gnu.org/prep/standards/html_node/Makefile-Conventions.html
@@ -58,6 +59,10 @@ ifeq ($(WITH_NETWORK), true)
     EXTRA_CPPFLAGS += -DWITH_NETWORK
 endif
 
+ifeq ($(WITH_MIDI), true)
+    EXTRA_CPPFLAGS += -DWITH_MIDI -DNO_NATIVE_MIDI
+endif
+
 OPENTYRIAN_VERSION := $(VCS_IDREV)\
 
 EXTRA_CPPFLAGS += -DOPENTYRIAN_VERSION=$(OPENTYRIAN_VERSION)
@@ -81,6 +86,22 @@ else
     SDL_CPPFLAGS := $(shell pkg-config SDL2 --cflags)
     SDL_LDFLAGS :=
     SDL_LDLIBS := $(shell pkg-config SDL2 --libs)
+endif
+
+ifeq ($(WITH_MIDI), true)
+    SDL_PACKAGES := SDL2_mixer_ext
+    MIDIPROC_LIBS := midiproc fluidsynth
+endif
+
+ifeq ($(WITH_MIDI), true)
+    SDL_CPPFLAGS += $(shell pkg-config $(MIDIPROC_LIBS) --cflags)
+    SDL_LDFLAGS :=
+    SDL_LDLIBS += $(shell pkg-config $(SDL_PACKAGES) --libs) $(shell pkg-config $(MIDIPROC_LIBS) --libs)
+endif
+
+# add stdc++ to the ldlibs if using midiproc
+ifneq ($(MIDIPROC_LIBS), )
+    SDL_LDLIBS += -lstdc++
 endif
 
 ALL_CPPFLAGS = -DTARGET_$(PLATFORM) \
