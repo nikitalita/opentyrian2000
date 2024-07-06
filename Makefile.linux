@@ -96,7 +96,7 @@ endif
 ifeq ($(WITH_MIDI), true)
     SDL_CPPFLAGS += $(shell pkg-config $(MIDIPROC_LIBS) --cflags)
     SDL_LDFLAGS :=
-    SDL_LDLIBS += $(shell pkg-config $(SDL_PACKAGES) --libs) $(shell pkg-config $(MIDIPROC_LIBS) --libs)
+    SDL_LDLIBS += $(shell pkg-config $(SDL_PACKAGES) --libs) $(shell pkg-config $(MIDIPROC_LIBS) --libs) -ltimidity_sdl2 -lEDMIDI -lOPNMIDI -lADLMIDI -lmodplug -lwavpack -lxmp -lgme -lz -lpthread
 endif
 
 # add stdc++ to the ldlibs if using midiproc
