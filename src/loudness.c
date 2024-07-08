@@ -359,7 +359,7 @@ static void audioCallback(void *userdata, Uint8 *stream, int size)
 				double factor = 1000.0;
                 double cur_position = 0.0;
 				music_mixer(NULL, stream, size);
-                cur_position = midi_tracks[song_playing] ? Mix_GetMusicPosition(midi_tracks[song_playing]) : 0;
+                cur_position = midi_tracks[song_playing] ? Mix_GetMusicPosition(midi_tracks[song_playing])  : 0;
 				cur_position *= factor;
 				// check the duration of the song and see if it looped
                 bool has_loop = (bool)(midi_data[song_playing].loop_end <= midi_data[song_playing].duration);
