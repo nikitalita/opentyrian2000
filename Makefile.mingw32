@@ -92,7 +92,7 @@ endif
 ifeq ($(WITH_MIDI), true)
     SDL_CPPFLAGS += -I/usr/local/x86_64-w64-mingw32/include -I/usr/local/x86_64-w64-mingw32/include/SDL2 -I/usr/local/x86_64-w64-mingw32/include/midiproc
     SDL_LDFLAGS :=
-    SDL_LDLIBS += -L/usr/local/x86_64-w64-mingw32/lib32 -lmidiproc -lfluidsynth.dll -lSDL2_mixer_ext
+    SDL_LDLIBS += -L/usr/local/x86_64-w64-mingw32/lib32 -lmidiproc -lSDL2_mixer_ext -lfluidsynth 
 endif
 
 # add stdc++ to the ldlibs if using midiproc
