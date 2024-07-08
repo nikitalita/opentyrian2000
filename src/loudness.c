@@ -389,7 +389,9 @@ static void audioCallback(void *userdata, Uint8 *stream, int size)
 						double loop_start = ((double)midi_data[song_playing].loop_start) / factor;
 						Mix_SetMusicPosition(loop_start);
 						for (int i = 0; i < samplesCount; ++i)
-							samples[i] = 0;
+                        {
+                            samples[i] = 0;
+                        }
 						music_mixer(NULL, stream, size);
 						songlooped = true;
 					}
