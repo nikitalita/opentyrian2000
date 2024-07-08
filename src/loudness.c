@@ -357,8 +357,9 @@ static void audioCallback(void *userdata, Uint8 *stream, int size)
 			if (playing){
 				// get samples from the mixer
 				double factor = 1000.0;
+                double cur_position = 0.0;
 				music_mixer(NULL, stream, size);
-				double cur_position = midi_tracks[song_playing] ? Mix_GetMusicPosition(midi_tracks[song_playing]) : 0;
+                cur_position = midi_tracks[song_playing] ? Mix_GetMusicPosition(midi_tracks[song_playing]) : 0;
 				cur_position *= factor;
 				// check the duration of the song and see if it looped
                 bool has_loop = (bool)(midi_data[song_playing].loop_end <= midi_data[song_playing].duration);
@@ -401,7 +402,7 @@ static void audioCallback(void *userdata, Uint8 *stream, int size)
 	}
 	else
 #endif
-	if (music_device == OPL && !music_disabled && !music_stopped)
+	if ((music_device == OPL) && !music_disabled && !music_stopped)
 	{
 		Sint16 *remaining = samples;
 		int remainingCount = samplesCount;
