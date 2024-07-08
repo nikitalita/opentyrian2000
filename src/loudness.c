@@ -26,12 +26,7 @@
 
 #include <SDL2/SDL.h>
 #ifdef WITH_MIDI
-#if defined(_WIN32) || defined(WIN32)
-#include <SDL_mixer_ext/SDL_mixer_ext.h>
-#else
 #include <SDL2/SDL_mixer_ext.h>
-#endif
-
 #include <midiproc.h>
 #endif
 #include <assert.h>
@@ -190,7 +185,7 @@ void convert_midi_data(void){
 		}
 		size_t midi_data_size = 0;
 		MIDPROC_Container_SerializeAsSMF(midi_container, &(midi_data[i].data), &midi_data_size);
-		midi_data[i].size = (Uint32) midi_data_size;
+		midi_data[i].size = (Uint32)midi_data_size;
 		if (midi_data[i].size == 0)
 		{
 			fprintf(stderr, "warning: failed to process song %d\n", i + 1);
@@ -389,7 +384,7 @@ static void audioCallback(void *userdata, Uint8 *stream, int size)
 					// We have to call music_mixer above first to get SDL_mixer to drive the synth and update the position,
 					// then clear the samples and call it again.
 					if (has_loop &&
-					(cur_position < time_playing || cur_position >= midi_data[song_playing].loop_end)) {
+					((cur_position < time_playing) || (cur_position >= midi_data[song_playing].loop_end))) {
 						double loop_start = ((double)midi_data[song_playing].loop_start) / factor;
 						Mix_SetMusicPosition(loop_start);
 						for (int i = 0; i < samplesCount; ++i)

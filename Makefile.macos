@@ -90,7 +90,7 @@ EXTRA_CPPFLAGS += -DOPENTYRIAN_VERSION=$(OPENTYRIAN_VERSION)
 
 ifeq ($(_DEBUG), 1)
 CPPFLAGS = -D_DEBUG=1 -UNDEBUG
-CFLAGS += -arch arm64 -arch x86_64 -g3 -O0 -mmacosx-version-min=$(MACOSX_DEPLOYMENT_TARGET) $(EXTRA_CPPFLAGS) -Werror -pedantic -Wall -Wextra -Werror
+CFLAGS += -arch arm64 -arch x86_64 -g3 -O0 -mmacosx-version-min=$(MACOSX_DEPLOYMENT_TARGET) $(EXTRA_CPPFLAGS) -Werror -pedantic -Wall -Wextra -Werror -D_DEBUG=1
 else
 CPPFLAGS = -MMD -DNDEBUG
 CFLAGS = -arch arm64 -arch x86_64 -g0 -O3 -mmacosx-version-min=$(MACOSX_DEPLOYMENT_TARGET) $(EXTRA_CPPFLAGS) -pedantic -Wall -Wextra -Werror
