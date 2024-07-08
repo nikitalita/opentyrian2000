@@ -467,7 +467,9 @@ static void audioCallback(void *userdata, Uint8 *stream, int size)
 		Sint32 sampleVolumeFactor = volumeFactorTable[sampleVolume];
 		Sint32 sampleVolumeFactors[CHANNEL_VOLUME_LEVELS];
 		for (int i = 0; i < CHANNEL_VOLUME_LEVELS; ++i)
-			sampleVolumeFactors[i] = sampleVolumeFactor * (i + 1) / CHANNEL_VOLUME_LEVELS;
+        {
+            sampleVolumeFactors[i] = sampleVolumeFactor * (i + 1) / CHANNEL_VOLUME_LEVELS;
+        }
 
 		// Mix music and channels
 		Sint16 *remaining = samples;
