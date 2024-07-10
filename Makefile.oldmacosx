@@ -10,11 +10,12 @@ ifneq ($(filter Darwin, $(shell uname -s)), )
    TYRIAN_DIR = "/Applications/OpenTyrian2000.app/Contents/MacOS"
 else
     PLATFORM := UNIX
-    TYRIAN_DIR = "/usr/local/bin"
+    TYRIAN_DIR = "/usr/bin"
 endif
 endif
 
 WITH_NETWORK := true
+WITH_MIDI := true
 
 ################################################################################
 # see https://www.gnu.org/prep/standards/html_node/Makefile-Conventions.html
@@ -44,7 +45,7 @@ INSTALL_PROGRAM = $(INSTALL) -m 755
 INSTALL_DATA = $(INSTALL) -m 644
 
 APPLICATIONS = /Applications
-prefix ?= /usr/local
+prefix ?= /usr
 exec_prefix ?= $(prefix)
 
 bindir ?= $(exec_prefix)/bin
@@ -75,6 +76,10 @@ ifeq ($(WITH_NETWORK), true)
     EXTRA_CPPFLAGS += -DWITH_NETWORK
 endif
 
+ifeq ($(WITH_MIDI), true)
+    EXTRA_CPPFLAGS += -DWITH_MIDI
+endif
+
 OPENTYRIAN_VERSION := $(VCS_IDREV)\
 
 EXTRA_CPPFLAGS += -DOPENTYRIAN_VERSION=$(OPENTYRIAN_VERSION)
@@ -91,13 +96,19 @@ LDFLAGS ?= -arch ppc -arch i386 -arch x86_64 -mmacosx-version-min=$(MACOSX_DEPLO
 LDLIBS ?= -framework Foundation -lobjc
 
 ifeq ($(WITH_NETWORK), true)
-    SDL_CPPFLAGS := -I/usr/local/include/SDL2
+    SDL_CPPFLAGS := -I/usr/include/SDL2 -I/usr/include
     SDL_LDFLAGS :=
-    SDL_LDLIBS := -lSDL2 -lSDL2_net
+    SDL_LDLIBS := -L/usr/lib -lSDL2 -lSDL2_net
 else
-    SDL_CPPFLAGS := -I/usr/local/include/SDL2
+    SDL_CPPFLAGS := -I/usr/include/SDL2 -I/usr/include
     SDL_LDFLAGS :=
-    SDL_LDLIBS := -lSDL2
+    SDL_LDLIBS := -L/usr/lib -lSDL2
+endif
+
+ifeq ($(WITH_MIDI), true)
+    SDL_CPPFLAGS += -I/usr/include/midiproc
+    SDL_LDFLAGS :=
+    SDL_LDLIBS += -lSDL2_mixer_ext -L/usr/lib -F/Library/Frameworks -lmidiproc -framework AudioUnit -framework AudioToolbox -framework CoreFoundation
 endif
 
 ALL_CPPFLAGS = \
@@ -126,11 +137,13 @@ $(TARGET).app: getver $(TARGET)
 	$(INSTALL) PkgInfo Info.plist $@/Contents/
 	$(INSTALL) $(TARGET) $@/Contents/MacOS/$(TARGET)
 	mkdir -p "$@/Contents/Frameworks"
-	$(INSTALL) /usr/local/lib/libSDL2-2.0.0.dylib $@/Contents/Frameworks/
-	$(INSTALL) /usr/local/lib/libSDL2_net-2.0.0.dylib $@/Contents/Frameworks/
-	$(INSTALL_NAME_TOOL) -change /usr/local/lib/libSDL2-2.0.0.dylib @executable_path/../Frameworks/libSDL2-2.0.0.dylib $@/Contents/Frameworks/libSDL2_net-2.0.0.dylib
+	$(INSTALL) /usr/lib/libSDL2-2.0.0.dylib $@/Contents/Frameworks/
+	$(INSTALL) /usr/lib/libSDL2_net-2.0.0.dylib $@/Contents/Frameworks/
+	$(INSTALL_NAME_TOOL) -change /usr/lib/libSDL2-2.0.0.dylib @executable_path/../Frameworks/libSDL2-2.0.0.dylib $@/Contents/Frameworks/libSDL2_net-2.0.0.dylib
+	$(INSTALL_NAME_TOOL) -change /usr/lib/libSDL2-2.0.0.dylib @executable_path/../Frameworks/libSDL2-2.0.0.dylib $@/Contents/MacOS/$(TARGET)
+	$(INSTALL_NAME_TOOL) -change /usr/lib/libSDL2_net-2.0.0.dylib @executable_path/../Frameworks/libSDL2_net-2.0.0.dylib $@/Contents/MacOS/$(TARGET)
 	$(INSTALL) data/* $@/Contents/Resources/
-	rm -Rf $@/Contents/Frameworks/*.framework $@/Contents/PlugIns
+	$(CODESIGN) $@/Contents/Frameworks/FluidSynth.framework
 	$(CODESIGN) $@/Contents/Frameworks/libSDL2-2.0.0.dylib
 	$(CODESIGN) $@/Contents/Frameworks/libSDL2_net-2.0.0.dylib
 	$(CODESIGN) $@
@@ -158,8 +171,6 @@ clean :
 
 $(TARGET) : $(OBJS)
 	$(CC) $(ALL_CFLAGS) $(ALL_LDFLAGS) -o $@ $^ $(ALL_LDLIBS)
-	$(INSTALL_NAME_TOOL) -change /usr/local/lib/libSDL2-2.0.0.dylib @executable_path/../Frameworks/libSDL2-2.0.0.dylib $@
-	$(INSTALL_NAME_TOOL) -change /usr/local/lib/libSDL2_net-2.0.0.dylib @executable_path/../Frameworks/libSDL2_net-2.0.0.dylib $@
 
 -include $(DEPS)
 
