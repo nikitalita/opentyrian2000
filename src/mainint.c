@@ -422,10 +422,10 @@ static bool helpSystemPage(Uint8 *topic, bool *restart)
 		// Draw footer.
 		JE_char buffer[128];
 
-		snprintf(buffer, sizeof buffer, "%s %d", miscText[24], page - topicStart[*topic - 1] + 1);
+		snprintf(buffer, sizeof(buffer), "%s %d", miscText[24], page - topicStart[*topic - 1] + 1);
 		draw_font_hv(VGAScreen, 10, 192, buffer, small_font, left_aligned, 13, 5);
 
-		snprintf(buffer, sizeof buffer, "%s %d of %d", miscText[25], page, MAX_PAGE);
+		snprintf(buffer, sizeof(buffer), "%s %d of %d", miscText[25], page, MAX_PAGE);
 		draw_font_hv(VGAScreen, 320 - 10, 192, buffer, small_font, right_aligned, 13, 5);
 
 		// Draw text.
@@ -693,17 +693,17 @@ bool JE_loadScreen(void)
 			{
 				JE_textShade(VGAScreen, xMenuItemName, y, miscText[2], 13, selected ? 6 : 0, FULL_SHADE);
 
-				snprintf(buffer, sizeof buffer, "%s -----", miscTextB[2]);
+				snprintf(buffer, sizeof(buffer), "%s -----", miscTextB[2]);
 				JE_textShade(VGAScreen, xMenuItemLastLevel, y, buffer, 5, selected ? 6 : 0, FULL_SHADE);
 			}
 			else
 			{
 				JE_textShade(VGAScreen, xMenuItemName, y, saveFile->name, 13, selected ? 6 : 2, FULL_SHADE);
 
-				snprintf(buffer, sizeof buffer, "%s %s", miscTextB[2], saveFile->levelName);
+				snprintf(buffer, sizeof(buffer), "%s %s", miscTextB[2], saveFile->levelName);
 				JE_textShade(VGAScreen, xMenuItemLastLevel, y, buffer, 5, selected ? 6 : 2, FULL_SHADE);
 
-				snprintf(buffer, sizeof buffer, "%s %u", miscTextB[1], saveFile->episode);
+				snprintf(buffer, sizeof(buffer), "%s %u", miscTextB[1], saveFile->episode);
 				JE_textShade(VGAScreen, xMenuItemEpisode, y, buffer, 5, selected ? 6 : 2, FULL_SHADE);
 			}
 		}
