@@ -1189,7 +1189,7 @@ void JE_highScoreScreen(void)
 			const int score = t2kHighScores[boardOnePlayer][i].score;
 			const char *playerName = t2kHighScores[boardOnePlayer][i].playerName;
 
-			snprintf(buffer, sizeof buffer, "~#%d:~  %d", i + 1, score);
+			snprintf(buffer, sizeof(buffer), "~#%d:~  %d", i + 1, score);
 			JE_textShade(VGAScreen, 20, y, buffer, 15, 0, FULL_SHADE);
 			JE_textShade(VGAScreen, 110, y, playerName, 15, 2, FULL_SHADE);
 			JE_textShade(VGAScreen, 250, y, difficultyNameB[rank], 15, rank + (rank == 0 ? 0 : -1), FULL_SHADE);
@@ -1211,7 +1211,7 @@ void JE_highScoreScreen(void)
 				const int score = t2kHighScores[boardTwoPlayer][i].score;
 				const char *teamName = t2kHighScores[boardTwoPlayer][i].playerName;
 
-				snprintf(buffer, sizeof buffer, "~#%d:~  %d", i + 1, score);
+				snprintf(buffer, sizeof(buffer), "~#%d:~  %d", i + 1, score);
 				JE_textShade(VGAScreen, 20, y, buffer, 15, 0, FULL_SHADE);
 				JE_textShade(VGAScreen, 110, y, teamName, 15, 2, FULL_SHADE);
 				JE_textShade(VGAScreen, 250, y, difficultyNameB[rank], 15, rank + (rank == 0 ? 0 : -1), FULL_SHADE);
