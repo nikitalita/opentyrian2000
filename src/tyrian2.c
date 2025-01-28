@@ -2238,7 +2238,11 @@ draw_player_shot_loop_end:
 				goto level_loop;
 		}
 
+#ifdef WITH_SDL3
+        if (pause_pressed)
+#else
 		if (pause_pressed || !windowHasFocus)
+#endif
 		{
 			pause_pressed = false;
 
@@ -2275,6 +2279,17 @@ draw_player_shot_loop_end:
 			                  (inGameMenuRequest == true) << 1 |
 			                  (skipLevelRequest == true) << 2 |
 			                  (nortShipRequest == true) << 3;
+
+#ifdef WITH_SDL3
+            SDLNet_Write16(requests,        &packet_state_out[0]->buf[14]);
+
+            SDLNet_Write16(difficultyLevel, &packet_state_out[0]->buf[16]);
+            SDLNet_Write16(player[0].x,     &packet_state_out[0]->buf[18]);
+            SDLNet_Write16(player[1].x,     &packet_state_out[0]->buf[20]);
+            SDLNet_Write16(player[0].y,     &packet_state_out[0]->buf[22]);
+            SDLNet_Write16(player[1].y,     &packet_state_out[0]->buf[24]);
+            SDLNet_Write16(curLoc,          &packet_state_out[0]->buf[26]);
+#else
 			SDLNet_Write16(requests,        &packet_state_out[0]->data[14]);
 
 			SDLNet_Write16(difficultyLevel, &packet_state_out[0]->data[16]);
@@ -2283,21 +2298,34 @@ draw_player_shot_loop_end:
 			SDLNet_Write16(player[0].y,     &packet_state_out[0]->data[22]);
 			SDLNet_Write16(player[1].y,     &packet_state_out[0]->data[24]);
 			SDLNet_Write16(curLoc,          &packet_state_out[0]->data[26]);
+#endif
 
 			network_state_send();
 
 			if (network_state_update())
 			{
+#ifdef WITH_SDL3
+                assert(SDLNet_Read16(&packet_state_in[0]->buf[26]) == SDLNet_Read16(&packet_state_out[network_delay]->buf[26]));
+
+                requests = SDLNet_Read16(&packet_state_in[0]->buf[14]) ^ SDLNet_Read16(&packet_state_out[network_delay]->buf[14]);
+#else
 				assert(SDLNet_Read16(&packet_state_in[0]->data[26]) == SDLNet_Read16(&packet_state_out[network_delay]->data[26]));
 
 				requests = SDLNet_Read16(&packet_state_in[0]->data[14]) ^ SDLNet_Read16(&packet_state_out[network_delay]->data[14]);
+#endif
+
 				if (requests & 1)
 				{
 					JE_pauseGame();
 				}
 				if (requests & 2)
 				{
+#ifdef WITH_SDL3
+                    yourInGameMenuRequest = SDLNet_Read16(&packet_state_out[network_delay]->buf[14]) & 2;
+#else
 					yourInGameMenuRequest = SDLNet_Read16(&packet_state_out[network_delay]->data[14]) & 2;
+#endif
+
 					JE_doInGameSetup();
 					yourInGameMenuRequest = false;
 					if (haltGame)
@@ -2321,7 +2349,11 @@ draw_player_shot_loop_end:
 
 				for (int i = 0; i < 2; i++)
 				{
+#ifdef WITH_SDL3
+                    if (SDLNet_Read16(&packet_state_in[0]->buf[18 + i * 2]) != SDLNet_Read16(&packet_state_out[network_delay]->buf[18 + i * 2]) || SDLNet_Read16(&packet_state_in[0]->buf[20 + i * 2]) != SDLNet_Read16(&packet_state_out[network_delay]->buf[20 + i * 2]))
+#else
 					if (SDLNet_Read16(&packet_state_in[0]->data[18 + i * 2]) != SDLNet_Read16(&packet_state_out[network_delay]->data[18 + i * 2]) || SDLNet_Read16(&packet_state_in[0]->data[20 + i * 2]) != SDLNet_Read16(&packet_state_out[network_delay]->data[20 + i * 2]))
+#endif
 					{
 						char temp[64];
 						snprintf(temp, sizeof(temp), "Player %d is unsynchronized!", i + 1);
@@ -3238,8 +3270,15 @@ void networkStartScreen(void)
 			difficultyLevel++;  /*Make it one step harder for 2-player mode!*/
 
 			network_prepare(PACKET_DETAILS);
+
+#ifdef WITH_SDL3
+            SDLNet_Write16(episodeNum, &packet_out_temp->buf[4]);
+            SDLNet_Write16(difficultyLevel, &packet_out_temp->buf[6]);
+#else
 			SDLNet_Write16(episodeNum, &packet_out_temp->data[4]);
 			SDLNet_Write16(difficultyLevel, &packet_out_temp->data[6]);
+#endif
+
 			network_send(8);  // PACKET_DETAILS
 		}
 		else
@@ -3262,7 +3301,11 @@ void networkStartScreen(void)
 			service_SDL_events(false);
 			JE_showVGA();
 
+#ifdef WITH_SDL3
+            if (packet_in[0] && SDLNet_Read16(&packet_in[0]->buf[0]) == PACKET_DETAILS)
+#else
 			if (packet_in[0] && SDLNet_Read16(&packet_in[0]->data[0]) == PACKET_DETAILS)
+#endif
 				break;
 
 			network_update();
@@ -3271,8 +3314,14 @@ void networkStartScreen(void)
 			SDL_Delay(16);
 		}
 
+#ifdef WITH_SDL3
+        JE_initEpisode(SDLNet_Read16(&packet_in[0]->buf[4]));
+        difficultyLevel = SDLNet_Read16(&packet_in[0]->buf[6]);
+#else
 		JE_initEpisode(SDLNet_Read16(&packet_in[0]->data[4]));
 		difficultyLevel = SDLNet_Read16(&packet_in[0]->data[6]);
+#endif
+
 		initialDifficulty = difficultyLevel - 1;
 		fade_black(10);
 
@@ -3793,7 +3842,11 @@ void intro_logos(void)
 {
 	moveTyrianLogoUp = true;
 
+#ifdef WITH_SDL3
+    SDL_FillSurfaceRect(VGAScreen, NULL, 0);
+#else
 	SDL_FillRect(VGAScreen, NULL, 0);
+#endif
 
 	fade_white(25);
 

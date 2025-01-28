@@ -43,7 +43,7 @@ void JE_loadPals(void)
 	
 	palette_count = ftell_eof(f) / (256 * 3);
 	assert(palette_count == PALETTE_COUNT);
-	
+
 	for (int p = 0; p < palette_count; ++p)
 	{
 		for (int i = 0; i < 256; ++i)
@@ -70,7 +70,11 @@ void set_palette(Palette colors, unsigned int first_color, unsigned int last_col
 	for (uint i = first_color; i <= last_color; ++i)
 	{
 		palette[i] = colors[i];
+#ifdef WITH_SDL3
+        rgb_palette[i] = SDL_MapRGB(main_window_tex_format, SDL_GetSurfacePalette(SDL_GetWindowSurface(main_window)), palette[i].r, palette[i].g, palette[i].b);
+#else
 		rgb_palette[i] = SDL_MapRGB(main_window_tex_format, palette[i].r, palette[i].g, palette[i].b);
+#endif
 		yuv_palette[i] = rgb_to_yuv(palette[i].r, palette[i].g, palette[i].b);
 	}
 }
@@ -80,7 +84,11 @@ void set_colors(SDL_Color color, unsigned int first_color, unsigned int last_col
 	for (uint i = first_color; i <= last_color; ++i)
 	{
 		palette[i] = color;
+#ifdef WITH_SDL3
+        rgb_palette[i] = SDL_MapRGB(main_window_tex_format, SDL_GetSurfacePalette(SDL_GetWindowSurface(main_window)), palette[i].r, palette[i].g, palette[i].b);
+#else
 		rgb_palette[i] = SDL_MapRGB(main_window_tex_format, palette[i].r, palette[i].g, palette[i].b);
+#endif
 		yuv_palette[i] = rgb_to_yuv(palette[i].r, palette[i].g, palette[i].b);
 	}
 }
@@ -120,8 +128,13 @@ void step_fade_palette(int diff[256][3], int steps, unsigned int first_color, un
 		palette[i].r += delta[0];
 		palette[i].g += delta[1];
 		palette[i].b += delta[2];
-		
+
+#ifdef WITH_SDL3
+        rgb_palette[i] = SDL_MapRGB(main_window_tex_format, SDL_GetSurfacePalette(SDL_GetWindowSurface(main_window)), palette[i].r, palette[i].g, palette[i].b);
+#else
 		rgb_palette[i] = SDL_MapRGB(main_window_tex_format, palette[i].r, palette[i].g, palette[i].b);
+#endif
+
 		yuv_palette[i] = rgb_to_yuv(palette[i].r, palette[i].g, palette[i].b);
 	}
 }

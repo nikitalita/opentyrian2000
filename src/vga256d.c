@@ -24,7 +24,11 @@
 #include "palette.h"
 #include "video.h"
 
+#ifdef WITH_SDL3
+#include "SDL3/SDL.h"
+#else
 #include "SDL2/SDL.h"
+#endif
 
 #include <assert.h>
 #include <ctype.h>
@@ -87,7 +91,12 @@ void JE_rectangle(SDL_Surface *surface, int a, int b, int c, int d, int e) /* x1
 void fill_rectangle_xy(SDL_Surface *surface, int x, int y, int x2, int y2, Uint8 color)
 {
 	SDL_Rect rect = { x, y, x2 - x + 1, y2 - y + 1 };
+
+#ifdef WITH_SDL3
+    SDL_FillSurfaceRect(surface, &rect, color);
+#else
 	SDL_FillRect(surface, &rect, color);
+#endif
 }
 
 void JE_barShade(SDL_Surface *surface, int a, int b, int c, int d) /* x1, y1, x2, y2 */

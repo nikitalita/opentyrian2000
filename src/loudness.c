@@ -24,9 +24,21 @@
 #include "opentyr.h"
 #include "params.h"
 
+#ifdef WITH_SDL3
+#include <SDL3/SDL.h>
+#else
 #include <SDL2/SDL.h>
+#endif
+
 #ifdef WITH_MIDI
+#ifdef WITH_SDL3
+#include <SDL3_mixer/SDL_mixer.h>
+
+#define Mix_GetError SDL_GetError
+#else
 #include <SDL2/SDL_mixer_ext.h>
+#endif
+
 #include <midiproc.h>
 #endif
 #include <assert.h>
@@ -46,6 +58,11 @@ bool unwated_loop = false;
 
 MusicDevice music_device = OPL;
 char soundfont[4096] = {0};
+
+#ifdef WITH_SDL3
+SDL_Mutex *AudioDeviceLock = NULL;
+#endif
+
 const char *const music_device_names[MUSIC_DEVICE_MAX] = {
 	"OPL3",
 	"FluidSynth",
@@ -55,7 +72,10 @@ const char *const music_device_names[MUSIC_DEVICE_MAX] = {
 const uint8_t IS_MIDI_DEVICE = FLUIDSYNTH | NATIVE_MIDI;
 
 #ifdef WITH_MIDI
+#ifndef WITH_SDL3
 static Mix_CommonMixer_t music_mixer = NULL;
+#endif
+
 typedef struct _MidiData {
 	Uint8 *data;
 	Uint32 size;
@@ -69,7 +89,12 @@ typedef struct _MidiData {
 static MidiData * midi_data;
 static Mix_Music ** midi_tracks = NULL;
 #endif
+
 static SDL_AudioDeviceID audioDevice = 0;
+
+#ifdef WITH_SDL3
+static SDL_AudioStream *auStream = NULL;
+#endif
 
 static Uint8 musicVolume = 255;
 static Uint8 sampleVolume = 255;
@@ -106,7 +131,11 @@ static size_t channelSampleCount[CHANNEL_COUNT] = { 0 };
 static Uint8 channelVolume[CHANNEL_COUNT];
 #define CHANNEL_VOLUME_LEVELS 8
 
+#ifdef WITH_SDL3
+static void audioCallback(void *userdata, SDL_AudioStream *SDLstream, int add_size, int size);
+#else
 static void audioCallback(void *userdata, Uint8 *stream, int size);
+#endif
 
 static void load_song(unsigned int song_num);
 
@@ -115,20 +144,34 @@ bool init_midi(SDL_AudioSpec * got){
 	if (!Mix_Init(MIX_INIT_MID)){
 		fprintf(stderr, "error: SDL2_mixer_ext failed to init: %s\n", Mix_GetError());
 		return false;
-	} else if (Mix_InitMixer(got, SDL_FALSE) != 0) {
-		fprintf(stderr, "error: SDL2_mixer_ext failed to open audio device: %s\n", Mix_GetError());
-		return false;
+#ifndef WITH_SDL3
+    } else if (Mix_InitMixer(got, SDL_FALSE) != 0) {
+        fprintf(stderr, "error: SDL2_mixer_ext failed to open audio device: %s\n", Mix_GetError());
+        return false;
+#endif
 	} else if (strlen(soundfont) != 0 && Mix_SetSoundFonts(soundfont) == 0) {
+#ifndef WITH_SDL3
 		Mix_FreeMixer();
+#endif
 		fprintf(stderr, "error: SDL2_mixer_ext failed to set soundfont: %s\n", Mix_GetError());
 		return false;
 	} else {
+#ifdef WITH_SDL3
+        Mix_OpenAudio(audioDevice, got);
+#else
 		music_mixer = Mix_GetGeneralMixer();
+
 		if (music_mixer == NULL){
+#ifdef WITH_SDL3
+            music_mixer = NULL;
+#else
 			Mix_FreeMixer();
+#endif
+
 			fprintf(stderr, "error: SDL2_mixer_ext: failed to get music_mixer: %s\n", Mix_GetError());
 			return false;
 		}
+#endif
 	}
 	return true;
 }
@@ -156,10 +199,13 @@ void deinit_midi(void){
 			}
 		}
 	}
-	if (music_mixer){
-		Mix_FreeMixer();
-		music_mixer = NULL;
-	}
+
+#ifndef WITH_SDL3
+    Mix_FreeMixer();
+    music_mixer = NULL;
+#else
+    Mix_CloseAudio();
+#endif
 }
 
 void convert_midi_data(void){
@@ -216,7 +262,12 @@ bool _play_midi(Uint32 songnum){
 	Sint32 loops = -1; // loop forever
 	// Not setting loops to 0 for no loop because it will either loop anyway
 	// or continue playing for like 4+ seconds after the end; we stop it manually below
+#ifdef WITH_SDL3
+    Mix_RewindMusic();
+#else
 	Mix_RewindMusicStream(midi_tracks[songnum]);
+#endif
+
 	if (Mix_PlayMusic(midi_tracks[songnum], loops) != 0)
 	{
 		fprintf(stderr, "error: failed to play music: %s\n", Mix_GetError());
@@ -245,8 +296,13 @@ const char * get_midi_params(void){
 bool load_midi(unsigned int song_num){
 	// This is outside of the audio lock because it can take a while
 	if (midi_tracks[song_num] == NULL){
-		const char * params = get_midi_params();
+#ifdef WITH_SDL3
+        midi_tracks[song_num] = Mix_LoadMUS_IO(SDL_IOFromConstMem(midi_data[song_num].data, midi_data[song_num].size), true);
+#else
+        const char * params = get_midi_params();
 		midi_tracks[song_num] = Mix_LoadMUSType_RW_ARG(SDL_RWFromConstMem(midi_data[song_num].data, midi_data[song_num].size), MUS_MID, 1, params);
+#endif
+
 		if (midi_tracks[song_num] == NULL)
 		{
 			fprintf(stderr, "error: failed to load music: %s\n", Mix_GetError());
@@ -259,6 +315,10 @@ bool load_midi(unsigned int song_num){
 
 bool init_audio(void)
 {
+#ifdef WITH_SDL3
+    AudioDeviceLock = SDL_CreateMutex();
+#endif
+
 #ifndef WITH_MIDI
 	// Force OPL if compiled without MIDI support
 	music_device = OPL;
@@ -275,26 +335,51 @@ bool init_audio(void)
 	SDL_AudioSpec ask, got;
 
 	ask.freq = 11025 * OUTPUT_QUALITY;
+#ifdef WITH_SDL3
+    ask.format = SDL_AUDIO_S16;
+#else
 	ask.format = AUDIO_S16SYS;
-	ask.channels = 1;
-	ask.samples = 256 * OUTPUT_QUALITY; // ~23 ms
-	ask.callback = audioCallback;
+#endif
 
+	ask.channels = 1;
+
+#ifndef WITH_SDL3
+    ask.samples = 256 * OUTPUT_QUALITY; // ~23 ms
+	ask.callback = audioCallback;
+#endif
+
+#ifdef WITH_SDL3
+    if (SDL_InitSubSystem(SDL_INIT_AUDIO) == false)
+#else
 	if (SDL_InitSubSystem(SDL_INIT_AUDIO))
+#endif
 	{
 		fprintf(stderr, "error: failed to initialize SDL audio: %s\n", SDL_GetError());
 		audio_disabled = true;
 		return false;
 	}
 
+#ifndef WITH_SDL3
 	int allowedChanges = SDL_AUDIO_ALLOW_FREQUENCY_CHANGE;
 #if SDL_VERSION_ATLEAST(2, 0, 9)
 	allowedChanges |= SDL_AUDIO_ALLOW_SAMPLES_CHANGE;
 #endif
+#endif
+
+#ifdef WITH_SDL3
+    auStream = SDL_OpenAudioDeviceStream(SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK, &ask, audioCallback, NULL);
+    audioDevice = SDL_GetAudioStreamDevice(auStream);
+    SDL_GetAudioStreamFormat(auStream, &ask, &got);
+
+    if ((auStream == NULL) || (audioDevice == 0))
+    {
+#else
 	audioDevice = SDL_OpenAudioDevice(/*device*/ NULL, /*iscapture*/ 0, &ask, &got, allowedChanges);
 
-	if (audioDevice == 0)
-	{
+    if (audioDevice == 0)
+    {
+#endif
+
 		fprintf(stderr, "error: SDL failed to open audio device: %s\n", SDL_GetError());
 		audio_disabled = true;
 		return false;
@@ -319,7 +404,13 @@ bool init_audio(void)
 
 	opl_init();
 
-	SDL_PauseAudioDevice(audioDevice, 0); // unpause
+#ifdef WITH_SDL3
+    SDL_ResumeAudioStreamDevice(auStream);
+
+    SDL_ResumeAudioDevice(audioDevice); // unpause
+#else
+    SDL_PauseAudioDevice(audioDevice, 0); // unpause
+#endif
 
 	return true;
 }
@@ -327,9 +418,20 @@ bool init_audio(void)
 bool restart_audio(void){
 	if (audio_disabled)
 		return false;
+#ifdef WITH_SDL3
+    SDL_LockMutex(AudioDeviceLock);
+#else
 	SDL_LockAudioDevice(audioDevice);
+#endif
+
 	unsigned int prev_song = song_playing;
+
+#ifdef WITH_SDL3
+    SDL_UnlockMutex(AudioDeviceLock);
+#else
 	SDL_UnlockAudioDevice(audioDevice);
+#endif
+
 	deinit_audio();
 	if (!init_audio()){
 		return false;
@@ -340,12 +442,30 @@ bool restart_audio(void){
 	return true;
 }
 
+#ifdef WITH_SDL3
+static void audioCallback(void *userdata, SDL_AudioStream *SDLstream, int add_size, int size)
+#else
 static void audioCallback(void *userdata, Uint8 *stream, int size)
+#endif
 {
+#ifdef WITH_SDL3
+    (void)add_size;
+#endif
 	(void)userdata;
 
+#ifdef WITH_SDL3
+    Sint16 *const samples = SDL_malloc(size);
+
+    if (samples == NULL)
+    {
+        return;
+    }
+#else
 	Sint16 *const samples = (Sint16 *)stream;
+#endif
+
 	const int samplesCount = size / sizeof (Sint16);
+
 #ifdef WITH_MIDI
 	if ((music_device & IS_MIDI_DEVICE) && !music_disabled && !music_stopped){
 		if (Mix_PlayingMusic() == 0){
@@ -358,7 +478,11 @@ static void audioCallback(void *userdata, Uint8 *stream, int size)
 				// get samples from the mixer
 				double factor = 1000.0;
                 double cur_position = 0.0;
+
+#ifndef WITH_SDL3
 				music_mixer(NULL, stream, size);
+#endif
+
                 cur_position = midi_tracks[song_playing] ? Mix_GetMusicPosition(midi_tracks[song_playing])  : 0;
 				cur_position *= factor;
                 
@@ -393,7 +517,11 @@ static void audioCallback(void *userdata, Uint8 *stream, int size)
                         {
                             samples[i] = 0;
                         }
+
+#ifndef WITH_SDL3
 						music_mixer(NULL, stream, size);
+#endif
+
 						songlooped = true;
 					}
 				}
@@ -476,27 +604,36 @@ static void audioCallback(void *userdata, Uint8 *stream, int size)
 		Sint16 *remaining = samples;
 		int remainingCount = samplesCount;
 		while (remainingCount > 0)
-		{
-			Sint32 sample = *remaining * musicVolumeFactor;
+        {
+            Sint32 sample = *remaining * musicVolumeFactor;
+            
+            for (size_t i = 0; i < CHANNEL_COUNT; ++i)
+            {
+                if (channelSampleCount[i] > 0)
+                {
+                    sample += *channelSamples[i] * sampleVolumeFactors[channelVolume[i]];
+                    
+                    channelSamples[i] += 1;
+                    channelSampleCount[i] -= 1;
+                }
+            }
+            
+            sample = FIXED_TO_INT(sample);
+            *remaining = MIN(MAX(INT16_MIN, sample), INT16_MAX);
+            
+            remaining += 1;
+            remainingCount -= 1;
+        }
+    }
 
-			for (size_t i = 0; i < CHANNEL_COUNT; ++i)
-			{
-				if (channelSampleCount[i] > 0)
-				{
-					sample += *channelSamples[i] * sampleVolumeFactors[channelVolume[i]];
+#ifdef WITH_SDL3
+    SDL_PutAudioStreamData(SDLstream, samples, size);
 
-					channelSamples[i] += 1;
-					channelSampleCount[i] -= 1;
-				}
-			}
-
-			sample = FIXED_TO_INT(sample);
-			*remaining = MIN(MAX(INT16_MIN, sample), INT16_MAX);
-
-			remaining += 1;
-			remainingCount -= 1;
-		}
-	}
+    if (samples != NULL)
+    {
+        SDL_free(samples);
+    }
+#endif
 }
 
 void deinit_audio(void)
@@ -506,7 +643,12 @@ void deinit_audio(void)
 
 	if (audioDevice != 0)
 	{
-		SDL_PauseAudioDevice(audioDevice, 1); // pause
+#ifdef WITH_SDL3
+		SDL_PauseAudioDevice(audioDevice); // pause
+#else
+        SDL_PauseAudioDevice(audioDevice, 1); // pause
+#endif
+
 #ifdef WITH_MIDI
 		deinit_midi();
 #endif
@@ -523,6 +665,10 @@ void deinit_audio(void)
 	memset(channelSampleCount, 0, sizeof(channelSampleCount));
 
 	lds_free();
+
+#ifdef WITH_SDL3
+    SDL_free(AudioDeviceLock);
+#endif
 }
 
 
@@ -582,7 +728,11 @@ void play_song(unsigned int song_num)  // FKA NortSong.playSong
 			return;
 		}
 #endif
+#ifdef WITH_SDL3
+        SDL_LockMutex(AudioDeviceLock);
+#else
 		SDL_LockAudioDevice(audioDevice);
+#endif
 
 		music_stopped = true;
 
@@ -595,7 +745,12 @@ void play_song(unsigned int song_num)  // FKA NortSong.playSong
 		fading_out = false;
 		time_playing = 0;
 		song_playing = song_num;
+
+#ifdef WITH_SDL3
+        SDL_UnlockMutex(AudioDeviceLock);
+#else
 		SDL_UnlockAudioDevice(audioDevice);
+#endif
 
 		if (music_device == OPL)
 		{
@@ -604,11 +759,19 @@ void play_song(unsigned int song_num)  // FKA NortSong.playSong
 
 	}
 
+#ifdef WITH_SDL3
+    SDL_LockMutex(AudioDeviceLock);
+#else
 	SDL_LockAudioDevice(audioDevice);
+#endif
 
 	music_stopped = false;
 
+#ifdef WITH_SDL3
+    SDL_UnlockMutex(AudioDeviceLock);
+#else
 	SDL_UnlockAudioDevice(audioDevice);
+#endif
 }
 
 void restart_song(void)  // FKA Player.selectSong(1)
@@ -616,7 +779,11 @@ void restart_song(void)  // FKA Player.selectSong(1)
 	if (audio_disabled)
 		return;
 
+#ifdef WITH_SDL3
+    SDL_LockMutex(AudioDeviceLock);
+#else
 	SDL_LockAudioDevice(audioDevice);
+#endif
 
 	#ifdef WITH_MIDI
 	if (music_device & IS_MIDI_DEVICE){
@@ -634,7 +801,11 @@ void restart_song(void)  // FKA Player.selectSong(1)
 	time_playing = 0;
 	music_stopped = false;
 
+#ifdef WITH_SDL3
+    SDL_UnlockMutex(AudioDeviceLock);
+#else
 	SDL_UnlockAudioDevice(audioDevice);
+#endif
 }
 
 void stop_song(void)  // FKA Player.selectSong(0)
@@ -642,7 +813,12 @@ void stop_song(void)  // FKA Player.selectSong(0)
 	if (audio_disabled)
 		return;
 
+#ifdef WITH_SDL3
+    SDL_LockMutex(AudioDeviceLock);
+#else
 	SDL_LockAudioDevice(audioDevice);
+#endif
+    
 #ifdef WITH_MIDI
 	if (music_device & IS_MIDI_DEVICE){
 		_stop_midi();
@@ -653,7 +829,11 @@ void stop_song(void)  // FKA Player.selectSong(0)
 
 	music_stopped = true;
 
+#ifdef WITH_SDL3
+    SDL_UnlockMutex(AudioDeviceLock);
+#else
 	SDL_UnlockAudioDevice(audioDevice);
+#endif
 }
 
 void fade_song(void)  // FKA Player.selectSong($C001)
@@ -661,7 +841,11 @@ void fade_song(void)  // FKA Player.selectSong($C001)
 	if (audio_disabled)
 		return;
 
+#ifdef WITH_SDL3
+    SDL_LockMutex(AudioDeviceLock);
+#else
 	SDL_LockAudioDevice(audioDevice);
+#endif
 
 	fading_out = true;
 #ifdef WITH_MIDI
@@ -677,7 +861,11 @@ void fade_song(void)  // FKA Player.selectSong($C001)
 		lds_fade(1);
 	}
 
+#ifdef WITH_SDL3
+    SDL_UnlockMutex(AudioDeviceLock);
+#else
 	SDL_UnlockAudioDevice(audioDevice);
+#endif
 }
 
 void set_volume(Uint8 musicVolume_, Uint8 sampleVolume_)  // FKA NortSong.setVol and Player.setVol
@@ -685,12 +873,20 @@ void set_volume(Uint8 musicVolume_, Uint8 sampleVolume_)  // FKA NortSong.setVol
 	if (audio_disabled)
 		return;
 
-	SDL_LockAudioDevice(audioDevice);
+#ifdef WITH_SDL3
+    SDL_LockMutex(AudioDeviceLock);
+#else
+    SDL_LockAudioDevice(audioDevice);
+#endif
 
 	musicVolume = musicVolume_;
 	sampleVolume = sampleVolume_;
 
+#ifdef WITH_SDL3
+    SDL_UnlockMutex(AudioDeviceLock);
+#else
 	SDL_UnlockAudioDevice(audioDevice);
+#endif
 }
 
 void multiSamplePlay(const Sint16 *samples, size_t sampleCount, Uint8 chan, Uint8 vol)  // FKA Player.multiSamplePlay
@@ -701,11 +897,19 @@ void multiSamplePlay(const Sint16 *samples, size_t sampleCount, Uint8 chan, Uint
 	if (audio_disabled || samples_disabled)
 		return;
 
+#ifdef WITH_SDL3
+    SDL_LockMutex(AudioDeviceLock);
+#else
 	SDL_LockAudioDevice(audioDevice);
+#endif
 
 	channelSamples[chan] = samples;
 	channelSampleCount[chan] = sampleCount;
 	channelVolume[chan] = vol;
 
+#ifdef WITH_SDL3
+    SDL_UnlockMutex(AudioDeviceLock);
+#else
 	SDL_UnlockAudioDevice(audioDevice);
+#endif
 }

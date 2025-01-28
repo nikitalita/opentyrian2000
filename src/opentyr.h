@@ -31,9 +31,17 @@
 #ifndef NO_NATIVE_MIDI
 #define NO_NATIVE_MIDI 1
 #endif
+
+#ifndef WITH_SDL3
+#define WITH_SDL3 1
+#endif
 #endif
 
+#ifdef WITH_SDL3
+#include "SDL3/SDL.h"
+#else
 #include "SDL2/SDL_types.h"
+#endif
 
 #include <math.h>
 #include <stdbool.h>

@@ -54,10 +54,18 @@
 #include "video_scale.h"
 #include "xmas.h"
 
+#ifdef WITH_SDL3
+#include <SDL3/SDL.h>
+#else
 #include <SDL2/SDL.h>
+#endif
 
 #ifdef WITH_NETWORK
+#ifdef WITH_SDL3
+#include <SDL3_net/SDL_net.h>
+#else
 #include <SDL2/SDL_net.h>
+#endif
 #endif
 
 #if defined(_WIN32) || defined(WIN32)
@@ -75,7 +83,14 @@ const char *opentyrian_version = OPENTYRIAN_VERSION;
 
 static size_t getDisplayPickerItemsCount(void)
 {
+#ifdef WITH_SDL3
+    int count = 0;
+    SDL_GetDisplays(&count);
+
+    return 1 + count;
+#else
 	return 1 + (size_t)SDL_GetNumVideoDisplays();
+#endif
 }
 
 static const char *getDisplayPickerItem(size_t i, char *buffer, size_t bufferSize)
@@ -807,9 +822,11 @@ void setupMenu(void)
 
 int main(int argc, char *argv[])
 {
+#ifndef WITH_SDL3
     SDL_version sdlver;
 #ifdef WITH_NETWORK
     const SDLNet_version *sdlnetver = NULL;
+#endif
 #endif
 
 	mt_srand(time(NULL));
@@ -846,6 +863,7 @@ int main(int argc, char *argv[])
     printf("Minimum OS version: %s\n", getMinimumOS());
 #endif
 
+#ifndef WITH_SDL3
     SDL_GetVersion(&sdlver);
 
 #ifdef WITH_NETWORK
@@ -857,6 +875,13 @@ int main(int argc, char *argv[])
 #ifdef WITH_NETWORK
     printf("SDL_net version %d.%d.%d\n\n", sdlnetver->major, sdlnetver->minor, sdlnetver->patch);
 #endif /* WITH_NETWORK */
+#else
+    printf("SDL version %d.%d.%d\n", SDL_MAJOR_VERSION, SDL_MINOR_VERSION, SDL_MICRO_VERSION);
+
+#ifdef WITH_NETWORK
+    printf("SDL_net version %d.%d.%d\n\n", SDL_NET_MAJOR_VERSION, SDL_NET_MINOR_VERSION, SDL_NET_MICRO_VERSION);
+#endif /* WITH_NETWORK */
+#endif
 
     printf("\n");
 
@@ -872,7 +897,11 @@ int main(int argc, char *argv[])
 	printf("This is free software, and you are welcome to redistribute it\n");
 	printf("under certain conditions.  See the file COPYING for details.\n\n");
 
+#ifdef WITH_SDL3
+    if (SDL_Init(0) == false)
+#else
 	if (SDL_Init(0))
+#endif
 	{
 		printf("Failed to initialize SDL: %s\n", SDL_GetError());
 		return -1;

@@ -500,8 +500,13 @@ void JE_tyrianHalt(JE_byte code)
 		       "\n");
 	}
 
+#ifndef WITH_SDL3
 	SDL_Quit();
-	exit(code);
+
+    exit(code);
+#else
+    exit(0);
+#endif
 }
 
 void JE_specialComplete(JE_byte playerNum, JE_byte specialType)

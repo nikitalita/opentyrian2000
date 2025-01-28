@@ -15,6 +15,7 @@ endif
 
 WITH_NETWORK := true
 WITH_MIDI := true
+WITH_SDL3 := true
 
 ################################################################################
 # see https://www.gnu.org/prep/standards/html_node/Makefile-Conventions.html
@@ -72,6 +73,10 @@ DEPS := $(SRCS:src/%.c=obj/%.d)
 
 ###
 
+ifeq ($(WITH_SDL3), true)
+    EXTRA_CPPFLAGS += -DWITH_SDL3
+endif
+
 ifeq ($(WITH_NETWORK), true)
     EXTRA_CPPFLAGS += -DWITH_NETWORK
 endif
@@ -101,24 +106,45 @@ LDLIBS ?= -framework Foundation -lobjc
 libmidiconv_PC_PATH :=
 
 ifeq ($(WITH_NETWORK), true)
-    SDL_CPPFLAGS := -F/Library/Frameworks -I/Library/Frameworks/SDL2.framework/Versions/A/Headers -I/Library/Frameworks/SDL2_net.framework/Versions/A/Headers
+ifeq ($(WITH_SDL3), true)
+    SDL_CPPFLAGS := -I/usr/local/include -I/usr/local/include/SDL3
     SDL_LDFLAGS :=
-    SDL_LDLIBS := -F/Library/Frameworks -framework SDL2 -framework SDL2_net
+    SDL_LDLIBS := -L/usr/local/lib -lSDL3 -lSDL3_net
 else
-    SDL_CPPFLAGS := -F/Library/Frameworks -I/Library/Frameworks/SDL2.framework/Versions/A/Headers
+    SDL_CPPFLAGS := -I/usr/local/include -I/usr/local/include/SDL2
     SDL_LDFLAGS :=
-    SDL_LDLIBS := -F/Library/Frameworks -framework SDL2
+    SDL_LDLIBS := -L/usr/local/lib -lSDL2 -lSDL2_net
+endif
+else
+ifeq ($(WITH_SDL3), true)
+    SDL_CPPFLAGS := -I/usr/local/include -I/usr/local/include/SDL3
+    SDL_LDFLAGS :=
+    SDL_LDLIBS := -L/usr/local/lib -lSDL3
+else
+    SDL_CPPFLAGS := -I/usr/local/include -I/usr/local/include/SDL3
+    SDL_LDFLAGS :=
+    SDL_LDLIBS := -L/usr/local/lib -lSDL2
+endif
 endif
 
 ifeq ($(WITH_MIDI), true)
+ifeq ($(WITH_SDL3), true)
+    SDL_PACKAGES := SDL3_mixer
+else
     SDL_PACKAGES := SDL2_mixer_ext
+endif
+
     MIDIPROC_LIBS := -L/usr/local/lib -lmidiproc -F/Library/Frameworks -framework FluidSynth
 endif
 
 ifeq ($(WITH_MIDI), true)
     SDL_CPPFLAGS += $(shell pkg-config $(MIDIPROC_LIBS) --cflags)
     SDL_LDFLAGS :=
+ifeq ($(WITH_SDL3), true)
+    SDL_LDLIBS += -L/usr/local/lib -lmidiproc -F/Library/Frameworks -framework FluidSynth -framework AudioToolbox -lSDL3_mixer
+else
     SDL_LDLIBS += -L/usr/local/lib -lmidiproc -F/Library/Frameworks -framework FluidSynth -framework AudioToolbox -lSDL2_mixer_ext
+endif
 endif
 
 # add stdc++ to the ldlibs if using midiproc
@@ -145,6 +171,26 @@ ALL_LDLIBS = -lm \
 .PHONY : all
 all : getver $(TARGET) $(TARGET).app
 
+ifeq ($(WITH_SDL3), true)
+$(TARGET).app: getver $(TARGET)
+	mkdir -p $@/Contents/MacOS
+	mkdir -p $@/Contents/Resources
+	iconutil --convert icns -o $@/Contents/Resources/opentyrian2000.icns opentyrian2000.iconset
+	$(INSTALL) PkgInfo Info.plist $@/Contents/
+	$(INSTALL) $(TARGET) $@/Contents/MacOS/$(TARGET)
+	mkdir -p $@/Contents/Frameworks
+	cp -RLf /usr/local/lib/libMoltenVK.dylib $@/Contents/Frameworks
+	cp -RLf /usr/local/lib/libSDL3.dylib $@/Contents/Frameworks
+	cp -RLf /usr/local/lib/libSDL3_net.dylib $@/Contents/Frameworks
+	cp -RLf /usr/local/lib/libSDL3_mixer.dylib $@/Contents/Frameworks
+	cp -Rf /Library/Frameworks/FluidSynth.framework $@/Contents/Frameworks
+	$(INSTALL_NAME_TOOL) -change FluidSynth.framework/Versions/3/FluidSynth @rpath/FluidSynth.framework/Versions/3/FluidSynth $@/Contents/MacOS/opentyrian2000
+	$(INSTALL_NAME_TOOL) -change @rpath/libSDL3.0.dylib @rpath/libSDL3.dylib $@/Contents/MacOS/opentyrian2000
+	$(INSTALL_NAME_TOOL) -change @rpath/libSDL3_net.0.dylib @rpath/libSDL3_net.dylib $@/Contents/MacOS/opentyrian2000
+	$(INSTALL_NAME_TOOL) -change @rpath/libSDL3_mixer.0.dylib @rpath/libSDL3_mixer.dylib $@/Contents/MacOS/opentyrian2000
+	$(INSTALL) data/* $@/Contents/Resources/
+	$(CODESIGN) $@/Contents/Frameworks/*.framework $@/Contents/Frameworks/*.dylib $@
+else
 $(TARGET).app: getver $(TARGET)
 	mkdir -p $@/Contents/MacOS
 	mkdir -p $@/Contents/Resources
@@ -153,12 +199,14 @@ $(TARGET).app: getver $(TARGET)
 	$(INSTALL) $(TARGET) $@/Contents/MacOS/$(TARGET)
 	mkdir -p $@/Contents/Frameworks
 	cp -Rf /usr/local/lib/libMoltenVK.dylib $@/Contents/Frameworks
-	cp -Rf /Library/Frameworks/SDL2.framework $@/Contents/Frameworks
-	cp -Rf /Library/Frameworks/SDL2_net.framework $@/Contents/Frameworks
+	cp -RLf /usr/local/lib/libSDL2-2.0.0.dylib $@/Contents/Frameworks
+	cp -RLf /usr/local/lib/libSDL3.dylib $@/Contents/Frameworks
+	cp -RLf /usr/local/lib/libSDL2_net-2.0.1.dylib $@/Contents/Frameworks
 	cp -Rf /Library/Frameworks/FluidSynth.framework $@/Contents/Frameworks
 	$(INSTALL_NAME_TOOL) -change FluidSynth.framework/Versions/3/FluidSynth @rpath/FluidSynth.framework/Versions/3/FluidSynth $@/Contents/MacOS/opentyrian2000
 	$(INSTALL) data/* $@/Contents/Resources/
 	$(CODESIGN) $@/Contents/Frameworks/*.framework $@/Contents/Frameworks/*.dylib $@
+endif
 
 .PHONY : installdirs
 installdirs :

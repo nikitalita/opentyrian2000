@@ -21,10 +21,39 @@
 
 #include "opentyr.h"
 
-#include "SDL2/SDL.h"
+#ifdef WITH_SDL3
+#   include "SDL3/SDL.h"
+#else
+#   include "SDL2/SDL.h"
+#endif
 
 #ifdef WITH_NETWORK
-#	include "SDL2/SDL_net.h"
+#   ifdef WITH_SDL3
+#      include "SDL3_net/SDL_net.h"
+
+SDL_FORCE_INLINE void SDLNet_Write16(Uint16 value, void *areap)
+{
+    *(Uint16 *)areap = SDL_Swap16BE(value);
+}
+
+SDL_FORCE_INLINE void SDLNet_Write32(Uint32 value, void *areap)
+{
+    *(Uint32 *)areap = SDL_Swap32BE(value);
+}
+
+SDL_FORCE_INLINE Uint16 SDLNet_Read16(const void *areap)
+{
+    return SDL_Swap16BE(*(const Uint16 *)areap);
+}
+
+SDL_FORCE_INLINE Uint32 SDLNet_Read32(const void *areap)
+{
+    return SDL_Swap32BE(*(const Uint32 *)areap);
+}
+
+#   else
+#	   include "SDL2/SDL_net.h"
+#   endif
 #endif
 
 #define PACKET_ACKNOWLEDGE   0x00    // 
@@ -53,9 +82,15 @@ extern Uint16 network_player_port, network_opponent_port;
 extern char *network_player_name, *network_opponent_name;
 
 #ifdef WITH_NETWORK
+#ifdef WITH_SDL3
+extern SDLNet_Datagram *packet_out_temp;
+extern SDLNet_Datagram *packet_in[], *packet_out[],
+*packet_state_in[], *packet_state_out[];
+#else
 extern UDPpacket *packet_out_temp;
 extern UDPpacket *packet_in[], *packet_out[],
                  *packet_state_in[], *packet_state_out[];
+#endif
 #endif
 
 extern uint thisPlayerNum;

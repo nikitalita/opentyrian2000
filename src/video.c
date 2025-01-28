@@ -46,7 +46,13 @@ SDL_Surface *game_screen;
 
 SDL_Window *main_window = NULL;
 static SDL_Renderer *main_window_renderer = NULL;
+
+#ifdef WITH_SDL3
+const SDL_PixelFormatDetails *main_window_tex_format = NULL;
+#else
 SDL_PixelFormat *main_window_tex_format = NULL;
+#endif
+
 static SDL_Texture *main_window_texture = NULL;
 
 static ScalerFunction scaler_function;
@@ -66,17 +72,27 @@ void init_video(void)
 	if (SDL_WasInit(SDL_INIT_VIDEO))
 		return;
 
+#ifdef WITH_SDL3
+    if (SDL_InitSubSystem(SDL_INIT_VIDEO) == false)
+#else
 	if (SDL_InitSubSystem(SDL_INIT_VIDEO) == -1)
+#endif
 	{
 		fprintf(stderr, "error: failed to initialize SDL video: %s\n", SDL_GetError());
 		exit(1);
-	}
+    }
 
 	// Create the software surfaces that the game renders to. These are all 320x200x8 regardless
 	// of the window size or monitor resolution.
+#ifdef WITH_SDL3
+    VGAScreen = VGAScreenSeg = SDL_CreateSurface(vga_width, vga_height, SDL_GetPixelFormatForMasks(8, 0, 0, 0, 0));
+    VGAScreen2 = SDL_CreateSurface(vga_width, vga_height, SDL_GetPixelFormatForMasks(8, 0, 0, 0, 0));
+    game_screen = SDL_CreateSurface(vga_width, vga_height, SDL_GetPixelFormatForMasks(8, 0, 0, 0, 0));
+#else
 	VGAScreen = VGAScreenSeg = SDL_CreateRGBSurface(0, vga_width, vga_height, 8, 0, 0, 0, 0);
 	VGAScreen2 = SDL_CreateRGBSurface(0, vga_width, vga_height, 8, 0, 0, 0, 0);
 	game_screen = SDL_CreateRGBSurface(0, vga_width, vga_height, 8, 0, 0, 0, 0);
+#endif
 
 	// The game code writes to surface->pixels directly without locking, so make sure that we
 	// indeed created software surfaces that support this.
@@ -88,9 +104,13 @@ void init_video(void)
 
 	// Create the window with a temporary initial size, hidden until we set up the
 	// scaler and find the true window size
+#ifdef WITH_SDL3
+    main_window = SDL_CreateWindow(opentyrian_str, vga_width, vga_height, SDL_WINDOW_RESIZABLE | SDL_WINDOW_HIDDEN);
+#else
 	main_window = SDL_CreateWindow(opentyrian_str,
 		SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
 		vga_width, vga_height, SDL_WINDOW_RESIZABLE | SDL_WINDOW_HIDDEN);
+#endif
 
 	if (main_window == NULL)
 	{
@@ -117,16 +137,26 @@ void deinit_video(void)
 
 	SDL_DestroyWindow(main_window);
 
+#ifdef WITH_SDL3
+    SDL_DestroySurface(VGAScreenSeg);
+    SDL_DestroySurface(VGAScreen2);
+    SDL_DestroySurface(game_screen);
+#else
 	SDL_FreeSurface(VGAScreenSeg);
 	SDL_FreeSurface(VGAScreen2);
 	SDL_FreeSurface(game_screen);
+#endif
 
 	SDL_QuitSubSystem(SDL_INIT_VIDEO);
 }
 
 static void init_renderer(void)
 {
+#ifdef WITH_SDL3
+    main_window_renderer = SDL_CreateRenderer(main_window, NULL);
+#else
 	main_window_renderer = SDL_CreateRenderer(main_window, -1, 0);
+#endif
 
 	if (main_window_renderer == NULL)
 	{
@@ -149,11 +179,21 @@ static void init_texture(void)
 	assert(main_window_renderer != NULL);
 
 	int bpp = 32; // TODOSDL2
+
+#ifdef WITH_SDL3
+    Uint32 format = bpp == 32 ? SDL_PIXELFORMAT_XRGB8888 : SDL_PIXELFORMAT_RGB565;
+#else
 	Uint32 format = bpp == 32 ? SDL_PIXELFORMAT_RGB888 : SDL_PIXELFORMAT_RGB565;
+#endif
+
 	int scaler_w = scalers[scaler].width;
 	int scaler_h = scalers[scaler].height;
 
+#ifdef WITH_SDL3
+    main_window_tex_format = SDL_GetPixelFormatDetails(format);
+#else
 	main_window_tex_format = SDL_AllocFormat(format);
+#endif
 
 	main_window_texture = SDL_CreateTexture(main_window_renderer, format, SDL_TEXTUREACCESS_STREAMING, scaler_w, scaler_h);
 
@@ -173,15 +213,22 @@ static void deinit_texture(void)
 	}
 
 	if (main_window_tex_format != NULL)
-	{
+    {
+#ifndef WITH_SDL3
 		SDL_FreeFormat(main_window_tex_format);
+#endif
+
 		main_window_tex_format = NULL;
 	}
 }
 
 static int window_get_display_index(void)
 {
+#ifdef WITH_SDL3
+    return SDL_GetDisplayForWindow(main_window);
+#else
 	return SDL_GetWindowDisplayIndex(main_window);
+#endif
 }
 
 static void window_center_in_display(int display_index)
@@ -199,12 +246,20 @@ void reinit_fullscreen(int new_display)
 {
 	fullscreen_display = new_display;
 
+#ifdef WITH_SDL3
+    int num_displays = 0;
+
+    SDL_GetDisplays(&num_displays);
+
+    if (fullscreen_display >= num_displays)
+#else
 	if (fullscreen_display >= SDL_GetNumVideoDisplays())
+#endif
 	{
 		fullscreen_display = 0;
 	}
 
-	SDL_SetWindowFullscreen(main_window, SDL_FALSE);
+	SDL_SetWindowFullscreen(main_window, false);
 	SDL_SetWindowSize(main_window, scalers[scaler].width, scalers[scaler].height);
 
 	if (fullscreen_display == -1)
@@ -215,7 +270,11 @@ void reinit_fullscreen(int new_display)
 	{
 		window_center_in_display(fullscreen_display);
 
+#ifdef WITH_SDL3
+        if (SDL_SetWindowFullscreen(main_window, true) == false)
+#else
 		if (SDL_SetWindowFullscreen(main_window, SDL_WINDOW_FULLSCREEN_DESKTOP) != 0)
+#endif
 		{
 			reinit_fullscreen(-1);
 			return;
@@ -249,14 +308,22 @@ void toggle_fullscreen(void)
 	if (fullscreen_display != -1)
 		reinit_fullscreen(-1);
 	else
+#ifdef WITH_SDL3
+        reinit_fullscreen(SDL_GetDisplayForWindow(main_window));
+#else
 		reinit_fullscreen(SDL_GetWindowDisplayIndex(main_window));
+#endif
 }
 
 bool init_scaler(unsigned int new_scaler)
 {
 	int w = scalers[new_scaler].width,
 	    h = scalers[new_scaler].height;
+#ifdef WITH_SDL3
+    int bpp = main_window_tex_format->bits_per_pixel; // TODOSDL2
+#else
 	int bpp = main_window_tex_format->BitsPerPixel; // TODOSDL2
+#endif
 
 	scaler = new_scaler;
 
@@ -308,7 +375,11 @@ bool set_scaling_mode_by_name(const char *name)
 
 void JE_clr256(SDL_Surface *screen)
 {
+#ifdef WITH_SDL3
+    SDL_FillSurfaceRect(screen, NULL, 0);
+#else
 	SDL_FillRect(screen, NULL, 0);
+#endif
 }
 
 void JE_showVGA(void) 
@@ -322,6 +393,10 @@ static void calc_dst_render_rect(SDL_Surface *const src_surface, SDL_Rect *const
 	// in the window.
 
 	int win_w, win_h;
+#ifdef WITH_SDL3
+    float dstwidth;
+    float dstheight;
+#endif
 	SDL_GetWindowSize(main_window, &win_w, &win_h);
 
 	int maxh_width, maxw_height;
@@ -329,7 +404,14 @@ static void calc_dst_render_rect(SDL_Surface *const src_surface, SDL_Rect *const
 	switch (scaling_mode)
 	{
 	case SCALE_CENTER:
-		SDL_QueryTexture(main_window_texture, NULL, NULL, &dst_rect->w, &dst_rect->h);
+#ifdef WITH_SDL3
+        SDL_GetTextureSize(main_window_texture, &dstwidth, &dstheight);
+        dst_rect->w = (int)dstwidth;
+        dst_rect->h = (int)dstheight;
+#else
+        SDL_QueryTexture(main_window_texture, NULL, NULL, &dst_rect->w, &dst_rect->h);
+#endif
+
 		break;
 	case SCALE_INTEGER:
 		dst_rect->w = src_surface->w;
@@ -381,20 +463,41 @@ static void calc_dst_render_rect(SDL_Surface *const src_surface, SDL_Rect *const
 
 static void scale_and_flip(SDL_Surface *src_surface)
 {
-	assert(src_surface->format->BitsPerPixel == 8);
-
 	// Do software scaling
-	assert(scaler_function != NULL);
-	scaler_function(src_surface, main_window_texture);
+    scaler_function(src_surface, main_window_texture);
 
-	SDL_Rect dst_rect;
+#ifdef WITH_SDL3
+	SDL_FRect dst_frect;
+#endif
+
+    SDL_Rect dst_rect;
 	calc_dst_render_rect(src_surface, &dst_rect);
+
+#ifdef WITH_SDL3
+    dst_frect.x = (float)dst_rect.x;
+    dst_frect.y = (float)dst_rect.y;
+    dst_frect.w = (float)dst_rect.w;
+    dst_frect.h = (float)dst_rect.h;
+#endif
 
 	// Clear the window and blit the output texture to it
 	SDL_SetRenderDrawColor(main_window_renderer, 0, 0, 0, 255);
-	SDL_RenderClear(main_window_renderer);
+    SDL_RenderClear(main_window_renderer);
+
+#ifdef WITH_SDL3
+    SDL_RenderTexture(main_window_renderer, main_window_texture, NULL, &dst_frect);
+#else
 	SDL_RenderCopy(main_window_renderer, main_window_texture, NULL, &dst_rect);
+#endif
+
 	SDL_RenderPresent(main_window_renderer);
+
+#ifdef WITH_SDL3
+    dst_rect.x = (int)dst_frect.x;
+    dst_rect.y = (int)dst_frect.y;
+    dst_rect.w = (int)dst_frect.w;
+    dst_rect.h = (int)dst_frect.h;
+#endif
 
 	// Save output rect to be used by mouse functions
 	last_output_rect = dst_rect;

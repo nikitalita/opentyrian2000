@@ -26,7 +26,11 @@
 #include "video.h"
 #include "video_scale.h"
 
+#ifdef WITH_SDL3
+#include "SDL3/SDL.h"
+#else
 #include "SDL2/SDL.h"
+#endif
 
 #include <stdio.h>
 
@@ -40,9 +44,17 @@ Sint32 lastmouse_x, lastmouse_y;
 JE_boolean mouse_pressed[4] = {false, false, false, false};
 Sint32 mouse_x, mouse_y;
 
-bool windowHasFocus;
+#ifdef WITH_SDL3
+bool windowHasFocus = true;
+#else
+bool windowHasFocus = false;
+#endif
 
-Uint8 keysactive[SDL_NUM_SCANCODES];
+#ifdef WITH_SDL3
+Uint8 keysactive[SDL_SCANCODE_COUNT] = { 0 };
+#else
+Uint8 keysactive[SDL_NUM_SCANCODES] = { 0 };
+#endif
 
 bool new_text;
 char last_text[SDL_TEXTINPUTEVENT_TEXT_SIZE];
@@ -99,7 +111,11 @@ void init_keyboard(void)
 	newkey = newmouse = false;
 	keydown = mousedown = false;
 
+#ifdef WITH_SDL3
+    SDL_HideCursor();
+#else
 	SDL_ShowCursor(SDL_FALSE);
+#endif
 
 #if SDL_VERSION_ATLEAST(2, 26, 0)
 	SDL_SetHint(SDL_HINT_MOUSE_RELATIVE_SYSTEM_SCALE, "1");
@@ -108,7 +124,11 @@ void init_keyboard(void)
 
 void mouseSetRelative(bool enable)
 {
+#ifdef WITH_SDL3
+    SDL_SetWindowRelativeMouseMode(main_window, enable && windowHasFocus);
+#else
 	SDL_SetRelativeMouseMode(enable && windowHasFocus);
+#endif
 
 	mouseRelativeEnabled = enable;
 
@@ -139,6 +159,14 @@ void mouseGetRelativePosition(Sint32 *const out_x, Sint32 *const out_y)
 void service_SDL_events(JE_boolean clear_new)
 {
 	SDL_Event ev;
+#ifdef WITH_SDL3
+    Sint32 bx = 0;
+    Sint32 by = 0;
+    Sint32 mx = 0;
+    Sint32 my = 0;
+    Sint32 mxrel = 0;
+    Sint32 myrel = 0;
+#endif
 
 	if (clear_new)
 	{
@@ -151,81 +179,174 @@ void service_SDL_events(JE_boolean clear_new)
 	{
 		switch (ev.type)
 		{
+#ifndef WITH_SDL3
 			case SDL_WINDOWEVENT:
 				switch (ev.window.event)
+#else
+                switch (ev.type)
+#endif
 				{
+#ifdef WITH_SDL3
+                case SDL_EVENT_WINDOW_FOCUS_LOST:
+#else
 				case SDL_WINDOWEVENT_FOCUS_LOST:
+#endif
 					windowHasFocus = false;
 
 					mouseSetRelative(mouseRelativeEnabled);
 					break;
 
+#ifdef WITH_SDL3
+                case SDL_EVENT_WINDOW_FOCUS_GAINED:
+#else
 				case SDL_WINDOWEVENT_FOCUS_GAINED:
+#endif
 					windowHasFocus = true;
 
 					mouseSetRelative(mouseRelativeEnabled);
 					break;
 
+#ifdef WITH_SDL3
+                case SDL_EVENT_WINDOW_RESIZED:
+#else
 				case SDL_WINDOWEVENT_RESIZED:
+#endif
 					video_on_win_resize();
 					break;
 				}
 				break;
 
+#ifdef WITH_SDL3
+            case SDL_EVENT_KEY_DOWN:
+                if (ev.key.mod & SDL_KMOD_ALT && ev.key.scancode == SDL_SCANCODE_RETURN)
+#else
 			case SDL_KEYDOWN:
+                if (ev.key.keysym.mod & KMOD_ALT && ev.key.keysym.scancode == SDL_SCANCODE_RETURN)
+#endif
 				/* <alt><enter> toggle fullscreen */
-				if (ev.key.keysym.mod & KMOD_ALT && ev.key.keysym.scancode == SDL_SCANCODE_RETURN)
 				{
 					toggle_fullscreen();
 					break;
 				}
 
+#ifdef WITH_SDL3
+                keysactive[ev.key.scancode] = 1;
+#else
 				keysactive[ev.key.keysym.scancode] = 1;
+#endif
 
 				newkey = true;
+#ifdef WITH_SDL3
+                lastkey_scan = ev.key.scancode;
+                lastkey_mod = ev.key.mod;
+#else
 				lastkey_scan = ev.key.keysym.scancode;
 				lastkey_mod = ev.key.keysym.mod;
+#endif
 				keydown = true;
 
 				mouseInactive = true;
 				return;
 
+#ifdef WITH_SDL3
+            case SDL_EVENT_KEY_UP:
+                keysactive[ev.key.scancode] = 0;
+#else
 			case SDL_KEYUP:
-				keysactive[ev.key.keysym.scancode] = 0;
+                keysactive[ev.key.keysym.scancode] = 0;
+#endif
 				keydown = false;
 				return;
 
+#ifdef WITH_SDL3
+            case SDL_EVENT_MOUSE_MOTION:
+                mx = (Sint32)ev.motion.x;
+                my = (Sint32)ev.motion.y;
+                mouse_x = mx;
+                mouse_y = my;
+#else
 			case SDL_MOUSEMOTION:
-				mouse_x = ev.motion.x;
-				mouse_y = ev.motion.y;
+                mouse_x = ev.motion.x;
+                mouse_y = ev.motion.y;
+                mxrel = 0;
+                myrel = 0;
+#endif
+
 				mapWindowPointToScreen(&mouse_x, &mouse_y);
 
 				if (mouseRelativeEnabled && windowHasFocus)
 				{
-					mouseWindowXRelative += ev.motion.xrel;
-					mouseWindowYRelative += ev.motion.yrel;
+#ifdef WITH_SDL3
+                    mxrel = (Sint32)ev.motion.xrel;
+                    myrel = (Sint32)ev.motion.yrel;
+					mouseWindowXRelative += mxrel;
+					mouseWindowYRelative += myrel;
+#else
+                    mouseWindowXRelative += ev.motion.xrel;
+                    mouseWindowYRelative += ev.motion.yrel;
+#endif
 				}
 
 				// Show system mouse pointer if outside screen.
+#ifdef WITH_SDL3
+                if (mouse_x < 0 || mouse_x >= vga_width ||
+                    mouse_y < 0 || mouse_y >= vga_height ? true : false)
+                {
+                    SDL_ShowCursor();
+                } else {
+                    SDL_HideCursor();
+                }
+#else
 				SDL_ShowCursor(mouse_x < 0 || mouse_x >= vga_width ||
 				               mouse_y < 0 || mouse_y >= vga_height ? SDL_TRUE : SDL_FALSE);
+#endif
 
+#ifdef WITH_SDL3
+                if (mxrel != 0 || myrel != 0)
+#else
 				if (ev.motion.xrel != 0 || ev.motion.yrel != 0)
+#endif
 					mouseInactive = false;
 				break;
 
+#ifdef WITH_SDL3
+            case SDL_EVENT_MOUSE_BUTTON_DOWN:
+#else
 			case SDL_MOUSEBUTTONDOWN:
+#endif
 				mouseInactive = false;
 
 				// fall through
+#ifdef WITH_SDL3
+            case SDL_EVENT_MOUSE_BUTTON_UP:
+                bx = (Sint32)ev.button.x;
+                by = (Sint32)ev.button.y;
+
+                mapWindowPointToScreen((Sint32 *)&bx, (Sint32 *)&by);
+
+#else
 			case SDL_MOUSEBUTTONUP:
-				mapWindowPointToScreen(&ev.button.x, &ev.button.y);
+                bx = (Sint32)ev.button.x;
+                by = (Sint32)ev.button.y;
+
+                mapWindowPointToScreen((Sint32 *)&bx, (Sint32 *)&by);
+#endif
+
+#ifdef WITH_SDL3
+                if (ev.type == SDL_EVENT_MOUSE_BUTTON_DOWN)
+#else
 				if (ev.type == SDL_MOUSEBUTTONDOWN)
+#endif
 				{
 					newmouse = true;
 					lastmouse_but = ev.button.button;
+#ifdef WITH_SDL3
+                    lastmouse_x = bx;
+                    lastmouse_y = by;
+#else
 					lastmouse_x = ev.button.x;
 					lastmouse_y = ev.button.y;
+#endif
 					mousedown = true;
 				}
 				else
@@ -240,6 +361,7 @@ void service_SDL_events(JE_boolean clear_new)
 					case SDL_BUTTON_RIGHT:  whichMB = 1; break;
 					case SDL_BUTTON_MIDDLE: whichMB = 2; break;
 				}
+
 				if (whichMB < 0)
 					break;
 
@@ -264,15 +386,27 @@ void service_SDL_events(JE_boolean clear_new)
 				}
 				break;
 
+#ifdef WITH_SDL3
+            case SDL_EVENT_TEXT_INPUT:
+#else
 			case SDL_TEXTINPUT:
+#endif
 				SDL_strlcpy(last_text, ev.text.text, COUNTOF(last_text));
 				new_text = true;
 				break;
 
+#ifdef WITH_SDL3
+            case SDL_EVENT_TEXT_EDITING:
+#else
 			case SDL_TEXTEDITING:
+#endif
 				break;
 
+#ifdef WITH_SDL3
+            case SDL_EVENT_QUIT:
+#else
 			case SDL_QUIT:
+#endif
 				/* TODO: Call the cleanup code here. */
 				exit(0);
 				break;

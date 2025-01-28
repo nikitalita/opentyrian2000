@@ -19,7 +19,11 @@
 #ifndef FILE_H
 #define FILE_H
 
+#ifdef WITH_SDL3
+#include "SDL3/SDL.h"
+#else
 #include "SDL2/SDL_endian.h"
+#endif
 
 #include <stdbool.h>
 #include <stdio.h>

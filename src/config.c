@@ -896,6 +896,21 @@ void JE_loadConfiguration(void)
 		p = saveTemp;
 		for (z = 0; z < SAVE_FILES_NUM; z++)
 		{
+#ifdef WITH_SDL3
+            memcpy(&saveFiles[z].encode, p, sizeof(JE_word)); p += 2;
+            saveFiles[z].encode = SDL_Swap16LE(saveFiles[z].encode);
+            
+            memcpy(&saveFiles[z].level, p, sizeof(JE_word)); p += 2;
+            saveFiles[z].level = SDL_Swap16LE(saveFiles[z].level);
+            
+            memcpy(&saveFiles[z].items, p, sizeof(JE_PItemsType)); p += sizeof(JE_PItemsType);
+            
+            memcpy(&saveFiles[z].score, p, sizeof(JE_longint)); p += 4;
+            saveFiles[z].score = SDL_Swap32LE(saveFiles[z].score);
+            
+            memcpy(&saveFiles[z].score2, p, sizeof(JE_longint)); p += 4;
+            saveFiles[z].score2 = SDL_Swap32LE(saveFiles[z].score2);
+#else
 			memcpy(&saveFiles[z].encode, p, sizeof(JE_word)); p += 2;
 			saveFiles[z].encode = SDL_SwapLE16(saveFiles[z].encode);
 			
@@ -909,7 +924,8 @@ void JE_loadConfiguration(void)
 			
 			memcpy(&saveFiles[z].score2, p, sizeof(JE_longint)); p += 4;
 			saveFiles[z].score2 = SDL_SwapLE32(saveFiles[z].score2);
-			
+#endif
+
 			/* SYN: Pascal strings are prefixed by a byte holding the length! */
 			memset(&saveFiles[z].levelName, 0, sizeof(saveFiles[z].levelName));
 			memcpy(&saveFiles[z].levelName, &p[1], *p);
@@ -934,13 +950,21 @@ void JE_loadConfiguration(void)
 			saveFiles[z].gameHasRepeated = temp != 0;
 			
 			memcpy(&saveFiles[z].initialDifficulty, p, sizeof(JE_byte)); p++;
-			
+
+#ifdef WITH_SDL3
+            memcpy(&saveFiles[z].highScore1, p, sizeof(JE_longint)); p += 4;
+            saveFiles[z].highScore1 = SDL_Swap32LE(saveFiles[z].highScore1);
+            
+            memcpy(&saveFiles[z].highScore2, p, sizeof(JE_longint)); p += 4;
+            saveFiles[z].highScore2 = SDL_Swap32LE(saveFiles[z].highScore2);
+#else
 			memcpy(&saveFiles[z].highScore1, p, sizeof(JE_longint)); p += 4;
 			saveFiles[z].highScore1 = SDL_SwapLE32(saveFiles[z].highScore1);
 			
 			memcpy(&saveFiles[z].highScore2, p, sizeof(JE_longint)); p += 4;
 			saveFiles[z].highScore2 = SDL_SwapLE32(saveFiles[z].highScore2);
-			
+#endif
+
 			memset(&saveFiles[z].highScoreName, 0, sizeof(saveFiles[z].highScoreName));
 			memcpy(&saveFiles[z].highScoreName, &p[1], *p);
 			p += 30;
@@ -960,7 +984,11 @@ void JE_loadConfiguration(void)
 			for (y = 0; y < 3; ++y)
 			{
 				fread_s32_die(&t2kHighScores[z][y].score, 1, fi);
+#ifdef WITH_SDL3
+                t2kHighScores[z][y].score = SDL_Swap32LE(t2kHighScores[z][y].score);
+#else
 				t2kHighScores[z][y].score = SDL_SwapLE32(t2kHighScores[z][y].score);
+#endif
 
 				fread_u8_die(&len, 1, fi);
 				fread_die(t2kHighScores[z][y].playerName, 1, 29, fi);
@@ -976,7 +1004,11 @@ void JE_loadConfiguration(void)
 			for (y = 0; y < 3; ++y)
 			{
 				fread_s32_die(&t2kHighScores[z][y].score, 1, fi);
+#ifdef WITH_SDL3
+                t2kHighScores[z][y].score = SDL_Swap32LE(t2kHighScores[z][y].score);
+#else
 				t2kHighScores[z][y].score = SDL_SwapLE32(t2kHighScores[z][y].score);
+#endif
 
 				fseek(fi, 4, SEEK_CUR); // Unknown long int that seems to have no effect
 				fread_u8_die(&len, 1, fi);
@@ -1064,21 +1096,37 @@ void JE_saveConfiguration(void)
 	{
 		JE_SaveFileType tempSaveFile;
 		memcpy(&tempSaveFile, &saveFiles[z], sizeof(tempSaveFile));
-		
+
+#ifdef WITH_SDL3
+        tempSaveFile.encode = SDL_Swap16LE(tempSaveFile.encode);
+        memcpy(p, &tempSaveFile.encode, sizeof(JE_word)); p += 2;
+
+        tempSaveFile.level = SDL_Swap16LE(tempSaveFile.level);
+        memcpy(p, &tempSaveFile.level, sizeof(JE_word)); p += 2;
+#else
 		tempSaveFile.encode = SDL_SwapLE16(tempSaveFile.encode);
 		memcpy(p, &tempSaveFile.encode, sizeof(JE_word)); p += 2;
-		
-		tempSaveFile.level = SDL_SwapLE16(tempSaveFile.level);
-		memcpy(p, &tempSaveFile.level, sizeof(JE_word)); p += 2;
+
+        tempSaveFile.level = SDL_SwapLE16(tempSaveFile.level);
+        memcpy(p, &tempSaveFile.level, sizeof(JE_word)); p += 2;
+#endif
 		
 		memcpy(p, &tempSaveFile.items, sizeof(JE_PItemsType)); p += sizeof(JE_PItemsType);
-		
+
+#ifdef WITH_SDL3
+        tempSaveFile.score = SDL_Swap32LE(tempSaveFile.score);
+        memcpy(p, &tempSaveFile.score, sizeof(JE_longint)); p += 4;
+        
+        tempSaveFile.score2 = SDL_Swap32LE(tempSaveFile.score2);
+        memcpy(p, &tempSaveFile.score2, sizeof(JE_longint)); p += 4;
+#else
 		tempSaveFile.score = SDL_SwapLE32(tempSaveFile.score);
 		memcpy(p, &tempSaveFile.score, sizeof(JE_longint)); p += 4;
 		
 		tempSaveFile.score2 = SDL_SwapLE32(tempSaveFile.score2);
 		memcpy(p, &tempSaveFile.score2, sizeof(JE_longint)); p += 4;
-		
+#endif
+
 		/* SYN: Pascal strings are prefixed by a byte holding the length! */
 		memset(p, 0, sizeof(tempSaveFile.levelName));
 		*p = strlen(tempSaveFile.levelName);
@@ -1103,13 +1151,21 @@ void JE_saveConfiguration(void)
 		memcpy(p, &temp, 1); p++;
 		
 		memcpy(p, &tempSaveFile.initialDifficulty, sizeof(JE_byte)); p++;
-		
+
+#ifdef WITH_SDL3
+        tempSaveFile.highScore1 = SDL_Swap32LE(tempSaveFile.highScore1);
+        memcpy(p, &tempSaveFile.highScore1, sizeof(JE_longint)); p += 4;
+        
+        tempSaveFile.highScore2 = SDL_Swap32LE(tempSaveFile.highScore2);
+        memcpy(p, &tempSaveFile.highScore2, sizeof(JE_longint)); p += 4;
+#else
 		tempSaveFile.highScore1 = SDL_SwapLE32(tempSaveFile.highScore1);
 		memcpy(p, &tempSaveFile.highScore1, sizeof(JE_longint)); p += 4;
 		
 		tempSaveFile.highScore2 = SDL_SwapLE32(tempSaveFile.highScore2);
 		memcpy(p, &tempSaveFile.highScore2, sizeof(JE_longint)); p += 4;
-		
+#endif
+
 		memset(p, 0, sizeof(tempSaveFile.highScoreName));
 		*p = strlen(tempSaveFile.highScoreName);
 		memcpy(&p[1], &tempSaveFile.highScoreName, *p);
@@ -1142,7 +1198,12 @@ void JE_saveConfiguration(void)
 
 			for (y = 0; y < 3; ++y)
 			{
+#ifdef WITH_SDL3
+                templi = SDL_Swap32LE(t2kHighScores[z][y].score);
+#else
 				templi = SDL_SwapLE32(t2kHighScores[z][y].score);
+#endif
+
 				len = strlen(t2kHighScores[z][y].playerName);
 				fwrite_s32_die(&templi, f);
 
@@ -1158,7 +1219,12 @@ void JE_saveConfiguration(void)
 
 			for (y = 0; y < 3; ++y)
 			{
+#ifdef WITH_SDL3
+                templi = SDL_Swap32LE(t2kHighScores[z][y].score);
+#else
 				templi = SDL_SwapLE32(t2kHighScores[z][y].score);
+#endif
+
 				len = strlen(t2kHighScores[z][y].playerName);
 				fwrite_s32_die(&templi, f);
 

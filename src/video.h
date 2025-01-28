@@ -21,7 +21,11 @@
 
 #include "opentyr.h"
 
+#ifdef WITH_SDL3
+#include "SDL3/SDL.h"
+#else
 #include "SDL2/SDL.h"
+#endif
 
 #define vga_width 320
 #define vga_height 200
@@ -44,7 +48,12 @@ extern SDL_Surface *game_screen;
 extern SDL_Surface *VGAScreen2;
 
 extern SDL_Window *main_window;
+
+#ifdef WITH_SDL3
+extern const SDL_PixelFormatDetails *main_window_tex_format;
+#else
 extern SDL_PixelFormat *main_window_tex_format;
+#endif
 
 void init_video(void);
 

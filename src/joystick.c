@@ -126,19 +126,32 @@ int check_assigned(SDL_Joystick *joystick_handle, const Joystick_assignment assi
 			continue;
 			
 		case AXIS:
+#ifdef WITH_SDL3
+            temp = SDL_GetJoystickAxis(joystick_handle, assignment[i].num);
+#else
 			temp = SDL_JoystickGetAxis(joystick_handle, assignment[i].num);
-			
+#endif
+
 			if (assignment[i].negative_axis)
 				temp = -temp;
 			break;
 		
 		case BUTTON:
+#ifdef WITH_SDL3
+            temp = SDL_GetJoystickButton(joystick_handle, assignment[i].num) == 1 ?
+                joystick_analog_max : 0;
+#else
 			temp = SDL_JoystickGetButton(joystick_handle, assignment[i].num) == 1 ? joystick_analog_max : 0;
+#endif
 			break;
 		
 		case HAT:
+#ifdef WITH_SDL3
+            temp = SDL_GetJoystickHat(joystick_handle, assignment[i].num);
+#else
 			temp = SDL_JoystickGetHat(joystick_handle, assignment[i].num);
-			
+#endif
+
 			if (assignment[i].x_axis)
 				temp &= SDL_HAT_LEFT | SDL_HAT_RIGHT;
 			else
@@ -167,9 +180,13 @@ void poll_joystick(int j)
 	
 	if (joystick[j].handle == NULL)
 		return;
-	
+
+#ifdef WITH_SDL3
+    SDL_UpdateJoysticks();
+#else
 	SDL_JoystickUpdate();
-	
+#endif
+
 	// indicates that a direction/action was pressed since last poll
 	joystick[j].input_pressed = false;
 	
@@ -226,15 +243,30 @@ void push_key(SDL_Scancode key)
 {
 	SDL_Event e;
 	
-	memset(&e.key.keysym, 0, sizeof(e.key.keysym));
-	
-	e.key.keysym.scancode = key;
+#ifdef WITH_SDL3
+    memset(&e.key.scancode, 0, sizeof(e.key.scancode));
+
+    e.key.scancode = key;
+#else
+    memset(&e.key.keysym, 0, sizeof(e.key.keysym));
+
+    e.key.keysym.scancode = key;
+#endif
+
+#ifdef WITH_SDL3
+    e.type = SDL_EVENT_KEY_DOWN;
+    SDL_PushEvent(&e);
+    
+    e.type = SDL_EVENT_KEY_UP;
+#else
 	e.key.state = SDL_RELEASED;
 	
 	e.type = SDL_KEYDOWN;
 	SDL_PushEvent(&e);
 	
 	e.type = SDL_KEYUP;
+#endif
+
 	SDL_PushEvent(&e);
 }
 
@@ -270,31 +302,56 @@ void init_joysticks(void)
 	if (ignore_joystick)
 		return;
 	
+#ifdef WITH_SDL3
+    if (SDL_InitSubSystem(SDL_INIT_JOYSTICK) == false)
+#else
 	if (SDL_InitSubSystem(SDL_INIT_JOYSTICK))
+#endif
 	{
 		fprintf(stderr, "warning: failed to initialize joystick system: %s\n", SDL_GetError());
 		ignore_joystick = true;
 		return;
 	}
 	
-	SDL_JoystickEventState(SDL_IGNORE);
-	
-	joysticks = SDL_NumJoysticks();
+#ifdef WITH_SDL3
+    SDL_GetJoysticks(&joysticks);
+#else
+    SDL_JoystickEventState(SDL_IGNORE);
+
+    joysticks = SDL_NumJoysticks();
+#endif
+
 	joystick = malloc(joysticks * sizeof(*joystick));
 	
 	for (int j = 0; j < joysticks; j++)
 	{
 		memset(&joystick[j], 0, sizeof(*joystick));
-		
+
+#ifdef WITH_SDL3
+        joystick[j].handle = SDL_OpenJoystick(j);
+#else
 		joystick[j].handle = SDL_JoystickOpen(j);
+#endif
+
 		if (joystick[j].handle != NULL)
 		{
+#ifdef WITH_SDL3
+            printf("joystick detected: %s ", SDL_GetJoystickName(joystick[j].handle));
+#else
 			printf("joystick detected: %s ", SDL_JoystickName(joystick[j].handle));
-			printf("(%d axes, %d buttons, %d hats)\n", 
-			       SDL_JoystickNumAxes(joystick[j].handle),
-			       SDL_JoystickNumButtons(joystick[j].handle),
+#endif
+
+			printf("(%d axes, %d buttons, %d hats)\n",
+#ifdef WITH_SDL3
+                   SDL_GetNumJoystickAxes(joystick[j].handle),
+                   SDL_GetNumJoystickButtons(joystick[j].handle),
+                   SDL_GetNumJoystickHats(joystick[j].handle));
+#else
+                   SDL_JoystickNumAxes(joystick[j].handle),
+                   SDL_JoystickNumButtons(joystick[j].handle),
 			       SDL_JoystickNumHats(joystick[j].handle));
-			
+#endif
+
 			if (!load_joystick_assignments(&opentyrian_config, j))
 				reset_joystick_assignments(j);
 		}
@@ -315,7 +372,12 @@ void deinit_joysticks(void)
 		if (joystick[j].handle != NULL)
 		{
 			save_joystick_assignments(&opentyrian_config, j);
+
+#ifdef WITH_SDL3
+            SDL_CloseJoystick(joystick[j].handle);
+#else
 			SDL_JoystickClose(joystick[j].handle);
+#endif
 		}
 	}
 	
@@ -337,14 +399,22 @@ void reset_joystick_assignments(int j)
 		
 		if (a < 4)
 		{
+#ifdef WITH_SDL3
+            if (SDL_GetNumJoystickAxes(joystick[j].handle) >= 2)
+#else
 			if (SDL_JoystickNumAxes(joystick[j].handle) >= 2)
+#endif
 			{
 				joystick[j].assignment[a][0].type = AXIS;
 				joystick[j].assignment[a][0].num = (a + 1) % 2;
 				joystick[j].assignment[a][0].negative_axis = (a == 0 || a == 3);
 			}
-			
+
+#ifdef WITH_SDL3
+            if (SDL_GetNumJoystickHats(joystick[j].handle) >= 1)
+#else
 			if (SDL_JoystickNumHats(joystick[j].handle) >= 1)
+#endif
 			{
 				joystick[j].assignment[a][1].type = HAT;
 				joystick[j].assignment[a][1].num = 0;
@@ -354,7 +424,11 @@ void reset_joystick_assignments(int j)
 		}
 		else
 		{
+#ifdef WITH_SDL3
+            if (a - 4 < (unsigned)SDL_GetNumJoystickButtons(joystick[j].handle))
+#else
 			if (a - 4 < (unsigned)SDL_JoystickNumButtons(joystick[j].handle))
+#endif
 			{
 				joystick[j].assignment[a][0].type = BUTTON;
 				joystick[j].assignment[a][0].num = a - 4;
@@ -383,7 +457,12 @@ static const char* const assignment_names[] =
 
 bool load_joystick_assignments(Config *config, int j)
 {
-	ConfigSection *section = config_find_section(config, "joystick", SDL_JoystickName(joystick[j].handle));
+#ifdef WITH_SDL3
+	ConfigSection *section = config_find_section(config, "joystick", SDL_GetJoystickName(joystick[j].handle));
+#else
+    ConfigSection *section = config_find_section(config, "joystick", SDL_JoystickName(joystick[j].handle));
+#endif
+
 	if (section == NULL)
 		return false;
 	
@@ -417,7 +496,12 @@ bool load_joystick_assignments(Config *config, int j)
 
 bool save_joystick_assignments(Config *config, int j)
 {
+#ifdef WITH_SDL3
+    ConfigSection *section = config_find_or_add_section(config, "joystick", SDL_GetJoystickName(joystick[j].handle));
+#else
 	ConfigSection *section = config_find_or_add_section(config, "joystick", SDL_JoystickName(joystick[j].handle));
+#endif
+
 	if (section == NULL)
 		exit(EXIT_FAILURE);  // out of memory
 	
@@ -538,34 +622,68 @@ const char *assignment_to_code(const Joystick_assignment *assignment)
 bool detect_joystick_assignment(int j, Joystick_assignment *assignment)
 {
 	// get initial joystick state to compare against to see if anything was pressed
-	
+
+#ifdef WITH_SDL3
+    const int axes = SDL_GetNumJoystickAxes(joystick[j].handle);
+#else
 	const int axes = SDL_JoystickNumAxes(joystick[j].handle);
+#endif
+
 	Sint16 *axis = malloc(axes * sizeof(*axis));
 	for (int i = 0; i < axes; i++)
+#ifdef WITH_SDL3
+        axis[i] = SDL_GetJoystickAxis(joystick[j].handle, i);
+#else
 		axis[i] = SDL_JoystickGetAxis(joystick[j].handle, i);
+#endif
 	
+#ifdef WITH_SDL3
+    const int buttons = SDL_GetNumJoystickButtons(joystick[j].handle);
+#else
 	const int buttons = SDL_JoystickNumButtons(joystick[j].handle);
+#endif
+
 	Uint8 *button = malloc(buttons * sizeof(*button));
 	for (int i = 0; i < buttons; i++)
+#ifdef WITH_SDL3
+        button[i] = SDL_GetJoystickButton(joystick[j].handle, i);
+
+    const int hats = SDL_GetNumJoystickHats(joystick[j].handle);
+#else
 		button[i] = SDL_JoystickGetButton(joystick[j].handle, i);
-	
-	const int hats = SDL_JoystickNumHats(joystick[j].handle);
+
+    const int hats = SDL_JoystickNumHats(joystick[j].handle);
+#endif
+
 	Uint8 *hat = malloc(hats * sizeof(*hat));
 	for (int i = 0; i < hats; i++)
+#ifdef WITH_SDL3
+        hat[i] = SDL_GetJoystickHat(joystick[j].handle, i);
+#else
 		hat[i] = SDL_JoystickGetHat(joystick[j].handle, i);
+#endif
+
 	
 	bool detected = false;
 	
 	do
 	{
 		setDelay(1);
-		
+
+#ifdef WITH_SDL3
+        SDL_UpdateJoysticks();
+#else
 		SDL_JoystickUpdate();
-		
+#endif
+
 		for (int i = 0; i < axes; ++i)
 		{
+#ifdef WITH_SDL3
+            Sint16 temp = SDL_GetJoystickAxis(joystick[j].handle, i);
+#else
 			Sint16 temp = SDL_JoystickGetAxis(joystick[j].handle, i);
-			
+#endif
+
 			if (abs(temp - axis[i]) > joystick_analog_max * 2 / 3)
 			{
 				assignment->type = AXIS;
@@ -578,7 +696,11 @@ bool detect_joystick_assignment(int j, Joystick_assignment *assignment)
 		
 		for (int i = 0; i < buttons; ++i)
 		{
+#ifdef WITH_SDL3
+            Uint8 new_button = SDL_GetJoystickButton(joystick[j].handle, i),
+#else
 			Uint8 new_button = SDL_JoystickGetButton(joystick[j].handle, i),
+#endif
 			      changed = button[i] ^ new_button;
 			
 			if (!changed)
@@ -599,7 +721,11 @@ bool detect_joystick_assignment(int j, Joystick_assignment *assignment)
 		
 		for (int i = 0; i < hats; ++i)
 		{
+#ifdef WITH_SDL3
+            Uint8 new_hat = SDL_GetJoystickHat(joystick[j].handle, i),
+#else
 			Uint8 new_hat = SDL_JoystickGetHat(joystick[j].handle, i),
+#endif
 			      changed = hat[i] ^ new_hat;
 			
 			if (!changed)
