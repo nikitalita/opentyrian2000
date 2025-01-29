@@ -22,13 +22,13 @@
 #include "opentyr.h"
 
 #ifdef WITH_SDL3
-#include "SDL3/SDL.h"
+#include <SDL3/SDL.h>
 
 #if defined(ANDROID) || defined(__ANDROID__)
 extern bool SDL_FillSurfaceRect(SDL_Surface *dst, const SDL_Rect *rect, Uint32 color);
 #endif
 #else
-#include "SDL2/SDL.h"
+#include <SDL2/SDL.h>
 #endif
 
 void JE_pix(SDL_Surface *surface, int x, int y, JE_byte c);

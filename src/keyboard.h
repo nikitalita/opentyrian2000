@@ -22,7 +22,7 @@
 #include "opentyr.h"
 
 #ifdef WITH_SDL3
-#include "SDL3/SDL.h"
+#include <SDL3/SDL.h>
 
 #ifndef SDL_SCANCODE_COUNT
 #define SDL_SCANCODE_COUNT 512
@@ -32,7 +32,7 @@
 #define SDL_TEXTINPUTEVENT_TEXT_SIZE (32)
 #endif
 #else
-#include "SDL2/SDL.h"
+#include <SDL2/SDL.h>
 #endif
 
 #include <stdbool.h>

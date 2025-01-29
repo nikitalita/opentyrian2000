@@ -3,6 +3,7 @@
 PLATFORM := WIN32
 TYRIAN_DIR = C:\\TYRIAN
 
+WITH_SDL3 := true
 WITH_NETWORK := true
 WITH_MIDI := true
 
@@ -12,16 +13,15 @@ WITH_MIDI := true
 
 SHELL = /bin/sh
 
-HOSTCC = /usr/bin/clang
-CC = /usr/local/bin/x86_64-w64-mingw32-gcc -m32
-RC = /usr/local/bin/x86_64-w64-mingw32-windres -Fpe-i386
+HOSTCC = gcc
+CC = gcc -m32
+RC = windres -Fpe-i386
 
 INSTALL = /usr/bin/install
 PKG_CONFIG = /usr/local/bin/pkg-config
 PKG_CONFIG_PATH=/usr/local/x86_64-w64-mingw32/lib/pkg-config
 
 # VCS_IDREV ?= (git describe --tags || git rev-parse --short HEAD)
-VCS_IDREV = "\"$(shell echo "$(shell ./getver)")\""
 
 INSTALL_PROGRAM = $(INSTALL) -m 755
 INSTALL_DATA = $(INSTALL) -m 644
@@ -53,6 +53,10 @@ DEPS := $(SRCS:src/%.c=obj/%.d)
 
 ###
 
+ifeq ($(WITH_SDL3), true)
+    EXTRA_CPPFLAGS += -DWITH_SDL3
+endif
+
 ifeq ($(WITH_NETWORK), true)
     EXTRA_CPPFLAGS += -DWITH_NETWORK
 endif
@@ -72,32 +76,59 @@ EXTRA_CPPFLAGS += -DOPENTYRIAN_VERSION=$(OPENTYRIAN_VERSION)
 CPPFLAGS = -MMD -DNDEBUG=1
 CFLAGS = -g0 -O3 $(EXTRA_CPPFLAGS) -pedantic -Wall -Wextra
 LDFLAGS ?=
-LDLIBS ?= -L/usr/local/x86_64-w64-mingw32/lib32 -lws2_32 -liphlpapi -lmingw32 -lSDL2main -lSDL2 -mwindows  -Wl,--dynamicbase -Wl,--nxcompat -lm -ldinput8 -ldxguid -ldxerr8 -luser32 -lgdi32 -lwinmm -limm32 -lole32 -loleaut32 -lshell32 -lsetupapi -lversion -luuid
+ifeq ($(WITH_SDL3), true)
+LDLIBS ?= -L/c/msys64/mingw32/lib -lws2_32 -liphlpapi -lmingw32 -lSDL3 -mwindows  -Wl,--dynamicbase -Wl,--nxcompat -lm -ldinput8 -ldxguid -ldxerr8 -luser32 -lgdi32 -lwinmm -limm32 -lole32 -loleaut32 -lshell32 -lsetupapi -lversion
+else
+LDLIBS ?= -L/c/msys64/mingw32/lib -lws2_32 -liphlpapi -lmingw32 -lSDL2 -lSDL2main -mwindows  -Wl,--dynamicbase -Wl,--nxcompat -lm -ldinput8 -ldxguid -ldxerr8 -luser32 -lgdi32 -lwinmm -limm32 -lole32 -loleaut32 -lshell32 -lsetupapi -lversion
+endif
 
 ifeq ($(WITH_NETWORK), true)
-    SDL_CPPFLAGS := -I/usr/local/x86_64-w64-mingw32/include
+ifeq ($(WITH_SDL3), true)
+    SDL_CPPFLAGS := -I/c/msys64/mingw32/include
     SDL_LDFLAGS :=
-    SDL_LDLIBS := -L/usr/local/x86_64-w64-mingw32/lib32 -lSDL2 -lSDL2_net
+    SDL_LDLIBS := -L/c/msys64/mingw32/lib -lSDL3 -lSDL3_net
 else
-    SDL_CPPFLAGS := -I/usr/local/x86_64-w64-mingw32/include
+    SDL_CPPFLAGS := -I/c/msys64/mingw32/include
     SDL_LDFLAGS :=
-    SDL_LDLIBS := -L/usr/local/x86_64-w64-mingw32/lib32 -lSDL2
+    SDL_LDLIBS := -L/c/msys64/mingw32/lib -lSDL2 -lSDL2_net
+endif
+else
+ifeq ($(WITH_SDL3), true)
+    SDL_CPPFLAGS := -I/c/msys64/mingw32/include
+    SDL_LDFLAGS :=
+    SDL_LDLIBS := -L/c/msys64/mingw32/lib -lSDL3
+else
+    SDL_CPPFLAGS := -I/c/msys64/mingw32/include
+    SDL_LDFLAGS :=
+    SDL_LDLIBS := -L/c/msys64/mingw32/lib -lSDL2
+endif
 endif
 
 ifeq ($(WITH_MIDI), true)
+ifeq ($(WITH_SDL3), true)
+    SDL_PACKAGES := SDL3_mixer
+    MIDIPROC_LIBS := midiproc
+else
     SDL_PACKAGES := SDL2_mixer_ext
     MIDIPROC_LIBS := midiproc fluidsynth
 endif
+endif
 
 ifeq ($(WITH_MIDI), true)
-    SDL_CPPFLAGS += -I/usr/local/x86_64-w64-mingw32/include -I/usr/local/x86_64-w64-mingw32/include/SDL2 -I/usr/local/x86_64-w64-mingw32/include/midiproc
+ifeq ($(WITH_SDL3), true)
+    SDL_CPPFLAGS += -I/c/msys64/mingw32/include -I/c/msys64/mingw32/include/SDL3 -I/c/msys64/mingw32/include/midiproc
     SDL_LDFLAGS :=
-    SDL_LDLIBS += -L/usr/local/x86_64-w64-mingw32/lib32 -lmidiproc -lSDL2_mixer_ext -lfluidsynth 
+    SDL_LDLIBS += -L/c/msys64/mingw32/lib -lmidiproc -lSDL3_mixer 
+else
+    SDL_CPPFLAGS += -I/c/msys64/mingw32/include -I/c/msys64/mingw32/include/SDL2 -I/c/msys64/mingw32/include/midiproc
+    SDL_LDFLAGS :=
+    SDL_LDLIBS += -L/c/msys64/mingw32/lib -lmidiproc -lSDL2_mixer_ext -lfluidsynth 
+endif
 endif
 
 # add stdc++ to the ldlibs if using midiproc
 ifneq ($(MIDIPROC_LIBS), )
-    SDL_LDLIBS += /usr/local/x86_64-w64-mingw32/lib32/libstdc++.dll.a -lsupc++ -lgcc_s
+    SDL_LDLIBS += -lstdc++ -lsupc++ -lgcc_s
 endif
 
 ALL_CPPFLAGS = -DTARGET_$(PLATFORM) \
@@ -115,7 +146,7 @@ ALL_LDLIBS = -lm \
 ###
 
 .PHONY : all
-all : getver $(TARGET).exe
+all : (TARGET).exe
 
 .PHONY : installdirs
 installdirs :
@@ -137,15 +168,12 @@ clean :
 	rm -f $(OBJS)
 	rm -f $(DEPS)
 	rm -f $(TARGET).exe
-	rm -f getver obj/opentyrian2000.o
+	rm -f obj/opentyrian2000.o
 
 $(TARGET).exe : $(OBJS)
 	$(CC) $(ALL_CFLAGS) $(ALL_LDFLAGS) -o $@ $^ $(ALL_LDLIBS)
 
 -include $(DEPS)
-
-getver: getver.c
-	$(HOSTCC) -o $@ $<
 
 obj/%.o : src/%.c
 	@mkdir -p "$(dir $@)"

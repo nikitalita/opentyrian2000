@@ -37,9 +37,9 @@
 #include "sizebuf.h"
 
 #ifdef WITH_SDL3
-#include "SDL3/SDL.h"
+#include <SDL3/SDL.h>
 #else
-#include "SDL2/SDL_endian.h"
+#include <SDL2/SDL_endian.h>
 #endif
 
 #include <assert.h>

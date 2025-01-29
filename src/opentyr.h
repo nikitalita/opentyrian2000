@@ -40,9 +40,9 @@
 #endif
 
 #ifdef WITH_SDL3
-#include "SDL3/SDL.h"
+#include <SDL3/SDL.h>
 #else
-#include "SDL2/SDL_types.h"
+#include <SDL2/SDL_types.h>
 #endif
 
 #include <math.h>
