@@ -78,6 +78,11 @@
 #include <string.h>
 #include <time.h>
 
+#ifdef _WIN32
+#include <windows.h>
+#include <shellapi.h>
+#endif
+
 const char *opentyrian_str = "OpenTyrian " TYRIAN_VERSION;
 const char *opentyrian_version = OPENTYRIAN_VERSION;
 
@@ -820,8 +825,19 @@ void setupMenu(void)
 	}
 }
 
+#ifdef _WIN32
+int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR cmdLine, int nShowCmd)
+{
+	(void)hInstance;
+	(void)hPrevInstance;
+	(void)cmdLine;
+	(void)nShowCmd;
+	int argc = __argc;
+	char** argv = __argv;
+#else
 int main(int argc, char *argv[])
 {
+#endif
 #ifndef WITH_SDL3
     SDL_version sdlver;
 #ifdef WITH_NETWORK

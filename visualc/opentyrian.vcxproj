@@ -67,7 +67,7 @@
       <CompileAs>CompileAsC</CompileAs>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <AdditionalIncludeDirectories>$(SDL2BaseDir)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(WITH_NETWORK)'=='true'">$(SDL2netBaseDir)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(WITH_NETWORK)'=='true'">C:\OTLIBS\ARM64\include\midiproc;C:\OTLIBS\ARM64\include;$(SDL2netBaseDir)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>EnableAllWarnings</WarningLevel>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>TARGET_WIN32;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -78,7 +78,7 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalDependencies Condition="'$(WITH_NETWORK)'=='true'">SDL2_net.lib;SDL2_mixer_ext-static.lib;fluidsynth.lib;midiproc_shared.lib;winmm.lib;SDL2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies Condition="'$(WITH_NETWORK)'=='true'">SDL3_net.lib;SDL3_mixer.lib;midiproc_shared.lib;winmm.lib;SDL3.lib</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
     </Link>
@@ -87,7 +87,7 @@
     <ClCompile>
       <TreatWarningAsError>true</TreatWarningAsError>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WITH_NETWORK=1;WITH_MIDI=1;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WITH_SDL3=1;WITH_NETWORK=1;WITH_MIDI=1;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
     </Link>
@@ -96,7 +96,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WITH_NETWORK=1;WITH_MIDI=1;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WITH_SDL3=1;WITH_NETWORK=1;WITH_MIDI=1;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <FunctionLevelLinking>true</FunctionLevelLinking>
     </ClCompile>
     <Link>
@@ -109,7 +109,13 @@
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SDL2BaseDir)\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalLibraryDirectories Condition="'$(WITH_NETWORK)'=='true'">$(SDL2netBaseDir)\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories Condition="'$(WITH_NETWORK)'=='true'">C:\OTLIBS\X86\lib;$(SDL2netBaseDir)\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <Version Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">3.0</Version>
+      <Version Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">3.0</Version>
+      <EntryPointSymbol Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </EntryPointSymbol>
+      <EntryPointSymbol Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </EntryPointSymbol>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Platform)'=='x64'">
@@ -117,21 +123,41 @@
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SDL2BaseDir)\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalLibraryDirectories Condition="'$(WITH_NETWORK)'=='true'">$(SDL2netBaseDir)\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories Condition="'$(WITH_NETWORK)'=='true'">C:\OTLIBS\X64\lib;$(SDL2netBaseDir)\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <Version Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">3.0</Version>
+      <Version Condition="'$(Configuration)|$(Platform)'=='Release|x64'">3.0</Version>
+      <EntryPointSymbol Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </EntryPointSymbol>
+      <EntryPointSymbol Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </EntryPointSymbol>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Platform)'=='ARM64'">
     <ClCompile />
     <Link>
       <AdditionalLibraryDirectories>$(SDL2BaseDir)\lib\arm64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalLibraryDirectories Condition="'$(WITH_NETWORK)'=='true'">$(SDL2netBaseDir)\lib\arm64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories Condition="'$(WITH_NETWORK)'=='true'">C:\OTLIBS\ARM64\lib;$(SDL2netBaseDir)\lib\arm64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <Version Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">3.0</Version>
+      <Version Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">3.0</Version>
+      <EntryPointSymbol Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
+      </EntryPointSymbol>
+      <EntryPointSymbol Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
+      </EntryPointSymbol>
     </Link>
+    <ProjectReference>
+      <UseLibraryDependencyInputs Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">true</UseLibraryDependencyInputs>
+    </ProjectReference>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Platform)'=='ARM64EC'">
     <ClCompile />
     <Link>
       <AdditionalLibraryDirectories>$(SDL2BaseDir)\lib\arm64ec;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalLibraryDirectories Condition="'$(WITH_NETWORK)'=='true'">$(SDL2netBaseDir)\lib\arm64ec;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <Version Condition="'$(Configuration)|$(Platform)'=='Release|ARM64EC'">3.0.0</Version>
+      <Version Condition="'$(Configuration)|$(Platform)'=='Release|ARM64EC'">3.0</Version>
+      <EntryPointSymbol Condition="'$(Configuration)|$(Platform)'=='Release|ARM64EC'">_main</EntryPointSymbol>
+      <EntryPointSymbol Condition="'$(Configuration)|$(Platform)'=='Release|ARM64EC'">
+      </EntryPointSymbol>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
