@@ -84,7 +84,6 @@
   /Users/andyvand/Downloads/opentyrian2000/android-project/app/jni/src/../../../../src/mouse.h \
   /Users/andyvand/Downloads/opentyrian2000/android-project/app/jni/src/../../../../src/mtrand.h \
   /Users/andyvand/Downloads/opentyrian2000/android-project/app/jni/src/../../../../src/network.h \
-  /Users/andyvand/Downloads/opentyrian2000/android-project/app/jni/src//include/SDL3_net/SDL_net.h \
   /Users/andyvand/Downloads/opentyrian2000/android-project/app/jni/src/../../../../src/nortsong.h \
   /Users/andyvand/Downloads/opentyrian2000/android-project/app/jni/src/../../../../src/musmast.h \
   /Users/andyvand/Downloads/opentyrian2000/android-project/app/jni/src/../../../../src/sndmast.h \
@@ -181,7 +180,6 @@
 /Users/andyvand/Downloads/opentyrian2000/android-project/app/jni/src/../../../../src/mouse.h:
 /Users/andyvand/Downloads/opentyrian2000/android-project/app/jni/src/../../../../src/mtrand.h:
 /Users/andyvand/Downloads/opentyrian2000/android-project/app/jni/src/../../../../src/network.h:
-/Users/andyvand/Downloads/opentyrian2000/android-project/app/jni/src//include/SDL3_net/SDL_net.h:
 /Users/andyvand/Downloads/opentyrian2000/android-project/app/jni/src/../../../../src/nortsong.h:
 /Users/andyvand/Downloads/opentyrian2000/android-project/app/jni/src/../../../../src/musmast.h:
 /Users/andyvand/Downloads/opentyrian2000/android-project/app/jni/src/../../../../src/sndmast.h:

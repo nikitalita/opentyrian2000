@@ -1,0 +1,119 @@
+[
+  {
+    "level_": 0,
+    "message_": "Start JSON generation. Platform version: 21 min SDK version: x86_64",
+    "file_": "/Users/andyvand/Downloads/opentyrian2000/android-project/app/jni/Android.mk",
+    "tag_": "debug|x86_64",
+    "diagnosticCode_": 0,
+    "memoizedIsInitialized": 1,
+    "unknownFields": {
+      "fields": {}
+    },
+    "memoizedSize": -1,
+    "memoizedHashCode": 0
+  },
+  {
+    "level_": 0,
+    "message_": "rebuilding JSON /Users/andyvand/Downloads/opentyrian2000/android-project/app/build/.cxx/Debug/47q31g3d/x86_64/android_gradle_build.json due to:",
+    "file_": "/Users/andyvand/Downloads/opentyrian2000/android-project/app/jni/Android.mk",
+    "tag_": "debug|x86_64",
+    "diagnosticCode_": 0,
+    "memoizedIsInitialized": 1,
+    "unknownFields": {
+      "fields": {}
+    },
+    "memoizedSize": -1,
+    "memoizedHashCode": 0
+  },
+  {
+    "level_": 0,
+    "message_": "- no fingerprint file, will remove stale configuration folder",
+    "file_": "/Users/andyvand/Downloads/opentyrian2000/android-project/app/jni/Android.mk",
+    "tag_": "debug|x86_64",
+    "diagnosticCode_": 0,
+    "memoizedIsInitialized": 1,
+    "unknownFields": {
+      "fields": {}
+    },
+    "memoizedSize": -1,
+    "memoizedHashCode": 0
+  },
+  {
+    "level_": 0,
+    "message_": "removing stale contents from \u0027/Users/andyvand/Downloads/opentyrian2000/android-project/app/build/.cxx/Debug/47q31g3d/x86_64\u0027",
+    "file_": "/Users/andyvand/Downloads/opentyrian2000/android-project/app/jni/Android.mk",
+    "tag_": "debug|x86_64",
+    "diagnosticCode_": 0,
+    "memoizedIsInitialized": 1,
+    "unknownFields": {
+      "fields": {}
+    },
+    "memoizedSize": -1,
+    "memoizedHashCode": 0
+  },
+  {
+    "level_": 0,
+    "message_": "created folder \u0027/Users/andyvand/Downloads/opentyrian2000/android-project/app/build/.cxx/Debug/47q31g3d/x86_64\u0027",
+    "file_": "/Users/andyvand/Downloads/opentyrian2000/android-project/app/jni/Android.mk",
+    "tag_": "debug|x86_64",
+    "diagnosticCode_": 0,
+    "memoizedIsInitialized": 1,
+    "unknownFields": {
+      "fields": {}
+    },
+    "memoizedSize": -1,
+    "memoizedHashCode": 0
+  },
+  {
+    "level_": 0,
+    "message_": "executing ndkBuild /Users/andyvand/Library/Android/sdk/ndk/27.0.12077973/ndk-build \\\n  NDK_PROJECT_PATH\u003dnull \\\n  APP_BUILD_SCRIPT\u003d/Users/andyvand/Downloads/opentyrian2000/android-project/app/jni/Android.mk \\\n  NDK_APPLICATION_MK\u003d/Users/andyvand/Downloads/opentyrian2000/android-project/app/jni/Application.mk \\\n  APP_ABI\u003dx86_64 \\\n  NDK_ALL_ABIS\u003dx86_64 \\\n  NDK_DEBUG\u003d1 \\\n  NDK_OUT\u003d/Users/andyvand/Downloads/opentyrian2000/android-project/app/build/intermediates/cxx/Debug/47q31g3d/obj \\\n  NDK_LIBS_OUT\u003d/Users/andyvand/Downloads/opentyrian2000/android-project/app/build/intermediates/cxx/Debug/47q31g3d/lib \\\n  APP_PLATFORM\u003dandroid-31 \\\n  APP_SHORT_COMMANDS\u003dfalse \\\n  LOCAL_SHORT_COMMANDS\u003dfalse \\\n  -B \\\n  -n\n",
+    "file_": "/Users/andyvand/Downloads/opentyrian2000/android-project/app/jni/Android.mk",
+    "tag_": "debug|x86_64",
+    "diagnosticCode_": 0,
+    "memoizedIsInitialized": 1,
+    "unknownFields": {
+      "fields": {}
+    },
+    "memoizedSize": -1,
+    "memoizedHashCode": 0
+  },
+  {
+    "level_": 0,
+    "message_": "/Users/andyvand/Library/Android/sdk/ndk/27.0.12077973/ndk-build \\\n  NDK_PROJECT_PATH\u003dnull \\\n  APP_BUILD_SCRIPT\u003d/Users/andyvand/Downloads/opentyrian2000/android-project/app/jni/Android.mk \\\n  NDK_APPLICATION_MK\u003d/Users/andyvand/Downloads/opentyrian2000/android-project/app/jni/Application.mk \\\n  APP_ABI\u003dx86_64 \\\n  NDK_ALL_ABIS\u003dx86_64 \\\n  NDK_DEBUG\u003d1 \\\n  NDK_OUT\u003d/Users/andyvand/Downloads/opentyrian2000/android-project/app/build/intermediates/cxx/Debug/47q31g3d/obj \\\n  NDK_LIBS_OUT\u003d/Users/andyvand/Downloads/opentyrian2000/android-project/app/build/intermediates/cxx/Debug/47q31g3d/lib \\\n  APP_PLATFORM\u003dandroid-31 \\\n  APP_SHORT_COMMANDS\u003dfalse \\\n  LOCAL_SHORT_COMMANDS\u003dfalse \\\n  -B \\\n  -n\n",
+    "file_": "/Users/andyvand/Downloads/opentyrian2000/android-project/app/jni/Android.mk",
+    "tag_": "debug|x86_64",
+    "diagnosticCode_": 0,
+    "memoizedIsInitialized": 1,
+    "unknownFields": {
+      "fields": {}
+    },
+    "memoizedSize": -1,
+    "memoizedHashCode": 0
+  },
+  {
+    "level_": 0,
+    "message_": "Received process result: 2",
+    "file_": "/Users/andyvand/Downloads/opentyrian2000/android-project/app/jni/Android.mk",
+    "tag_": "debug|x86_64",
+    "diagnosticCode_": 0,
+    "memoizedIsInitialized": 1,
+    "unknownFields": {
+      "fields": {}
+    },
+    "memoizedSize": -1,
+    "memoizedHashCode": 0
+  },
+  {
+    "level_": 0,
+    "message_": "JSON generation completed with problem. Exception: com.android.ide.common.process.ProcessException: Android NDK: WARNING:/Users/andyvand/Downloads/opentyrian2000/android-project/app/jni/src/Android.mk:main: non-system libraries in linker flags: -lc++ -lc++abi    \nAndroid NDK:     This is likely to result in incorrect builds. Try using LOCAL_STATIC_LIBRARIES    \nAndroid NDK:     or LOCAL_SHARED_LIBRARIES instead to list the library dependencies of the    \nAndroid NDK:     current module    \n\nC++ build system [configure] failed while executing:\n    /Users/andyvand/Library/Android/sdk/ndk/27.0.12077973/ndk-build \\\n      NDK_PROJECT_PATH\u003dnull \\\n      APP_BUILD_SCRIPT\u003d/Users/andyvand/Downloads/opentyrian2000/android-project/app/jni/Android.mk \\\n      NDK_APPLICATION_MK\u003d/Users/andyvand/Downloads/opentyrian2000/android-project/app/jni/Application.mk \\\n      APP_ABI\u003dx86_64 \\\n      NDK_ALL_ABIS\u003dx86_64 \\\n      NDK_DEBUG\u003d1 \\\n      NDK_OUT\u003d/Users/andyvand/Downloads/opentyrian2000/android-project/app/build/intermediates/cxx/Debug/47q31g3d/obj \\\n      NDK_LIBS_OUT\u003d/Users/andyvand/Downloads/opentyrian2000/android-project/app/build/intermediates/cxx/Debug/47q31g3d/lib \\\n      APP_PLATFORM\u003dandroid-31 \\\n      APP_SHORT_COMMANDS\u003dfalse \\\n      LOCAL_SHORT_COMMANDS\u003dfalse \\\n      -B \\\n      -n\n  from /Users/andyvand/Downloads/opentyrian2000/android-project/app\nfcntl(): Bad file descriptor\n/Users/andyvand/Library/Android/sdk/ndk/27.0.12077973/build/core/build-binary.mk:590: Android NDK: Module main depends on undefined modules: SDL3    \n/Users/andyvand/Library/Android/sdk/ndk/27.0.12077973/build/core/build-binary.mk:603: *** Android NDK: Note that old versions of ndk-build silently ignored this error case. If your project worked on those versions, the missing libraries were not needed and you can remove those dependencies from the module to fix your build. Alternatively, set APP_ALLOW_MISSING_DEPS\u003dtrue to allow missing dependencies.    .  Stop.",
+    "file_": "/Users/andyvand/Downloads/opentyrian2000/android-project/app/jni/Android.mk",
+    "tag_": "debug|x86_64",
+    "diagnosticCode_": 0,
+    "memoizedIsInitialized": 1,
+    "unknownFields": {
+      "fields": {}
+    },
+    "memoizedSize": -1,
+    "memoizedHashCode": 0
+  }
+]

@@ -1,7 +1,7 @@
 [
   {
     "level_": 0,
-    "message_": "Start JSON generation. Platform version: 31 min SDK version: armeabi-v7a",
+    "message_": "Start JSON generation. Platform version: 21 min SDK version: armeabi-v7a",
     "file_": "/Users/andyvand/Downloads/opentyrian2000/android-project/app/jni/Android.mk",
     "tag_": "release|armeabi-v7a",
     "diagnosticCode_": 0,

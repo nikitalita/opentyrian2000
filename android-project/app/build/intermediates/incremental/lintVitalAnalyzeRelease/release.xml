@@ -1,12 +1,12 @@
 <variant
     name="release"
     package="org.libsdl.app"
-    minSdkVersion="31"
+    minSdkVersion="21"
     targetSdkVersion="35"
     mergedManifest="build/intermediates/merged_manifest/release/processReleaseMainManifest/AndroidManifest.xml"
     proguardFiles="build/intermediates/default_proguard_files/global/proguard-android.txt-8.8.0:proguard-rules.pro"
     partialResultsDir="build/intermediates/lint_vital_partial_results/release/lintVitalAnalyzeRelease/out"
-    desugaredMethodsFiles="/Users/andyvand/.gradle/caches/8.10.2/transforms/f61f7464ff583699a1540e9ca09b8d68/transformed/D8BackportedDesugaredMethods.txt">
+    desugaredMethodsFiles="/Users/andyvand/.gradle/caches/8.10.2/transforms/78a8e4115cf01bb99827f9c67532ab1b/transformed/D8BackportedDesugaredMethods.txt">
   <buildFeatures
       namespacing="REQUIRED"/>
   <sourceProviders>
@@ -26,6 +26,6 @@
       applicationId="org.libsdl.app"
       generatedSourceFolders="build/generated/ap_generated_sources/release/out"
       generatedResourceFolders="build/generated/res/resValues/release"
-      desugaredMethodsFiles="/Users/andyvand/.gradle/caches/8.10.2/transforms/f61f7464ff583699a1540e9ca09b8d68/transformed/D8BackportedDesugaredMethods.txt">
+      desugaredMethodsFiles="/Users/andyvand/.gradle/caches/8.10.2/transforms/78a8e4115cf01bb99827f9c67532ab1b/transformed/D8BackportedDesugaredMethods.txt">
   </artifact>
 </variant>

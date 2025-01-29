@@ -61,7 +61,6 @@
   /Users/andyvand/Downloads/opentyrian2000/android-project/app/jni/src//include/SDL3/SDL_tray.h \
   /Users/andyvand/Downloads/opentyrian2000/android-project/app/jni/src//include/SDL3/SDL_version.h \
   /Users/andyvand/Downloads/opentyrian2000/android-project/app/jni/src//include/SDL3/SDL_oldnames.h \
-  /Users/andyvand/Downloads/opentyrian2000/android-project/app/jni/src//include/SDL3_net/SDL_net.h \
   /Users/andyvand/Downloads/opentyrian2000/android-project/app/jni/src/../../../../src/episodes.h \
   /Users/andyvand/Downloads/opentyrian2000/android-project/app/jni/src/../../../../src/lvlmast.h \
   /Users/andyvand/Downloads/opentyrian2000/android-project/app/jni/src/../../../../src/fonthand.h \
@@ -139,7 +138,6 @@
 /Users/andyvand/Downloads/opentyrian2000/android-project/app/jni/src//include/SDL3/SDL_tray.h:
 /Users/andyvand/Downloads/opentyrian2000/android-project/app/jni/src//include/SDL3/SDL_version.h:
 /Users/andyvand/Downloads/opentyrian2000/android-project/app/jni/src//include/SDL3/SDL_oldnames.h:
-/Users/andyvand/Downloads/opentyrian2000/android-project/app/jni/src//include/SDL3_net/SDL_net.h:
 /Users/andyvand/Downloads/opentyrian2000/android-project/app/jni/src/../../../../src/episodes.h:
 /Users/andyvand/Downloads/opentyrian2000/android-project/app/jni/src/../../../../src/lvlmast.h:
 /Users/andyvand/Downloads/opentyrian2000/android-project/app/jni/src/../../../../src/fonthand.h:

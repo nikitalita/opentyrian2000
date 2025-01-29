@@ -66,7 +66,6 @@
   /Users/andyvand/Downloads/opentyrian2000/android-project/app/jni/src/../../../../src/joystick.h \
   /Users/andyvand/Downloads/opentyrian2000/android-project/app/jni/src/../../../../src/mouse.h \
   /Users/andyvand/Downloads/opentyrian2000/android-project/app/jni/src/../../../../src/network.h \
-  /Users/andyvand/Downloads/opentyrian2000/android-project/app/jni/src//include/SDL3_net/SDL_net.h \
   /Users/andyvand/Downloads/opentyrian2000/android-project/app/jni/src/../../../../src/video.h \
   /Users/andyvand/Downloads/opentyrian2000/android-project/app/jni/src/../../../../src/video_scale.h
 /Users/andyvand/Downloads/opentyrian2000/android-project/app/jni/src/../../../../src/keyboard.h:
@@ -135,6 +134,5 @@
 /Users/andyvand/Downloads/opentyrian2000/android-project/app/jni/src/../../../../src/joystick.h:
 /Users/andyvand/Downloads/opentyrian2000/android-project/app/jni/src/../../../../src/mouse.h:
 /Users/andyvand/Downloads/opentyrian2000/android-project/app/jni/src/../../../../src/network.h:
-/Users/andyvand/Downloads/opentyrian2000/android-project/app/jni/src//include/SDL3_net/SDL_net.h:
 /Users/andyvand/Downloads/opentyrian2000/android-project/app/jni/src/../../../../src/video.h:
 /Users/andyvand/Downloads/opentyrian2000/android-project/app/jni/src/../../../../src/video_scale.h:

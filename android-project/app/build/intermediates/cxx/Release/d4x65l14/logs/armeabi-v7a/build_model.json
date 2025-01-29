@@ -11,7 +11,7 @@
   "cxxBuildFolder": "/Users/andyvand/Downloads/opentyrian2000/android-project/app/build/.cxx/Release/d4x65l14/armeabi-v7a",
   "soFolder": "/Users/andyvand/Downloads/opentyrian2000/android-project/app/build/intermediates/cxx/Release/d4x65l14/obj/local/armeabi-v7a",
   "soRepublishFolder": "/Users/andyvand/Downloads/opentyrian2000/android-project/app/build/intermediates/ndkBuild/release/obj/local/armeabi-v7a",
-  "abiPlatformVersion": 31,
+  "abiPlatformVersion": 21,
   "variant": {
     "buildSystemArgumentList": [
       "APP_PLATFORM\u003dandroid-31"
@@ -23,7 +23,6 @@
     "validAbiList": [
       "armeabi-v7a",
       "arm64-v8a",
-      "riscv64",
       "x86",
       "x86_64"
     ],

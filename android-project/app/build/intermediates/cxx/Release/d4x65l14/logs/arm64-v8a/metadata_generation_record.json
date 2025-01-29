@@ -1,7 +1,7 @@
 [
   {
     "level_": 0,
-    "message_": "Start JSON generation. Platform version: 31 min SDK version: arm64-v8a",
+    "message_": "Start JSON generation. Platform version: 21 min SDK version: arm64-v8a",
     "file_": "/Users/andyvand/Downloads/opentyrian2000/android-project/app/jni/Android.mk",
     "tag_": "release|arm64-v8a",
     "diagnosticCode_": 0,
