@@ -48,7 +48,11 @@ SDL_Window *main_window = NULL;
 static SDL_Renderer *main_window_renderer = NULL;
 
 #ifdef WITH_SDL3
+#if defined(ANDROID) || defined(__ANDROID__)
+SDL_PixelFormatDetailsPtr main_window_tex_format = NULL;
+#else
 const SDL_PixelFormatDetails *main_window_tex_format = NULL;
+#endif
 #else
 SDL_PixelFormat *main_window_tex_format = NULL;
 #endif
@@ -190,7 +194,11 @@ static void init_texture(void)
 	int scaler_h = scalers[scaler].height;
 
 #ifdef WITH_SDL3
+#if defined(ANDROID) || defined(__ANDROID__)
+    main_window_tex_format = (SDL_PixelFormatDetailsPtr)SDL_GetPixelFormatDetails(format);
+#else
     main_window_tex_format = SDL_GetPixelFormatDetails(format);
+#endif
 #else
 	main_window_tex_format = SDL_AllocFormat(format);
 #endif
@@ -382,9 +390,9 @@ void JE_clr256(SDL_Surface *screen)
 #endif
 }
 
-void JE_showVGA(void) 
-{ 
-	scale_and_flip(VGAScreen); 
+void JE_showVGA(void)
+{
+	scale_and_flip(VGAScreen);
 }
 
 static void calc_dst_render_rect(SDL_Surface *const src_surface, SDL_Rect *const dst_rect)

@@ -856,7 +856,30 @@ void network_state_reset(void)
 // exchange game information
 int network_connect(void)
 {
-#ifndef WITH_SDL3
+#ifdef WITH_SDL3
+    ip = SDLNet_ResolveHostname(network_opponent_host);
+
+    if (ip == NULL)
+    {
+        fprintf(stderr, "error: SDLNet_ResolveHostName: %s\n", SDLNet_GetError());
+    }
+
+resolve:
+    switch (SDLNet_WaitUntilResolved(ip, 1000))
+    {
+        case 1:
+            break;
+
+        case 0:
+            goto resolve;
+            break;
+
+        case -1:
+        default:
+            fprintf(stderr, "error: SDLNet_WaitUntilResolved: %s\n", SDLNet_GetError());
+            return -1;
+    }
+#else
 	SDLNet_ResolveHost(&ip, network_opponent_host, network_opponent_port);
 
 	SDLNet_UDP_Bind(socket, 0, &ip);
@@ -1095,29 +1118,7 @@ int network_init(void)
 #ifndef WITH_SDL3
 	socket = SDLNet_UDP_Open(network_player_port);
 #else
-    ip = SDLNet_ResolveHostname(network_opponent_host);
-
-    if (ip == NULL)
-    {
-        fprintf(stderr, "error: SDLNet_ResolveHostName: %s\n", SDLNet_GetError());
-    }
-
-resolve:
-    switch (SDLNet_WaitUntilResolved(ip, 1000))
-    {
-        case 1:
-            socket = SDLNet_CreateDatagramSocket(ip, network_opponent_port);
-            break;
-
-        case 0:
-            goto resolve;
-            break;
-
-        case -1:
-        default:
-            fprintf(stderr, "error: SDLNet_WaitUntilResolved: %s\n", SDLNet_GetError());
-            break;
-    }
+    socket = SDLNet_CreateDatagramSocket(NULL, network_opponent_port);
 #endif
 
 	if (!socket)
