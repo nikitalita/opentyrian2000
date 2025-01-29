@@ -3,6 +3,7 @@
 PLATFORM := UNIX
 TYRIAN_DIR = /usr/bin
 
+WITH_SDL3 := true
 WITH_NETWORK := true
 WITH_MIDI := true
 
@@ -22,7 +23,6 @@ INSTALL = install
 PKG_CONFIG = pkg-config
 
 # VCS_IDREV ?= (git describe --tags || git rev-parse --short HEAD)
-VCS_IDREV = "\"$(shell echo "SDL2 v$(shell pkg-config SDL2 --modversion), SDL2_net v$(shell pkg-config SDL2_net --modversion), $(shell ./getver)")\""
 
 INSTALL_PROGRAM = $(INSTALL) -m 755
 INSTALL_DATA = $(INSTALL) -m 644
@@ -55,6 +55,10 @@ DEPS := $(SRCS:src/%.c=obj/%.d)
 
 ###
 
+ifeq ($(WITH_SDL3), true)
+    EXTRA_CPPFLAGS += -DWITH_SDL3
+endif
+
 ifeq ($(WITH_NETWORK), true)
     EXTRA_CPPFLAGS += -DWITH_NETWORK
 endif
@@ -79,24 +83,47 @@ LDFLAGS ?=
 LDLIBS ?=
 
 ifeq ($(WITH_NETWORK), true)
+ifeq ($(WITH_SDL3), true)
+    SDL_CPPFLAGS := $(shell pkg-config SDL3 --cflags) $(shell pkg-config SDL3_net --cflags)
+    SDL_LDFLAGS :=
+    SDL_LDLIBS := $(shell pkg-config SDL3 --libs) $(shell pkg-config SDL3_net --libs)
+else
     SDL_CPPFLAGS := $(shell pkg-config SDL2 --cflags) $(shell pkg-config SDL2_net --cflags)
     SDL_LDFLAGS :=
     SDL_LDLIBS := $(shell pkg-config SDL2 --libs) $(shell pkg-config SDL2_net --libs)
+endif
+else
+ifeq ($(WITH_SDL3), true)
+    SDL_CPPFLAGS := $(shell pkg-config SDL3 --cflags)
+    SDL_LDFLAGS :=
+    SDL_LDLIBS := $(shell pkg-config SDL3 --libs)
 else
     SDL_CPPFLAGS := $(shell pkg-config SDL2 --cflags)
     SDL_LDFLAGS :=
     SDL_LDLIBS := $(shell pkg-config SDL2 --libs)
 endif
-
-ifeq ($(WITH_MIDI), true)
-    SDL_PACKAGES := SDL2_mixer_ext
-    MIDIPROC_LIBS := midiproc fluidsynth
 endif
 
 ifeq ($(WITH_MIDI), true)
+ifeq ($(WITH_SDL3), true)
+    SDL_PACKAGES := SDL3_mixer
+    MIDIPROC_LIBS := midiproc fluidsynth
+else
+    SDL_PACKAGES := SDL2_mixer_ext
+    MIDIPROC_LIBS := midiproc fluidsynth
+endif
+endif
+
+ifeq ($(WITH_MIDI), true)
+ifeq ($(WITH_SDL3), true)
+    SDL_CPPFLAGS += $(shell pkg-config $(MIDIPROC_LIBS) --cflags)
+    SDL_LDFLAGS :=
+    SDL_LDLIBS += $(shell pkg-config $(SDL_PACKAGES) --libs) $(shell pkg-config $(MIDIPROC_LIBS) --libs) -lz -lpthread
+else
     SDL_CPPFLAGS += $(shell pkg-config $(MIDIPROC_LIBS) --cflags)
     SDL_LDFLAGS :=
     SDL_LDLIBS += $(shell pkg-config $(SDL_PACKAGES) --libs) $(shell pkg-config $(MIDIPROC_LIBS) --libs) -ltimidity_sdl2 -lEDMIDI -lOPNMIDI -lADLMIDI -lmodplug -lwavpack -lxmp -lgme -lz -lpthread
+endif
 endif
 
 # add stdc++ to the ldlibs if using midiproc
@@ -119,7 +146,7 @@ ALL_LDLIBS = -lm \
 ###
 
 .PHONY : all
-all : getver $(TARGET)
+all : $(TARGET)
 
 .PHONY : installdirs
 installdirs :
@@ -164,15 +191,11 @@ clean :
 	rm -f $(OBJS)
 	rm -f $(DEPS)
 	rm -f $(TARGET)
-	rm -f getver
 
 $(TARGET) : $(OBJS)
 	$(CC) $(ALL_CFLAGS) $(ALL_LDFLAGS) -o $@ $^ $(ALL_LDLIBS)
 
 -include $(DEPS)
-
-getver: getver.c
-	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $<
 
 obj/%.o : src/%.c
 	@mkdir -p "$(dir $@)"
