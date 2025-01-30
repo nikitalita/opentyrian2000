@@ -1,1 +1,0 @@
-/Users/andyvand/Downloads/opentyrian2000/android-project/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64

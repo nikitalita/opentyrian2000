@@ -1,3 +1,0 @@
-fcntl(): Bad file descriptor
-/Users/andyvand/Library/Android/sdk/ndk/27.0.12077973/build/core/build-binary.mk:590: Android NDK: Module main depends on undefined modules: SDL3    
-/Users/andyvand/Library/Android/sdk/ndk/27.0.12077973/build/core/build-binary.mk:603: *** Android NDK: Note that old versions of ndk-build silently ignored this error case. If your project worked on those versions, the missing libraries were not needed and you can remove those dependencies from the module to fix your build. Alternatively, set APP_ALLOW_MISSING_DEPS=true to allow missing dependencies.    .  Stop.

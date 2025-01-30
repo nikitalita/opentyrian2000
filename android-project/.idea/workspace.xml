@@ -14,73 +14,689 @@
       <change beforePath="$PROJECT_DIR$/.gradle/8.10.2/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.10.2/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.10.2/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.10.2/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.10.2/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.10.2/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/.cxx/Debug/47q31g3d/arm64-v8a/android_gradle_build.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/.cxx/Debug/47q31g3d/arm64-v8a/android_gradle_build_mini.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/.cxx/Debug/47q31g3d/arm64-v8a/build_file_index.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/.cxx/Debug/47q31g3d/arm64-v8a/compile_commands.json.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/.cxx/Debug/47q31g3d/arm64-v8a/configure_fingerprint.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/.cxx/Debug/47q31g3d/arm64-v8a/metadata_generation_command.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/.cxx/Debug/47q31g3d/arm64-v8a/prefab_config.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/.cxx/Debug/47q31g3d/arm64-v8a/symbol_folder_index.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/.cxx/Debug/47q31g3d/armeabi-v7a/android_gradle_build.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/.cxx/Debug/47q31g3d/armeabi-v7a/android_gradle_build_mini.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/.cxx/Debug/47q31g3d/armeabi-v7a/build_file_index.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/.cxx/Debug/47q31g3d/armeabi-v7a/compile_commands.json.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/.cxx/Debug/47q31g3d/armeabi-v7a/configure_fingerprint.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/.cxx/Debug/47q31g3d/armeabi-v7a/metadata_generation_command.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/.cxx/Debug/47q31g3d/armeabi-v7a/prefab_config.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/.cxx/Debug/47q31g3d/armeabi-v7a/symbol_folder_index.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/.cxx/Debug/47q31g3d/hash_key.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/.cxx/Debug/47q31g3d/x86/android_gradle_build.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/.cxx/Debug/47q31g3d/x86/android_gradle_build_mini.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/.cxx/Debug/47q31g3d/x86/build_file_index.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/.cxx/Debug/47q31g3d/x86/compile_commands.json.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/.cxx/Debug/47q31g3d/x86/configure_fingerprint.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/.cxx/Debug/47q31g3d/x86/metadata_generation_command.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/.cxx/Debug/47q31g3d/x86/prefab_config.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/.cxx/Debug/47q31g3d/x86/symbol_folder_index.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/.cxx/Debug/47q31g3d/x86_64/android_gradle_build.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/.cxx/Debug/47q31g3d/x86_64/android_gradle_build_mini.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/.cxx/Debug/47q31g3d/x86_64/build_file_index.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/.cxx/Debug/47q31g3d/x86_64/compile_commands.json.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/.cxx/Debug/47q31g3d/x86_64/configure_fingerprint.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/.cxx/Debug/47q31g3d/x86_64/metadata_generation_command.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/.cxx/Debug/47q31g3d/x86_64/prefab_config.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/.cxx/Debug/47q31g3d/x86_64/symbol_folder_index.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/.cxx/Release/d4x65l14/arm64-v8a/configure_fingerprint.bin" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/.cxx/Release/d4x65l14/arm64-v8a/configure_fingerprint.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/.cxx/Release/d4x65l14/armeabi-v7a/configure_fingerprint.bin" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/.cxx/Release/d4x65l14/armeabi-v7a/configure_fingerprint.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/.cxx/Release/d4x65l14/riscv64/android_gradle_build.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/.cxx/Release/d4x65l14/riscv64/android_gradle_build_mini.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/.cxx/Release/d4x65l14/riscv64/build_file_index.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/.cxx/Release/d4x65l14/riscv64/compile_commands.json.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/.cxx/Release/d4x65l14/riscv64/configure_fingerprint.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/.cxx/Release/d4x65l14/riscv64/metadata_generation_command.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/.cxx/Release/d4x65l14/riscv64/prefab_config.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/.cxx/Release/d4x65l14/riscv64/symbol_folder_index.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/.cxx/Release/d4x65l14/x86/configure_fingerprint.bin" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/.cxx/Release/d4x65l14/x86/configure_fingerprint.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/.cxx/Release/d4x65l14/x86_64/configure_fingerprint.bin" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/.cxx/Release/d4x65l14/x86_64/configure_fingerprint.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/arm64-v8a/configure_stacktrace.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/arm64-v8a/configure_stderr.txt" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/arm64-v8a/configure_stderr.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/arm64-v8a/configure_stdout.txt" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/arm64-v8a/configure_stdout.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/arm64-v8a/metadata_generation_record.json" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/arm64-v8a/metadata_generation_record.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/armeabi-v7a/configure_stacktrace.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/armeabi-v7a/configure_stderr.txt" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/armeabi-v7a/configure_stderr.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/armeabi-v7a/configure_stdout.txt" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/armeabi-v7a/configure_stdout.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/armeabi-v7a/metadata_generation_record.json" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/armeabi-v7a/metadata_generation_record.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/x86/configure_stacktrace.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/x86/configure_stderr.txt" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/x86/configure_stderr.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/x86/configure_stdout.txt" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/x86/configure_stdout.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/x86/generate_cxx_metadata_33_timing.txt" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/x86/generate_cxx_metadata_33_timing.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/x86/metadata_generation_record.json" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/x86/metadata_generation_record.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/x86_64/configure_stacktrace.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/x86_64/configure_stderr.txt" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/x86_64/configure_stderr.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/x86_64/configure_stdout.txt" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/x86_64/configure_stdout.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/x86_64/metadata_generation_record.json" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/x86_64/metadata_generation_record.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/logs/arm64-v8a/generate_cxx_metadata_33_timing.txt" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/logs/arm64-v8a/generate_cxx_metadata_33_timing.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/logs/x86/generate_cxx_metadata_33_timing.txt" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/logs/x86/generate_cxx_metadata_33_timing.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/annotation_processor_list/debug/javaPreCompileDebug/annotationProcessors.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/annotation_processor_list/debugAndroidTest/javaPreCompileDebugAndroidTest/annotationProcessors.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/annotation_processor_list/debugUnitTest/javaPreCompileDebugUnitTest/annotationProcessors.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/app_metadata/debug/writeDebugAppMetadata/app-metadata.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/compatible_screen_manifest/debug/createDebugCompatibleScreenManifests/output-metadata.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/compile_and_runtime_not_namespaced_r_class_jar/debug/processDebugResources/R.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/compile_and_runtime_not_namespaced_r_class_jar/debugAndroidTest/processDebugAndroidTestResources/R.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/compile_app_classes_jar/debug/bundleDebugClassesToCompileJar/classes.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/arm64-v8a/build_command_main" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/arm64-v8a/build_model.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/arm64-v8a/build_stacktrace_main.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/arm64-v8a/build_stderr_main.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/arm64-v8a/build_stdout_main.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/arm64-v8a/configure_command" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/arm64-v8a/configure_stderr.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/arm64-v8a/configure_stdout.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/arm64-v8a/generate_cxx_metadata_150_timing.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/arm64-v8a/generate_cxx_metadata_181_timing.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/arm64-v8a/metadata_generation_record.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/armeabi-v7a/build_command_main" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/armeabi-v7a/build_model.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/armeabi-v7a/build_stacktrace_main.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/armeabi-v7a/build_stderr_main.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/armeabi-v7a/build_stdout_main.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/armeabi-v7a/configure_command" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/armeabi-v7a/configure_stderr.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/armeabi-v7a/configure_stdout.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/armeabi-v7a/generate_cxx_metadata_150_timing.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/armeabi-v7a/generate_cxx_metadata_181_timing.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/armeabi-v7a/metadata_generation_record.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/x86/build_command_main" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/x86/build_model.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/x86/build_stacktrace_main.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/x86/build_stderr_main.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/x86/build_stdout_main.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/x86/configure_command" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/x86/configure_stderr.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/x86/configure_stdout.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/x86/generate_cxx_metadata_149_timing.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/x86/generate_cxx_metadata_181_timing.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/x86/generate_cxx_metadata_33_timing.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/x86/metadata_generation_record.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/x86_64/build_command_main" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/x86_64/build_model.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/x86_64/build_stacktrace_main.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/x86_64/build_stderr_main.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/x86_64/build_stdout_main.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/x86_64/configure_command" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/x86_64/configure_stderr.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/x86_64/configure_stdout.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/x86_64/generate_cxx_metadata_149_timing.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/x86_64/generate_cxx_metadata_181_timing.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/logs/x86_64/metadata_generation_record.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/arm64-v8a/objs-debug/main/__/__/__/__/src/animlib.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/arm64-v8a/objs-debug/main/__/__/__/__/src/animlib.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/arm64-v8a/objs-debug/main/__/__/__/__/src/arg_parse.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/arm64-v8a/objs-debug/main/__/__/__/__/src/arg_parse.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/arm64-v8a/objs-debug/main/__/__/__/__/src/backgrnd.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/arm64-v8a/objs-debug/main/__/__/__/__/src/backgrnd.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/arm64-v8a/objs-debug/main/__/__/__/__/src/config.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/arm64-v8a/objs-debug/main/__/__/__/__/src/config.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/arm64-v8a/objs-debug/main/__/__/__/__/src/config_file.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/arm64-v8a/objs-debug/main/__/__/__/__/src/config_file.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/arm64-v8a/objs-debug/main/__/__/__/__/src/destruct.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/arm64-v8a/objs-debug/main/__/__/__/__/src/destruct.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/arm64-v8a/objs-debug/main/__/__/__/__/src/editship.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/arm64-v8a/objs-debug/main/__/__/__/__/src/editship.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/arm64-v8a/objs-debug/main/__/__/__/__/src/episodes.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/arm64-v8a/objs-debug/main/__/__/__/__/src/episodes.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/arm64-v8a/objs-debug/main/__/__/__/__/src/file.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/arm64-v8a/objs-debug/main/__/__/__/__/src/file.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/arm64-v8a/objs-debug/main/__/__/__/__/src/font.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/arm64-v8a/objs-debug/main/__/__/__/__/src/font.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/arm64-v8a/objs-debug/main/__/__/__/__/src/fonthand.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/arm64-v8a/objs-debug/main/__/__/__/__/src/fonthand.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/arm64-v8a/objs-debug/main/__/__/__/__/src/game_menu.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/arm64-v8a/objs-debug/main/__/__/__/__/src/game_menu.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/arm64-v8a/objs-debug/main/__/__/__/__/src/helptext.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/arm64-v8a/objs-debug/main/__/__/__/__/src/helptext.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/arm64-v8a/objs-debug/main/__/__/__/__/src/joystick.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/arm64-v8a/objs-debug/main/__/__/__/__/src/joystick.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/arm64-v8a/objs-debug/main/__/__/__/__/src/jukebox.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/arm64-v8a/objs-debug/main/__/__/__/__/src/jukebox.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/arm64-v8a/objs-debug/main/__/__/__/__/src/keyboard.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/arm64-v8a/objs-debug/main/__/__/__/__/src/keyboard.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/arm64-v8a/objs-debug/main/__/__/__/__/src/lds_play.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/arm64-v8a/objs-debug/main/__/__/__/__/src/lds_play.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/arm64-v8a/objs-debug/main/__/__/__/__/src/loudness.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/arm64-v8a/objs-debug/main/__/__/__/__/src/loudness.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/arm64-v8a/objs-debug/main/__/__/__/__/src/lvllib.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/arm64-v8a/objs-debug/main/__/__/__/__/src/lvllib.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/arm64-v8a/objs-debug/main/__/__/__/__/src/lvlmast.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/arm64-v8a/objs-debug/main/__/__/__/__/src/lvlmast.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/arm64-v8a/objs-debug/main/__/__/__/__/src/mainint.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/arm64-v8a/objs-debug/main/__/__/__/__/src/mainint.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/arm64-v8a/objs-debug/main/__/__/__/__/src/menus.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/arm64-v8a/objs-debug/main/__/__/__/__/src/menus.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/arm64-v8a/objs-debug/main/__/__/__/__/src/mouse.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/arm64-v8a/objs-debug/main/__/__/__/__/src/mouse.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/arm64-v8a/objs-debug/main/__/__/__/__/src/mtrand.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/arm64-v8a/objs-debug/main/__/__/__/__/src/mtrand.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/arm64-v8a/objs-debug/main/__/__/__/__/src/musmast.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/arm64-v8a/objs-debug/main/__/__/__/__/src/musmast.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/arm64-v8a/objs-debug/main/__/__/__/__/src/network.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/arm64-v8a/objs-debug/main/__/__/__/__/src/network.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/arm64-v8a/objs-debug/main/__/__/__/__/src/nortsong.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/arm64-v8a/objs-debug/main/__/__/__/__/src/nortsong.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/arm64-v8a/objs-debug/main/__/__/__/__/src/nortvars.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/arm64-v8a/objs-debug/main/__/__/__/__/src/nortvars.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/arm64-v8a/objs-debug/main/__/__/__/__/src/opentyr.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/armeabi-v7a/objs-debug/main/__/__/__/__/src/animlib.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/armeabi-v7a/objs-debug/main/__/__/__/__/src/animlib.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/armeabi-v7a/objs-debug/main/__/__/__/__/src/arg_parse.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/armeabi-v7a/objs-debug/main/__/__/__/__/src/arg_parse.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/armeabi-v7a/objs-debug/main/__/__/__/__/src/backgrnd.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/armeabi-v7a/objs-debug/main/__/__/__/__/src/backgrnd.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/armeabi-v7a/objs-debug/main/__/__/__/__/src/config.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/armeabi-v7a/objs-debug/main/__/__/__/__/src/config.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/armeabi-v7a/objs-debug/main/__/__/__/__/src/config_file.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/armeabi-v7a/objs-debug/main/__/__/__/__/src/config_file.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/armeabi-v7a/objs-debug/main/__/__/__/__/src/destruct.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/armeabi-v7a/objs-debug/main/__/__/__/__/src/destruct.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/armeabi-v7a/objs-debug/main/__/__/__/__/src/editship.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/armeabi-v7a/objs-debug/main/__/__/__/__/src/editship.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/armeabi-v7a/objs-debug/main/__/__/__/__/src/episodes.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/armeabi-v7a/objs-debug/main/__/__/__/__/src/episodes.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/armeabi-v7a/objs-debug/main/__/__/__/__/src/file.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/armeabi-v7a/objs-debug/main/__/__/__/__/src/file.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/armeabi-v7a/objs-debug/main/__/__/__/__/src/font.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/armeabi-v7a/objs-debug/main/__/__/__/__/src/font.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/armeabi-v7a/objs-debug/main/__/__/__/__/src/fonthand.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/armeabi-v7a/objs-debug/main/__/__/__/__/src/fonthand.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/armeabi-v7a/objs-debug/main/__/__/__/__/src/game_menu.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/armeabi-v7a/objs-debug/main/__/__/__/__/src/game_menu.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/armeabi-v7a/objs-debug/main/__/__/__/__/src/helptext.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/armeabi-v7a/objs-debug/main/__/__/__/__/src/helptext.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/armeabi-v7a/objs-debug/main/__/__/__/__/src/joystick.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/armeabi-v7a/objs-debug/main/__/__/__/__/src/joystick.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/armeabi-v7a/objs-debug/main/__/__/__/__/src/jukebox.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/armeabi-v7a/objs-debug/main/__/__/__/__/src/jukebox.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/armeabi-v7a/objs-debug/main/__/__/__/__/src/keyboard.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/armeabi-v7a/objs-debug/main/__/__/__/__/src/keyboard.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/armeabi-v7a/objs-debug/main/__/__/__/__/src/lds_play.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/armeabi-v7a/objs-debug/main/__/__/__/__/src/lds_play.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/armeabi-v7a/objs-debug/main/__/__/__/__/src/loudness.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/armeabi-v7a/objs-debug/main/__/__/__/__/src/loudness.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/armeabi-v7a/objs-debug/main/__/__/__/__/src/lvllib.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/armeabi-v7a/objs-debug/main/__/__/__/__/src/lvllib.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/armeabi-v7a/objs-debug/main/__/__/__/__/src/lvlmast.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/armeabi-v7a/objs-debug/main/__/__/__/__/src/lvlmast.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/armeabi-v7a/objs-debug/main/__/__/__/__/src/mainint.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/armeabi-v7a/objs-debug/main/__/__/__/__/src/mainint.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/armeabi-v7a/objs-debug/main/__/__/__/__/src/menus.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/armeabi-v7a/objs-debug/main/__/__/__/__/src/menus.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/armeabi-v7a/objs-debug/main/__/__/__/__/src/mouse.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/armeabi-v7a/objs-debug/main/__/__/__/__/src/mouse.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/armeabi-v7a/objs-debug/main/__/__/__/__/src/mtrand.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/armeabi-v7a/objs-debug/main/__/__/__/__/src/mtrand.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/armeabi-v7a/objs-debug/main/__/__/__/__/src/musmast.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/armeabi-v7a/objs-debug/main/__/__/__/__/src/musmast.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/armeabi-v7a/objs-debug/main/__/__/__/__/src/network.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/armeabi-v7a/objs-debug/main/__/__/__/__/src/network.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/armeabi-v7a/objs-debug/main/__/__/__/__/src/nortsong.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/armeabi-v7a/objs-debug/main/__/__/__/__/src/nortsong.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/armeabi-v7a/objs-debug/main/__/__/__/__/src/nortvars.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/armeabi-v7a/objs-debug/main/__/__/__/__/src/nortvars.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/armeabi-v7a/objs-debug/main/__/__/__/__/src/opentyr.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86/objs-debug/main/__/__/__/__/src/animlib.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86/objs-debug/main/__/__/__/__/src/animlib.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86/objs-debug/main/__/__/__/__/src/arg_parse.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86/objs-debug/main/__/__/__/__/src/arg_parse.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86/objs-debug/main/__/__/__/__/src/backgrnd.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86/objs-debug/main/__/__/__/__/src/backgrnd.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86/objs-debug/main/__/__/__/__/src/config.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86/objs-debug/main/__/__/__/__/src/config.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86/objs-debug/main/__/__/__/__/src/config_file.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86/objs-debug/main/__/__/__/__/src/config_file.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86/objs-debug/main/__/__/__/__/src/destruct.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86/objs-debug/main/__/__/__/__/src/destruct.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86/objs-debug/main/__/__/__/__/src/editship.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86/objs-debug/main/__/__/__/__/src/editship.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86/objs-debug/main/__/__/__/__/src/episodes.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86/objs-debug/main/__/__/__/__/src/episodes.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86/objs-debug/main/__/__/__/__/src/file.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86/objs-debug/main/__/__/__/__/src/file.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86/objs-debug/main/__/__/__/__/src/font.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86/objs-debug/main/__/__/__/__/src/font.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86/objs-debug/main/__/__/__/__/src/fonthand.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86/objs-debug/main/__/__/__/__/src/fonthand.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86/objs-debug/main/__/__/__/__/src/game_menu.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86/objs-debug/main/__/__/__/__/src/game_menu.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86/objs-debug/main/__/__/__/__/src/helptext.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86/objs-debug/main/__/__/__/__/src/helptext.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86/objs-debug/main/__/__/__/__/src/joystick.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86/objs-debug/main/__/__/__/__/src/joystick.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86/objs-debug/main/__/__/__/__/src/jukebox.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86/objs-debug/main/__/__/__/__/src/jukebox.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86/objs-debug/main/__/__/__/__/src/keyboard.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86/objs-debug/main/__/__/__/__/src/keyboard.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86/objs-debug/main/__/__/__/__/src/lds_play.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86/objs-debug/main/__/__/__/__/src/lds_play.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86/objs-debug/main/__/__/__/__/src/loudness.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86/objs-debug/main/__/__/__/__/src/loudness.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86/objs-debug/main/__/__/__/__/src/lvllib.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86/objs-debug/main/__/__/__/__/src/lvllib.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86/objs-debug/main/__/__/__/__/src/lvlmast.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86/objs-debug/main/__/__/__/__/src/lvlmast.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86/objs-debug/main/__/__/__/__/src/mainint.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86/objs-debug/main/__/__/__/__/src/mainint.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86/objs-debug/main/__/__/__/__/src/menus.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86/objs-debug/main/__/__/__/__/src/menus.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86/objs-debug/main/__/__/__/__/src/mouse.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86/objs-debug/main/__/__/__/__/src/mouse.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86/objs-debug/main/__/__/__/__/src/mtrand.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86/objs-debug/main/__/__/__/__/src/mtrand.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86/objs-debug/main/__/__/__/__/src/musmast.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86/objs-debug/main/__/__/__/__/src/musmast.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86/objs-debug/main/__/__/__/__/src/network.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86/objs-debug/main/__/__/__/__/src/network.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86/objs-debug/main/__/__/__/__/src/nortsong.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86/objs-debug/main/__/__/__/__/src/nortsong.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86/objs-debug/main/__/__/__/__/src/nortvars.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86/objs-debug/main/__/__/__/__/src/nortvars.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86/objs-debug/main/__/__/__/__/src/opentyr.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86_64/objs-debug/main/__/__/__/__/src/animlib.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86_64/objs-debug/main/__/__/__/__/src/animlib.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86_64/objs-debug/main/__/__/__/__/src/arg_parse.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86_64/objs-debug/main/__/__/__/__/src/arg_parse.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86_64/objs-debug/main/__/__/__/__/src/backgrnd.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86_64/objs-debug/main/__/__/__/__/src/backgrnd.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86_64/objs-debug/main/__/__/__/__/src/config.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86_64/objs-debug/main/__/__/__/__/src/config.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86_64/objs-debug/main/__/__/__/__/src/config_file.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86_64/objs-debug/main/__/__/__/__/src/config_file.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86_64/objs-debug/main/__/__/__/__/src/destruct.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86_64/objs-debug/main/__/__/__/__/src/destruct.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86_64/objs-debug/main/__/__/__/__/src/editship.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86_64/objs-debug/main/__/__/__/__/src/editship.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86_64/objs-debug/main/__/__/__/__/src/episodes.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86_64/objs-debug/main/__/__/__/__/src/episodes.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86_64/objs-debug/main/__/__/__/__/src/file.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86_64/objs-debug/main/__/__/__/__/src/file.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86_64/objs-debug/main/__/__/__/__/src/font.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86_64/objs-debug/main/__/__/__/__/src/font.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86_64/objs-debug/main/__/__/__/__/src/fonthand.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86_64/objs-debug/main/__/__/__/__/src/fonthand.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86_64/objs-debug/main/__/__/__/__/src/game_menu.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86_64/objs-debug/main/__/__/__/__/src/game_menu.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86_64/objs-debug/main/__/__/__/__/src/helptext.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86_64/objs-debug/main/__/__/__/__/src/helptext.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86_64/objs-debug/main/__/__/__/__/src/joystick.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86_64/objs-debug/main/__/__/__/__/src/joystick.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86_64/objs-debug/main/__/__/__/__/src/jukebox.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86_64/objs-debug/main/__/__/__/__/src/jukebox.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86_64/objs-debug/main/__/__/__/__/src/keyboard.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86_64/objs-debug/main/__/__/__/__/src/keyboard.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86_64/objs-debug/main/__/__/__/__/src/lds_play.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86_64/objs-debug/main/__/__/__/__/src/lds_play.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86_64/objs-debug/main/__/__/__/__/src/loudness.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86_64/objs-debug/main/__/__/__/__/src/loudness.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86_64/objs-debug/main/__/__/__/__/src/lvllib.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86_64/objs-debug/main/__/__/__/__/src/lvllib.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86_64/objs-debug/main/__/__/__/__/src/lvlmast.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86_64/objs-debug/main/__/__/__/__/src/lvlmast.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86_64/objs-debug/main/__/__/__/__/src/mainint.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86_64/objs-debug/main/__/__/__/__/src/mainint.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86_64/objs-debug/main/__/__/__/__/src/menus.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86_64/objs-debug/main/__/__/__/__/src/menus.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86_64/objs-debug/main/__/__/__/__/src/mouse.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86_64/objs-debug/main/__/__/__/__/src/mouse.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86_64/objs-debug/main/__/__/__/__/src/mtrand.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86_64/objs-debug/main/__/__/__/__/src/mtrand.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86_64/objs-debug/main/__/__/__/__/src/musmast.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86_64/objs-debug/main/__/__/__/__/src/musmast.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86_64/objs-debug/main/__/__/__/__/src/network.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86_64/objs-debug/main/__/__/__/__/src/network.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86_64/objs-debug/main/__/__/__/__/src/nortsong.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86_64/objs-debug/main/__/__/__/__/src/nortsong.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86_64/objs-debug/main/__/__/__/__/src/nortvars.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86_64/objs-debug/main/__/__/__/__/src/nortvars.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Debug/47q31g3d/obj/local/x86_64/objs-debug/main/__/__/__/__/src/opentyr.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/logs/arm64-v8a/generate_cxx_metadata_2348_timing.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/logs/arm64-v8a/generate_cxx_metadata_2503_timing.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/logs/arm64-v8a/generate_cxx_metadata_280_timing.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/logs/arm64-v8a/generate_cxx_metadata_337_timing.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/logs/arm64-v8a/generate_cxx_metadata_33_timing.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/logs/arm64-v8a/generate_cxx_metadata_345_timing.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/logs/arm64-v8a/generate_cxx_metadata_432_timing.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/logs/arm64-v8a/generate_cxx_metadata_436_timing.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/logs/arm64-v8a/generate_cxx_metadata_527_timing.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/logs/armeabi-v7a/clean_command" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/logs/armeabi-v7a/clean_stacktrace.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/logs/armeabi-v7a/clean_stderr.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/logs/armeabi-v7a/clean_stdout.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/logs/armeabi-v7a/generate_cxx_metadata_2348_timing.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/logs/armeabi-v7a/generate_cxx_metadata_2503_timing.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/logs/armeabi-v7a/generate_cxx_metadata_284_timing.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/logs/armeabi-v7a/generate_cxx_metadata_337_timing.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/logs/armeabi-v7a/generate_cxx_metadata_353_timing.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/logs/armeabi-v7a/generate_cxx_metadata_432_timing.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/logs/armeabi-v7a/generate_cxx_metadata_436_timing.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/logs/armeabi-v7a/generate_cxx_metadata_527_timing.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/logs/riscv64/build_command_main" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/logs/riscv64/build_model.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/logs/riscv64/build_stderr_main.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/logs/riscv64/build_stdout_main.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/logs/riscv64/configure_command" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/logs/riscv64/configure_stderr.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/logs/riscv64/configure_stdout.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/logs/riscv64/generate_cxx_metadata_2348_timing.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/logs/riscv64/generate_cxx_metadata_2503_timing.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/logs/riscv64/metadata_generation_record.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/logs/x86/generate_cxx_metadata_2348_timing.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/logs/x86/generate_cxx_metadata_2503_timing.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/logs/x86/generate_cxx_metadata_278_timing.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/logs/x86/generate_cxx_metadata_337_timing.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/logs/x86/generate_cxx_metadata_33_timing.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/logs/x86/generate_cxx_metadata_353_timing.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/logs/x86/generate_cxx_metadata_432_timing.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/logs/x86/generate_cxx_metadata_436_timing.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/logs/x86/generate_cxx_metadata_527_timing.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/logs/x86_64/generate_cxx_metadata_2348_timing.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/logs/x86_64/generate_cxx_metadata_2503_timing.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/logs/x86_64/generate_cxx_metadata_278_timing.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/logs/x86_64/generate_cxx_metadata_338_timing.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/logs/x86_64/generate_cxx_metadata_353_timing.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/logs/x86_64/generate_cxx_metadata_432_timing.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/logs/x86_64/generate_cxx_metadata_433_timing.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/logs/x86_64/generate_cxx_metadata_527_timing.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/arm64-v8a/libmain.so" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/arm64-v8a/libmain.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/arm64-v8a/objs/main/__/__/__/__/src/network.o" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/arm64-v8a/objs/main/__/__/__/__/src/network.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/arm64-v8a/objs/main/__/__/__/__/src/opentyr.o" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/arm64-v8a/objs/main/__/__/__/__/src/opentyr.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/arm64-v8a/objs/main/__/__/__/__/src/keyboard.o" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/arm64-v8a/objs/main/__/__/__/__/src/keyboard.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/armeabi-v7a/libmain.so" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/armeabi-v7a/libmain.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/armeabi-v7a/objs/main/__/__/__/__/src/network.o" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/armeabi-v7a/objs/main/__/__/__/__/src/network.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/armeabi-v7a/objs/main/__/__/__/__/src/opentyr.o" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/armeabi-v7a/objs/main/__/__/__/__/src/opentyr.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/armeabi-v7a/objs/main/__/__/__/__/src/keyboard.o" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/armeabi-v7a/objs/main/__/__/__/__/src/keyboard.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/libSDL3.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/libSDL3_net.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/libc++_shared.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/libmain.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/animlib.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/animlib.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/arg_parse.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/arg_parse.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/backgrnd.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/backgrnd.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/config.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/config.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/config_file.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/config_file.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/destruct.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/destruct.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/editship.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/editship.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/episodes.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/episodes.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/file.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/file.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/font.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/font.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/fonthand.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/fonthand.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/game_menu.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/game_menu.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/helptext.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/helptext.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/joystick.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/joystick.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/jukebox.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/jukebox.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/keyboard.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/keyboard.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/lds_play.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/lds_play.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/loudness.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/loudness.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/lvllib.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/lvllib.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/lvlmast.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/lvlmast.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/mainint.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/mainint.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/menus.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/menus.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/mouse.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/mouse.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/mtrand.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/mtrand.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/musmast.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/musmast.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/network.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/network.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/nortsong.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/nortsong.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/nortvars.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/nortvars.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/opentyr.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/opentyr.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/opl.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/opl.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/palette.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/palette.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/params.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/params.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/pcxload.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/pcxload.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/pcxmast.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/pcxmast.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/picload.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/picload.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/player.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/player.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/shots.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/shots.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/sizebuf.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/sizebuf.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/sndmast.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/sndmast.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/sprite.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/sprite.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/starlib.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/starlib.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/tyrian2.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/tyrian2.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/varz.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/varz.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/vga256d.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/vga256d.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/vga_palette.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/vga_palette.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/video.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/video.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/video_scale.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/video_scale.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/video_scale_hqNx.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/video_scale_hqNx.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/xmas.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/riscv64/objs/main/__/__/__/__/src/xmas.o.d" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/x86/libmain.so" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/x86/libmain.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/x86/objs/main/__/__/__/__/src/network.o" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/x86/objs/main/__/__/__/__/src/network.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/x86/objs/main/__/__/__/__/src/opentyr.o" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/x86/objs/main/__/__/__/__/src/opentyr.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/x86/objs/main/__/__/__/__/src/keyboard.o" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/x86/objs/main/__/__/__/__/src/keyboard.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/x86_64/libmain.so" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/x86_64/libmain.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/x86_64/objs/main/__/__/__/__/src/network.o" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/x86_64/objs/main/__/__/__/__/src/network.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/x86_64/objs/main/__/__/__/__/src/opentyr.o" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/x86_64/objs/main/__/__/__/__/src/opentyr.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/x86_64/objs/main/__/__/__/__/src/keyboard.o" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/cxx/Release/d4x65l14/obj/local/x86_64/objs/main/__/__/__/__/src/keyboard.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/desugar_graph/debug/dexBuilderDebug/out/currentProject/dirs_bucket_0/graph.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/desugar_graph/debug/dexBuilderDebug/out/currentProject/dirs_bucket_1/graph.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/desugar_graph/debug/dexBuilderDebug/out/currentProject/dirs_bucket_2/graph.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/desugar_graph/debug/dexBuilderDebug/out/currentProject/dirs_bucket_3/graph.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/desugar_graph/debug/dexBuilderDebug/out/currentProject/jar_e1574df6027fc3ee1059e2ec72d08efac365496303d16fae81252694e4a3a2f6_bucket_0/graph.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/desugar_graph/debug/dexBuilderDebug/out/currentProject/jar_e1574df6027fc3ee1059e2ec72d08efac365496303d16fae81252694e4a3a2f6_bucket_1/graph.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/desugar_graph/debug/dexBuilderDebug/out/currentProject/jar_e1574df6027fc3ee1059e2ec72d08efac365496303d16fae81252694e4a3a2f6_bucket_2/graph.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/desugar_graph/debug/dexBuilderDebug/out/currentProject/jar_e1574df6027fc3ee1059e2ec72d08efac365496303d16fae81252694e4a3a2f6_bucket_3/graph.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/desugar_graph/debugAndroidTest/dexBuilderDebugAndroidTest/out/currentProject/jar_7ea3057b0bf0b772330605423877609ada8ecfab1e990cb17f11c64486b4e493_bucket_0/graph.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/desugar_graph/debugAndroidTest/dexBuilderDebugAndroidTest/out/currentProject/jar_7ea3057b0bf0b772330605423877609ada8ecfab1e990cb17f11c64486b4e493_bucket_1/graph.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/desugar_graph/debugAndroidTest/dexBuilderDebugAndroidTest/out/currentProject/jar_7ea3057b0bf0b772330605423877609ada8ecfab1e990cb17f11c64486b4e493_bucket_2/graph.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/desugar_graph/debugAndroidTest/dexBuilderDebugAndroidTest/out/currentProject/jar_7ea3057b0bf0b772330605423877609ada8ecfab1e990cb17f11c64486b4e493_bucket_3/graph.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/dex/debug/mergeProjectDexDebug/0/classes.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/dex/debug/mergeProjectDexDebug/2/classes.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/dex/debugAndroidTest/mergeProjectDexDebugAndroidTest/0/classes.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/dex_archive_input_jar_hashes/debug/dexBuilderDebug/out" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/dex_archive_input_jar_hashes/debugAndroidTest/dexBuilderDebugAndroidTest/out" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/dex_number_of_buckets_file/debug/dexBuilderDebug/out" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/dex_number_of_buckets_file/debugAndroidTest/dexBuilderDebugAndroidTest/out" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/debug-mergeJavaRes/merge-state" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/debug/mergeDebugResources/compile-file-map.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/debug/mergeDebugResources/merged.dir/values/values.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/debug/mergeDebugResources/merger.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/debug/packageDebugResources/compile-file-map.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/debug/packageDebugResources/merged.dir/values/values.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/debug/packageDebugResources/merger.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/debugAndroidTest-mergeJavaRes/merge-state" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/debugAndroidTest/mergeDebugAndroidTestResources/compile-file-map.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/debugAndroidTest/mergeDebugAndroidTestResources/merger.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugAndroidTestAssets/merger.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugAndroidTestJniLibFolders/merger.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugAndroidTestShaders/merger.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugJniLibFolders/merger.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugShaders/merger.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/packageRelease/tmp/release/dex-renamer-state.txt" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental/packageRelease/tmp/release/dex-renamer-state.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/release/mergeReleaseResources/compile-file-map.properties" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental/release/mergeReleaseResources/compile-file-map.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/release/packageReleaseResources/compile-file-map.properties" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental/release/packageReleaseResources/compile-file-map.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/org/libsdl/app/HIDDevice.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/org/libsdl/app/HIDDeviceBLESteamController$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/org/libsdl/app/HIDDeviceBLESteamController$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/org/libsdl/app/HIDDeviceBLESteamController$3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/org/libsdl/app/HIDDeviceBLESteamController$GattOperation$Operation.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/org/libsdl/app/HIDDeviceBLESteamController$GattOperation.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/org/libsdl/app/HIDDeviceBLESteamController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/org/libsdl/app/HIDDeviceManager$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/org/libsdl/app/HIDDeviceManager$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/org/libsdl/app/HIDDeviceManager$3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/org/libsdl/app/HIDDeviceManager.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/org/libsdl/app/HIDDeviceUSB$InputThread.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/org/libsdl/app/HIDDeviceUSB.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/org/libsdl/app/SDL.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/org/libsdl/app/SDLActivity$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/org/libsdl/app/SDLActivity$1OneShotTask.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/org/libsdl/app/SDLActivity$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/org/libsdl/app/SDLActivity$3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/org/libsdl/app/SDLActivity$4.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/org/libsdl/app/SDLActivity$5.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/org/libsdl/app/SDLActivity$6.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/org/libsdl/app/SDLActivity$7.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/org/libsdl/app/SDLActivity$NativeState.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/org/libsdl/app/SDLActivity$SDLCommandHandler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/org/libsdl/app/SDLActivity$SDLFileDialogState.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/org/libsdl/app/SDLActivity$ShowTextInputTask.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/org/libsdl/app/SDLActivity.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/org/libsdl/app/SDLAudioManager$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/org/libsdl/app/SDLAudioManager.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/org/libsdl/app/SDLClipboardHandler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/org/libsdl/app/SDLControllerManager.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/org/libsdl/app/SDLDummyEdit.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/org/libsdl/app/SDLGenericMotionListener_API14.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/org/libsdl/app/SDLGenericMotionListener_API24.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/org/libsdl/app/SDLGenericMotionListener_API26.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/org/libsdl/app/SDLHapticHandler$SDLHaptic.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/org/libsdl/app/SDLHapticHandler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/org/libsdl/app/SDLHapticHandler_API26.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/org/libsdl/app/SDLHapticHandler_API31.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/org/libsdl/app/SDLInputConnection.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/org/libsdl/app/SDLJoystickHandler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/org/libsdl/app/SDLJoystickHandler_API16$RangeComparator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/org/libsdl/app/SDLJoystickHandler_API16$SDLJoystick.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/org/libsdl/app/SDLJoystickHandler_API16.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/org/libsdl/app/SDLJoystickHandler_API19.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/org/libsdl/app/SDLMain.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/org/libsdl/app/SDLSurface.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/linked_resources_binary_format/debug/processDebugResources/linked-resources-binary-format-debug.ap_" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/linked_resources_binary_format/debug/processDebugResources/output-metadata.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/linked_resources_binary_format/debugAndroidTest/processDebugAndroidTestResources/linked-resources-binary-format.ap_" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/linked_resources_binary_format/debugAndroidTest/processDebugAndroidTestResources/output-metadata.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/local_only_symbol_list/debug/parseDebugLocalResources/R-def.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/manifest_merge_blame_file/debug/processDebugMainManifest/manifest-merger-blame-debug-report.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/manifest_merge_blame_file/debugAndroidTest/processDebugAndroidTestManifest/manifest-merger-blame-debug-androidTest-report.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/merged_java_res/debug/mergeDebugJavaResource/base.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/merged_java_res/debugAndroidTest/mergeDebugAndroidTestJavaResource/feature-app.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/merged_manifest/debug/processDebugMainManifest/AndroidManifest.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/merged_manifests/debug/processDebugManifest/AndroidManifest.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/merged_manifests/debug/processDebugManifest/output-metadata.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/merged_native_libs/release/mergeReleaseNativeLibs/out/lib/arm64-v8a/libmain.so" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/merged_native_libs/release/mergeReleaseNativeLibs/out/lib/arm64-v8a/libmain.so" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/merged_native_libs/release/mergeReleaseNativeLibs/out/lib/armeabi-v7a/libmain.so" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/merged_native_libs/release/mergeReleaseNativeLibs/out/lib/armeabi-v7a/libmain.so" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/merged_native_libs/release/mergeReleaseNativeLibs/out/lib/x86/libmain.so" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/merged_native_libs/release/mergeReleaseNativeLibs/out/lib/x86/libmain.so" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/merged_native_libs/release/mergeReleaseNativeLibs/out/lib/x86_64/libmain.so" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/merged_native_libs/release/mergeReleaseNativeLibs/out/lib/x86_64/libmain.so" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/merged_res/debug/mergeDebugResources/mipmap-hdpi_ic_launcher.png.flat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/merged_res/debug/mergeDebugResources/mipmap-mdpi_ic_launcher.png.flat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/merged_res/debug/mergeDebugResources/mipmap-xhdpi_ic_launcher.png.flat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/merged_res/debug/mergeDebugResources/mipmap-xxhdpi_ic_launcher.png.flat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/merged_res/debug/mergeDebugResources/mipmap-xxxhdpi_ic_launcher.png.flat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/merged_res/debug/mergeDebugResources/values_values.arsc.flat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/merged_res_blame_folder/debug/mergeDebugResources/out/multi-v2/mergeDebugResources.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/merged_res_blame_folder/debug/mergeDebugResources/out/multi-v2/values.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/merged_res_blame_folder/debug/mergeDebugResources/out/single/mergeDebugResources.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/native_symbol_tables/release/extractReleaseNativeSymbolTables/out/arm64-v8a/libmain.so.sym" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/native_symbol_tables/release/extractReleaseNativeSymbolTables/out/arm64-v8a/libmain.so.sym" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/native_symbol_tables/release/extractReleaseNativeSymbolTables/out/armeabi-v7a/libmain.so.sym" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/native_symbol_tables/release/extractReleaseNativeSymbolTables/out/armeabi-v7a/libmain.so.sym" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/native_symbol_tables/release/extractReleaseNativeSymbolTables/out/x86/libmain.so.sym" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/native_symbol_tables/release/extractReleaseNativeSymbolTables/out/x86/libmain.so.sym" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/native_symbol_tables/release/extractReleaseNativeSymbolTables/out/x86_64/libmain.so.sym" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/native_symbol_tables/release/extractReleaseNativeSymbolTables/out/x86_64/libmain.so.sym" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/navigation_json/debug/extractDeepLinksDebug/navigation.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/ndkBuild/release/obj/local/arm64-v8a/libmain.so" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/ndkBuild/release/obj/local/arm64-v8a/libmain.so" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/ndkBuild/release/obj/local/armeabi-v7a/libmain.so" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/ndkBuild/release/obj/local/armeabi-v7a/libmain.so" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/ndkBuild/release/obj/local/riscv64/libmain.so" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/ndkBuild/release/obj/local/x86/libmain.so" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/ndkBuild/release/obj/local/x86/libmain.so" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/ndkBuild/release/obj/local/x86_64/libmain.so" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/ndkBuild/release/obj/local/x86_64/libmain.so" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/nested_resources_validation_report/debug/generateDebugResources/nestedResourcesValidationReport.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/nested_resources_validation_report/debugAndroidTest/generateDebugAndroidTestResources/nestedResourcesValidationReport.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/packaged_manifests/debug/processDebugManifestForPackage/AndroidManifest.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/packaged_manifests/debug/processDebugManifestForPackage/output-metadata.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/packaged_manifests/debugAndroidTest/processDebugAndroidTestManifest/AndroidManifest.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/packaged_manifests/debugAndroidTest/processDebugAndroidTestManifest/output-metadata.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/packaged_res/debug/packageDebugResources/mipmap-hdpi-v4/ic_launcher.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/packaged_res/debug/packageDebugResources/mipmap-mdpi-v4/ic_launcher.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/packaged_res/debug/packageDebugResources/mipmap-xhdpi-v4/ic_launcher.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/packaged_res/debug/packageDebugResources/mipmap-xxhdpi-v4/ic_launcher.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/packaged_res/debug/packageDebugResources/mipmap-xxxhdpi-v4/ic_launcher.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/packaged_res/debug/packageDebugResources/values/values.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/71d16c9a595562082cccca1fb9d4068a1fa0a19ce64859706b68077219311055_1.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/org/libsdl/app/HIDDevice.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/org/libsdl/app/HIDDeviceBLESteamController$1.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/org/libsdl/app/HIDDeviceBLESteamController$2.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/org/libsdl/app/HIDDeviceBLESteamController$3.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/org/libsdl/app/HIDDeviceBLESteamController$GattOperation$Operation.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/org/libsdl/app/HIDDeviceBLESteamController$GattOperation.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/org/libsdl/app/HIDDeviceBLESteamController.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/org/libsdl/app/HIDDeviceManager$1.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/org/libsdl/app/HIDDeviceManager$2.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/org/libsdl/app/HIDDeviceManager$3.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/org/libsdl/app/HIDDeviceManager.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/org/libsdl/app/HIDDeviceUSB$InputThread.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/org/libsdl/app/HIDDeviceUSB.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/org/libsdl/app/SDL.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/org/libsdl/app/SDLActivity$1.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/org/libsdl/app/SDLActivity$1OneShotTask.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/org/libsdl/app/SDLActivity$2.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/org/libsdl/app/SDLActivity$3.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/org/libsdl/app/SDLActivity$4.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/org/libsdl/app/SDLActivity$5.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/org/libsdl/app/SDLActivity$6.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/org/libsdl/app/SDLActivity$7.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/org/libsdl/app/SDLActivity$NativeState.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/org/libsdl/app/SDLActivity$SDLCommandHandler.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/org/libsdl/app/SDLActivity$SDLFileDialogState.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/org/libsdl/app/SDLActivity$ShowTextInputTask.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/org/libsdl/app/SDLActivity.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/org/libsdl/app/SDLAudioManager$1.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/org/libsdl/app/SDLAudioManager.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/org/libsdl/app/SDLClipboardHandler.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/org/libsdl/app/SDLControllerManager.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/org/libsdl/app/SDLDummyEdit.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/org/libsdl/app/SDLGenericMotionListener_API14.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/org/libsdl/app/SDLGenericMotionListener_API24.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/org/libsdl/app/SDLGenericMotionListener_API26.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/org/libsdl/app/SDLHapticHandler$SDLHaptic.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/org/libsdl/app/SDLHapticHandler.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/org/libsdl/app/SDLHapticHandler_API26.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/org/libsdl/app/SDLHapticHandler_API31.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/org/libsdl/app/SDLInputConnection.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/org/libsdl/app/SDLJoystickHandler.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/org/libsdl/app/SDLJoystickHandler_API16$RangeComparator.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/org/libsdl/app/SDLJoystickHandler_API16$SDLJoystick.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/org/libsdl/app/SDLJoystickHandler_API16.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/org/libsdl/app/SDLJoystickHandler_API19.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/org/libsdl/app/SDLMain.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/org/libsdl/app/SDLSurface.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debugAndroidTest/dexBuilderDebugAndroidTest/out/6746b3c97000ad376bc7ccb69bda37372df7b497189443c84b4ab7e65f22352b_2.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/runtime_symbol_list/debug/processDebugResources/R.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/runtime_symbol_list/debugAndroidTest/processDebugAndroidTestResources/R.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/sdk_dependency_data/release/sdkReleaseDependencyData/sdkDependencyData.pb" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/sdk_dependency_data/release/sdkReleaseDependencyData/sdkDependencyData.pb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/signing_config_versions/debug/writeDebugSigningConfigVersions/signing-config-versions.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/signing_config_versions/debugAndroidTest/writeDebugAndroidTestSigningConfigVersions/signing-config-versions.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/source_set_path_map/debug/mapDebugSourceSetPaths/file-map.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/source_set_path_map/debugAndroidTest/mapDebugAndroidTestSourceSetPaths/file-map.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/stable_resource_ids_file/debug/processDebugResources/stableIds.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/stable_resource_ids_file/debugAndroidTest/processDebugAndroidTestResources/stableIds.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/stripped_native_libs/release/stripReleaseDebugSymbols/out/lib/arm64-v8a/libmain.so" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/stripped_native_libs/release/stripReleaseDebugSymbols/out/lib/arm64-v8a/libmain.so" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/stripped_native_libs/release/stripReleaseDebugSymbols/out/lib/armeabi-v7a/libmain.so" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/stripped_native_libs/release/stripReleaseDebugSymbols/out/lib/armeabi-v7a/libmain.so" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/stripped_native_libs/release/stripReleaseDebugSymbols/out/lib/x86/libmain.so" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/stripped_native_libs/release/stripReleaseDebugSymbols/out/lib/x86/libmain.so" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/stripped_native_libs/release/stripReleaseDebugSymbols/out/lib/x86_64/libmain.so" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/stripped_native_libs/release/stripReleaseDebugSymbols/out/lib/x86_64/libmain.so" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/outputs/logs/manifest-merger-debug-report.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/outputs/native-debug-symbols/release/native-debug-symbols.zip" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/outputs/native-debug-symbols/release/native-debug-symbols.zip" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/tmp/compileDebugJavaWithJavac/previous-compilation-data.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/tmp/compileReleaseJavaWithJavac/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/tmp/compileReleaseJavaWithJavac/previous-compilation-data.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/release/opentyrian2000-SDL3.apk" beforeDir="false" afterPath="$PROJECT_DIR$/app/release/opentyrian2000-SDL3.apk" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../opentyrian2000.app/Contents/Frameworks/FluidSynth.framework/Versions/3/FluidSynth" beforeDir="false" afterPath="$PROJECT_DIR$/../opentyrian2000.app/Contents/Frameworks/FluidSynth.framework/Versions/3/FluidSynth" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../opentyrian2000.app/Contents/Frameworks/libMoltenVK.dylib" beforeDir="false" afterPath="$PROJECT_DIR$/../opentyrian2000.app/Contents/Frameworks/libMoltenVK.dylib" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../opentyrian2000.app/Contents/Frameworks/libSDL3.dylib" beforeDir="false" afterPath="$PROJECT_DIR$/../opentyrian2000.app/Contents/Frameworks/libSDL3.dylib" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../opentyrian2000.app/Contents/Frameworks/libSDL3_mixer.dylib" beforeDir="false" afterPath="$PROJECT_DIR$/../opentyrian2000.app/Contents/Frameworks/libSDL3_mixer.dylib" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../opentyrian2000.app/Contents/Frameworks/libSDL3_net.dylib" beforeDir="false" afterPath="$PROJECT_DIR$/../opentyrian2000.app/Contents/Frameworks/libSDL3_net.dylib" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../opentyrian2000.app/Contents/MacOS/opentyrian2000" beforeDir="false" afterPath="$PROJECT_DIR$/../opentyrian2000.app/Contents/MacOS/opentyrian2000" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../opentyrian2000.app/Contents/Resources/opentyrian2000.icns" beforeDir="false" afterPath="$PROJECT_DIR$/../opentyrian2000.app/Contents/Resources/opentyrian2000.icns" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../opentyrian2000.app/Contents/_CodeSignature/CodeResources" beforeDir="false" afterPath="$PROJECT_DIR$/../opentyrian2000.app/Contents/_CodeSignature/CodeResources" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/network.c" beforeDir="false" afterPath="$PROJECT_DIR$/../src/network.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/opentyr.c" beforeDir="false" afterPath="$PROJECT_DIR$/../src/opentyr.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
