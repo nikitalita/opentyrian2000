@@ -834,6 +834,9 @@ int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR cmdLine, int nSh
 	(void)nShowCmd;
 	int argc = __argc;
 	char** argv = __argv;
+#elif defined(ANDROID) || defined(__ANDROID__)
+int SDL_main(int argc, char *argv[])
+{
 #else
 int main(int argc, char *argv[])
 {

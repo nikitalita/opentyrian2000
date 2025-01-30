@@ -298,7 +298,7 @@ int network_check(void)
 	if (packet_out[0] && SDL_GetTicks() - last_out_tick > NET_RETRY)
 	{
 #ifdef WITH_SDL3
-        if (!SDLNet_SendDatagram(socket, ip, network_opponent_port, packet_out[0]->buf, packet_out[0]->buflen))
+		if (!SDLNet_SendDatagram(socket, ip, network_opponent_port, packet_out[0]->buf, packet_out[0]->buflen))
 #else
 		if (!SDLNet_UDP_Send(socket, 0, packet_out[0]))
 #endif
@@ -311,7 +311,7 @@ int network_check(void)
 	}
 
 #ifdef WITH_SDL3
-    switch ((int)SDLNet_ReceiveDatagram(socket, &packet_temp))
+	switch ((int)SDLNet_ReceiveDatagram(socket, &packet_temp))
 #else
 	switch (SDLNet_UDP_Recv(socket, packet_temp))
 #endif
@@ -325,7 +325,7 @@ int network_check(void)
 			return -1;
 			break;
 #ifdef WITH_SDL3
-        case 1:
+		case 1:
 #else
 		case 0:
             break;
@@ -859,25 +859,17 @@ int network_connect(void)
 #ifdef WITH_SDL3
     ip = SDLNet_ResolveHostname(network_opponent_host);
 
-    if (ip == NULL)
-    {
-        fprintf(stderr, "error: SDLNet_ResolveHostName: %s\n", SDLNet_GetError());
+    if (ip) {
+        if (SDLNet_WaitUntilResolved(ip, -1) < 0) {
+            SDLNet_UnrefAddress(ip);
+            ip = NULL;
+        }
     }
 
-resolve:
-    switch (SDLNet_WaitUntilResolved(ip, 1000))
-    {
-        case 1:
-            break;
-
-        case 0:
-            goto resolve;
-            break;
-
-        case -1:
-        default:
-            fprintf(stderr, "error: SDLNet_WaitUntilResolved: %s\n", SDLNet_GetError());
-            return -1;
+    if (!ip) {
+        fprintf(stderr, "CLIENT: Failed! %s", SDL_GetError());
+        fprintf(stderr, "CLIENT: Giving up.");
+        return -1;
     }
 #else
 	SDLNet_ResolveHost(&ip, network_opponent_host, network_opponent_port);
@@ -901,11 +893,11 @@ resolve:
 connect_reset:
 	network_prepare(PACKET_CONNECT);
 #ifdef WITH_SDL3
-    SDLNet_Write16(NET_VERSION, &packet_out_temp->buf[4]);
-    SDLNet_Write16(network_delay,   &packet_out_temp->buf[6]);
-    SDLNet_Write16(episodes_local,  &packet_out_temp->buf[8]);
-    SDLNet_Write16(thisPlayerNum,   &packet_out_temp->buf[10]);
-    strlcpy((char *)&packet_out_temp->buf[12], network_player_name, packet_out_temp->buflen);
+	SDLNet_Write16(NET_VERSION, &packet_out_temp->buf[4]);
+	SDLNet_Write16(network_delay,   &packet_out_temp->buf[6]);
+	SDLNet_Write16(episodes_local,  &packet_out_temp->buf[8]);
+	SDLNet_Write16(thisPlayerNum,   &packet_out_temp->buf[10]);
+	strlcpy((char *)&packet_out_temp->buf[12], network_player_name, packet_out_temp->buflen);
 #else
 	SDLNet_Write16(NET_VERSION, &packet_out_temp->data[4]);
 	SDLNet_Write16(network_delay,   &packet_out_temp->data[6]);
@@ -928,7 +920,7 @@ connect_reset:
 		last_in_tick = SDL_GetTicks();
 
 #ifdef WITH_SDL3
-        if (packet_in[0] && SDLNet_Read16(&packet_in[0]->buf[0]) == PACKET_CONNECT)
+		if (packet_in[0] && SDLNet_Read16(&packet_in[0]->buf[0]) == PACKET_CONNECT)
 #else
 		if (packet_in[0] && SDLNet_Read16(&packet_in[0]->data[0]) == PACKET_CONNECT)
 #endif
@@ -1118,7 +1110,7 @@ int network_init(void)
 #ifndef WITH_SDL3
 	socket = SDLNet_UDP_Open(network_player_port);
 #else
-    socket = SDLNet_CreateDatagramSocket(NULL, network_opponent_port);
+    	socket = SDLNet_CreateDatagramSocket(NULL, network_opponent_port);
 #endif
 
 	if (!socket)
