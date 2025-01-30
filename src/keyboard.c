@@ -43,12 +43,7 @@ Uint8 lastmouse_but;
 Sint32 lastmouse_x, lastmouse_y;
 JE_boolean mouse_pressed[4] = {false, false, false, false};
 Sint32 mouse_x, mouse_y;
-
-#ifdef WITH_SDL3
-bool windowHasFocus = true;
-#else
 bool windowHasFocus = false;
-#endif
 
 #ifdef WITH_SDL3
 Uint8 keysactive[SDL_SCANCODE_COUNT] = { 0 };
@@ -182,10 +177,8 @@ void service_SDL_events(JE_boolean clear_new)
 #ifndef WITH_SDL3
 			case SDL_WINDOWEVENT:
 				switch (ev.window.event)
-#else
-                switch (ev.type)
+                {
 #endif
-				{
 #ifdef WITH_SDL3
                 case SDL_EVENT_WINDOW_FOCUS_LOST:
 #else
@@ -213,8 +206,10 @@ void service_SDL_events(JE_boolean clear_new)
 #endif
 					video_on_win_resize();
 					break;
+#ifndef WITH_SDL3
 				}
 				break;
+#endif
 
 #ifdef WITH_SDL3
             case SDL_EVENT_KEY_DOWN:
