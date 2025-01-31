@@ -894,6 +894,8 @@ int network_connect(void)
         fprintf(stderr, "CLIENT: Failed! %s", SDL_GetError());
         return -1;
     }
+
+    ip = SDLNet_RefAddress(ip);
 #else
 	SDLNet_ResolveHost(&ip, network_opponent_host, network_opponent_port);
 
