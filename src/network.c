@@ -124,9 +124,8 @@ JE_boolean yourInGameMenuRequest, inGameMenuRequest;
 #ifdef WITH_SDL3
 static void packet_copy(SDLNet_Datagram *dst, SDLNet_Datagram *src)
 {
-    void *temp = dst->buf;
     memcpy(dst, src, sizeof(*dst));
-    dst->buf = temp;
+    dst->buf = malloc(src->buflen);
     memcpy(dst->buf, src->buf, src->buflen);
 }
 #else
@@ -1110,7 +1109,7 @@ int network_init(void)
 #ifndef WITH_SDL3
 	socket = SDLNet_UDP_Open(network_player_port);
 #else
-    	socket = SDLNet_CreateDatagramSocket(NULL, network_opponent_port);
+    socket = SDLNet_CreateDatagramSocket(NULL, network_opponent_port);
 #endif
 
 	if (!socket)
