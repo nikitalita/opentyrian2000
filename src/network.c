@@ -614,12 +614,6 @@ void network_state_prepare(void)
 	{
 #ifdef WITH_SDL3
         packet_state_out[0] = malloc(sizeof(*packet_state_out[0]));
-
-        if (packet_state_out[0]->buf)
-        {
-            free(packet_state_out[0]->buf);
-        }
-
         packet_state_out[0]->buf = malloc(NET_PACKET_SIZE);
         packet_state_out[0]->buflen = 28;
 #else
@@ -730,12 +724,6 @@ bool network_state_update(void)
 				{
 #ifdef WITH_SDL3
                     packet_state_in[0] = malloc(sizeof(*packet_state_in[0]));
-
-                    if (packet_state_in[0]->buf)
-                    {
-                        free(packet_state_in[0]->buf);
-                    }
-
                     packet_state_in[0]->buf = malloc(NET_PACKET_SIZE);
                     packet_state_in[0]->buflen = NET_PACKET_SIZE;
 #else
@@ -781,12 +769,6 @@ bool network_state_update(void)
 			{
 #ifdef WITH_SDL3
                 packet_state_in_xor[x] = malloc(sizeof(*packet_state_in_xor[x]));
-
-                if (packet_state_in_xor[x]->buf)
-                {
-                    free(packet_state_in_xor[x]->buf);
-                }
-
                 packet_state_in_xor[x]->buf = malloc(NET_PACKET_SIZE);
                 packet_state_in_xor[x]->buflen = NET_PACKET_SIZE;
 #else
