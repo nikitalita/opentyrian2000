@@ -124,7 +124,7 @@ JE_boolean yourInGameMenuRequest, inGameMenuRequest;
 #ifdef WITH_SDL3
 static void packet_copy(SDLNet_Datagram *dst, SDLNet_Datagram *src)
 {
-    void *temp = dst->data;
+    void *temp = dst->buf;
     memcpy(dst, src, sizeof(*dst));
     dst->buf = temp;
     memcpy(dst->buf, src->buf, src->buflen);
@@ -199,16 +199,26 @@ static bool network_send_no_ack(int len)
 #ifdef WITH_SDL3
     packet_out_temp->buflen = len;
 
-    if (!SDLNet_SendDatagram(socket, ip, network_opponent_port, packet_out_temp->buf, packet_out_temp->buflen))
+    if (packet_out_temp->buf)
+    {
+        if (!SDLNet_SendDatagram(socket, ip, network_opponent_port, packet_out_temp->buf, packet_out_temp->buflen))
+        {
+            printf("SDLNet_UDP_Send: %s, host: %s, port: %d, length: %d (3)\n", SDL_GetError(), SDLNet_GetAddressString(ip), network_opponent_port, packet_out_temp->buflen);
 #else
-    packet_out_temp->len = len;
-
-	if (!SDLNet_UDP_Send(socket, 0, packet_out_temp))
+            packet_out_temp->len = len;
+        
+        if (!SDLNet_UDP_Send(socket, 0, packet_out_temp))
+        {
+            printf("SDLNet_UDP_Send: %s (3)\n", SDL_GetError());
 #endif
-	{
-		printf("SDLNet_UDP_Send: %s\n", SDL_GetError());
-		return false;
-	}
+            return false;
+        }
+#ifdef WITH_SDL3
+    } else {
+        printf("network_send_no_ack: Packet buffer is NULL (3)\n");
+        return false;
+    }
+#endif
 
 	return true;
 }
@@ -222,7 +232,7 @@ bool network_send(int len)
 	if (i < NET_PACKET_QUEUE)
 	{
 #ifdef WITH_SDL3
-        packet_out[i] = SDL_malloc(sizeof(*packet_out[i]));
+        packet_out[i] = malloc(sizeof(*packet_out[i]));
         packet_out[i]->buf = malloc(NET_PACKET_SIZE);
         packet_out[i]->buflen = NET_PACKET_SIZE;
 #else
@@ -298,14 +308,24 @@ int network_check(void)
 	if (packet_out[0] && SDL_GetTicks() - last_out_tick > NET_RETRY)
 	{
 #ifdef WITH_SDL3
-		if (!SDLNet_SendDatagram(socket, ip, network_opponent_port, packet_out[0]->buf, packet_out[0]->buflen))
+        if (packet_out[0]->buf)
+        {
+            if (!SDLNet_SendDatagram(socket, ip, network_opponent_port, packet_out[0]->buf, packet_out[0]->buflen))
+            {
+                printf("SDLNet_UDP_Send: %s, host: %s, port: %d, length: %d (4)\n", SDL_GetError(), SDLNet_GetAddressString(ip), network_opponent_port, packet_out[0]->buflen);
 #else
-		if (!SDLNet_UDP_Send(socket, 0, packet_out[0]))
+            if (!SDLNet_UDP_Send(socket, 0, packet_out[0]))
+            {
+                printf("SDLNet_UDP_Send: %s (4)\n", SDL_GetError());
 #endif
-		{
-			printf("SDLNet_UDP_Send: %s\n", SDL_GetError());
-			return -1;
-		}
+                return -1;
+            }
+#ifdef WITH_SDL3
+        } else {
+            printf("network_check: Packet buffer is NULL (4)\n");
+            return -1;
+        }
+#endif
 
 		last_out_tick = SDL_GetTicks();
 	}
@@ -551,14 +571,24 @@ int network_check(void)
 								if (packet_state_out[i])
 								{
 #ifdef WITH_SDL3
-                                    if (!SDLNet_SendDatagram(socket, ip, network_opponent_port, packet_state_out[i]->buf, packet_state_out[i]->buflen))
+                                    if (packet_state_out[i]->buf)
+                                    {
+                                        if (!SDLNet_SendDatagram(socket, ip, network_opponent_port, packet_state_out[i]->buf, packet_state_out[i]->buflen))
+                                        {
+                                            printf("SDLNet_UDP_Send: %s, host: %s, port: %d, length: %d (5)\n", SDL_GetError(), SDLNet_GetAddressString(ip), network_opponent_port, packet_state_out[i]->buflen);
 #else
-									if (!SDLNet_UDP_Send(socket, 0, packet_state_out[i]))
+                                        if (!SDLNet_UDP_Send(socket, 0, packet_state_out[i]))
+                                        {
+                                            printf("SDLNet_UDP_Send: %s (5)\n", SDL_GetError());
 #endif
-									{
-										printf("SDLNet_UDP_Send: %s\n", SDL_GetError());
-										return -1;
-									}
+                                            return -1;
+                                        }
+#ifdef WITH_SDL3
+                                    } else {
+                                        printf("network_check: Packet buffer is NULL (5)\n");
+                                        return -1;
+                                    }
+#endif
 								}
 							}
 						}
@@ -639,14 +669,24 @@ void network_state_prepare(void)
 int network_state_send(void)
 {
 #ifdef WITH_SDL3
-    if (!SDLNet_SendDatagram(socket, ip, network_opponent_port, packet_state_out[0]->buf, packet_state_out[0]->buflen))
+    if (packet_state_out[0]->buf)
+    {
+        if (!SDLNet_SendDatagram(socket, ip, network_opponent_port, packet_state_out[0]->buf, packet_state_out[0]->buflen))
+        {
+            printf("SDLNet_UDP_Send: %s, host: %s, port: %d, length: %d (1)\n", SDL_GetError(), SDLNet_GetAddressString(ip), network_opponent_port, packet_state_out[0]->buflen);
 #else
-	if (!SDLNet_UDP_Send(socket, 0, packet_state_out[0]))
+        if (!SDLNet_UDP_Send(socket, 0, packet_state_out[0]))
+        {
+            printf("SDLNet_UDP_Send: %s (1)\n", SDL_GetError());
 #endif
-	{
-		printf("SDLNet_UDP_Send: %s\n", SDL_GetError());
-		return -1;
-	}
+            return -1;
+        }
+#ifdef WITH_SDL3
+    } else {
+        printf("network_state_send: Packet buffer is NULL (1)\n");
+        return -1;
+    }
+#endif
 
 	// send xor of last network_delay packets
 	if (network_delay > 1 && (last_state_out_sync + 1) % network_delay == 0 && packet_state_out[network_delay - 1] != NULL)
@@ -662,17 +702,27 @@ int network_state_send(void)
             for (int j = 4; j < packet_temp->buflen; j++)
                 packet_temp->buf[j] ^= packet_state_out[i]->buf[j];
 
-        if (!SDLNet_SendDatagram(socket, ip, network_opponent_port, packet_temp->buf, packet_temp->buflen))
+        if (packet_temp->buf)
+        {
+            if (!SDLNet_SendDatagram(socket, ip, network_opponent_port, packet_temp->buf, packet_temp->buflen))
+            {
+                printf("SDLNet_UDP_Send: %s, host: %s, port: %d, length: %d (2)\n", SDL_GetError(), SDLNet_GetAddressString(ip), network_opponent_port, packet_temp->buflen);
 #else
-            for (int j = 4; j < packet_temp->len; j++)
-				packet_temp->data[j] ^= packet_state_out[i]->data[j];
+                for (int j = 4; j < packet_temp->len; j++)
+                    packet_temp->data[j] ^= packet_state_out[i]->data[j];
 
-		if (!SDLNet_UDP_Send(socket, 0, packet_temp))
+            if (!SDLNet_UDP_Send(socket, 0, packet_temp))
+            {
+                printf("SDLNet_UDP_Send: %s (2)\n", SDL_GetError());
 #endif
-		{
-			printf("SDLNet_UDP_Send: %s\n", SDL_GetError());
-			return -1;
-		}
+                return -1;
+            }
+#ifdef WITH_SDL3
+        } else {
+            printf("network_state_send: Packet buffer is NULL (2)\n");
+            return -1;
+        }
+#endif
 	}
 
 	packets_shift_down(packet_state_out, NET_PACKET_QUEUE);
@@ -1112,7 +1162,7 @@ int network_init(void)
 #ifndef WITH_SDL3
 	socket = SDLNet_UDP_Open(network_player_port);
 #else
-    socket = SDLNet_CreateDatagramSocket(NULL, network_opponent_port);
+    socket = SDLNet_CreateDatagramSocket(NULL, network_player_port);
 #endif
 
 	if (!socket)
