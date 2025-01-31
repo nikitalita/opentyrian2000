@@ -871,12 +871,6 @@ int network_connect(void)
         fprintf(stderr, "CLIENT: Failed! %s", SDL_GetError());
         return -1;
     }
-
-    if (SDLNet_WaitUntilConnected(socket, -1) == -1)
-    {
-        fprintf(stderr, "CLIENT: Wait until connected failed! %s", SDL_GetError());
-        return -1;
-    }
 #else
 	SDLNet_ResolveHost(&ip, network_opponent_host, network_opponent_port);
 
