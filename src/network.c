@@ -324,11 +324,12 @@ int network_check(void)
 			printf("SDLNet_UDP_Recv: %s\n", SDL_GetError());
 			return -1;
 			break;
-#ifdef WITH_SDL3
-		case 1:
-#else
+#ifndef WITH_SDL3
 		case 0:
             break;
+#endif
+#ifdef WITH_SDL3
+        case 1:
 #endif
 		default:
 #ifdef WITH_SDL3
