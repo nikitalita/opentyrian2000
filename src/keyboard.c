@@ -272,8 +272,24 @@ void service_SDL_events(JE_boolean clear_new)
 				if (mouseRelativeEnabled && windowHasFocus)
 				{
 #ifdef WITH_SDL3
-                    mxrel = (Sint32)ev.motion.xrel;
-                    myrel = (Sint32)ev.motion.yrel;
+                    if ((ev.motion.xrel > 0) && (ev.motion.xrel < 1))
+                    {
+                        mxrel = 1;
+                    } else if ((ev.motion.xrel < 0) && (ev.motion.xrel > 1)) {
+                        mxrel = -1;
+                    } else {
+                        mxrel = (Sint32)ev.motion.xrel;
+                    }
+
+                    if ((ev.motion.yrel > 0) && (ev.motion.yrel < 1))
+                    {
+                        myrel = 1;
+                    } else if ((ev.motion.yrel < 0) && (ev.motion.yrel > -1)) {
+                        myrel = -1;
+                    } else {
+                        myrel = (Sint32)ev.motion.yrel;
+                    }
+
 					mouseWindowXRelative += mxrel;
 					mouseWindowYRelative += myrel;
 #else

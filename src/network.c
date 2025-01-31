@@ -868,7 +868,12 @@ int network_connect(void)
 
     if (!ip) {
         fprintf(stderr, "CLIENT: Failed! %s", SDL_GetError());
-        fprintf(stderr, "CLIENT: Giving up.");
+        return -1;
+    }
+
+    if (SDLNet_WaitUntilConnected(socket, -1) == -1)
+    {
+        fprintf(stderr, "CLIENT: Wait until connected failed! %s", SDL_GetError());
         return -1;
     }
 #else
