@@ -13,6 +13,7 @@ tyrian.sav
 /src/*.gch
 /opentyrian
 /opentyrian2000
+/opentyrian2000.app/
 
 # Windows build output
 /opentyrian.exe
