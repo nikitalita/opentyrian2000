@@ -201,21 +201,23 @@ static bool network_send_no_ack(int len)
 
     if (packet_out_temp->buf)
     {
-        if (!SDLNet_SendDatagram(socket, ip, network_opponent_port, packet_out_temp->buf, packet_out_temp->buflen))
+        packet_out_temp->addr = ip;
+        packet_out_temp->port = network_opponent_port;
+        if (SDLNet_SendDatagram(socket, packet_out_temp->addr, packet_out_temp->port, packet_out_temp->buf, packet_out_temp->buflen) == false)
         {
-            printf("SDLNet_UDP_Send: %s, host: %s, port: %d, length: %d (3)\n", SDL_GetError(), SDLNet_GetAddressString(ip), network_opponent_port, packet_out_temp->buflen);
+            fprintf(stderr, "SDLNet_SendDatagram: %s, host: %s, port: %d, length: %d (3)\n", SDL_GetError(), SDLNet_GetAddressString(ip), network_opponent_port, packet_out_temp->buflen);
 #else
             packet_out_temp->len = len;
-        
+
         if (!SDLNet_UDP_Send(socket, 0, packet_out_temp))
         {
-            printf("SDLNet_UDP_Send: %s (3)\n", SDL_GetError());
+            fprintf(stderr, "SDLNet_UDP_Send: %s (3)\n", SDL_GetError());
 #endif
             return false;
         }
 #ifdef WITH_SDL3
     } else {
-        printf("network_send_no_ack: Packet buffer is NULL (3)\n");
+        fprintf(stderr, "network_send_no_ack: Packet buffer is NULL (3)\n");
         return false;
     }
 #endif
@@ -233,8 +235,12 @@ bool network_send(int len)
 	{
 #ifdef WITH_SDL3
         packet_out[i] = malloc(sizeof(*packet_out[i]));
-        packet_out[i]->buf = malloc(NET_PACKET_SIZE);
-        packet_out[i]->buflen = NET_PACKET_SIZE;
+
+        if (packet_out[i] != NULL)
+        {
+            packet_out[i]->buf = malloc(NET_PACKET_SIZE);
+            packet_out[i]->buflen = NET_PACKET_SIZE;
+        }
 #else
 		packet_out[i] = SDLNet_AllocPacket(NET_PACKET_SIZE);
 #endif
@@ -251,7 +257,9 @@ bool network_send(int len)
 	last_out_sync++;
 
 	if (network_is_sync())
-		last_out_tick = SDL_GetTicks();
+    {
+        last_out_tick = SDL_GetTicks();
+    }
 
 	return temp;
 }
@@ -310,19 +318,21 @@ int network_check(void)
 #ifdef WITH_SDL3
         if (packet_out[0]->buf)
         {
-            if (!SDLNet_SendDatagram(socket, ip, network_opponent_port, packet_out[0]->buf, packet_out[0]->buflen))
+            packet_out[0]->addr = ip;
+            packet_out[0]->port = network_opponent_port;
+            if (SDLNet_SendDatagram(socket, packet_out[0]->addr, packet_out[0]->port, packet_out[0]->buf, packet_out[0]->buflen) == false)
             {
-                printf("SDLNet_UDP_Send: %s, host: %s, port: %d, length: %d (4)\n", SDL_GetError(), SDLNet_GetAddressString(ip), network_opponent_port, packet_out[0]->buflen);
+                fprintf(stderr, "SDLNet_SendDatagram: %s, host: %s, port: %d, length: %d (4)\n", SDL_GetError(), SDLNet_GetAddressString(ip), network_opponent_port, packet_out[0]->buflen);
 #else
             if (!SDLNet_UDP_Send(socket, 0, packet_out[0]))
             {
-                printf("SDLNet_UDP_Send: %s (4)\n", SDL_GetError());
+                fprintf(stderr, "SDLNet_UDP_Send: %s (4)\n", SDL_GetError());
 #endif
                 return -1;
             }
 #ifdef WITH_SDL3
         } else {
-            printf("network_check: Packet buffer is NULL (4)\n");
+            fprintf(stderr, "network_check: Packet buffer is NULL (4)\n");
             return -1;
         }
 #endif
@@ -338,10 +348,11 @@ int network_check(void)
 	{
 #ifdef WITH_SDL3
         case 0:
+            fprintf(stderr, "SDLNet_ReceiveDatagram: %s\n", SDL_GetError());
 #else
 		case -1:
+            fprintf(stderr, "SDLNet_UDP_Recv: %s\n", SDL_GetError());
 #endif
-			printf("SDLNet_UDP_Recv: %s\n", SDL_GetError());
 			return -1;
 			break;
 #ifndef WITH_SDL3
@@ -447,8 +458,12 @@ int network_check(void)
                                 {
 #ifdef WITH_SDL3
                                     packet_in[i] = malloc(sizeof(*packet_in[i]));
-                                    packet_in[i]->buf = malloc(NET_PACKET_SIZE);
-                                    packet_in[i]->buflen = NET_PACKET_SIZE;
+
+                                    if (packet_in[i] != NULL)
+                                    {
+                                        packet_in[i]->buf = malloc(NET_PACKET_SIZE);
+                                        packet_in[i]->buflen = NET_PACKET_SIZE;
+                                    }
 #else
                                     packet_in[i] = SDLNet_AllocPacket(NET_PACKET_SIZE);
 #endif
@@ -505,8 +520,12 @@ int network_check(void)
                                 {
 #ifdef WITH_SDL3
                                     packet_state_in[i] = malloc(sizeof(*packet_state_in[i]));
-                                    packet_state_in[i]->buf = malloc(NET_PACKET_SIZE);
-                                    packet_state_in[i]->buflen = NET_PACKET_SIZE;
+
+                                    if (packet_state_in[i] != NULL)
+                                    {
+                                        packet_state_in[i]->buf = malloc(NET_PACKET_SIZE);
+                                        packet_state_in[i]->buflen = NET_PACKET_SIZE;
+                                    }
 #else
                                     packet_state_in[i] = SDLNet_AllocPacket(NET_PACKET_SIZE);
 #endif
@@ -531,8 +550,12 @@ int network_check(void)
 								{
 #ifdef WITH_SDL3
                                     packet_state_in_xor[i] = malloc(sizeof(*packet_state_in_xor[i]));
-                                    packet_state_in_xor[i]->buf = malloc(NET_PACKET_SIZE);
-                                    packet_state_in_xor[i]->buflen = NET_PACKET_SIZE;
+
+                                    if (packet_state_in_xor[i] != NULL)
+                                    {
+                                        packet_state_in_xor[i]->buf = malloc(NET_PACKET_SIZE);
+                                        packet_state_in_xor[i]->buflen = NET_PACKET_SIZE;
+                                    }
 #else
 									packet_state_in_xor[i] = SDLNet_AllocPacket(NET_PACKET_SIZE);
 #endif
@@ -573,19 +596,21 @@ int network_check(void)
 #ifdef WITH_SDL3
                                     if (packet_state_out[i]->buf)
                                     {
-                                        if (!SDLNet_SendDatagram(socket, ip, network_opponent_port, packet_state_out[i]->buf, packet_state_out[i]->buflen))
+                                        packet_state_out[i]->addr = ip;
+                                        packet_state_out[i]->port = network_opponent_port;
+                                        if (SDLNet_SendDatagram(socket, packet_state_out[i]->addr, packet_state_out[i]->port, packet_state_out[i]->buf, packet_state_out[i]->buflen) == false)
                                         {
-                                            printf("SDLNet_UDP_Send: %s, host: %s, port: %d, length: %d (5)\n", SDL_GetError(), SDLNet_GetAddressString(ip), network_opponent_port, packet_state_out[i]->buflen);
+                                            fprintf(stderr, "SDLNet_SendDatagram: %s, host: %s, port: %d, length: %d (5)\n", SDL_GetError(), SDLNet_GetAddressString(ip), network_opponent_port, packet_state_out[i]->buflen);
 #else
                                         if (!SDLNet_UDP_Send(socket, 0, packet_state_out[i]))
                                         {
-                                            printf("SDLNet_UDP_Send: %s (5)\n", SDL_GetError());
+                                            fprintf(stderr, "SDLNet_UDP_Send: %s (5)\n", SDL_GetError());
 #endif
                                             return -1;
                                         }
 #ifdef WITH_SDL3
                                     } else {
-                                        printf("network_check: Packet buffer is NULL (5)\n");
+                                        fprintf(stderr, "network_check: Packet buffer is NULL (5)\n");
                                         return -1;
                                     }
 #endif
@@ -644,8 +669,12 @@ void network_state_prepare(void)
 	{
 #ifdef WITH_SDL3
         packet_state_out[0] = malloc(sizeof(*packet_state_out[0]));
-        packet_state_out[0]->buf = malloc(NET_PACKET_SIZE);
-        packet_state_out[0]->buflen = 28;
+
+        if (packet_state_out[0] != NULL)
+        {
+            packet_state_out[0]->buf = malloc(NET_PACKET_SIZE);
+            packet_state_out[0]->buflen = 28;
+        }
 #else
 		packet_state_out[0] = SDLNet_AllocPacket(NET_PACKET_SIZE);
         packet_state_out[0]->len = 28;
@@ -671,19 +700,21 @@ int network_state_send(void)
 #ifdef WITH_SDL3
     if (packet_state_out[0]->buf)
     {
-        if (!SDLNet_SendDatagram(socket, ip, network_opponent_port, packet_state_out[0]->buf, packet_state_out[0]->buflen))
+        packet_state_out[0]->addr = ip;
+        packet_state_out[0]->port = network_opponent_port;
+        if (SDLNet_SendDatagram(socket, packet_state_out[0]->addr, packet_state_out[0]->port, packet_state_out[0]->buf, packet_state_out[0]->buflen) == false)
         {
-            printf("SDLNet_UDP_Send: %s, host: %s, port: %d, length: %d (1)\n", SDL_GetError(), SDLNet_GetAddressString(ip), network_opponent_port, packet_state_out[0]->buflen);
+            fprintf(stderr, "SDLNet_SendDatagram: %s, host: %s, port: %d, length: %d (1)\n", SDL_GetError(), SDLNet_GetAddressString(ip), network_opponent_port, packet_state_out[0]->buflen);
 #else
         if (!SDLNet_UDP_Send(socket, 0, packet_state_out[0]))
         {
-            printf("SDLNet_UDP_Send: %s (1)\n", SDL_GetError());
+            fprintf(stderr, "SDLNet_UDP_Send: %s (1)\n", SDL_GetError());
 #endif
             return -1;
         }
 #ifdef WITH_SDL3
     } else {
-        printf("network_state_send: Packet buffer is NULL (1)\n");
+        fprintf(stderr, "network_state_send: Packet buffer is NULL (1)\n");
         return -1;
     }
 #endif
@@ -698,28 +729,37 @@ int network_state_send(void)
 		SDLNet_Write16(PACKET_STATE_XOR, &packet_temp->data[0]);
 #endif
 		for (int i = 1; i < network_delay; i++)
+        {
 #ifdef WITH_SDL3
             for (int j = 4; j < packet_temp->buflen; j++)
+            {
                 packet_temp->buf[j] ^= packet_state_out[i]->buf[j];
+            }
+        }
 
         if (packet_temp->buf)
         {
-            if (!SDLNet_SendDatagram(socket, ip, network_opponent_port, packet_temp->buf, packet_temp->buflen))
+            packet_temp->addr = ip;
+            packet_temp->port = network_opponent_port;
+            if (SDLNet_SendDatagram(socket, packet_temp->addr, packet_temp->port, packet_temp->buf, packet_temp->buflen) == false)
             {
-                printf("SDLNet_UDP_Send: %s, host: %s, port: %d, length: %d (2)\n", SDL_GetError(), SDLNet_GetAddressString(ip), network_opponent_port, packet_temp->buflen);
+                fprintf(stderr, "SDLNet_SendDatagram: %s, host: %s, port: %d, length: %d (2)\n", SDL_GetError(), SDLNet_GetAddressString(ip), network_opponent_port, packet_temp->buflen);
 #else
-                for (int j = 4; j < packet_temp->len; j++)
-                    packet_temp->data[j] ^= packet_state_out[i]->data[j];
+            for (int j = 4; j < packet_temp->len; j++)
+            {
+                packet_temp->data[j] ^= packet_state_out[i]->data[j];
+            }
+        }
 
             if (!SDLNet_UDP_Send(socket, 0, packet_temp))
             {
-                printf("SDLNet_UDP_Send: %s (2)\n", SDL_GetError());
+                fprintf(stderr, "SDLNet_UDP_Send: %s (2)\n", SDL_GetError());
 #endif
                 return -1;
             }
 #ifdef WITH_SDL3
         } else {
-            printf("network_state_send: Packet buffer is NULL (2)\n");
+            fprintf(stderr, "network_state_send: Packet buffer is NULL (2)\n");
             return -1;
         }
 #endif
@@ -774,20 +814,30 @@ bool network_state_update(void)
 				{
 #ifdef WITH_SDL3
                     packet_state_in[0] = malloc(sizeof(*packet_state_in[0]));
-                    packet_state_in[0]->buf = malloc(NET_PACKET_SIZE);
-                    packet_state_in[0]->buflen = NET_PACKET_SIZE;
+
+                    if (packet_state_in[0] != NULL)
+                    {
+                        packet_state_in[0]->buf = malloc(NET_PACKET_SIZE);
+                        packet_state_in[0]->buflen = NET_PACKET_SIZE;
+                    }
 #else
 					packet_state_in[0] = SDLNet_AllocPacket(NET_PACKET_SIZE);
 #endif
 					packet_copy(packet_state_in[0], packet_state_in_xor[x]);
 					for (int i = 1; i <= x; i++)
+                    {
 #ifdef WITH_SDL3
                         for (int j = 4; j < packet_state_in[0]->buflen; j++)
+                        {
                             packet_state_in[0]->buf[j] ^= packet_state_in[i]->buf[j];
+                        }
 #else
-						for (int j = 4; j < packet_state_in[0]->len; j++)
-							packet_state_in[0]->data[j] ^= packet_state_in[i]->data[j];
+                        for (int j = 4; j < packet_state_in[0]->len; j++)
+                        {
+                            packet_state_in[0]->data[j] ^= packet_state_in[i]->data[j];
+                        }
 #endif
+                    }
 					break;
 				}
 			}
@@ -819,8 +869,12 @@ bool network_state_update(void)
 			{
 #ifdef WITH_SDL3
                 packet_state_in_xor[x] = malloc(sizeof(*packet_state_in_xor[x]));
-                packet_state_in_xor[x]->buf = malloc(NET_PACKET_SIZE);
-                packet_state_in_xor[x]->buflen = NET_PACKET_SIZE;
+
+                if (packet_state_in_xor[x] != NULL)
+                {
+                    packet_state_in_xor[x]->buf = malloc(NET_PACKET_SIZE);
+                    packet_state_in_xor[x]->buflen = NET_PACKET_SIZE;
+                }
 #else
 				packet_state_in_xor[x] = SDLNet_AllocPacket(NET_PACKET_SIZE);
 #endif
@@ -835,10 +889,14 @@ bool network_state_update(void)
 			{
 #ifdef WITH_SDL3
                 for (int j = 4; j < packet_state_in_xor[x]->buflen; j++)
+                {
                     packet_state_in_xor[x]->buf[j] ^= packet_state_in[0]->buf[j];
+                }
 #else
 				for (int j = 4; j < packet_state_in_xor[x]->len; j++)
-					packet_state_in_xor[x]->data[j] ^= packet_state_in[0]->data[j];
+                {
+                    packet_state_in_xor[x]->data[j] ^= packet_state_in[0]->data[j];
+                }
 #endif
 			}
 		}
@@ -918,11 +976,9 @@ int network_connect(void)
     }
 
     if (!ip) {
-        fprintf(stderr, "CLIENT: Failed! %s", SDL_GetError());
+        fprintf(stderr, "network_connect: Resolve host name failed! %s", SDL_GetError());
         return -1;
     }
-
-    ip = SDLNet_RefAddress(ip);
 #else
 	SDLNet_ResolveHost(&ip, network_opponent_host, network_opponent_port);
 
@@ -1134,6 +1190,10 @@ void network_tyrian_halt(unsigned int err, bool attempt_sync)
 
 	fade_black(10);
 
+#ifdef WITH_SDL3
+    SDLNet_DestroyDatagramSocket(socket);
+#endif
+
 	SDLNet_Quit();
 
 	JE_tyrianHalt(5);
@@ -1159,10 +1219,10 @@ int network_init(void)
 		return -1;
 	}
 
-#ifndef WITH_SDL3
-	socket = SDLNet_UDP_Open(network_player_port);
-#else
+#ifdef WITH_SDL3
     socket = SDLNet_CreateDatagramSocket(NULL, network_player_port);
+#else
+	socket = SDLNet_UDP_Open(network_player_port);
 #endif
 
 	if (!socket)
@@ -1173,11 +1233,20 @@ int network_init(void)
 
 #ifdef WITH_SDL3
     packet_temp = malloc(sizeof(*packet_temp));
-    packet_temp->buf = malloc(NET_PACKET_SIZE);
-    packet_temp->buflen = NET_PACKET_SIZE;
+
+    if (packet_temp != NULL)
+    {
+        packet_temp->buf = malloc(NET_PACKET_SIZE);
+        packet_temp->buflen = NET_PACKET_SIZE;
+    }
+
     packet_out_temp = malloc(sizeof(*packet_out_temp));
-    packet_out_temp->buf = malloc(NET_PACKET_SIZE);
-    packet_out_temp->buflen = NET_PACKET_SIZE;
+
+    if (packet_out_temp != NULL)
+    {
+        packet_out_temp->buf = malloc(NET_PACKET_SIZE);
+        packet_out_temp->buflen = NET_PACKET_SIZE;
+    }
 #else
 	packet_temp = SDLNet_AllocPacket(NET_PACKET_SIZE);
 	packet_out_temp = SDLNet_AllocPacket(NET_PACKET_SIZE);
@@ -1185,7 +1254,7 @@ int network_init(void)
 
 	if (!packet_temp || !packet_out_temp)
 	{
-		printf("SDLNet_AllocPacket: %s\n", SDLNet_GetError());
+		fprintf(stderr, "SDLNet_AllocPacket: %s\n", SDLNet_GetError());
 		return -3;
 	}
 
