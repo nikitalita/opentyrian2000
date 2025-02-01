@@ -85,7 +85,11 @@ void jukebox(void)  // FKA Setup.jukeboxGo
 
 		setDelay(1);
 
+#ifdef WITH_SDL3
+        SDL_FillSurfaceRect(VGAScreenSeg, NULL, 0);
+#else
 		SDL_FillRect(VGAScreenSeg, NULL, 0);
+#endif
 
 		// starlib input needs to be rewritten
 		JE_starlib_main();
@@ -187,7 +191,7 @@ void jukebox(void)  // FKA Setup.jukeboxGo
 		{
 			palette_fade_steps = 15;
 			
-			SDL_Color black = { 0, 0, 0 };
+			SDL_Color black = { 0, 0, 0, 0 };
 			init_step_fade_solid(diff, black, 0, 255);
 			
 			quitting = true;

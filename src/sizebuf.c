@@ -36,7 +36,11 @@
  */
 #include "sizebuf.h"
 
-#include "SDL_endian.h"
+#ifdef WITH_SDL3
+#include <SDL3/SDL.h>
+#else
+#include <SDL2/SDL_endian.h>
+#endif
 
 #include <assert.h>
 #include <stdio.h>
@@ -150,7 +154,12 @@ unsigned int MSG_ReadWord(sizebuf_t * sz)
 		return 0;
 	}
 
+#ifdef WITH_SDL3
+    ret = SDL_Swap16LE(*((Uint16 *)(sz->data + sz->bufferPos)));
+#else
 	ret = SDL_SwapLE16(*((Uint16 *)(sz->data + sz->bufferPos)));
+#endif
+
 	sz->bufferPos += 2;
 
 	return ret;

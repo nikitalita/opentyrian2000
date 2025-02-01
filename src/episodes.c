@@ -24,6 +24,17 @@
 #include "lvlmast.h"
 #include "opentyr.h"
 
+#if defined(__APPLE__) & defined(__MACH__)
+#include "macos-bundle.h"
+
+#define fseek fseeko
+#define ftell ftello
+#elif (defined(_WIN32) || defined(WIN32)) && !defined(_MSC_VER)
+#define fseek fseeko64
+#define ftell ftello64
+#define fopen fopen64
+#endif
+
 /* MAIN Weapons Data */
 JE_WeaponPortType weaponPort;
 JE_WeaponType     weapons[WEAP_NUM + 1]; /* [0..weapnum] */

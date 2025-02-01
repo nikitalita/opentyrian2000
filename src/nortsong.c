@@ -1,4 +1,4 @@
-/* 
+/*
  * OpenTyrian: A modern cross-platform port of Tyrian
  * Copyright (C) 2007-2009  The OpenTyrian Development Team
  *
@@ -28,7 +28,22 @@
 #include "sndmast.h"
 #include "vga256d.h"
 
-#include "SDL.h"
+#ifdef WITH_SDL3
+#include <SDL3/SDL.h>
+#else
+#include <SDL2/SDL.h>
+#endif
+
+#if defined(__APPLE__) & defined(__MACH__)
+#include "macos-bundle.h"
+
+#define fseek fseeko
+#define ftell ftello
+#elif (defined(_WIN32) || defined(WIN32)) && !defined(_MSC_VER)
+#define fseek fseeko64
+#define ftell ftello64
+#define fopen fopen64
+#endif
 
 JE_word frameCountMax;
 
@@ -123,8 +138,8 @@ void loadSndFile(bool xmas)
 
 	// Read number of sounds.
 	fread_u16_die(&sfxCount, 1, f);
-	if (sfxCount != SFX_COUNT)
-		goto die;
+	/*if (sfxCount != SFX_COUNT)
+		goto die;*/
 
 	// Read positions of sounds.
 	fread_u32_die(sfxPositions, sfxCount, f);
@@ -194,6 +209,107 @@ void loadSndFile(bool xmas)
 
 	// Convert samples to output sample format and rate.
 
+#ifdef WITH_SDL3
+    SDL_AudioStream *cvtstream = NULL;
+    SDL_AudioSpec cvtinspec;
+    SDL_AudioSpec cvtoutspec;
+    int src_samplesize = 0;
+    int src_len = 0;
+    int dst_len = 0;
+    int real_dst_len = 0;
+    int len_mult = 1;
+    void *cvtdata = NULL;
+    size_t maxSampleSize = 0;
+
+    for (size_t i = 0; i < SOUND_COUNT; ++i)
+        
+
+    cvtinspec.format = SDL_AUDIO_S8;
+    cvtinspec.channels = 1;
+    cvtinspec.freq = 11025;
+
+    cvtoutspec.format = SDL_AUDIO_S16;
+    cvtoutspec.channels = 1;
+    cvtoutspec.freq = audioSampleRate;
+
+    if (11025 < audioSampleRate) {
+        const double mult = ((double)audioSampleRate / (double)11025);
+        len_mult *= (int)SDL_ceil(mult);
+    }
+
+    src_samplesize = (SDL_AUDIO_BITSIZE(cvtinspec.format) / 8) * cvtinspec.channels;
+
+    for (size_t i = 0; i < SOUND_COUNT; ++i)
+    {
+        src_len = soundSampleCount[i] & ~(src_samplesize - 1);
+        dst_len = soundSampleCount[i] * len_mult;
+        
+        cvtstream = SDL_CreateAudioStream(&cvtinspec, &cvtoutspec);
+
+        if (cvtstream == NULL)
+        {
+            fprintf(stderr, "error: Failed to make audio converter stream: %s\n", SDL_GetError());
+
+            for (int i = 0; i < SOUND_COUNT; ++i)
+                soundSampleCount[i] = 0;
+            
+            return;
+        }
+
+        maxSampleSize = MAX(maxSampleSize, soundSampleCount[i]);
+        
+        cvtdata = malloc(maxSampleSize * len_mult);
+        
+        if (cvtdata == NULL)
+        {
+            fprintf(stderr, "error: Failed to allocate memory for audio converter\n");
+            
+            for (int i = 0; i < SOUND_COUNT; ++i)
+                soundSampleCount[i] = 0;
+            
+            return;
+        }
+        
+        if ((SDL_PutAudioStreamData(cvtstream, soundSamples[i], src_len) == false) ||
+            (SDL_FlushAudioStream(cvtstream) == false))
+        {
+            fprintf(stderr, "error: Failed to load sound samples: %s\n", SDL_GetError());
+
+            for (int i = 0; i < SOUND_COUNT; ++i)
+                soundSampleCount[i] = 0;
+            
+            return;
+        }
+        
+        real_dst_len = SDL_GetAudioStreamData(cvtstream, cvtdata, dst_len);
+        
+        if (real_dst_len < 0)
+        {
+            fprintf(stderr, "error: Failed to save sound samples: %s\n", SDL_GetError());
+            
+            for (int i = 0; i < SOUND_COUNT; ++i)
+                soundSampleCount[i] = 0;
+            
+            return;
+        }
+        
+        SDL_DestroyAudioStream(cvtstream);
+        
+        if (soundSamples[i] != NULL)
+        {
+            free(soundSamples[i]);
+        }
+        
+        soundSamples[i] = malloc(real_dst_len);
+        memcpy(soundSamples[i], cvtdata, real_dst_len);
+        soundSampleCount[i] = real_dst_len / sizeof (Sint16);
+
+        if (cvtdata != NULL)
+        {
+            free(cvtdata);
+        }
+    }
+#else
 	SDL_AudioCVT cvt;
 	if (SDL_BuildAudioCVT(&cvt, AUDIO_S8, 1, 11025, AUDIO_S16SYS, 1, audioSampleRate) < 0)
 	{
@@ -233,6 +349,7 @@ void loadSndFile(bool xmas)
 	}
 
 	free(cvt.buf);
+#endif
 
 	return;
 
@@ -257,7 +374,7 @@ void JE_changeVolume(JE_word *music, int music_delta, JE_word *sample, int sampl
 {
 	int music_temp = *music + music_delta,
 	    sample_temp = *sample + sample_delta;
-	
+
 	if (music_delta)
 	{
 		if (music_temp > 255)
@@ -271,7 +388,7 @@ void JE_changeVolume(JE_word *music, int music_delta, JE_word *sample, int sampl
 			JE_playSampleNum(S_CLINK);
 		}
 	}
-	
+
 	if (sample_delta)
 	{
 		if (sample_temp > 255)
@@ -285,9 +402,9 @@ void JE_changeVolume(JE_word *music, int music_delta, JE_word *sample, int sampl
 			JE_playSampleNum(S_CLINK);
 		}
 	}
-	
+
 	*music = music_temp;
 	*sample = sample_temp;
-	
+
 	set_volume(*music, *sample);
 }

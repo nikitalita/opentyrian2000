@@ -544,7 +544,11 @@ bool difficultySelect(void)
 				}
 			}
 		}
+#ifdef WITH_SDL3
+        if (SDL_GetModState() & SDL_KMOD_SHIFT)
+#else
 		if (SDL_GetModState() & KMOD_SHIFT)
+#endif
 		{
 			if (menuItemsVisibleCount == 4 && keysactive[SDL_SCANCODE_RIGHTBRACKET])
 				menuItemsVisibleCount = 5;

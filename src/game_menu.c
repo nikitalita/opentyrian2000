@@ -44,6 +44,10 @@
 
 #include <assert.h>
 
+#if defined(_MSC_VER) && __STDC_WANT_SECURE_LIB__
+#define snprintf sprintf_s
+#endif
+
 enum
 {
 	MENU_FULL_GAME       =  0,
@@ -353,11 +357,11 @@ void JE_itemScreen(void)
 
 				/* Write save game slot */
 				if (x == max)
-					strcpy(tempStr, miscText[6-1]);
+					strlcpy(tempStr, miscText[6-1], sizeof(tempStr));
 				else if (saveFiles[x-2].level == 0)
-					strcpy(tempStr, miscText[3-1]);
+					strlcpy(tempStr, miscText[3-1], sizeof(tempStr));
 				else
-					strcpy(tempStr, saveFiles[x-2].name);
+					strlcpy(tempStr, saveFiles[x-2].name, sizeof(tempStr));
 
 				int tempY = 38 + (x - min)*11;
 
@@ -370,13 +374,13 @@ void JE_itemScreen(void)
 
 					if (saveFiles[x-2].level == 0)
 					{
-						strcpy(tempStr, "-----"); /* Empty save slot */
+						strlcpy(tempStr, "-----", sizeof(tempStr)); /* Empty save slot */
 					}
 					else
 					{
 						char buf[20];
 
-						strcpy(tempStr, saveFiles[x-2].levelName);
+						strlcpy(tempStr, saveFiles[x-2].levelName, sizeof(tempStr));
 
 						snprintf(buf, sizeof buf, "%s%d", miscTextB[1-1], saveFiles[x-2].episode);
 						JE_textShade(VGAScreen, 297, tempY, buf, temp2 / 16, temp2 % 16 - 8, DARKEN);
@@ -447,21 +451,21 @@ void JE_itemScreen(void)
 				char value[30] = "";
 				if (joysticks == 0 && i < 14) // no joysticks, everything disabled
 				{
-					sprintf(value, "-");
+					snprintf(value, sizeof(value), "-");
 				}
 				else if (i == 0) // joystick number
 				{
-					sprintf(value, "%d", joystick_config + 1);
+					snprintf(value, sizeof(value), "%d", joystick_config + 1);
 				}
 				else if (i == 1) // joystick is analog
 				{
-					sprintf(value, "%s", joystick[joystick_config].analog ? "TRUE" : "FALSE");
+					snprintf(value, sizeof(value), "%s", joystick[joystick_config].analog ? "TRUE" : "FALSE");
 				}
 				else if (i < 4)  // joystick analog settings
 				{
 					if (!joystick[joystick_config].analog)
 						temp -= 3;
-					sprintf(value, "%d", i == 2 ? joystick[joystick_config].sensitivity : joystick[joystick_config].threshold);
+					snprintf(value, sizeof(value), "%d", i == 2 ? joystick[joystick_config].sensitivity : joystick[joystick_config].threshold);
 				}
 				else if (i < 14) // assignments
 				{
@@ -560,21 +564,21 @@ void JE_itemScreen(void)
 						if (temp > 90)
 							snprintf(tempStr, sizeof(tempStr), "Custom Ship %d", temp - 90);
 						else
-							strcpy(tempStr, ships[temp].name);
+							strlcpy(tempStr, ships[temp].name, sizeof(tempStr));
 						break;
 					case 2: /* front and rear weapon */
 					case 3:
-						strcpy(tempStr, weaponPort[temp].name);
+						strlcpy(tempStr, weaponPort[temp].name, sizeof(tempStr));
 						break;
 					case 4: /* shields */
-						strcpy(tempStr, shields[temp].name);
+						strlcpy(tempStr, shields[temp].name, sizeof(tempStr));
 						break;
 					case 5: /* generator */
-						strcpy(tempStr, powerSys[temp].name);
+						strlcpy(tempStr, powerSys[temp].name, sizeof(tempStr));
 						break;
 					case 6: /* sidekicks */
 					case 7:
-						strcpy(tempStr, options[temp].name);
+						strlcpy(tempStr, options[temp].name, sizeof(tempStr));
 						break;
 				}
 				if (tempW == curSel[curMenu]-1)
@@ -594,7 +598,7 @@ void JE_itemScreen(void)
 				/* Draw DONE */
 				if (tempW == menuChoices[curMenu]-1)
 				{
-					strcpy(tempStr, miscText[13]);
+					strlcpy(tempStr, miscText[13], sizeof(tempStr));
 				}
 				JE_textShade(VGAScreen, 185, tempY, tempStr, temp2 / 16, temp2 % 16 - 8 - afford_shade, DARKEN);
 
@@ -769,9 +773,9 @@ void JE_itemScreen(void)
 
 				char temp[64];
 				if (joysticks > 1 && inputDevice[i] > 2)
-					sprintf(temp, "%s %d", inputDevices[2], inputDevice[i] - 2);
+					snprintf(temp, sizeof(temp), "%s %d", inputDevices[2], inputDevice[i] - 2);
 				else
-					sprintf(temp, "%s", inputDevices[inputDevice[i] - 1]);
+					snprintf(temp, sizeof(temp), "%s", inputDevices[inputDevice[i] - 1]);
 				JE_dString(VGAScreen, 186, 38 + 2 * (i + 1) * 16, temp, SMALL_FONT_SHAPES);
 			}
 		}
@@ -1628,7 +1632,11 @@ void JE_itemScreen(void)
 			service_SDL_events(false);
 			JE_showVGA();
 
+#ifdef WITH_SDL3
+            if (packet_in[0] && SDLNet_Read16(&packet_in[0]->buf[0]) == PACKET_WAITING)
+#else
 			if (packet_in[0] && SDLNet_Read16(&packet_in[0]->data[0]) == PACKET_WAITING)
+#endif
 			{
 				network_update();
 				break;
@@ -1848,8 +1856,13 @@ bool load_cube(int cube_slot, int cube_index)
 				if (line < COUNTOF(cube->text))
 				{
 					if (prepend_space)
-						strcat(cube[cube_slot].text[line], " ");
-					strcat(cube[cube_slot].text[line], word);
+#if defined(_MSC_VER) && __STDC_WANT_SECURE_LIB__
+						strncat_s(cube[cube_slot].text[line], sizeof(cube[cube_slot].text[line]), " ", 2);
+					strncat_s(cube[cube_slot].text[line], sizeof(cube[cube_slot].text[line]), word, sizeof(cube[cube_slot].text[line]));
+#else
+                        strncat(cube[cube_slot].text[line], " ", 2);
+					strncat(cube[cube_slot].text[line], word, sizeof(cube[cube_slot].text[line]));
+#endif
 
 					// track last line with text
 					cube[cube_slot].last_line = line + 1;
@@ -1919,16 +1932,16 @@ void JE_drawMenuHeader(void)
 	switch (curMenu)
 	{
 		case MENU_DATA_CUBE_SUB:
-			strcpy(tempStr, cube[curSel[MENU_DATA_CUBES]-2].header);
+			strlcpy(tempStr, cube[curSel[MENU_DATA_CUBES]-2].header, sizeof(tempStr));
 			break;
 		case MENU_DATA_CUBES:
-			strcpy(tempStr, menuInt[1][1]);
+			strlcpy(tempStr, menuInt[1][1], sizeof(tempStr));
 			break;
 		case MENU_LOAD_SAVE:
-			strcpy(tempStr, menuInt[3][performSave + 1]);
+			strlcpy(tempStr, menuInt[3][performSave + 1], sizeof(tempStr));
 			break;
 		default:
-			strcpy(tempStr, menuInt[curMenu + 1][0]);
+			strlcpy(tempStr, menuInt[curMenu + 1][0], sizeof(tempStr));
 			break;
 	}
 	JE_dString(VGAScreen, 74 + JE_fontCenter(tempStr, FONT_SHAPES), 10, tempStr, FONT_SHAPES);
@@ -1978,11 +1991,11 @@ void JE_drawMenuChoices(void)
 		if (curSel[curMenu] == x)
 		{
 			str[0] = '~';
-			strcpy(str+1, menuInt[curMenu + 1][x-1]);
+			strlcpy(str+1, menuInt[curMenu + 1][x-1], strlen(menuInt[curMenu + 1][x-1])+1);
 		}
 		else
 		{
-			strcpy(str, menuInt[curMenu + 1][x-1]);
+			strlcpy(str, menuInt[curMenu + 1][x-1], strlen(menuInt[curMenu + 1][x-1])+2);
 		}
 		JE_dString(VGAScreen, 166, tempY, str, SMALL_FONT_SHAPES);
 		free(str);
@@ -2605,7 +2618,7 @@ void JE_genItemMenu(JE_byte itemNum)
 	temp3 = 2;
 	temp2 = *playeritem_map(&player[0].items, itemNum - 2);
 
-	strcpy(menuInt[5][0], menuInt[2][itemNum - 1]);
+	strlcpy(menuInt[5][0], menuInt[2][itemNum - 1], sizeof(menuInt[5][0]));
 
 	for (tempW = 0; tempW < itemAvailMax[itemAvailMap[itemNum - 2] - 1]; tempW++)
 	{
@@ -2613,31 +2626,31 @@ void JE_genItemMenu(JE_byte itemNum)
 		switch (itemNum)
 		{
 		case 2:
-			strcpy(tempStr, ships[temp].name);
+			strlcpy(tempStr, ships[temp].name, sizeof(tempStr));
 			break;
 		case 3:
 		case 4:
-			strcpy(tempStr, weaponPort[temp].name);
+			strlcpy(tempStr, weaponPort[temp].name, sizeof(tempStr));
 			break;
 		case 5:
-			strcpy(tempStr, shields[temp].name);
+			strlcpy(tempStr, shields[temp].name, sizeof(tempStr));
 			break;
 		case 6:
-			strcpy(tempStr, powerSys[temp].name);
+			strlcpy(tempStr, powerSys[temp].name, sizeof(tempStr));
 			break;
 		case 7:
 		case 8:
-			strcpy(tempStr, options[temp].name);
+			strlcpy(tempStr, options[temp].name, sizeof(tempStr));
 			break;
 		}
 		if (temp == temp2)
 		{
 			temp3 = tempW + 2;
 		}
-		strcpy(menuInt[5][tempW], tempStr);
+		strlcpy(menuInt[5][tempW], tempStr, sizeof(menuInt[5][tempW]));
 	}
 
-	strcpy(menuInt[5][tempW], miscText[13]);
+	strlcpy(menuInt[5][tempW], miscText[13], sizeof(menuInt[5][tempW]));
 
 	curSel[MENU_UPGRADE_SUB] = temp3;
 }
@@ -2661,7 +2674,7 @@ void JE_drawScore(void)
 	char cl[24];
 	if (curMenu == MENU_UPGRADE_SUB)
 	{
-		sprintf(cl, "%d", JE_cashLeft());
+		snprintf(cl, sizeof(cl), "%d", JE_cashLeft());
 		JE_textShade(VGAScreen, 65, 173, cl, 1, 6, DARKEN);
 	}
 }
@@ -2705,13 +2718,13 @@ void JE_menuFunction(JE_byte select)
 			newNavY = navY;
 			menuChoices[MENU_PLAY_NEXT_LEVEL] = mapPNum + 2;
 			curSel[MENU_PLAY_NEXT_LEVEL] = 2;
-			strcpy(menuInt[4][0], "Next Level");
+			strlcpy(menuInt[4][0], "Next Level", sizeof(menuInt[4][0]));
 			for (x = 0; x < mapPNum; x++)
 			{
 				temp = mapPlanet[x];
-				strcpy(menuInt[4][x + 1], pName[temp - 1]);
+				strlcpy(menuInt[4][x + 1], pName[temp - 1], sizeof(menuInt[4][x + 1]));
 			}
-			strcpy(menuInt[4][x + 1], miscText[5]);
+			strlcpy(menuInt[4][x + 1], miscText[5], sizeof(menuInt[4][x + 1]));
 			break;
 		case 7: //quit
 			if (JE_quitRequest())
@@ -3262,16 +3275,16 @@ void JE_weaponSimUpdate(void)
 		{
 			if (leftPower)
 			{
-				sprintf(buf, "%d", downgradeCost);
+				snprintf(buf, sizeof(buf), "%d", downgradeCost);
 				JE_outText(VGAScreen, 26, 137, buf, 1, 4);
 			}
 			if (rightPower)
 			{
-				sprintf(buf, "%d", upgradeCost);
+				snprintf(buf, sizeof(buf), "%d", upgradeCost);
 				JE_outText(VGAScreen, 108, 137, buf, (rightPowerAfford) ? 1 : 7, 4);
 			}
 
-			sprintf(buf, "%s %d", miscTextB[5], temp);
+			snprintf(buf, sizeof(buf), "%s %d", miscTextB[5], temp);
 			JE_outText(VGAScreen, 58, 137, buf, 15, 4);
 		}
 

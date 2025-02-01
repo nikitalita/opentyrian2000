@@ -54,6 +54,21 @@
 #include <string.h>
 #include <stdint.h>
 
+#if defined(_MSC_VER) && __STDC_WANT_SECURE_LIB__
+#define snprintf sprintf_s
+#endif
+
+#if defined(__APPLE__) & defined(__MACH__)
+#include "macos-bundle.h"
+
+#define fseek fseeko
+#define ftell ftello
+#elif (defined(_WIN32) || defined(WIN32)) && !defined(_MSC_VER)
+#define fseek fseeko64
+#define ftell ftello64
+#define fopen fopen64
+#endif
+
 inline static void blit_enemy(SDL_Surface *surface, unsigned int i, signed int x_offset, signed int y_offset, signed int sprite_offset);
 
 boss_bar_t boss_bar[2];
@@ -336,8 +351,8 @@ enemy_still_exists:
 			if (enemy[i].ex <= -24 || enemy[i].ex >= 296)
 				goto draw_enemy_end;
 
-			tempX = enemy[i].ex;
-			tempY = enemy[i].ey;
+			JE_integer tempX = enemy[i].ex;
+			JE_integer tempY = enemy[i].ey;
 
 			temp = enemy[i].enemytype;
 
@@ -386,8 +401,9 @@ enemy_still_exists:
 							}
 							break;
 						case 251:; /* Suck-O-Magnet */
-							const int attractivity = 4 - (abs(player[0].x - tempX) + abs(player[0].y - tempY)) / 100;
-							player[0].x_velocity += (player[0].x > tempX) ? -attractivity : attractivity;
+							const JE_integer attraction = 4 - (abs(player[0].x - tempX) + abs(player[0].y - tempY)) / 100;
+							if (attraction > 0)
+								player[0].x_velocity += (player[0].x > tempX) ? -attraction : attraction;
 							break;
 						case 253: /* Left ShortRange Magnet */
 							if (abs(player[0].x + 25 - 14 - tempX) < 24 && abs(player[0].y - tempY) < 28)
@@ -420,9 +436,9 @@ enemy_still_exists:
 								}
 								else
 								{
-									const int repulsivity = 4 - (abs(player[0].x - tempX) + abs(player[0].y - tempY)) / 20;
-									if (repulsivity > 0)
-										player[0].x_velocity += (player[0].x > tempX) ? repulsivity : -repulsivity;
+									const JE_integer repulsion = 4 - (abs(player[0].x - tempX) + abs(player[0].y - tempY)) / 20;
+									if (repulsion > 0)
+										player[0].x_velocity += (player[0].x > tempX) ? repulsion : -repulsion;
 								}
 							}
 							break;
@@ -497,16 +513,14 @@ enemy_still_exists:
 
 								if (weapons[temp3].aim > 0)
 								{
-									int aim = weapons[temp3].aim;
+									JE_byte aim = weapons[temp3].aim;
 
 									/*DIF*/
 									if (difficultyLevel > DIFFICULTY_NORMAL)
-									{
 										aim += difficultyLevel - 2;
-									}
 
-									JE_word target_x = player[0].x;
-									JE_word target_y = player[0].y;
+									JE_word targetX = player[0].x;
+									JE_word targetY = player[0].y;
 
 									if (twoPlayerMode)
 									{
@@ -520,20 +534,20 @@ enemy_still_exists:
 
 										if (temp == 1)
 										{
-											target_x = player[1].x - 25;
-											target_y = player[1].y;
+											targetX = player[1].x - 25;
+											targetY = player[1].y;
 										}
 									}
 
-									int relative_x = (target_x + 25) - tempX - tempMapXOfs - 4;
-									if (relative_x == 0)
-										relative_x = 1;
-									int relative_y = target_y - tempY;
-									if (relative_y == 0)
-										relative_y = 1;
-									const int longest_side = MAX(abs(relative_x), abs(relative_y));
-									enemyShot[b].sxm = roundf((float)relative_x / longest_side * aim);
-									enemyShot[b].sym = roundf((float)relative_y / longest_side * aim);
+									JE_integer aimX = (targetX + 25) - tempX - tempMapXOfs - 4;
+									if (aimX == 0)
+										aimX = 1;
+									JE_integer aimY = targetY - tempY;
+									if (aimY == 0)
+										aimY = 1;
+									const JE_integer maxMagAim = MAX(abs(aimX), abs(aimY));
+									enemyShot[b].sxm = roundf((float)aimX / maxMagAim * aim);
+									enemyShot[b].sym = roundf((float)aimY / maxMagAim * aim);
 								}
 							}
 							break;
@@ -585,15 +599,15 @@ enemy_still_exists:
 							}
 							else
 							{
-								int target_x = (player[0].x + 25) - tempX - tempMapXOfs - 4;
-								if (target_x == 0)
-									target_x = 1;
-								int tempI5 = player[0].y - tempY;
-								if (tempI5 == 0)
-									tempI5 = 1;
-								const int longest_side = MAX(abs(target_x), abs(tempI5));
-								e->exc = roundf(((float)target_x / longest_side) * e->launchtype);
-								e->eyc = roundf(((float)tempI5 / longest_side) * e->launchtype);
+								JE_integer aimX = (player[0].x + 25) - tempX - tempMapXOfs - 4;
+								if (aimX == 0)
+									aimX = 1;
+								JE_integer aimY = player[0].y - tempY;
+								if (aimY == 0)
+									aimY = 1;
+								const JE_integer maxMagAim = MAX(abs(aimX), abs(aimY));
+								e->exc = roundf((float)aimX / maxMagAim * e->launchtype);
+								e->eyc = roundf((float)aimY / maxMagAim * e->launchtype);
 							}
 						}
 
@@ -944,7 +958,7 @@ start_level_first:
 
 		do
 		{
-			sprintf(tempStr, "demorec.%d", new_demo_num++);
+			snprintf(tempStr, sizeof(tempStr), "demorec.%d", new_demo_num++);
 		} while (dir_file_exists(get_user_directory(), tempStr)); // until file doesn't exist
 
 		demo_file = dir_fopen_warn(get_user_directory(), tempStr, "wb");
@@ -1613,8 +1627,8 @@ level_loop:
 											if (enemy[temp3].armorleft > (unsigned char)enemy[temp3].edlevel)
 												enemy[temp3].armorleft = enemy[temp3].edlevel;
 
-											tempX = enemy[temp3].ex + enemy[temp3].mapoffset;
-											tempY = enemy[temp3].ey;
+											JE_integer tempX = enemy[temp3].ex + enemy[temp3].mapoffset;
+											JE_integer tempY = enemy[temp3].ey;
 
 											if (enemyDat[enemy[temp3].enemytype].esize != 1)
 												JE_setupExplosion(tempX, tempY - 6, 0, 1, false, false);
@@ -1828,8 +1842,8 @@ draw_player_shot_loop_end:
 						    enemyShot[z].sy > player[i].y - (signed)player[i].shot_hit_area_y &&
 						    enemyShot[z].sy < player[i].y + (signed)player[i].shot_hit_area_y)
 						{
-							tempX = enemyShot[z].sx;
-							tempY = enemyShot[z].sy;
+							JE_integer tempX = enemyShot[z].sx;
+							JE_integer tempY = enemyShot[z].sy;
 							temp = enemyShot[z].sdmg;
 
 							enemyShotAvail[z] = true;
@@ -1910,8 +1924,8 @@ draw_player_shot_loop_end:
 			}
 
 			rep_explosions[i].y += backMove2 + 1;
-			tempX = rep_explosions[i].x + (mt_rand() % 24) - 12;
-			tempY = rep_explosions[i].y + (mt_rand() % 27) - 24;
+			JE_integer tempX = rep_explosions[i].x + (mt_rand() % 24) - 12;
+			JE_integer tempY = rep_explosions[i].y + (mt_rand() % 27) - 24;
 
 			if (rep_explosions[i].big)
 			{
@@ -1942,18 +1956,17 @@ draw_player_shot_loop_end:
 	{
 		if (explosions[j].ttl != 0)
 		{
-			if (explosions[j].fixed_position != true)
+			if (!explosions[j].fixedPosition)
 			{
 				explosions[j].sprite++;
 				explosions[j].y += explodeMove;
 			}
-			else if (explosions[j].follow_player == true)
+			else if (explosions[j].followPlayer)
 			{
 				explosions[j].x += explosionFollowAmountX;
 				explosions[j].y += explosionFollowAmountY;
 			}
-			explosions[j].y += explosions[j].delta_y;
-			explosions[j].x += explosions[j].delta_x;
+			explosions[j].y += explosions[j].deltaY;
 
 			if (explosions[j].y > 200 - 14)
 			{
@@ -2086,8 +2099,6 @@ draw_player_shot_loop_end:
 	/*-------      DEbug      ---------*/
 	debugTime = SDL_GetTicks();
 	tempW = lastmouse_but;
-	tempX = mouse_x;
-	tempY = mouse_y;
 
 	if (debug)
 	{
@@ -2096,18 +2107,18 @@ draw_player_shot_loop_end:
 			tempStr[i] = '0' + smoothies[i];
 		}
 		tempStr[9] = '\0';
-		sprintf(buffer, "SM = %s", tempStr);
+		snprintf(buffer, sizeof(buffer), "SM = %s", tempStr);
 		JE_outText(VGAScreen, 30, 70, buffer, 4, 0);
 
-		sprintf(buffer, "Memory left = %d", -1);
+		snprintf(buffer, sizeof(buffer), "Memory left = %d", -1);
 		JE_outText(VGAScreen, 30, 80, buffer, 4, 0);
-		sprintf(buffer, "Enemies onscreen = %d", enemyOnScreen);
+		snprintf(buffer, sizeof(buffer), "Enemies onscreen = %d", enemyOnScreen);
 		JE_outText(VGAScreen, 30, 90, buffer, 6, 0);
 
 		debugHist = debugHist + abs((JE_longint)debugTime - (JE_longint)lastDebugTime);
 		debugHistCount++;
-		sprintf(tempStr, "%2.3f", 1000.0f / roundf(debugHist / debugHistCount));
-		sprintf(buffer, "X:%d Y:%-5d  %s FPS  %d %d %d %d", (mapX - 1) * 12 + player[0].x, curLoc, tempStr, player[0].x_velocity, player[0].y_velocity, player[0].x, player[0].y);
+		snprintf(tempStr, sizeof(tempStr), "%2.3f", 1000.0f / roundf(debugHist / debugHistCount));
+		snprintf(buffer, sizeof(buffer), "X:%d Y:%-5d  %s FPS  %d %d %d %d", (mapX - 1) * 12 + player[0].x, curLoc, tempStr, player[0].x_velocity, player[0].y_velocity, player[0].x, player[0].y);
 		JE_outText(VGAScreen, 45, 175, buffer, 15, 3);
 		lastDebugTime = debugTime;
 	}
@@ -2153,7 +2164,7 @@ draw_player_shot_loop_end:
 
 		JE_textShade (VGAScreen, 140, 6, miscText[66], 7, (levelTimerCountdown % 20) / 3, FULL_SHADE);
 		// Don't use floats due to rounding.
-		sprintf(buffer, "%d.%d", levelTimerCountdown / 100, (levelTimerCountdown / 10) % 10);
+		snprintf(buffer, sizeof(buffer), "%d.%d", levelTimerCountdown / 100, (levelTimerCountdown / 10) % 10);
 		JE_dString (VGAScreen, 100, 2, buffer, SMALL_FONT_SHAPES);
 	}
 
@@ -2227,7 +2238,11 @@ draw_player_shot_loop_end:
 				goto level_loop;
 		}
 
+#ifdef WITH_SDL3
+        if (pause_pressed)
+#else
 		if (pause_pressed || !windowHasFocus)
+#endif
 		{
 			pause_pressed = false;
 
@@ -2264,6 +2279,17 @@ draw_player_shot_loop_end:
 			                  (inGameMenuRequest == true) << 1 |
 			                  (skipLevelRequest == true) << 2 |
 			                  (nortShipRequest == true) << 3;
+
+#ifdef WITH_SDL3
+            SDLNet_Write16(requests,        &packet_state_out[0]->buf[14]);
+
+            SDLNet_Write16(difficultyLevel, &packet_state_out[0]->buf[16]);
+            SDLNet_Write16(player[0].x,     &packet_state_out[0]->buf[18]);
+            SDLNet_Write16(player[1].x,     &packet_state_out[0]->buf[20]);
+            SDLNet_Write16(player[0].y,     &packet_state_out[0]->buf[22]);
+            SDLNet_Write16(player[1].y,     &packet_state_out[0]->buf[24]);
+            SDLNet_Write16(curLoc,          &packet_state_out[0]->buf[26]);
+#else
 			SDLNet_Write16(requests,        &packet_state_out[0]->data[14]);
 
 			SDLNet_Write16(difficultyLevel, &packet_state_out[0]->data[16]);
@@ -2272,21 +2298,34 @@ draw_player_shot_loop_end:
 			SDLNet_Write16(player[0].y,     &packet_state_out[0]->data[22]);
 			SDLNet_Write16(player[1].y,     &packet_state_out[0]->data[24]);
 			SDLNet_Write16(curLoc,          &packet_state_out[0]->data[26]);
+#endif
 
 			network_state_send();
 
 			if (network_state_update())
 			{
+#ifdef WITH_SDL3
+                assert(SDLNet_Read16(&packet_state_in[0]->buf[26]) == SDLNet_Read16(&packet_state_out[network_delay]->buf[26]));
+
+                requests = SDLNet_Read16(&packet_state_in[0]->buf[14]) ^ SDLNet_Read16(&packet_state_out[network_delay]->buf[14]);
+#else
 				assert(SDLNet_Read16(&packet_state_in[0]->data[26]) == SDLNet_Read16(&packet_state_out[network_delay]->data[26]));
 
 				requests = SDLNet_Read16(&packet_state_in[0]->data[14]) ^ SDLNet_Read16(&packet_state_out[network_delay]->data[14]);
+#endif
+
 				if (requests & 1)
 				{
 					JE_pauseGame();
 				}
 				if (requests & 2)
 				{
+#ifdef WITH_SDL3
+                    yourInGameMenuRequest = SDLNet_Read16(&packet_state_out[network_delay]->buf[14]) & 2;
+#else
 					yourInGameMenuRequest = SDLNet_Read16(&packet_state_out[network_delay]->data[14]) & 2;
+#endif
+
 					JE_doInGameSetup();
 					yourInGameMenuRequest = false;
 					if (haltGame)
@@ -2310,10 +2349,14 @@ draw_player_shot_loop_end:
 
 				for (int i = 0; i < 2; i++)
 				{
+#ifdef WITH_SDL3
+                    if (SDLNet_Read16(&packet_state_in[0]->buf[18 + i * 2]) != SDLNet_Read16(&packet_state_out[network_delay]->buf[18 + i * 2]) || SDLNet_Read16(&packet_state_in[0]->buf[20 + i * 2]) != SDLNet_Read16(&packet_state_out[network_delay]->buf[20 + i * 2]))
+#else
 					if (SDLNet_Read16(&packet_state_in[0]->data[18 + i * 2]) != SDLNet_Read16(&packet_state_out[network_delay]->data[18 + i * 2]) || SDLNet_Read16(&packet_state_in[0]->data[20 + i * 2]) != SDLNet_Read16(&packet_state_out[network_delay]->data[20 + i * 2]))
+#endif
 					{
 						char temp[64];
-						sprintf(temp, "Player %d is unsynchronized!", i + 1);
+						snprintf(temp, sizeof(temp), "Player %d is unsynchronized!", i + 1);
 
 						JE_textShade(game_screen, 40, 110 + i * 10, temp, 9, 2, FULL_SHADE);
 					}
@@ -2469,7 +2512,7 @@ new_game:
 						goto new_game;
 				}
 
-				strcpy(s, " ");
+				strlcpy(s, " ", sizeof(s));
 				read_encrypted_pascal_string(s, sizeof(s), ep_f);
 
 				if (s[0] == ']')
@@ -2613,7 +2656,7 @@ new_game:
 							read_encrypted_pascal_string(s, sizeof(s), ep_f);
 
 							char buf[256];
-							strncpy(buf, (strlen(s) > 8) ? s + 8 : "", sizeof(buf));
+							strlcpy(buf, (strlen(s) > 8) ? s + 8 : "", sizeof(buf));
 
 							int j = 0, temp;
 							while (str_pop_int(buf, &temp))
@@ -2651,13 +2694,13 @@ new_game:
 						{
 							for (uint i = 0; i < 2; ++i)
 								snprintf(levelWarningText[i], sizeof(*levelWarningText), "%s %lu", miscText[40 + i], player[i].cash);
-							strcpy(levelWarningText[2], "");
+							strlcpy(levelWarningText[2], "", 1);
 							levelWarningLines = 3;
 						}
 						else
 						{
-							sprintf(levelWarningText[0], "%s %lu", miscText[37], JE_totalScore(&player[0]));
-							strcpy(levelWarningText[1], "");
+							snprintf(levelWarningText[0], sizeof(levelWarningText[0]), "%s %lu", miscText[37], JE_totalScore(&player[0]));
+							strlcpy(levelWarningText[1], "", 1);
 							levelWarningLines = 2;
 						}
 
@@ -2672,7 +2715,7 @@ new_game:
 						do
 						{
 							read_encrypted_pascal_string(s, sizeof(s), ep_f);
-							strcpy(levelWarningText[levelWarningLines], s);
+							strlcpy(levelWarningText[levelWarningLines], s, sizeof(levelWarningText[levelWarningLines]));
 							levelWarningLines++;
 						} while (s[0] != '#');
 						levelWarningLines--;
@@ -2702,10 +2745,10 @@ new_game:
 							{
 								if (SANextShip[superArcadeMode] == SA_ENGAGE)
 								{
-									sprintf(buffer, "%s %s", miscTextB[4], pName[0]);
+									snprintf(buffer, sizeof(buffer), "%s %s", miscTextB[4], pName[0]);
 									JE_dString(VGAScreen, JE_fontCenter(buffer, FONT_SHAPES), 100, buffer, FONT_SHAPES);
 
-									sprintf(buffer, "Or play... %s", specialName[SA_DESTRUCT - 1]);
+									snprintf(buffer, sizeof(buffer), "Or play... %s", specialName[SA_DESTRUCT - 1]);
 									JE_dString(VGAScreen, 80, 180, buffer, SMALL_FONT_SHAPES);
 								}
 								else
@@ -2719,7 +2762,7 @@ new_game:
 								else if (SANextShip[superArcadeMode] == SA_NORTSHIPZ)
 									trentWin = true;
 
-								sprintf(buffer, "Type %s at Title", specialName[SANextShip[superArcadeMode]-1]);
+								snprintf(buffer, sizeof(buffer), "Type %s at Title", specialName[SANextShip[superArcadeMode]-1]);
 								JE_dString(VGAScreen, JE_fontCenter(buffer, SMALL_FONT_SHAPES), 160, buffer, SMALL_FONT_SHAPES);
 								JE_showVGA();
 
@@ -2748,7 +2791,7 @@ new_game:
 					case 'P':
 						if (!constantPlay)
 						{
-							tempX = atoi(s + 3);
+							JE_word tempX = atoi(s + 3);
 							if (tempX > 900)
 							{
 								memcpy(colors, palettes[pcxpal[tempX-1 - 900]], sizeof(colors));
@@ -2774,7 +2817,7 @@ new_game:
 						{
 							memcpy(VGAScreen2->pixels, VGAScreen->pixels, VGAScreen2->pitch * VGAScreen2->h);
 
-							tempX = atoi(s + 3);
+							JE_word tempX = atoi(s + 3);
 							JE_loadPic(VGAScreen, tempX, false);
 							memcpy(pic_buffer, VGAScreen->pixels, sizeof(pic_buffer));
 
@@ -2826,7 +2869,7 @@ new_game:
 							/* TODO: NETWORK */
 							memcpy(VGAScreen2->pixels, VGAScreen->pixels, VGAScreen2->pitch * VGAScreen2->h);
 
-							tempX = atoi(s + 3);
+							JE_word tempX = atoi(s + 3);
 							JE_loadPic(VGAScreen, tempX, false);
 							memcpy(pic_buffer, VGAScreen->pixels, sizeof(pic_buffer));
 
@@ -2877,7 +2920,7 @@ new_game:
 							/* TODO: NETWORK */
 							memcpy(VGAScreen2->pixels, VGAScreen->pixels, VGAScreen2->pitch * VGAScreen2->h);
 
-							tempX = atoi(s + 3);
+							JE_word tempX = atoi(s + 3);
 							JE_loadPic(VGAScreen, tempX, false);
 							memcpy(pic_buffer, VGAScreen->pixels, sizeof(pic_buffer));
 
@@ -2967,7 +3010,7 @@ new_game:
 
 									if (s[0] != '#')
 									{
-										strcpy(levelWarningText[levelWarningLines], s);
+										strlcpy(levelWarningText[levelWarningLines], s, sizeof(levelWarningText[levelWarningLines]));
 										levelWarningLines++;
 									}
 								} while (!(s[0] == '#'));
@@ -3085,7 +3128,7 @@ new_game:
 	}
 
 	/* Read Shapes.DAT */
-	sprintf(tempStr, "shapes%c.dat", tolower((unsigned char)char_shapeFile));
+	snprintf(tempStr, sizeof(tempStr), "shapes%c.dat", tolower((unsigned char)char_shapeFile));
 	FILE *shpFile = dir_fopen_die(data_dir(), tempStr, "rb");
 
 	for (int z = 0; z < 600; z++)
@@ -3227,8 +3270,15 @@ void networkStartScreen(void)
 			difficultyLevel++;  /*Make it one step harder for 2-player mode!*/
 
 			network_prepare(PACKET_DETAILS);
+
+#ifdef WITH_SDL3
+            SDLNet_Write16(episodeNum, &packet_out_temp->buf[4]);
+            SDLNet_Write16(difficultyLevel, &packet_out_temp->buf[6]);
+#else
 			SDLNet_Write16(episodeNum, &packet_out_temp->data[4]);
 			SDLNet_Write16(difficultyLevel, &packet_out_temp->data[6]);
+#endif
+
 			network_send(8);  // PACKET_DETAILS
 		}
 		else
@@ -3251,7 +3301,11 @@ void networkStartScreen(void)
 			service_SDL_events(false);
 			JE_showVGA();
 
+#ifdef WITH_SDL3
+            if (packet_in[0] && SDLNet_Read16(&packet_in[0]->buf[0]) == PACKET_DETAILS)
+#else
 			if (packet_in[0] && SDLNet_Read16(&packet_in[0]->data[0]) == PACKET_DETAILS)
+#endif
 				break;
 
 			network_update();
@@ -3260,8 +3314,14 @@ void networkStartScreen(void)
 			SDL_Delay(16);
 		}
 
+#ifdef WITH_SDL3
+        JE_initEpisode(SDLNet_Read16(&packet_in[0]->buf[4]));
+        difficultyLevel = SDLNet_Read16(&packet_in[0]->buf[6]);
+#else
 		JE_initEpisode(SDLNet_Read16(&packet_in[0]->data[4]));
 		difficultyLevel = SDLNet_Read16(&packet_in[0]->data[6]);
+#endif
+
 		initialDifficulty = difficultyLevel - 1;
 		fade_black(10);
 
@@ -3525,7 +3585,7 @@ bool titleScreen(void)
 							JE_playSampleNum(V_DANGER);
 
 							JE_whoa();
-							set_colors((SDL_Color) { 0, 0, 0 }, 0, 255);
+                            set_colors((SDL_Color) { 0, 0, 0, 0 }, 0, 255);
 
 							if (newSuperTyrianGame())
 								return true;
@@ -3782,7 +3842,11 @@ void intro_logos(void)
 {
 	moveTyrianLogoUp = true;
 
+#ifdef WITH_SDL3
+    SDL_FillSurfaceRect(VGAScreen, NULL, 0);
+#else
 	SDL_FillRect(VGAScreen, NULL, 0);
+#endif
 
 	fade_white(25);
 
@@ -3836,7 +3900,7 @@ void JE_readTextSync(void)
 void JE_displayText(void)
 {
 	/* Display Warning Text */
-	tempY = 55;
+	JE_word tempY = 55;
 	if (warningRed)
 	{
 		tempY = 2;

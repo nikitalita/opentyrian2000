@@ -19,7 +19,11 @@
 #ifndef FONT_H
 #define FONT_H
 
-#include "SDL.h"
+#ifdef WITH_SDL3
+#include <SDL3/SDL.h>
+#else
+#include <SDL2/SDL.h>
+#endif
 
 #include <stdbool.h>
 

@@ -1,4 +1,4 @@
-/* 
+/*
  * OpenTyrian: A modern cross-platform port of Tyrian
  * Copyright (C) 2007-2009  The OpenTyrian Development Team
  *
@@ -24,7 +24,11 @@
 #include "musmast.h"
 #include "sndmast.h"
 
-#include "SDL.h"
+#ifdef WITH_SDL3
+#include <SDL3/SDL.h>
+#else
+#include <SDL2/SDL.h>
+#endif
 
 extern JE_word frameCountMax;
 

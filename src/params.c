@@ -45,30 +45,31 @@ void JE_paramCheck(int argc, char *argv[])
 	const Options options[] =
 	{
 		{ 'h', 'h', "help",              false },
-		
+
 		{ 's', 's', "no-sound",          false },
 		{ 'j', 'j', "no-joystick",       false },
 		{ 'x', 'x', "no-xmas",           false },
-		
+
 		{ 't', 't', "data",              true },
-		
+		{ 'f', 'f', "soundfont",         true },
+
 		{ 'n', 'n', "net",               true },
 		{ 256, 0,   "net-player-name",   true }, // TODO: no short codes because there should
 		{ 257, 0,   "net-player-number", true }, //       be a menu for entering these in the future
 		{ 'p', 'p', "net-port",          true },
 		{ 'd', 'd', "net-delay",         true },
-		
+
 		{ 'X', 'X', "xmas",              false },
 		{ 'c', 'c', "constant",          false },
 		{ 'k', 'k', "death",             false },
 		{ 'r', 'r', "record",            false },
 		{ 'l', 'l', "loot",              false },
-		
+
 		{ 0, 0, NULL, false}
 	};
-	
+
 	Option option;
-	
+
 	for (; ; )
 	{
 		option = parse_args(argc, (const char **)argv, options);
@@ -98,7 +99,9 @@ void JE_paramCheck(int argc, char *argv[])
 			       "  --net-player-number=NUMBER   Sets local player number in a networked game\n"
 			       "                               (1 or 2)\n"
 			       "  -p, --net-port=PORT          Local port to bind (default is 1333)\n"
-			       "  -d, --net-delay=FRAMES       Set lag-compensation delay (default is 1)\n", argv[0]);
+			       "  -d, --net-delay=FRAMES       Set lag-compensation delay (default is 1)\n"
+				   "  -f, --soundfont=FILE         Set the soundfont for MIDI playback\n\n"
+				   , argv[0]);
 			exit(0);
 			break;
 			
@@ -106,7 +109,10 @@ void JE_paramCheck(int argc, char *argv[])
 			// Disables sound/music usage
 			audio_disabled = true;
 			break;
-			
+		case 'f':
+			// Set the soundfont for MIDI playback
+			strlcpy(soundfont, option.arg, MAX(strlen(option.arg) + 1, 4096));
+			break;
 		case 'j':
 			// Disables joystick detection
 			ignore_joystick = true;
@@ -115,6 +121,11 @@ void JE_paramCheck(int argc, char *argv[])
 		case 'x':
 			override_xmas = true;
 			xmas = false;
+			break;
+			
+		case 'X':
+			override_xmas = true;
+			xmas = true;
 			break;
 			
 		// set custom Tyrian data directory
@@ -129,7 +140,7 @@ void JE_paramCheck(int argc, char *argv[])
 			if (temp)
 			{
 				temp -= (intptr_t)option.arg;
-				
+
 				int temp_port = atoi(&option.arg[temp + 1]);
 				if (temp_port > 0 && temp_port < 49152)
 					network_opponent_port = temp_port;
@@ -138,22 +149,22 @@ void JE_paramCheck(int argc, char *argv[])
 					fprintf(stderr, "%s: error: invalid network port number\n", argv[0]);
 					exit(EXIT_FAILURE);
 				}
-				
+
 				network_opponent_host = malloc(temp + 1);
 				SDL_strlcpy(network_opponent_host, option.arg, temp + 1);
 			}
 			else
 			{
 				network_opponent_host = malloc(strlen(option.arg) + 1);
-				strcpy(network_opponent_host, option.arg);
+				strlcpy(network_opponent_host, option.arg, strlen(option.arg) + 1);
 			}
 			break;
-			
+
 		case 256: // --net-player-name
 			network_player_name = malloc(strlen(option.arg) + 1);
-			strcpy(network_player_name, option.arg);
+			strlcpy(network_player_name, option.arg, (strlen(option.arg) + 1));
 			break;
-			
+
 		case 257: // --net-player-number
 		{
 			int temp = atoi(option.arg);
@@ -166,6 +177,7 @@ void JE_paramCheck(int argc, char *argv[])
 			}
 			break;
 		}
+
 		case 'p':
 		{
 			int temp = atoi(option.arg);
@@ -180,8 +192,13 @@ void JE_paramCheck(int argc, char *argv[])
 		}
 		case 'd':
 		{
-			int temp;
+			int temp = 0;
+
+#if defined(_MSC_VER) && __STDC_WANT_SECURE_LIB__
+            if (sscanf_s(option.arg, "%d", &temp) == 1)
+#else
 			if (sscanf(option.arg, "%d", &temp) == 1)
+#endif
 				network_delay = 1 + temp;
 			else
 			{
@@ -190,12 +207,8 @@ void JE_paramCheck(int argc, char *argv[])
 			}
 			break;
 		}
-		case 'X':
-			override_xmas = true;
-			xmas = true;
-			break;
-			
-		case 'c':
+
+        case 'c':
 			/* Constant play for testing purposes (C key activates invincibility)
 			   This might be useful for publishers to see everything - especially
 			   those who can't play it */

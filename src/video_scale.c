@@ -76,13 +76,22 @@ void nn_32(SDL_Surface *src_surface, SDL_Texture *dst_texture)
 	int dst_pitch;
 
 	const int dst_Bpp = 4;         // dst_surface->format->BytesPerPixel
-	int dst_width, dst_height;
+#ifdef WITH_SDL3
+    float dstwidth = 0;
+    float dstheight = 0;
+    int dst_width = 0;
+
+    SDL_GetTextureSize(dst_texture, &dstwidth, &dstheight);
+
+    dst_width = (int)dstwidth;
+#else
+    int dst_width = 0, dst_height = 0;
 	SDL_QueryTexture(dst_texture, NULL, NULL, &dst_width, &dst_height);
-	
-	const int height = vga_height, // src_surface->h
-	          width = vga_width,   // src_surface->w
-	          scale = dst_width / width;
-	assert(scale == dst_height / height);
+#endif
+
+    const int height = vga_height, // src_surface->h
+              width = vga_width,   // src_surface->w
+              scale = dst_width / width;
 
 	void* tmp_ptr;
 	SDL_LockTexture(dst_texture, NULL, &tmp_ptr, &dst_pitch);
@@ -109,6 +118,7 @@ void nn_32(SDL_Surface *src_surface, SDL_Texture *dst_texture)
 		for (int z = scale; z > 1; z--)
 		{
 			memcpy(dst, dst_temp, dst_width * dst_Bpp);
+
 			dst += dst_pitch;
 		}
 	}
@@ -125,13 +135,23 @@ void nn_16(SDL_Surface *src_surface, SDL_Texture *dst_texture)
 	int dst_pitch;
 
 	const int dst_Bpp = 2;         // dst_surface->format->BytesPerPixel
-	int dst_width, dst_height;
+#ifdef WITH_SDL3
+    float dstwidth = 0;
+    float dstheight = 0;
+    int dst_width = 0;
+
+    SDL_GetTextureSize(dst_texture, &dstwidth, &dstheight);
+
+    dst_width = (int)dstwidth;
+#else
+    int dst_width = 0, dst_height = 0;
+
 	SDL_QueryTexture(dst_texture, NULL, NULL, &dst_width, &dst_height);
-	
-	const int height = vga_height, // src_surface->h
-	          width = vga_width,   // src_surface->w
-	          scale = dst_width / width;
-	assert(scale == dst_height / height);
+#endif
+    
+    const int height = vga_height, // src_surface->h
+              width = vga_width,   // src_surface->w
+              scale = dst_width / width;
 
 	void* tmp_ptr;
 	SDL_LockTexture(dst_texture, NULL, &tmp_ptr, &dst_pitch);

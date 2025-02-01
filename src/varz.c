@@ -298,7 +298,7 @@ JE_byte chargeWait, chargeLevel, chargeMax, chargeGr, chargeGrWait;
 JE_word neat;
 
 /*ExplosionData*/
-explosion_type explosions[MAX_EXPLOSIONS]; /* [1..ExplosionMax] */
+Explosion explosions[MAX_EXPLOSIONS]; /* [1..ExplosionMax] */
 JE_integer explosionFollowAmountX, explosionFollowAmountY;
 
 /*Repeating Explosions*/
@@ -310,7 +310,6 @@ unsigned int last_superpixel;
 
 /*Temporary Numbers*/
 JE_byte temp, temp2, temp3;
-JE_word tempX, tempY;
 JE_word tempW;
 
 JE_boolean doNotSaveBackup;
@@ -501,8 +500,13 @@ void JE_tyrianHalt(JE_byte code)
 		       "\n");
 	}
 
+#ifndef WITH_SDL3
 	SDL_Quit();
-	exit(code);
+
+    exit(code);
+#else
+    exit(0);
+#endif
 }
 
 void JE_specialComplete(JE_byte playerNum, JE_byte specialType)
@@ -872,7 +876,13 @@ void JE_doSpecialShot(JE_byte playerNum, uint *armor, uint *shield)
 	}
 }
 
-void JE_setupExplosion(signed int x, signed int y, signed int delta_y, unsigned int type, bool fixed_position, bool follow_player)
+void JE_setupExplosion(
+	JE_integer x,
+	JE_integer y,
+	JE_integer deltaY,
+	JE_integer type,
+	bool fixedPosition,  // true when coin/gem value
+	bool followPlayer)   // true when player shield (1P only)
 {
 	const struct {
 		JE_word sprite;
@@ -953,10 +963,9 @@ void JE_setupExplosion(signed int x, signed int y, signed int delta_y, unsigned 
 				}
 				explosions[i].sprite = explosion_data[type].sprite;
 				explosions[i].ttl = explosion_data[type].ttl;
-				explosions[i].follow_player = follow_player;
-				explosions[i].fixed_position = fixed_position;
-				explosions[i].delta_x = 0;
-				explosions[i].delta_y = delta_y;
+				explosions[i].followPlayer = followPlayer;
+				explosions[i].fixedPosition = fixedPosition;
+				explosions[i].deltaY = deltaY;
 				break;
 			}
 		}

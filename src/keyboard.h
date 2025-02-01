@@ -1,4 +1,4 @@
-/* 
+/*
  * OpenTyrian: A modern cross-platform port of Tyrian
  * Copyright (C) 2007-2009  The OpenTyrian Development Team
  *
@@ -21,7 +21,19 @@
 
 #include "opentyr.h"
 
-#include "SDL.h"
+#ifdef WITH_SDL3
+#include <SDL3/SDL.h>
+
+#ifndef SDL_SCANCODE_COUNT
+#define SDL_SCANCODE_COUNT 512
+#endif
+
+#ifndef SDL_TEXTINPUTEVENT_TEXT_SIZE
+#define SDL_TEXTINPUTEVENT_TEXT_SIZE (32)
+#endif
+#else
+#include <SDL2/SDL.h>
+#endif
 
 #include <stdbool.h>
 
@@ -35,7 +47,12 @@ extern Uint8 lastmouse_but;
 extern Sint32 lastmouse_x, lastmouse_y;
 extern JE_boolean mouse_pressed[4];
 extern Sint32 mouse_x, mouse_y;
+
+#ifdef WITH_SDL3
+extern Uint8 keysactive[SDL_SCANCODE_COUNT];
+#else
 extern Uint8 keysactive[SDL_NUM_SCANCODES];
+#endif
 
 extern bool windowHasFocus;
 

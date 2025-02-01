@@ -29,6 +29,17 @@
 #include <assert.h>
 #include <string.h>
 
+#if defined(__APPLE__) & defined(__MACH__)
+#include "macos-bundle.h"
+
+#define fseek fseeko
+#define ftell ftello
+#elif (defined(_WIN32) || defined(WIN32)) && !defined(_MSC_VER)
+#define fseek fseeko64
+#define ftell ftello64
+#define fopen fopen64
+#endif
+
 /*** Structs ***/
 /* The actual header has a lot of fields that are basically useless to us since
  * we both set our own framerate and the format itself only allows for

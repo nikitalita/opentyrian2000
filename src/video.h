@@ -21,7 +21,11 @@
 
 #include "opentyr.h"
 
-#include "SDL.h"
+#ifdef WITH_SDL3
+#include <SDL3/SDL.h>
+#else
+#include <SDL2/SDL.h>
+#endif
 
 #define vga_width 320
 #define vga_height 200
@@ -44,7 +48,17 @@ extern SDL_Surface *game_screen;
 extern SDL_Surface *VGAScreen2;
 
 extern SDL_Window *main_window;
+
+#ifdef WITH_SDL3
+#if defined(__ANDROID__) || defined(ANDROID)
+typedef struct SDL_PixelFormatDetails *SDL_PixelFormatDetailsPtr;
+extern SDL_PixelFormatDetailsPtr main_window_tex_format;
+#else
+extern const SDL_PixelFormatDetails *main_window_tex_format;
+#endif
+#else
 extern SDL_PixelFormat *main_window_tex_format;
+#endif
 
 void init_video(void);
 

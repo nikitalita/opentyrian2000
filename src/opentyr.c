@@ -16,7 +16,13 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
+
+#undef OPENTYRIAN_VERSION
+
 #include "opentyr.h"
+#include "opentyrian_version.h"
+
+#include "macos-bundle.h"
 
 #include "config.h"
 #include "destruct.h"
@@ -48,7 +54,23 @@
 #include "video_scale.h"
 #include "xmas.h"
 
-#include "SDL.h"
+#ifdef WITH_SDL3
+#include <SDL3/SDL.h>
+#else
+#include <SDL2/SDL.h>
+#endif
+
+#ifdef WITH_NETWORK
+#ifdef WITH_SDL3
+#include <SDL3_net/SDL_net.h>
+#else
+#include <SDL2/SDL_net.h>
+#endif
+#endif
+
+#if defined(_WIN32) || defined(WIN32)
+#include <Windows.h>
+#endif
 
 #include <assert.h>
 #include <stdio.h>
@@ -56,12 +78,24 @@
 #include <string.h>
 #include <time.h>
 
-const char *opentyrian_str = "OpenTyrian2000";
+#ifdef _WIN32
+#include <windows.h>
+#include <shellapi.h>
+#endif
+
+const char *opentyrian_str = "OpenTyrian " TYRIAN_VERSION;
 const char *opentyrian_version = OPENTYRIAN_VERSION;
 
 static size_t getDisplayPickerItemsCount(void)
 {
+#ifdef WITH_SDL3
+    int count = 0;
+    SDL_GetDisplays(&count);
+
+    return 1 + count;
+#else
 	return 1 + (size_t)SDL_GetNumVideoDisplays();
+#endif
 }
 
 static const char *getDisplayPickerItem(size_t i, char *buffer, size_t bufferSize)
@@ -97,6 +131,31 @@ static const char *getScalingModePickerItem(size_t i, char *buffer, size_t buffe
 	return scaling_mode_names[i];
 }
 
+static size_t getMusicDevicePickerItemsCount(void)
+{
+#ifndef WITH_MIDI
+	return (size_t)1;
+#else
+	#ifdef NO_NATIVE_MIDI
+	return (size_t)MUSIC_DEVICE_MAX - 1;
+	#else
+	return (size_t)MUSIC_DEVICE_MAX;
+	#endif
+#endif
+}
+
+static const char *getMusicDevicePickerItem(size_t i, char *buffer, size_t bufferSize)
+{
+	(void)buffer, (void)bufferSize;
+#ifndef WITH_MIDI
+	(void)i;
+	return music_device_names[0];
+#else
+	return music_device_names[i];
+#endif
+}
+
+
 void setupMenu(void)
 {
 	typedef enum
@@ -112,6 +171,7 @@ void setupMenu(void)
 		MENU_ITEM_SCALING_MODE,
 		MENU_ITEM_MUSIC_VOLUME,
 		MENU_ITEM_SOUND_VOLUME,
+		MENU_ITEM_MUSIC_DEVICE,
 	} MenuItemId;
 
 	typedef enum
@@ -141,12 +201,12 @@ void setupMenu(void)
 		[MENU_SETUP] = {
 			.header = "Setup",
 			.items = {
-				{ MENU_ITEM_GRAPHICS, "Graphics...", "Change the graphics settings." },
-				{ MENU_ITEM_SOUND, "Sound...", "Change the sound settings." },
-				{ MENU_ITEM_JUKEBOX, "Jukebox", "Listen to the music of Tyrian." },
-				// { MENU_ITEM_DESTRUCT, "Destruct", "Play a bonus mini-game." },
-				{ MENU_ITEM_DONE, "Done", "Return to the main menu." },
-				{ -1 }
+				{ MENU_ITEM_GRAPHICS, "Graphics...", "Change the graphics settings.", NULL, NULL },
+				{ MENU_ITEM_SOUND, "Sound...", "Change the sound settings.", NULL, NULL },
+				{ MENU_ITEM_JUKEBOX, "Jukebox", "Listen to the music of Tyrian.", NULL, NULL },
+				// { MENU_ITEM_DESTRUCT, "Destruct", "Play a bonus mini-game.", NULL, NULL },
+				{ MENU_ITEM_DONE, "Done", "Return to the main menu.", NULL, NULL },
+				{ -1, NULL, NULL, NULL, NULL }
 			},
 		},
 		[MENU_GRAPHICS] = {
@@ -155,17 +215,18 @@ void setupMenu(void)
 				{ MENU_ITEM_DISPLAY, "Display:", "Change the display mode.", getDisplayPickerItemsCount, getDisplayPickerItem },
 				{ MENU_ITEM_SCALER, "Scaler:", "Change the pixel art scaling algorithm.", getScalerPickerItemsCount, getScalerPickerItem },
 				{ MENU_ITEM_SCALING_MODE, "Scaling Mode:", "Change the scaling mode.", getScalingModePickerItemsCount, getScalingModePickerItem },
-				{ MENU_ITEM_DONE, "Done", "Return to the previous menu." },
-				{ -1 }
+				{ MENU_ITEM_DONE, "Done", "Return to the previous menu.", NULL, NULL },
+				{ -1, NULL, NULL, NULL, NULL }
 			},
 		},
 		[MENU_SOUND] = {
 			.header = "Sound",
 			.items = {
-				{ MENU_ITEM_MUSIC_VOLUME, "Music Volume", "Change volume with the left/right arrow keys." },
-				{ MENU_ITEM_SOUND_VOLUME, "Sound Volume", "Change volume with the left/right arrow keys." },
-				{ MENU_ITEM_DONE, "Done", "Return to the previous menu." },
-				{ -1 }
+				{ MENU_ITEM_MUSIC_VOLUME, "Music Volume", "Change volume with the left/right arrow keys.", NULL, NULL },
+				{ MENU_ITEM_SOUND_VOLUME, "Sound Volume", "Change volume with the left/right arrow keys.", NULL, NULL },
+				{ MENU_ITEM_MUSIC_DEVICE, "Music Device", "Change the music device.", getMusicDevicePickerItemsCount, getMusicDevicePickerItem},
+                { MENU_ITEM_DONE, "Done", "Return to the previous menu.", NULL, NULL },
+				{ -1, NULL, NULL, NULL, NULL }
 			},
 		},
 	};
@@ -269,6 +330,10 @@ void setupMenu(void)
 			case MENU_ITEM_SOUND_VOLUME:
 				JE_barDrawShadow(VGAScreen, xMenuItemValue, y, 1, samples_disabled ? 170 : 174, (fxVolume + 4) / 8, 2, 10);
 				JE_rectangle(VGAScreen, xMenuItemValue - 2, y - 2, xMenuItemValue + 96, y + 11, 242);
+				break;
+
+			case MENU_ITEM_MUSIC_DEVICE:
+				draw_font_hv_shadow(VGAScreen, xMenuItemValue, y, music_device_names[music_device], normal_font, left_aligned, 15, -3 + (selected ? 2 : 0) + (disabled ? -4 : 0), false, 2);
 				break;
 
 			default:
@@ -376,6 +441,7 @@ void setupMenu(void)
 									case MENU_ITEM_DISPLAY:
 									case MENU_ITEM_SCALER:
 									case MENU_ITEM_SCALING_MODE:
+									case MENU_ITEM_MUSIC_DEVICE:
 									{
 										action = true;
 										break;
@@ -584,6 +650,14 @@ void setupMenu(void)
 					pickerSelectedIndex = scaling_mode;
 					break;
 				}
+				case MENU_ITEM_MUSIC_DEVICE:
+				{
+					JE_playSampleNum(S_CLICK);
+
+					currentPicker = selectedMenuItemId;
+					pickerSelectedIndex = music_device;
+					break;
+				}
 				case MENU_ITEM_MUSIC_VOLUME:
 				{
 					JE_playSampleNum(S_CLICK);
@@ -735,6 +809,12 @@ void setupMenu(void)
 					scaling_mode = pickerSelectedIndex;
 					break;
 				}
+				case MENU_ITEM_MUSIC_DEVICE:
+				{
+					music_device = pickerSelectedIndex;
+					restart_audio();
+					break;
+				}
 				default:
 					break;
 				}
@@ -745,20 +825,102 @@ void setupMenu(void)
 	}
 }
 
+#ifdef _WIN32
+int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR cmdLine, int nShowCmd)
+{
+	(void)hInstance;
+	(void)hPrevInstance;
+	(void)cmdLine;
+	(void)nShowCmd;
+	int argc = __argc;
+	char** argv = __argv;
+#elif defined(ANDROID) || defined(__ANDROID__)
+int SDL_main(int argc, char *argv[])
+{
+#else
 int main(int argc, char *argv[])
 {
+#endif
+#ifndef WITH_SDL3
+    SDL_version sdlver;
+#ifdef WITH_NETWORK
+    const SDLNet_version *sdlnetver = NULL;
+#endif
+#endif
+
 	mt_srand(time(NULL));
 
-	printf("\nWelcome to... >> %s %s <<\n\n", opentyrian_str, opentyrian_version);
+#if defined(__APPLE__) && defined(__MACH__)
+    printf("\nWelcome to... >> %s v%s <<\n\n", getBundleName(), getBundleVersion());
 
-	printf("Copyright (C) 2022 The OpenTyrian Development Team\n");
-	printf("Copyright (C) 2022 Kaito Sinclaire\n\n");
+    printf("Identifier: %s\n", getBundleID());
+    printf("Executable: %s\n", getExecutablePath());
+    printf("Resources:  %s\n", getBundlePath());
+    printf("Frameworks: %s\n\n", getFrameworksPath());
+#else
+	printf("\nWelcome to... >> %s %s <<\n\n", opentyrian_str, opentyrian_version);
+#endif
+
+    printf("Current architecture: ");
+#if defined(__i386__) || defined(_M_IX86)
+    printf("I386\n");
+#elif defined(__x86_64__) || defined(_M_AMD64)
+    printf("X86_64\n");
+#elif defined(__ppc__) || defined(_M_PPC)
+    printf("PPC\n");
+#elif defined(__ppc64__) || defined(_M_PPC64)
+    printf("PPC64\n");
+#elif defined(__arm__) || defined(_M_ARM)
+    printf("ARM\n");
+#elif defined(__arm64__) || defined(__aarch64__) || defined(_M_ARM64) || defined(_M_ARM64EC)
+    printf("ARM64\n");
+#else
+    printf("Unknown\n");
+#endif
+
+#if defined(__APPLE__) && defined(__MACH__)
+    printf("Minimum OS version: %s\n", getMinimumOS());
+#endif
+
+#ifndef WITH_SDL3
+    SDL_GetVersion(&sdlver);
+
+#ifdef WITH_NETWORK
+    sdlnetver = SDLNet_Linked_Version();
+#endif
+
+    printf("SDL version %d.%d.%d\n", sdlver.major, sdlver.minor, sdlver.patch);
+
+#ifdef WITH_NETWORK
+    printf("SDL_net version %d.%d.%d\n\n", sdlnetver->major, sdlnetver->minor, sdlnetver->patch);
+#endif /* WITH_NETWORK */
+#else
+    printf("SDL version %d.%d.%d\n", SDL_MAJOR_VERSION, SDL_MINOR_VERSION, SDL_MICRO_VERSION);
+
+#ifdef WITH_NETWORK
+    printf("SDL_net version %d.%d.%d\n\n", SDL_NET_MAJOR_VERSION, SDL_NET_MINOR_VERSION, SDL_NET_MICRO_VERSION);
+#endif /* WITH_NETWORK */
+#endif
+
+    printf("\n");
+
+#if defined(__APPLE__) && defined(__MACH__)
+    printf("%s\n\n", getCopyRight());
+#else
+	printf("Copyright (C) 2022-2024 The OpenTyrian Development Team\n");
+	printf("Copyright (C) 2022-2024 Kaito Sinclaire\n");
+    printf("Copyright (C) 2024 AnV Software\n\n");
+#endif
 
 	printf("This program comes with ABSOLUTELY NO WARRANTY.\n");
 	printf("This is free software, and you are welcome to redistribute it\n");
 	printf("under certain conditions.  See the file COPYING for details.\n\n");
 
+#ifdef WITH_SDL3
+    if (SDL_Init(0) == false)
+#else
 	if (SDL_Init(0))
+#endif
 	{
 		printf("Failed to initialize SDL: %s\n", SDL_GetError());
 		return -1;
@@ -768,7 +930,7 @@ int main(int argc, char *argv[])
 	// Tyrian 2000 requires help text to be loaded before the configuration,
 	// because the default high score names are stored in help text
 
-	JE_paramCheck(argc, argv);
+	JE_paramCheck(argc, (char **)argv);
 
 	if (!override_xmas) // arg handler may override
 		xmas = xmas_time();
@@ -863,7 +1025,7 @@ int main(int argc, char *argv[])
 			networkStartScreen();
 		}
 		else
-#endif
+#endif /* WITH_NETWORK */
 		{
 			if (!titleScreen())
 			{

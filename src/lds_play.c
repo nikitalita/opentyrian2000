@@ -26,6 +26,17 @@
 #include <string.h>
 #include <stdlib.h>
 
+#if defined(__APPLE__) & defined(__MACH__)
+#include "macos-bundle.h"
+
+#define fseek fseeko
+#define ftell ftello
+#elif (defined(_WIN32) || defined(WIN32)) && !defined(_MSC_VER)
+#define fseek fseeko64
+#define ftell ftello64
+#define fopen fopen64
+#endif
+
 const unsigned char op_table[9] = {0x00, 0x01, 0x02, 0x08, 0x09, 0x0a, 0x10, 0x11, 0x12};
 
 /* A substantial amount of this code has been copied and adapted from adplug.

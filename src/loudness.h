@@ -1,4 +1,4 @@
-/* 
+/*
  * OpenTyrian: A modern cross-platform port of Tyrian
  * Copyright (C) 2007-2009  The OpenTyrian Development Team
  *
@@ -22,17 +22,33 @@
 #include "opentyr.h"
 #include "opl.h"
 
-#include "SDL.h"
+#ifdef WITH_SDL3
+#include <SDL3/SDL.h>
+#else
+#include <SDL2/SDL.h>
+#endif
 
 extern int audioSampleRate;
 
 extern unsigned int song_playing;
 
 extern bool audio_disabled, music_disabled, samples_disabled;
+extern char soundfont[4096];
+
+typedef enum {
+    OPL,
+    FLUIDSYNTH,
+    NATIVE_MIDI,
+    MUSIC_DEVICE_MAX
+} MusicDevice;
+
+extern MusicDevice music_device;
+
+extern const char *const music_device_names[MUSIC_DEVICE_MAX];
 
 bool init_audio(void);
 void deinit_audio(void);
-
+bool restart_audio(void);
 void load_music(void);
 void play_song(unsigned int song_num);
 void restart_song(void);

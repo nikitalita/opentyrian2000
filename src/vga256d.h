@@ -21,7 +21,15 @@
 
 #include "opentyr.h"
 
-#include "SDL.h"
+#ifdef WITH_SDL3
+#include <SDL3/SDL.h>
+
+#if defined(ANDROID) || defined(__ANDROID__)
+extern bool SDL_FillSurfaceRect(SDL_Surface *dst, const SDL_Rect *rect, Uint32 color);
+#endif
+#else
+#include <SDL2/SDL.h>
+#endif
 
 void JE_pix(SDL_Surface *surface, int x, int y, JE_byte c);
 void JE_pix3(SDL_Surface *surface, int x, int y, JE_byte c);
@@ -35,7 +43,12 @@ void JE_barBright(SDL_Surface *surface, int a, int b, int c, int d);
 static inline void fill_rectangle_wh(SDL_Surface *surface, int x, int y, uint w, uint h, Uint8 color)
 {
 	SDL_Rect rect = { x, y, w, h };
+
+#ifdef WITH_SDL3
+    SDL_FillSurfaceRect(surface, &rect, color);
+#else
 	SDL_FillRect(surface, &rect, color);
+#endif
 }
 
 void draw_segmented_gauge(SDL_Surface *surface, int x, int y, Uint8 color, uint segment_width, uint segment_height, uint segment_value, uint value);

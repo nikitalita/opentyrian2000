@@ -1,0 +1,184 @@
+
+# BUILD SETTINGS ###############################################################
+
+ifneq ($(filter Msys Cygwin, $(shell uname -s)), )
+    PLATFORM := WIN32
+    TYRIAN_DIR = "C:\\TYRIAN"
+else
+ifneq ($(filter Darwin, $(shell uname -s)), )
+   PLATFORM := MACOS
+   TYRIAN_DIR = "/Applications/OpenTyrian2000.app/Contents/MacOS"
+else
+    PLATFORM := UNIX
+    TYRIAN_DIR = "/usr/bin"
+endif
+endif
+
+WITH_NETWORK := true
+WITH_MIDI := true
+
+################################################################################
+# see https://www.gnu.org/prep/standards/html_node/Makefile-Conventions.html
+################################################################################
+
+SHELL = /bin/sh
+
+################################################################################
+# Mac OS X Deployment Target Version
+################################################################################
+MACOSX_DEPLOYMENT_TARGET = 10.5
+
+################################################################################
+# Signing executable (codesign)
+################################################################################
+# CODESIGN = /usr/bin/codesign -f -s - -i com.AnV.Software.OpenTyrian2000
+CODESIGN = /usr/bin/codesign -f -s "Apple Development" -i com.AnV.Software.OpenTyrian2000
+
+CC = gcc-4.2
+INSTALL = /usr/bin/install
+INSTALL_NAME_TOOL = /usr/bin/install_name_tool
+
+VCS_IDREV ?= `(git describe --tags || git rev-parse --short HEAD)`
+
+INSTALL_PROGRAM = $(INSTALL) -m 755
+INSTALL_DATA = $(INSTALL) -m 644
+
+APPLICATIONS = /Applications
+prefix ?= /usr
+exec_prefix ?= $(prefix)
+
+bindir ?= $(exec_prefix)/bin
+datarootdir ?= $(prefix)/share
+datadir ?= $(datarootdir)
+docdir ?= $(datarootdir)/doc/opentyrian2000
+mandir ?= $(datarootdir)/man
+man6dir ?= $(mandir)/man6
+man6ext ?= .6
+desktopdir ?= $(datarootdir)/applications
+icondir ?= $(datarootdir)/icons
+
+# see https://www.pathname.com/fhs/pub/fhs-2.3.html
+
+gamesdir ?= $(datadir)/games
+
+###
+
+TARGET := opentyrian2000
+
+SRCS := $(wildcard src/*.c)
+OBJS := $(SRCS:src/%.c=obj/%.o) obj/macos-bundle.o
+DEPS := $(SRCS:src/%.c=obj/%.d)
+
+###
+
+ifeq ($(WITH_NETWORK), true)
+    EXTRA_CPPFLAGS += -DWITH_NETWORK
+endif
+
+ifeq ($(WITH_MIDI), true)
+    EXTRA_CPPFLAGS += -DWITH_MIDI
+endif
+
+OPENTYRIAN_VERSION := $(VCS_IDREV)\
+
+EXTRA_CPPFLAGS += -DOPENTYRIAN_VERSION="$(OPENTYRIAN_VERSION)"
+
+ifeq ($(_DEBUG), 1)
+CPPFLAGS = -D_DEBUG=1 -UNDEBUG
+CFLAGS += -std=gnu99 -arch ppc -arch i386 -arch x86_64 -g3 -O0 -mmacosx-version-min=$(MACOSX_DEPLOYMENT_TARGET) $(EXTRA_CPPFLAGS) -Werror -pedantic -Wall -Wextra -Werror
+else
+CPPFLAGS = -DNDEBUG
+CFLAGS = -std=gnu99 -arch ppc -arch i386 -arch x86_64 -g0 -O3 -mmacosx-version-min=$(MACOSX_DEPLOYMENT_TARGET) $(EXTRA_CPPFLAGS) -pedantic -Wall -Wextra -Werror
+endif
+
+LDFLAGS ?= -arch ppc -arch i386 -arch x86_64 -mmacosx-version-min=$(MACOSX_DEPLOYMENT_TARGET)
+LDLIBS ?= -framework Foundation -lobjc
+
+ifeq ($(WITH_NETWORK), true)
+    SDL_CPPFLAGS := -I/usr/include/SDL2 -I/usr/include
+    SDL_LDFLAGS :=
+    SDL_LDLIBS := -L/usr/lib -lSDL2 -lSDL2_net
+else
+    SDL_CPPFLAGS := -I/usr/include/SDL2 -I/usr/include
+    SDL_LDFLAGS :=
+    SDL_LDLIBS := -L/usr/lib -lSDL2
+endif
+
+ifeq ($(WITH_MIDI), true)
+    SDL_CPPFLAGS += -I/usr/include/midiproc
+    SDL_LDFLAGS :=
+    SDL_LDLIBS += -lSDL2_mixer_ext -L/usr/lib -F/Library/Frameworks -lmidiproc -framework AudioUnit -framework AudioToolbox -framework CoreFoundation
+endif
+
+ALL_CPPFLAGS = \
+	       -DTARGET_$(PLATFORM) \
+               -DTYRIAN_DIR='"$(TYRIAN_DIR)"' \
+               $(EXTRA_CPPFLAGS) \
+               $(SDL_CPPFLAGS) \
+               $(CPPFLAGS)
+ALL_CFLAGS = \
+             $(CFLAGS)
+ALL_LDFLAGS = $(SDL_LDFLAGS) \
+              $(LDFLAGS)
+ALL_LDLIBS = -lm \
+             $(SDL_LDLIBS) \
+             $(LDLIBS)
+
+###
+
+.PHONY : all
+all : $(TARGET) $(TARGET).app
+
+$(TARGET).app: $(TARGET)
+	mkdir -p $@/Contents/MacOS
+	mkdir -p $@/Contents/Resources
+	$(INSTALL) opentyrian2000-legacy.icns $@/Contents/Resources/opentyrian2000.icns
+	$(INSTALL) PkgInfo Info.plist $@/Contents/
+	$(INSTALL) $(TARGET) $@/Contents/MacOS/$(TARGET)
+	mkdir -p "$@/Contents/Frameworks"
+	$(INSTALL) /usr/lib/libSDL2-2.0.0.dylib $@/Contents/Frameworks/
+	$(INSTALL) /usr/lib/libSDL2_net-2.0.0.dylib $@/Contents/Frameworks/
+	$(INSTALL_NAME_TOOL) -change /usr/lib/libSDL2-2.0.0.dylib @executable_path/../Frameworks/libSDL2-2.0.0.dylib $@/Contents/Frameworks/libSDL2_net-2.0.0.dylib
+	$(INSTALL_NAME_TOOL) -change /usr/lib/libSDL2-2.0.0.dylib @executable_path/../Frameworks/libSDL2-2.0.0.dylib $@/Contents/MacOS/$(TARGET)
+	$(INSTALL_NAME_TOOL) -change /usr/lib/libSDL2_net-2.0.0.dylib @executable_path/../Frameworks/libSDL2_net-2.0.0.dylib $@/Contents/MacOS/$(TARGET)
+	$(INSTALL) data/* $@/Contents/Resources/
+	$(CODESIGN) $@/Contents/Frameworks/FluidSynth.framework
+	$(CODESIGN) $@/Contents/Frameworks/libSDL2-2.0.0.dylib
+	$(CODESIGN) $@/Contents/Frameworks/libSDL2_net-2.0.0.dylib
+	$(CODESIGN) $@
+
+.PHONY : installdirs
+installdirs :
+	mkdir -p $(DESTDIR)$(man6dir)
+
+.PHONY : install
+install : $(TARGET) installdirs
+	cp -Rf $(TARGET).app $(APPLICATIONS)/$(TARGET).app
+	$(INSTALL_DATA) linux/man/opentyrian2000.6 $(DESTDIR)$(man6dir)/opentyrian2000$(man6ext)
+
+.PHONY : uninstall
+uninstall :
+	rm -Rf /Applications/$(TARGET).app
+	rm -f $(DESTDIR)$(man6dir)/opentyrian2000$(man6ext)
+
+.PHONY : clean
+clean :
+	rm -f $(OBJS)
+	rm -f $(DEPS)
+	rm -f $(TARGET)
+
+$(TARGET) : $(OBJS)
+	$(CC) $(ALL_CFLAGS) $(ALL_LDFLAGS) -o $@ $^ $(ALL_LDLIBS)
+
+-include $(DEPS)
+
+obj/%.o : src/%.c
+	@mkdir -p "$(dir $@)"
+	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS) -c -o $@ $<
+
+obj/%.o : src/%.m
+	@mkdir -p "$(dir $@)"
+	$(CC) -arch i386 -arch x86_64 -arch ppc -c -o $@ $<
+
+obj/macos-bundle.o : src/macos-bundle.m
+	$(CC) -arch i386 -arch x86_64 -arch ppc -o $@ -c $<
