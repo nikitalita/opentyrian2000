@@ -22,7 +22,7 @@ CC = clang
 INSTALL = install
 PKG_CONFIG = pkg-config
 
-# VCS_IDREV ?= (git describe --tags || git rev-parse --short HEAD)
+VCS_IDREV ?= `(git describe --tags || git rev-parse --short HEAD)`
 
 INSTALL_PROGRAM = $(INSTALL) -m 755
 INSTALL_DATA = $(INSTALL) -m 644

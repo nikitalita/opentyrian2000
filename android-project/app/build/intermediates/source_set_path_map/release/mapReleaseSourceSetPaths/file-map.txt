@@ -1,7 +1,0 @@
-org.libsdl.app-pngs-0 /Users/andyvand/Downloads/opentyrian2000/android-project/app/build/generated/res/pngs/release
-org.libsdl.app-resValues-1 /Users/andyvand/Downloads/opentyrian2000/android-project/app/build/generated/res/resValues/release
-org.libsdl.app-packageReleaseResources-2 /Users/andyvand/Downloads/opentyrian2000/android-project/app/build/intermediates/incremental/release/packageReleaseResources/merged.dir
-org.libsdl.app-packageReleaseResources-3 /Users/andyvand/Downloads/opentyrian2000/android-project/app/build/intermediates/incremental/release/packageReleaseResources/stripped.dir
-org.libsdl.app-release-4 /Users/andyvand/Downloads/opentyrian2000/android-project/app/build/intermediates/merged_res/release/mergeReleaseResources
-org.libsdl.app-main-5 /Users/andyvand/Downloads/opentyrian2000/android-project/app/src/main/res
-org.libsdl.app-release-6 /Users/andyvand/Downloads/opentyrian2000/android-project/app/src/release/res

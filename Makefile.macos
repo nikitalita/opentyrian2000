@@ -39,8 +39,7 @@ INSTALL = /usr/bin/install
 PKG_CONFIG = /usr/local/bin/pkg-config
 INSTALL_NAME_TOOL = /usr/bin/install_name_tool
 
-# VCS_IDREV ?= (git describe --tags || git rev-parse --short HEAD)
-VCS_IDREV = "\"$(shell echo "$(shell ./getver)")\""
+VCS_IDREV ?= `(git describe --tags || git rev-parse --short HEAD)`
 
 INSTALL_PROGRAM = $(INSTALL) -m 755
 INSTALL_DATA = $(INSTALL) -m 644
@@ -169,10 +168,10 @@ ALL_LDLIBS = -lm \
 ###
 
 .PHONY : all
-all : getver $(TARGET) $(TARGET).app
+all : $(TARGET) $(TARGET).app
 
 ifeq ($(WITH_SDL3), true)
-$(TARGET).app: getver $(TARGET)
+$(TARGET).app: $(TARGET)
 	mkdir -p $@/Contents/MacOS
 	mkdir -p $@/Contents/Resources
 	iconutil --convert icns -o $@/Contents/Resources/opentyrian2000.icns opentyrian2000.iconset
@@ -191,7 +190,7 @@ $(TARGET).app: getver $(TARGET)
 	$(INSTALL) data/* $@/Contents/Resources/
 	$(CODESIGN) $@/Contents/Frameworks/*.framework $@/Contents/Frameworks/*.dylib $@
 else
-$(TARGET).app: getver $(TARGET)
+$(TARGET).app: $(TARGET)
 	mkdir -p $@/Contents/MacOS
 	mkdir -p $@/Contents/Resources
 	iconutil --convert icns -o $@/Contents/Resources/opentyrian2000.icns opentyrian2000.iconset
@@ -227,7 +226,6 @@ clean :
 	rm -f $(OBJS)
 	rm -f $(DEPS)
 	rm -f $(TARGET)
-	rm -f getver
 	rm -Rf opentyrian2000.app
 
 $(TARGET) : $(OBJS)
@@ -235,9 +233,6 @@ $(TARGET) : $(OBJS)
 	$(INSTALL_NAME_TOOL) -add_rpath @executable_path/../Frameworks $@
 
 -include $(DEPS)
-
-getver: getver.c
-	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $<
 
 obj/%.o : src/%.c
 	@mkdir -p "$(dir $@)"

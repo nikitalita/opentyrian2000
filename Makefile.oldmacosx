@@ -38,8 +38,7 @@ CC = gcc-4.2
 INSTALL = /usr/bin/install
 INSTALL_NAME_TOOL = /usr/bin/install_name_tool
 
-# VCS_IDREV ?= (git describe --tags || git rev-parse --short HEAD)
-VCS_IDREV = "\"$(shell echo "$(shell ./getver)")\""
+VCS_IDREV ?= `(git describe --tags || git rev-parse --short HEAD)`
 
 INSTALL_PROGRAM = $(INSTALL) -m 755
 INSTALL_DATA = $(INSTALL) -m 644
@@ -128,9 +127,9 @@ ALL_LDLIBS = -lm \
 ###
 
 .PHONY : all
-all : getver $(TARGET) $(TARGET).app
+all : $(TARGET) $(TARGET).app
 
-$(TARGET).app: getver $(TARGET)
+$(TARGET).app: $(TARGET)
 	mkdir -p $@/Contents/MacOS
 	mkdir -p $@/Contents/Resources
 	$(INSTALL) opentyrian2000-legacy.icns $@/Contents/Resources/opentyrian2000.icns
@@ -167,15 +166,11 @@ clean :
 	rm -f $(OBJS)
 	rm -f $(DEPS)
 	rm -f $(TARGET)
-	rm -f getver
 
 $(TARGET) : $(OBJS)
 	$(CC) $(ALL_CFLAGS) $(ALL_LDFLAGS) -o $@ $^ $(ALL_LDLIBS)
 
 -include $(DEPS)
-
-getver: getver.c
-	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $<
 
 obj/%.o : src/%.c
 	@mkdir -p "$(dir $@)"
